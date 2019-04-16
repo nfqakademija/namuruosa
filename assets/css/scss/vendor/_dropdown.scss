@@ -1,0 +1,9 @@
+.dropdown {
+  .dropdown-toggle{
+    color: $white;
+  }
+  .dropdown-toggle:hover {
+    color: $navbar-dark-hover-color;
+    text-decoration: none;
+  }
+}

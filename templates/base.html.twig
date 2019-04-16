@@ -7,12 +7,34 @@
         <title>{% block title %}Welcome!{% endblock %}</title>
         {% block stylesheets %}
             {{ encore_entry_link_tags('app') }}
+            <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
         {% endblock %}
+
     </head>
     <body>
+
+    {% include 'header.html.twig' %}
+    {% include 'aside.html.twig' %}
+    {% include 'main.html.twig' %}
+
+
+
         {% block body %}{% endblock %}
+    {% include 'foooter.html.twig' %}
         {% block javascripts %}
             {{ encore_entry_script_tags('app') }}
+            <script>
+                function toggleNav() {
+                    var x  = document.getElementById("mySidenav");
+                    if (x.style.width === "250px") {
+                        x.style.width = "0";
+                    } else {
+                        x.style.width = "250px";
+                    }
+                }
+            </script>
         {% endblock %}
     </body>
 </html>
+
+

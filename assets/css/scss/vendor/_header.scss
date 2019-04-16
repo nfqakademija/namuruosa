@@ -1,0 +1,12 @@
+header {
+  .navbar{
+    border-bottom: black solid 1px;
+    z-index: 2;
+    position: fixed;
+    width: 100%;
+  }
+}
+
+.app-name {
+  font-weight: bold;
+}
