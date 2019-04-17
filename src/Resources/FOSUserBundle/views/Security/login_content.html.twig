@@ -11,9 +11,10 @@
         <h1 class="h3 mb-3 font-weight-normal">Prašom prisiregistruoti</h1>
         <div class="mb-3">
             <label for="username" class="sr-only">{{ 'security.login.username'|trans }}</label>
-            <input class="form-control" placeholder="Email address" type="text" id="username" name="_username" value="{{ last_username }}" required="required" autocomplete="username" />
+            <input class="form-control" placeholder="Naudotojo vardas" type="text" id="username" name="_username"  required="required" autocomplete="username" />
+            {#value="{{ last_username }}"#}
             <label for="password" class="sr-only">{{ 'security.login.password'|trans }}</label>
-            <input class="form-control" placeholder="Password" type="password" id="password" name="_password" required="required" autocomplete="current-password" />
+            <input class="form-control" placeholder={{ 'security.login.password'|trans }} type="password" id="password" name="_password" required="required" autocomplete="current-password" />
         </div>
 
         <div class="checkbox mb-3 text-center">
