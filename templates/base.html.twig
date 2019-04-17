@@ -8,6 +8,7 @@
         {% block stylesheets %}
             {{ encore_entry_link_tags('app') }}
             <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+
         {% endblock %}
 
     </head>
@@ -24,14 +25,21 @@
         {% block javascripts %}
             {{ encore_entry_script_tags('app') }}
             <script>
-                function toggleNav() {
-                    var x  = document.getElementById("mySidenav");
-                    if (x.style.width === "250px") {
-                        x.style.width = "0";
-                    } else {
-                        x.style.width = "250px";
-                    }
-                }
+                //need to be moved
+                    function toggleNav() {
+                        var x  = document.getElementById("mySidenav");
+                        var y = document.getElementById("menuArrow");
+                        if (x.style.width === "250px") {
+                            x.style.width = "0";
+                            y.classList.remove('fa-caret-left');
+                            y.classList.add('fa-caret-right');
+                        } else {
+                            x.style.width = "250px";
+                            y.classList.remove('fa-caret-right');
+                            y.classList.add('fa-caret-left');
+                        }
+                    };
+
             </script>
         {% endblock %}
     </body>

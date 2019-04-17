@@ -11,13 +11,21 @@
 
 .sidenav {
   ul {
-    padding-left: 18px;
+    .nav-item {
+      padding-left: 18px;
+    }
+    div {
+      .nav-item {
+        padding-left: 28px;
+      }
+      .sidenav-divider {
+        margin-top: 0rem;
+        margin-bottom: 0rem;
+        border: 0;
+        border-top: 1px solid $white;
+        width: 100%;
+      }
+    }
   }
 }
 
-.sidenav-divider {
-  margin-top: 0rem;
-  margin-bottom: 0rem;
-  border: 0;
-  border-top: 1px solid $white;
-}
