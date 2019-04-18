@@ -1,3 +1,4 @@
+//------ Login form ------------
 .fos_login-wrapper{
   max-width: 400px;
   margin: 100px auto;
@@ -9,5 +10,15 @@
 }
 .fos_login-wrapper h1{
   text-align: center;
+}
 
+//-----  Registration form --------------
+.col-form-label{
+  flex: 0 0 33.333333%;
+  max-width: 300px;
+  text-align: right;
+}
+.col-form-label+.col-sm-10 {
+  flex: 0 0 66.666666%;
+  max-width: 400px;
 }
