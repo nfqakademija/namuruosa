@@ -11,13 +11,13 @@ group:
         deleted: 'Grupė ištrinta.'
 security:
     login:
-        username: Vardas
+        username: 'Prisijungimo vardas'
         password: Slaptažodis
         remember_me: Atsiminti
         submit: Prisijungti
 profile:
     show:
-        username: 'Naudotojo vardas'
+        username: 'Prisijungimo vardas'
         email: 'El. paštas'
     edit:
         submit: Atnaujinti
