@@ -9,14 +9,17 @@
                     <a href="{{ path('fos_user_security_logout') }}">
                         {{ 'layout.logout'|trans({}, 'FOSUserBundle') }}
                     </a>
-                {% else %}
-                    <a href="{{ path('fos_user_security_login') }}">{{ 'layout.login'|trans({}, 'FOSUserBundle') }}</a>
                 {% endif %}
             </a>
             <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                 <li><a class="dropdown-item" href="#"><i class="fa fa-fw fa-user">Profilis</i></a></li>
                 <li></li>
-                <li><a class="dropdown-item" href="#"><i class="fa fa-fw fa-power-off"></i>Atsijungti</a></li>
+                <li><a class="dropdown-item" href="{{ path('fos_user_security_logout') }}"><i class="fa fa-fw fa-power-off"></i>
+                    {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+                        {{ 'layout.logout'|trans({}, 'FOSUserBundle') }}
+                    {% else %}
+                        <a href="{{ path('fos_user_security_login') }}">{{ 'layout.login'|trans({}, 'FOSUserBundle') }}</a>
+                    {% endif %}</a></li>
             </ul>
         </div>
     </nav>

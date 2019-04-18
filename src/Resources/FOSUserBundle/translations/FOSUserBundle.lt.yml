@@ -77,3 +77,5 @@ form:
     password_confirmation: 'Pakartoti slaptažodį'
     new_password: 'Naujas slaptažodis'
     new_password_confirmation: 'Naujas slaptažodis (pakartoti)'
+    lastName: Pavardė
+    firstName: Vardas

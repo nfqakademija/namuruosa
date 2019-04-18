@@ -10,12 +10,16 @@ class RegistrationType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder->add('firstName', TextType::class, [
-            'label' => 'Vardas',
+            'label' => 'form.firstName',
+            'translation_domain' => 'FOSUserBundle',
             'attr'=>[
                 'class'=>'form-control',
             ]
         ]);
-        $builder->add('lastName', TextType::class);
+        $builder->add('lastName', TextType::class, [
+            'label' => 'form.lastName',
+            'translation_domain' => 'FOSUserBundle'
+        ]);
     }
     public function getParent()
     {

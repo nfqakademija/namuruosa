@@ -1,8 +1,8 @@
 {% extends "@FOSUser/layout.html.twig" %}
 
 {% block fos_user_content %}
-    <div>
-
+    <div class="container">
+        <h3>Naujo vartotojo registracija</h3>
+        {% include "@FOSUser/Registration/register_content.html.twig" %}
     </div>
-{% include "@FOSUser/Registration/register_content.html.twig" %}
 {% endblock fos_user_content %}
