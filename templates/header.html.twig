@@ -6,20 +6,22 @@
             <a class="dropdown-toggle" href="#" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
                     {{ 'layout.logged_in_as'|trans({'%username%': app.user.username}, 'FOSUserBundle') }} |
-                    <a href="{{ path('fos_user_security_logout') }}">
-                        {{ 'layout.logout'|trans({}, 'FOSUserBundle') }}
-                    </a>
+                    {#<a href="{{ path('fos_user_security_logout') }}">#}
+                        {#{{ 'layout.logout'|trans({}, 'FOSUserBundle') }}#}
+                    {#</a>#}
                 {% endif %}
             </a>
             <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                 <li><a class="dropdown-item" href="#"><i class="fa fa-fw fa-user">Profilis</i></a></li>
                 <li></li>
-                <li><a class="dropdown-item" href="{{ path('fos_user_security_logout') }}"><i class="fa fa-fw fa-power-off"></i>
                     {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+                        <li><a class="dropdown-item" href="{{ path('fos_user_security_logout') }}"><i class="fa fa-fw fa-power-off"></i>
                         {{ 'layout.logout'|trans({}, 'FOSUserBundle') }}
                     {% else %}
+                        <li><a class="dropdown-item" href="{{ path('fos_user_security_logout') }}"><i class="fa fa-fw fa-power-off"></i>
                         <a href="{{ path('fos_user_security_login') }}">{{ 'layout.login'|trans({}, 'FOSUserBundle') }}</a>
-                    {% endif %}</a></li>
+                    {% endif %}
+                    </a></li>
             </ul>
         </div>
     </nav>
