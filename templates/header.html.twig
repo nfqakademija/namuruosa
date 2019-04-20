@@ -1,15 +1,28 @@
 <header>
     <nav class="navbar navbar-dark bg-dark">
-        <a class="navbar-brand" href="#" onclick="toggleNav()" >MENU</a>
+        <a class="navbar-brand" href="#" onclick="toggleNav()" >MENU<i class="fa fa-fw fa-caret-right" id="menuArrow"></i></a>
         <a class="navbar-brand app-name" href="#"> NAMURUOSA</a>
         <div class="dropdown dropdown-toggle-split">
             <a class="dropdown-toggle" href="#" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                Vardas Pavardė
+                {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+                    {{ 'layout.logged_in_as'|trans({'%username%': app.user.username}, 'FOSUserBundle') }} |
+                {% endif %}
             </a>
             <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                 <li><a class="dropdown-item" href="#"><i class="fa fa-fw fa-user">Profilis</i></a></li>
-                <li></li>
-                <li><a class="dropdown-item" href="#"><i class="fa fa-fw fa-power-off"></i>Atsijungti</a></li>
+                <li>
+                    {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+                        <a class="dropdown-item" href="{{ path('fos_user_security_logout') }}">
+                            <i class="fa fa-fw fa-power-off"></i>
+                            {{ 'layout.logout'|trans({}, 'FOSUserBundle') }}
+                        </a>
+                    {% else %}
+                        <a class="dropdown-item" href="{{ path('fos_user_security_login') }}">
+                            <i class="fa fa-fw fa-power-off"></i>
+                            {{ 'layout.login'|trans({}, 'FOSUserBundle') }}
+                        </a>
+                    {% endif %}
+                </li>
             </ul>
         </div>
     </nav>
