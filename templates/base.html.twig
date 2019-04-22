@@ -15,12 +15,12 @@
 
     {% block header %}
         {% include 'header.html.twig' %}
+        {% include 'aside.html.twig' %}
     {% endblock %}
 
     <div class="container container-under-fixednav">
         {% block body %}
-            {#{% include 'aside.html.twig' %}#}
-            {#{% include 'main.html.twig' %}#}
+            {% include 'main.html.twig' %}
         {% endblock %}
     </div>
 

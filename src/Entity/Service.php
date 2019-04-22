@@ -123,8 +123,6 @@ class Service
         $this->userId = $userId;
     }
 
-
-
     /**
      * @return mixed
      */

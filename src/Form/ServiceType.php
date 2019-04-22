@@ -33,12 +33,15 @@ class ServiceType extends AbstractType
             ])
             ->add('transport', CheckboxType::class, [
                 'label' => 'Transporto paslaugos',
+                'required' => false,
             ])
             ->add('education', CheckboxType::class, [
-                'label' => 'Mokymo paslaugos'
+                'label' => 'Mokymo paslaugos',
+                'required' => false,
             ])
             ->add('cleaning', CheckboxType::class, [
-                'label' => 'Valymo paslaugos'
+                'label' => 'Valymo paslaugos',
+                'required' => false,
             ])
             ->add('coordinateX', ChoiceType::class, [
                 'choices' => [

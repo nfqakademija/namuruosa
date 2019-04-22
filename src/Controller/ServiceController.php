@@ -24,7 +24,7 @@ class ServiceController extends AbstractController
     /**
      * @Route("/service/add", name="serviceAdd")
      */
-    public function add(Request $request)
+    public function addService(Request $request)
     {
 
         $form = $this->createForm(ServiceType::class);
@@ -42,5 +42,19 @@ class ServiceController extends AbstractController
         return $this->render('service/add.html.twig', [
             'serviceForm' => $form->createView(),
         ]);
+    }
+
+
+    /**
+     *
+     * @Route("service/list", name="serviceList")
+     */
+    public function listServices()
+    {
+        $userId = $this->getUser()->getId();
+        $services = $this->getDoctrine()->getRepository('App:Service')->getByUserId($userId);
+        return $this->render('service/list.html.twig', [
+            'services'=>$services,
+    ]);
     }
 }
