@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Form;
 
 use Symfony\Component\Form\AbstractType;
@@ -12,8 +13,8 @@ class RegistrationType extends AbstractType
         $builder->add('firstName', TextType::class, [
             'label' => 'form.firstName',
             'translation_domain' => 'FOSUserBundle',
-            'attr'=>[
-                'class'=>'form-control',
+            'attr' => [
+                'class' => 'form-control',
             ]
         ]);
         $builder->add('lastName', TextType::class, [
@@ -21,14 +22,17 @@ class RegistrationType extends AbstractType
             'translation_domain' => 'FOSUserBundle'
         ]);
     }
+
     public function getParent()
     {
         return 'FOS\UserBundle\Form\Type\RegistrationFormType';
     }
+
     public function getBlockPrefix()
     {
         return 'app_user_registration';
     }
+
     public function getName()
     {
         return $this->getBlockPrefix();

@@ -1,6 +1,14 @@
 {% extends "service/layout.html.twig" %}
 
 {% block main %}
-    <h1>{{ posts }}</h1>
     <h1>Hello</h1>
+
+    {#{{ form_start(form, {'method': 'post', 'action': path('fos_user_registration_register'), 'attr': {'class': 'fos_user_registration_register'}}) }}#}
+    {{ form_start(serviceForm, {'method': 'post', 'action': path('serviceAdd'), 'attr': {'class': 'fos_user_registration_register'}}) }}
+    {{ form_widget(serviceForm) }}
+    <div>
+        <input type="submit" value="Submit" />
+    </div>
+    {{ form_end(serviceForm) }}
+
 {% endblock %}

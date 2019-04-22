@@ -8,7 +8,6 @@
         {% block stylesheets %}
             {{ encore_entry_link_tags('app') }}
             <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
-
         {% endblock %}
     </head>
 
@@ -20,8 +19,8 @@
 
     <div class="container container-under-fixednav">
         {% block body %}
-            {% include 'aside.html.twig' %}
-            {% include 'main.html.twig' %}
+            {#{% include 'aside.html.twig' %}#}
+            {#{% include 'main.html.twig' %}#}
         {% endblock %}
     </div>
 

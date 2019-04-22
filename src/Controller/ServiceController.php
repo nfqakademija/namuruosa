@@ -9,7 +9,9 @@
 namespace App\Controller;
 
 
+use App\Form\ServiceType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
@@ -23,10 +25,18 @@ class ServiceController extends AbstractController
     /**
      * @Route("/service/add", name="serviceAdd")
      */
-    public function add()
+    public function add(Request $request)
     {
-        return $this->render("service/add.html.twig", [
-            'posts' => 'This is a post',
+
+        $form = $this->createForm(ServiceType::class);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()){
+            return $this->redirectToRoute('home');
+        }
+
+        return $this->render('service/add.html.twig', [
+            'serviceForm' => $form->createView(),
         ]);
     }
 }
