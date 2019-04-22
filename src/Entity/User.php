@@ -19,6 +19,10 @@ class User extends BaseUser
      */
     protected $id;
 
+
+//    ------- Dalius -------------
+
+
     /**
      * @ORM\Column(type="string", length=255)
      */
@@ -28,6 +32,10 @@ class User extends BaseUser
      * @ORM\Column(type="string", length=255)
      */
     protected $lastName;
+
+
+//    ------- End Dalius ------------
+
 
     public function __construct()
     {
