@@ -96,19 +96,8 @@ class Service
     protected $coordinateY;
 
 
-
 //    ----------- Methods ----------
 
-    public function onPrePersist(){
-
-        if ($this->getCreatedAt() === null) {
-            $this->setCreatedAt(new \DateTime('now'));
-        }
-    }
-
-    public function onPreUpdate(){
-        $this->updatedAt = new \DateTime('now');
-    }
 
     /**
      * @return mixed
@@ -134,6 +123,8 @@ class Service
         $this->userId = $userId;
     }
 
+
+
     /**
      * @return mixed
      */
@@ -143,11 +134,14 @@ class Service
     }
 
     /**
-     * @param mixed $createdAt
+     * @throws \Exception
+     *
+     * @ORM\PrePersist()
      */
-    public function setCreatedAt($createdAt): void
+    public function setCreatedAt()
     {
-        $this->createdAt = $createdAt;
+        $this->createdAt = new \DateTime();
+        $this->updatedAt = new \DateTime();
     }
 
     /**
@@ -159,11 +153,13 @@ class Service
     }
 
     /**
-     * @param mixed $updatedAt
+     * @throws \Exception
+     *
+     * @ORM\PreUpdate()
      */
-    public function setUpdatedAt($updatedAt): void
+    public function setUpdatedAt()
     {
-        $this->updatedAt = $updatedAt;
+        $this->updatedAt = new \DateTime();
     }
 
     /**

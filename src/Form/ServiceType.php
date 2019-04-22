@@ -12,7 +12,7 @@ namespace App\Form;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
-use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
+use Symfony\Component\Form\Extension\Core\Type\TimeType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -23,32 +23,30 @@ class ServiceType extends AbstractType
     {
         $builder
             ->add('description', TextareaType::class, [
-                'required'=> true,
+                'required' => true,
             ])
-            ->add('activeTimeStart', DateTimeType::class, [
-                'input'  => 'timestamp',
+            ->add('activeTimeStart', TimeType::class, [
                 'widget' => 'choice',
-            ] )
-            ->add('activeTimeEnd', DateTimeType::class, [
-                'input'  => 'timestamp',
+            ])
+            ->add('activeTimeEnd', TimeType::class, [
                 'widget' => 'choice',
-            ] )
+            ])
             ->add('transport', CheckboxType::class, [
-                'label'=> 'Transporto paslaugos',
+                'label' => 'Transporto paslaugos',
             ])
             ->add('education', CheckboxType::class, [
-                'label'=> 'Mokymo paslaugos'
+                'label' => 'Mokymo paslaugos'
             ])
             ->add('cleaning', CheckboxType::class, [
-                'label'=> 'Valymo paslaugos'
+                'label' => 'Valymo paslaugos'
             ])
             ->add('coordinateX', ChoiceType::class, [
-                'choices'=>[
+                'choices' => [
                     range(1, 100, 5)
                 ]
             ])
             ->add('coordinateY', ChoiceType::class, [
-                'choices'=>[
+                'choices' => [
                     range(1, 100, 5)
                 ]
             ]);

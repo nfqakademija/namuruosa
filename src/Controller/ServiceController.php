@@ -21,7 +21,6 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class ServiceController extends AbstractController
 {
-
     /**
      * @Route("/service/add", name="serviceAdd")
      */
@@ -32,7 +31,12 @@ class ServiceController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()){
-            return $this->redirectToRoute('home');
+            $em = $this->getDoctrine()->getManager();
+            $service = $form->getData();
+            $service->setUserId($this->getUser());
+            $em->persist($service);
+            $em->flush();
+            return $this->redirectToRoute('serviceAdd');
         }
 
         return $this->render('service/add.html.twig', [
