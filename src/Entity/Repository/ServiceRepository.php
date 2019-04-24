@@ -18,7 +18,10 @@ class ServiceRepository extends EntityRepository
     {
         return $this->getEntityManager()->createQuery(
             "
-            SELECT s FROM App\Entity\Service s WHERE s.userId= :id ORDER BY s.description DESC
+            SELECT s 
+                FROM App\Entity\Service s 
+            WHERE s.userId= :id 
+            ORDER BY s.description DESC
             "
         )
             ->setParameter('id', $id)
