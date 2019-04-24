@@ -10,6 +10,7 @@ namespace App\Controller;
 
 
 use App\Form\ServiceType;
+use App\Helpers\ServiceHelper;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
@@ -56,5 +57,26 @@ class ServiceController extends AbstractController
         return $this->render('service/list.html.twig', [
             'services'=>$services,
     ]);
+    }
+
+
+    /**
+     * @Route("service/list-matches", name="listMatches")
+     */
+    public function listMatches()
+    {
+        $userId = $this->getUser()->getId();
+        $myServices = $this->getDoctrine()->getRepository('App:Service')->getMatches($userId);
+//        $helper = new ServiceHelper();
+//        $helper->getMatches($myServices, $userId);
+
+
+
+//        var_dump($services[2]->getCoordinateX());
+        return $this->render('service/list.html.twig', [
+            'services'=>$myServices,
+        ]);
+
+
     }
 }

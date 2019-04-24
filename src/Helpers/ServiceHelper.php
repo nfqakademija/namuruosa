@@ -2,33 +2,22 @@
 /**
  * Created by PhpStorm.
  * User: dalius
- * Date: 19.4.22
- * Time: 08.19
+ * Date: 19.4.23
+ * Time: 08.16
  */
 
-namespace App\Entity\Repository;
+namespace App\Helpers;
 
 
+use App\Entity\Repository\ServiceRepository;
 use App\Entity\Service;
-use Doctrine\ORM\EntityRepository;
+use Doctrine\ORM\EntityManager;
 
-class ServiceRepository extends EntityRepository
+class ServiceHelper
 {
 
-    public function getByUserId($id)
+    public function getMatches(array $myServices, $myId)
     {
-        return $this->getEntityManager()->createQuery(
-            "
-            SELECT s FROM App\Entity\Service s WHERE s.userId= :id ORDER BY s.description DESC
-            "
-        )
-            ->setParameter('id', $id)
-            ->getResult();
-    }
-
-    public function getMatches($id){
-
-        $myServices = $this->getByUserId($id);
 
         /**
          * @var $myServices Service[]
@@ -44,6 +33,5 @@ class ServiceRepository extends EntityRepository
 
             echo($myCoordX);
         }
-
     }
 }
