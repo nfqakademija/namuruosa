@@ -12,3 +12,6 @@ require('../css/app.scss');
 $(document).ready(function() {
     $('[data-toggle="popover"]').popover();
 });
+
+//custom imports:
+import toggleNav from './custom/toggleNav.js';
