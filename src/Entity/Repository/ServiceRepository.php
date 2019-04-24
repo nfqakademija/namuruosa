@@ -38,7 +38,7 @@ class ServiceRepository extends EntityRepository
     public function getMatches($id){
 
         $myServices = $this->getByUserId($id);
-        $matches =[];
+//        $matches =[];
         $qb = $this->createQueryBuilder('s');
 
 
@@ -46,27 +46,54 @@ class ServiceRepository extends EntityRepository
          * @var $myServices Service[]
          */
         foreach ($myServices as $service){
-            $myTimeStart = $service->getActiveTimeStart();
-            $myTimeEnd = $service->getActiveTimeEnd();
+
+            $myTimeStart = $service->getActiveTimeStart()->format('H:i:s');
+            $myTimeEnd = $service->getActiveTimeEnd()->format('H:i:s');
             $myTransport = $service->getTransport();
             $myCleaning = $service->getCleaning();
             $myEducation = $service->getEducation();
             $myCoordX = $service->getCoordinateX();
             $myCoordY = $service->getCoordinateY();
-
-//            $matches = $this->findBy([
-//                'userId' => 2,
-////                'activeTimeEnd'=>$myTimeEnd,
-//            ]);
+            $coordinateTollerance = 50;  //TODO replace with form field
+            $myCoordXmin = $myCoordX - $coordinateTollerance;
+            $myCoordXmax = $myCoordX + $coordinateTollerance;
+            $myCoordYmin = $myCoordY - $coordinateTollerance;
+            $myCoordYmax = $myCoordY + $coordinateTollerance;
 
             $qb = $this->createQueryBuilder('s')
-                ->where('s.userId = 1')
-//                ->setParameter('transport', $myTransport)
-                ->orderBy('s.activeTimeEnd')
+                ->addSelect('(s.coordinateX *  s.coordinateX + s.coordinateY) AS HIDDEN distance' )
+                ->where('s.transport = :myTransport')
+                ->orWhere('s.cleaning = :myCleaning')
+                ->orWhere('s.education = :myEducation')
+                ->andWhere('s.activeTimeStart <= :myTimeStart')
+                ->andWhere('s.activeTimeEnd <= :myTimeEnd')
+                ->andWhere('s.coordinateX BETWEEN :myCoordXmin AND :myCoordXmax'  )
+                ->andWhere('s.coordinateY BETWEEN :myCoordYmin AND :myCoordYmax'  )
+                ->setParameters([
+                    'myTimeStart'=>$myTimeStart,
+                    'myTimeEnd'=>$myTimeEnd,
+                    'myTransport'=>$myTransport,
+                    'myCleaning'=>$myCleaning,
+                    'myEducation'=>$myEducation,
+//                    'myCoordX1' => $myCoordX,
+//                    'myCoordX2' => $myCoordX,
+//                    'myCoordY' => $myCoordY,
+                    'myCoordXmin' => $myCoordXmin,
+                    'myCoordXmax' => $myCoordXmax,
+                    'myCoordYmin' => $myCoordYmin,
+                    'myCoordYmax' => $myCoordYmax,
+                ])
+                ->orderBy('distance', 'DESC')
                 ->getQuery();
 
             $matches = $qb->execute();
+            var_dump($myCoordX);
+
+
         }
+
+
+//        var_dump($myTimeEnd);
         return $matches;
     }
 }
