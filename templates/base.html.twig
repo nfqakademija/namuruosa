@@ -4,45 +4,52 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width,initial-scale=1.0">
         <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}">
-        <title>{% block title %}Welcome!{% endblock %}</title>
+        <title>{% block title %}OkiDoki!{% endblock %}</title>
         {% block stylesheets %}
             {{ encore_entry_link_tags('app') }}
             <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
-
         {% endblock %}
-
     </head>
+
     <body>
 
-    {% include 'header.html.twig' %}
-    {% include 'aside.html.twig' %}
-    {% include 'main.html.twig' %}
+    {% block header %}
+        {% include 'header.html.twig' %}
+        {% include 'aside.html.twig' %}
+    {% endblock %}
 
-
-
-        {% block body %}{% endblock %}
-    {% include 'foooter.html.twig' %}
-        {% block javascripts %}
-            {{ encore_entry_script_tags('app') }}
-            <script>
-                //need to be moved
-                    function toggleNav() {
-                        var x  = document.getElementById("mySidenav");
-                        var y = document.getElementById("menuArrow");
-                        if (x.style.width === "250px") {
-                            x.style.width = "0";
-                            y.classList.remove('fa-caret-left');
-                            y.classList.add('fa-caret-right');
-                        } else {
-                            x.style.width = "250px";
-                            y.classList.remove('fa-caret-right');
-                            y.classList.add('fa-caret-left');
-                        }
-                    };
-
-            </script>
+    <div class="container container-under-fixednav">
+        {% block body %}
+            {% include 'main.html.twig' %}
         {% endblock %}
+    </div>
+
+    {% block footer %}
+        {% include 'foooter.html.twig' %}
+    {% endblock %}
+
+
+    {% block javascripts %}
+        {{ encore_entry_script_tags('app') }}
+        <script>
+            //need to be moved
+                function toggleNav() {
+                    var x  = document.getElementById("mySidenav");
+                    var y = document.getElementById("menuArrow");
+                    if (x.style.width === "250px") {
+                        x.style.width = "0";
+                        y.classList.remove('fa-caret-left');
+                        y.classList.add('fa-caret-right');
+                    } else {
+                        x.style.width = "250px";
+                        y.classList.remove('fa-caret-right');
+                        y.classList.add('fa-caret-left');
+                    }
+                };
+
+        </script>
+    {% endblock %}
+
+
     </body>
 </html>
-
-

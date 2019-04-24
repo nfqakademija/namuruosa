@@ -18,3 +18,7 @@ framework:
 
     templating:
         engines: ['twig', 'php']
+
+
+    #-----------Edited by Dalius----------
+    translator: ~
