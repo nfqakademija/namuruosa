@@ -11,9 +11,15 @@ namespace App\Entity\Repository;
 
 use App\Entity\Service;
 use Doctrine\ORM\EntityRepository;
+use Symfony\Bridge\Doctrine\RegistryInterface;
 
 class ServiceRepository extends EntityRepository
 {
+
+//    public function __construct(RegistryInterface $registry)
+//    {
+//        parent::__construct($registry, Service::class);
+//    }
 
     public function getByUserId($id)
     {
@@ -32,6 +38,9 @@ class ServiceRepository extends EntityRepository
     public function getMatches($id){
 
         $myServices = $this->getByUserId($id);
+        $matches =[];
+        $qb = $this->createQueryBuilder('s');
+
 
         /**
          * @var $myServices Service[]
@@ -45,8 +54,19 @@ class ServiceRepository extends EntityRepository
             $myCoordX = $service->getCoordinateX();
             $myCoordY = $service->getCoordinateY();
 
-            echo($myCoordX);
-        }
+//            $matches = $this->findBy([
+//                'userId' => 2,
+////                'activeTimeEnd'=>$myTimeEnd,
+//            ]);
 
+            $qb = $this->createQueryBuilder('s')
+                ->where('s.userId = 1')
+//                ->setParameter('transport', $myTransport)
+                ->orderBy('s.activeTimeEnd')
+                ->getQuery();
+
+            $matches = $qb->execute();
+        }
+        return $matches;
     }
 }
