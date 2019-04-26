@@ -53,9 +53,9 @@ class ServiceController extends AbstractController
     public function listServices()
     {
         $userId = $this->getUser()->getId();
-        $services = $this->getDoctrine()->getRepository('App:Service')->getByUserId($userId);
+        $services = [$this->getDoctrine()->getRepository('App:Service')->getByUserId($userId)];
         return $this->render('service/list.html.twig', [
-            'services'=>$services,
+            'servicesArray'=>$services,
     ]);
     }
 
@@ -74,7 +74,7 @@ class ServiceController extends AbstractController
 
 //        var_dump($services[2]->getCoordinateX());
         return $this->render('service/list.html.twig', [
-            'services'=>$myServices,
+            'servicesArray'=>$myServices,
         ]);
 
 

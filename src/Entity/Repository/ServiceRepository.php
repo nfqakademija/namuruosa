@@ -35,12 +35,12 @@ class ServiceRepository extends EntityRepository
             ->getResult();
     }
 
+
+
     public function getMatches($id){
 
         $myServices = $this->getByUserId($id);
-//        $matches =[];
-        $qb = $this->createQueryBuilder('s');
-
+        $matches =[];
 
         /**
          * @var $myServices Service[]
@@ -61,7 +61,7 @@ class ServiceRepository extends EntityRepository
             $myCoordYmax = $myCoordY + $coordinateTollerance;
 
             $qb = $this->createQueryBuilder('s')
-                ->addSelect('(s.coordinateX *  s.coordinateX + s.coordinateY) AS HIDDEN distance' )
+                ->addSelect('( (s.coordinateX - :myCoordX1) * (s.coordinateX - :myCoordX2) + (s.coordinateY - :myCoordY1) * (s.coordinateY - :myCoordY2)) AS HIDDEN distance' ) // Distance without sqrt - just for sorting, not for real values
                 ->where('s.transport = :myTransport')
                 ->orWhere('s.cleaning = :myCleaning')
                 ->orWhere('s.education = :myEducation')
@@ -69,29 +69,30 @@ class ServiceRepository extends EntityRepository
                 ->andWhere('s.activeTimeEnd <= :myTimeEnd')
                 ->andWhere('s.coordinateX BETWEEN :myCoordXmin AND :myCoordXmax'  )
                 ->andWhere('s.coordinateY BETWEEN :myCoordYmin AND :myCoordYmax'  )
+                ->andWhere('s.userId <> :myId'  )
+//                ->andWhere('distance < 500'  )
                 ->setParameters([
                     'myTimeStart'=>$myTimeStart,
                     'myTimeEnd'=>$myTimeEnd,
                     'myTransport'=>$myTransport,
                     'myCleaning'=>$myCleaning,
                     'myEducation'=>$myEducation,
-//                    'myCoordX1' => $myCoordX,
-//                    'myCoordX2' => $myCoordX,
-//                    'myCoordY' => $myCoordY,
+                    'myCoordX1' => $myCoordX,
+                    'myCoordX2' => $myCoordX,
+                    'myCoordY1' => $myCoordY,
+                    'myCoordY2' => $myCoordY,
                     'myCoordXmin' => $myCoordXmin,
                     'myCoordXmax' => $myCoordXmax,
                     'myCoordYmin' => $myCoordYmin,
                     'myCoordYmax' => $myCoordYmax,
+                    'myId' => $id,
+
                 ])
                 ->orderBy('distance', 'DESC')
                 ->getQuery();
 
-            $matches = $qb->execute();
-            var_dump($myCoordX);
-
-
+            $matches[] = $qb->execute();
         }
-
 
 //        var_dump($myTimeEnd);
         return $matches;
