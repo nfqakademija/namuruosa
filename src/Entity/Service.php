@@ -49,6 +49,12 @@ class Service
     protected $updatedAt;
 
     /**
+     * @ORM\Column(type="string", length=255, columnDefinition="AFTER `created_at`")
+     */
+    private $title;
+
+
+    /**
      * @ORM\Column(type="text")
      */
     protected $description;
@@ -95,10 +101,6 @@ class Service
      */
     protected $coordinateY;
 
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private $title;
 
 
 //    ----------- Methods ----------
@@ -163,6 +165,19 @@ class Service
     public function setUpdatedAt()
     {
         $this->updatedAt = new \DateTime();
+    }
+
+
+    public function getTitle(): ?string
+    {
+        return $this->title;
+    }
+
+    public function setTitle(string $title): self
+    {
+        $this->title = $title;
+
+        return $this;
     }
 
     /**
@@ -293,17 +308,6 @@ class Service
         $this->coordinateY = $coordinateY;
     }
 
-    public function getTitle(): ?string
-    {
-        return $this->title;
-    }
-
-    public function setTitle(string $title): self
-    {
-        $this->title = $title;
-
-        return $this;
-    }
 
 
 }

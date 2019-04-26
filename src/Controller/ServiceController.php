@@ -67,16 +67,23 @@ class ServiceController extends AbstractController
     {
         $userId = $this->getUser()->getId();
         $myServices = $this->getDoctrine()->getRepository('App:Service')->getMatches($userId);
-//        $helper = new ServiceHelper();
-//        $helper->getMatches($myServices, $userId);
 
-
-
-//        var_dump($services[2]->getCoordinateX());
-        return $this->render('service/list.html.twig', [
+        return $this->render('service/list-matches.html.twig', [
             'servicesArray'=>$myServices,
         ]);
 
 
+    }
+
+    /**
+     * @Route("service/show-match/{id}", name="showMatch")
+     */
+    public function showMatch($id)
+    {
+        $serviceId = $id;
+        $service = $this->getDoctrine()->getRepository('App:Service')->find($serviceId);
+        return $this->render('service/show-match.html.twig', [
+            'service'=>$service,
+        ]);
     }
 }

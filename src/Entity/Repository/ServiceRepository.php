@@ -40,7 +40,7 @@ class ServiceRepository extends EntityRepository
     public function getMatches($id){
 
         $myServices = $this->getByUserId($id);
-        $matches =[];
+        $matchesWithSearchTitle =[];
 
         /**
          * @var $myServices Service[]
@@ -59,6 +59,9 @@ class ServiceRepository extends EntityRepository
             $myCoordXmax = $myCoordX + $coordinateTollerance;
             $myCoordYmin = $myCoordY - $coordinateTollerance;
             $myCoordYmax = $myCoordY + $coordinateTollerance;
+
+            $myServiceTitle = $service->getTitle();
+            $matchesWithSearchTitle =[];
 
             $qb = $this->createQueryBuilder('s')
                 ->addSelect('( (s.coordinateX - :myCoordX1) * (s.coordinateX - :myCoordX2) + (s.coordinateY - :myCoordY1) * (s.coordinateY - :myCoordY2)) AS HIDDEN distance' ) // Distance without sqrt - just for sorting, not for real values
@@ -88,13 +91,17 @@ class ServiceRepository extends EntityRepository
                     'myId' => $id,
 
                 ])
-                ->orderBy('distance', 'DESC')
+                ->orderBy('distance', 'ASC') //TODO Išsiaiškinti kodėl rikiuoja belekaip
                 ->getQuery();
 
-            $matches[] = $qb->execute();
-        }
+            $matchesBySearch = $qb->execute();
+//            $matchesWithSearchTitle[] = ['myTitle'=>$myServiceTitle];
+            $matchesWithSearchTitle[] = $myServiceTitle;
+            $matchesWithSearchTitle[] = $matchesBySearch;
+            $allMatches[] = $matchesWithSearchTitle;
 
-//        var_dump($myTimeEnd);
-        return $matches;
+        }
+//        var_dump($matches);
+        return $allMatches;
     }
 }
