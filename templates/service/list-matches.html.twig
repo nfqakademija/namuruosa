@@ -2,10 +2,10 @@
 
 {% block body %}
     {% for servicesBySearchTitle in servicesArray %}
-        {%  if servicesBySearchTitle[1] != null %}
+        {%  if servicesBySearchTitle[3] != null %}
             {% include 'service/table/listTable-matches.html.twig' %}
         {% else %}
-            <h5>Šiuo metu nėra paslaugų pagal Jūsų užklausą {{ servicesBySearchTitle[0] }}</h5>
+            <h5 class="text-danger">Šiuo metu nėra paslaugų pagal Jūsų užklausą {{ servicesBySearchTitle[0] }}</h5>
             <hr>
         {% endif %}
     {% endfor %}

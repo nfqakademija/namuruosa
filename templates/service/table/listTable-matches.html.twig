@@ -1,5 +1,5 @@
 
-<h5>Paieška pagal: " {{ servicesBySearchTitle[0] }} "</h5>
+<h5 class="text-info">Paieška pagal: " {{ servicesBySearchTitle[0] }} nuo {{ servicesBySearchTitle[1] }} iki {{ servicesBySearchTitle[2] }} "</h5>
 <table class="table mb-5">
     <tr>
         <th>Pavadinimas</th>
@@ -9,7 +9,7 @@
         <th>Koordinatės</th>
         <th></th>
     </tr>
-    {% for service in servicesBySearchTitle[1] %}
+    {% for service in servicesBySearchTitle[3] %}
         <tr>
             <td>{{ service.title }}</td>
             <td>{{ service.activeTimeStart|date('H:i:s') }}</td>

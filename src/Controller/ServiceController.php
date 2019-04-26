@@ -71,9 +71,8 @@ class ServiceController extends AbstractController
         return $this->render('service/list-matches.html.twig', [
             'servicesArray'=>$myServices,
         ]);
-
-
     }
+
 
     /**
      * @Route("service/show-match/{id}", name="showMatch")

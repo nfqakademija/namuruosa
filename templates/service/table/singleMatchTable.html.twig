@@ -1,5 +1,5 @@
-<h3>Jūsų užklausą atitinkanti paslauga</h3>
-<p>Jeigu norite susisiekti su paslaugos autorium - spauskite MATCH</p>
+<h3 class="text-info">Jūsų užklausą atitinkanti paslauga</h3>
+<p class="text-muted">Jeigu norite susisiekti su paslaugos autorium - spauskite MATCH</p>
 
 <table class="table">
     <tr>
@@ -19,7 +19,6 @@
                     Transportas,
                 {% endif %}
                 {%  if service[0].education %}
-                {#{%  if service.firstname %}#}
                     Mokymai,
                 {% endif %}
                 {%  if service[0].education %}
@@ -33,7 +32,4 @@
                 <button class="btn btn-sm btn-success">MATCH</button>
             </td>
         </tr>
-
-    {#<h1>{{ service.username }}</h1>#}
-
 </table>

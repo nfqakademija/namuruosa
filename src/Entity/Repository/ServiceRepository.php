@@ -16,11 +16,6 @@ use Symfony\Bridge\Doctrine\RegistryInterface;
 class ServiceRepository extends EntityRepository
 {
 
-//    public function __construct(RegistryInterface $registry)
-//    {
-//        parent::__construct($registry, Service::class);
-//    }
-
     public function getByUserId($id)
     {
         return $this->getEntityManager()->createQuery(
@@ -36,19 +31,19 @@ class ServiceRepository extends EntityRepository
     }
 
 
-
-    public function getMatches($id){
+    public function getMatches($id)
+    {
 
         $myServices = $this->getByUserId($id);
-        $matchesWithSearchTitle =[];
+        $matchesWithSearchTitle = [];
 
         /**
          * @var $myServices Service[]
          */
-        foreach ($myServices as $service){
+        foreach ($myServices as $service) {
 
-            $myTimeStart = $service->getActiveTimeStart()->format('H:i:s');
-            $myTimeEnd = $service->getActiveTimeEnd()->format('H:i:s');
+            $myTimeStart = $service->getActiveTimeStart()->format('H:i');
+            $myTimeEnd = $service->getActiveTimeEnd()->format('H:i');
             $myTransport = $service->getTransport();
             $myCleaning = $service->getCleaning();
             $myEducation = $service->getEducation();
@@ -61,25 +56,24 @@ class ServiceRepository extends EntityRepository
             $myCoordYmax = $myCoordY + $coordinateTollerance;
 
             $myServiceTitle = $service->getTitle();
-            $matchesWithSearchTitle =[];
+
+            $matchesWithSearchTitle = [];
 
             $qb = $this->createQueryBuilder('s')
-                ->addSelect('( (s.coordinateX - :myCoordX1) * (s.coordinateX - :myCoordX2) + (s.coordinateY - :myCoordY1) * (s.coordinateY - :myCoordY2)) AS HIDDEN distance' ) // Distance without sqrt - just for sorting, not for real values
+                ->addSelect('( (s.coordinateX - :myCoordX1) * (s.coordinateX - :myCoordX2) + (s.coordinateY - :myCoordY1) * (s.coordinateY - :myCoordY2)) AS HIDDEN distance')// Distance without sqrt - just for sorting, not for real values
                 ->where('s.transport = :myTransport')
                 ->orWhere('s.cleaning = :myCleaning')
                 ->orWhere('s.education = :myEducation')
-                ->andWhere('s.activeTimeStart <= :myTimeStart')
-                ->andWhere('s.activeTimeEnd <= :myTimeEnd')
-                ->andWhere('s.coordinateX BETWEEN :myCoordXmin AND :myCoordXmax'  )
-                ->andWhere('s.coordinateY BETWEEN :myCoordYmin AND :myCoordYmax'  )
-                ->andWhere('s.userId <> :myId'  )
+                ->andWhere('s.coordinateX BETWEEN :myCoordXmin AND :myCoordXmax')
+                ->andWhere('s.coordinateY BETWEEN :myCoordYmin AND :myCoordYmax')
+                ->andWhere('s.userId <> :myId')
 //                ->andWhere('distance < 500'  )
                 ->setParameters([
-                    'myTimeStart'=>$myTimeStart,
-                    'myTimeEnd'=>$myTimeEnd,
-                    'myTransport'=>$myTransport,
-                    'myCleaning'=>$myCleaning,
-                    'myEducation'=>$myEducation,
+                    'myTimeStart' => $myTimeStart,
+                    'myTimeEnd' => $myTimeEnd,
+                    'myTransport' => $myTransport,
+                    'myCleaning' => $myCleaning,
+                    'myEducation' => $myEducation,
                     'myCoordX1' => $myCoordX,
                     'myCoordX2' => $myCoordX,
                     'myCoordY1' => $myCoordY,
@@ -91,28 +85,39 @@ class ServiceRepository extends EntityRepository
                     'myId' => $id,
 
                 ])
-                ->orderBy('distance', 'ASC') //TODO Išsiaiškinti kodėl rikiuoja belekaip
-                ->getQuery();
+                ->orderBy('distance', 'ASC');//TODO Išsiaiškinti kodėl rikiuoja belekaip
 
-            $matchesBySearch = $qb->execute();
-//            $matchesWithSearchTitle[] = ['myTitle'=>$myServiceTitle];
+            $qb->andWhere($qb->expr()->orX(
+                $qb->expr()->andX(
+                    's.activeTimeStart <= :myTimeStart', 's.activeTimeEnd >= :myTimeStart'),
+                $qb->expr()->andX(
+                    's.activeTimeStart <= :myTimeEnd', 's.activeTimeEnd >= :myTimeEnd'),
+                $qb->expr()->andX(
+                    's.activeTimeStart >= :myTimeStart', 's.activeTimeEnd <= :myTimeEnd')
+            ));
+
+            $query = $qb->getQuery();
+            $matchesBySearch = $query->execute();
+
             $matchesWithSearchTitle[] = $myServiceTitle;
+            $matchesWithSearchTitle[] = $myTimeStart;
+            $matchesWithSearchTitle[] = $myTimeEnd;
             $matchesWithSearchTitle[] = $matchesBySearch;
-            $allMatches[] = $matchesWithSearchTitle;
+            $matchesInfo[] = $matchesWithSearchTitle;
 
         }
-        return $allMatches;
+        return $matchesInfo;
     }
 
 
     public function findServiceUserByServiceId($serviceId)
     {
         $qb = $this->createQueryBuilder('s')
-            -> select('s')
-            -> where ('s.id = :serviceId')
-            -> leftJoin('s.userId', 'u')
+            ->select('s')
+            ->where('s.id = :serviceId')
+            ->leftJoin('s.userId', 'u')
 //            -> addSelect('u.username')
-            -> setParameter('serviceId', $serviceId)
+            ->setParameter('serviceId', $serviceId)
             ->getQuery();
 
         $serviceAndUser = $qb->execute();
