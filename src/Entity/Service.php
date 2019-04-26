@@ -49,7 +49,7 @@ class Service
     protected $updatedAt;
 
     /**
-     * @ORM\Column(type="string", length=255, columnDefinition="AFTER `created_at`")
+     * @ORM\Column(type="string", length=255)
      */
     private $title;
 
