@@ -81,7 +81,7 @@ class ServiceController extends AbstractController
     public function showMatch($id)
     {
         $serviceId = $id;
-        $service = $this->getDoctrine()->getRepository('App:Service')->find($serviceId);
+        $service = $this->getDoctrine()->getRepository('App:Service')->findServiceUserByServiceId($serviceId);
         return $this->render('service/show-match.html.twig', [
             'service'=>$service,
         ]);

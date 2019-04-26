@@ -11,26 +11,29 @@
         <th></th>
     </tr>
         <tr>
-            <td>{{ service.description }}</td>
-            <td>{{ service.activeTimeStart|date('H:i:s') }}</td>
-            <td>{{ service.activeTimeEnd|date('H:i:s') }}</td>
+            <td>{{ service[0].description }}</td>
+            <td>{{ service[0].activeTimeStart|date('H:i:s') }}</td>
+            <td>{{ service[0].activeTimeEnd|date('H:i:s') }}</td>
             <td>
-                {%  if service.transport %}
+                {%  if service[0].transport %}
                     Transportas,
                 {% endif %}
-                {%  if service.education %}
+                {%  if service[0].education %}
+                {#{%  if service.firstname %}#}
                     Mokymai,
                 {% endif %}
-                {%  if service.education %}
+                {%  if service[0].education %}
                     Valymo paslaugos,
                 {% endif %}
             </td>
             <td>
-                X: {{ service.coordinateX }}, Y: {{ service.coordinateY }}
+                X: {{ service[0].coordinateX }}, Y: {{ service[0].coordinateY }}
             </td>
             <td>
                 <button class="btn btn-sm btn-success">MATCH</button>
             </td>
         </tr>
+
+    {#<h1>{{ service.username }}</h1>#}
 
 </table>

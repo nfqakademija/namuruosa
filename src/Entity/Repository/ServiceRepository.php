@@ -101,7 +101,22 @@ class ServiceRepository extends EntityRepository
             $allMatches[] = $matchesWithSearchTitle;
 
         }
-//        var_dump($matches);
         return $allMatches;
+    }
+
+
+    public function findServiceUserByServiceId($serviceId)
+    {
+        $qb = $this->createQueryBuilder('s')
+            -> select('s')
+            -> where ('s.id = :serviceId')
+            -> leftJoin('s.userId', 'u')
+//            -> addSelect('u.username')
+            -> setParameter('serviceId', $serviceId)
+            ->getQuery();
+
+        $serviceAndUser = $qb->execute();
+
+        return $serviceAndUser;
     }
 }
