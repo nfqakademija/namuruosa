@@ -3,7 +3,7 @@
 namespace App\Form;
 
 use App\Entity\UserProfile;
-use Doctrine\DBAL\Types\TextType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -19,11 +19,9 @@ class EditProfileType extends AbstractType
                 'required' => true,
                 ])
             ->add('description', TextareaType::class, [
-                'label' => 'aprasymas',
+                'label' => 'Aprasymas',
                 'required' => true,
-            ])
-            ->add('user_id')
-        ;
+            ]);
     }
 
     public function configureOptions(OptionsResolver $resolver)
