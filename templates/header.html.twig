@@ -1,10 +1,11 @@
 <header>
     <nav class="navbar navbar-dark bg-dark">
         <a class="navbar-brand" href="#" onclick="toggleNav()" >MENU<i class="fa fa-fw fa-caret-right" id="menuArrow"></i></a>
-        <a class="navbar-brand app-name" href="#"> NAMURUOSA</a>
+        <a class="navbar-brand app-name" href="/"> NAMURUOSA</a>
 
 
-        <a href="{{ path('listMatches') }}"><button>Ieškoti darbų</button></a>
+        <a href="{{ path('listMatches') }}"><button class="btn-outline-info">Ieškoti darbų</button></a>
+        <a href="{{ path('matchListMyAll') }}"><button class="btn-outline-success">Mano matchai</button></a>
 
 
         <div class="dropdown dropdown-toggle-split">

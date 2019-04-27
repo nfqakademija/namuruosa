@@ -1,39 +1,73 @@
-<h1>All my matched cases will be listed here</h1>
+<h3 class="text-info">Mano užklausos</h3>
+
+<table class="table mb-5">
+    <tr>
+        <th style="width: 10%">Data</th>
+        <th style="width: 25%">Mano paklausimas</th>
+        <th style="width: 30%">Paslauga</th>
+        <th style="width: 15%">Tiekėjas</th>
+        <th style="width: 10%">Statusas</th>
+        <th></th>
+    </tr>
+    {% for match in myCalls %}
+        <tr>
+            <td >{{ match.createdAt|date('Y.m.d') }}</td>
+            <td >{{ match.callerServiceId.description }}</td>
+            <td >{{ match.responderServiceId.title }}</td>
+            <td>{{ match.responderId }}</td>
+            <td >
+                {%  if match.acceptedAt %}
+                    Patvirtinta {{ match.acceptedAt|date('Y.m.d') }}
+                {% elseif match.rejectedAt %}
+                    Atmesta {{ match.rejectedAt|date('Y.m.d') }}
+                {% elseif match.cancelledAt %}
+                    Atšaukta {{ match.cancelledAt|date('Y.m.d') }}
+                {% else %}
+                    Neatsakė
+                {% endif %}
+            </td>
+            <td >
+                <a href="#"><button class="btn btn-sm btn-danger">Atšaukti</button></a>
+            </td>
+        </tr>
+    {% endfor %}
+</table>
 
 
-{#<h5 class="text-muted">Paieška pagal: <span class="text-info"> {{ servicesBySearchTitle[0] }} nuo {{ servicesBySearchTitle[1] }} iki {{ servicesBySearchTitle[2] }} </span></h5>#}
-{#<table class="table mb-5">#}
-    {#<tr>#}
-        {#<th style="width: 32%">Pavadinimas</th>#}
-        {#<th style="width: 15%">Laikas nuo</th>#}
-        {#<th style="width: 12%">Laikas iki</th>#}
-        {#<th style="width: 25%">Kategorijos</th>#}
-        {#<th style="width: 10%">Koordinatės</th>#}
-        {#<th></th>#}
-    {#</tr>#}
-    {#{% for service in servicesBySearchTitle[3] %}#}
-        {#<tr>#}
-            {#<td >{{ service.title }}</td>#}
-            {#<td >{{ service.activeTimeStart|date('H:i') }}</td>#}
-            {#<td >{{ service.activeTimeEnd|date('H:i') }}</td>#}
-            {#<td >#}
-                {#{%  if service.transport %}#}
-                    {#Transportas,#}
-                {#{% endif %}#}
-                {#{%  if service.education %}#}
-                    {#Mokymai,#}
-                {#{% endif %}#}
-                {#{%  if service.education %}#}
-                    {#Valymo paslaugos,#}
-                {#{% endif %}#}
-            {#</td>#}
-            {#<td >#}
-                {#X: {{ service.coordinateX }}, Y: {{ service.coordinateY }}#}
-            {#</td>#}
-            {#<td >#}
-                {#<a href="{{ path('showMatch', {'id': service.id}) }}"><button class="btn btn-sm btn-info">Peržiūrėti</button></a>#}
-            {#</td>#}
-        {#</tr>#}
+<h3 class="text-info">Manęs klausia</h3>
 
-    {#{% endfor %}#}
-{#</table>#}
+<table class="table mb-5">
+    <tr>
+        <th style="width: 10%">Data</th>
+        <th style="width: 25%">Mano pasiūlymas</th>
+        <th style="width: 30%">Užklausa</th>
+        <th style="width: 15%">Klausėjas</th>
+        <th style="width: 10%">Statusas</th>
+        <th></th>
+    </tr>
+    {% for call in callsToMe %}
+        <tr>
+            <td >{{ call.createdAt|date('Y.m.d') }}</td>
+            <td >{{ call.responderServiceId.title }}</td>
+            <td >{{ call.callerServiceId.description }}</td>
+            <td>{{ call.callerId }}</td>
+            <td >
+                {%  if call.acceptedAt %}
+                    Patvirtinta {{ match.acceptedAt|date('Y.m.d') }}
+                {% elseif call.rejectedAt %}
+                    Atmesta {{ match.rejectedAt|date('Y.m.d') }}
+                {% elseif call.cancelledAt %}
+                    Atšaukta {{ match.cancelledAt|date('Y.m.d') }}
+                {% else %}
+                    Neatsakyta
+                {% endif %}
+            </td>
+            <td class="text-center">
+                <a href="#" ><button class="btn btn-sm btn-success mb-2">Sutikti</button></a>
+                <a href="#"><button class="btn btn-sm btn-danger">Atmesti</button></a>
+            </td>
+        </tr>
+
+    {% endfor %}
+</table>
+

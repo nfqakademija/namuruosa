@@ -37,7 +37,14 @@ class MatchController extends AbstractController
      */
     public function matchListMyAll()
     {
-        return $this->render('match/listMyAll.html.twig');
+        $myId = $this->getUser()->getId();
+        $myCalls = $this->getDoctrine()->getRepository('App:Matches')->findBy(['callerId'=>$myId]);
+
+        $callsToMe = $this->getDoctrine()->getRepository('App:Matches')->findBy(['responderId'=>$myId]);
+        return $this->render('match/listMyAll.html.twig', [
+            'myCalls'=> $myCalls,
+            'callsToMe'=>$callsToMe,
+        ]);
     }
 
     /**

@@ -27,7 +27,6 @@ class ServiceController extends AbstractController
      */
     public function addService(Request $request)
     {
-
         $form = $this->createForm(ServiceType::class);
         $form->handleRequest($request);
 
