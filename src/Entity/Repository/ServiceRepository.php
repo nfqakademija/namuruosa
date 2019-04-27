@@ -23,7 +23,7 @@ class ServiceRepository extends EntityRepository
             SELECT s 
                 FROM App\Entity\Service s 
             WHERE s.userId= :id 
-            ORDER BY s.description DESC
+            ORDER BY s.updatedAt DESC
             "
         )
             ->setParameter('id', $id)
