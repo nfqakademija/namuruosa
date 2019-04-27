@@ -15,16 +15,17 @@ class ProfileController extends AbstractController
     public function index()
     {
         $userId = $this->getUser()->getId();
-        $userInfo = $this->getDoctrine()->getRepository('App:User')->find($userId);
-        $moreInfo = $this->getDoctrine()->getRepository('App:UserProfile')->find($userId);
+        $userInfo = $this->getDoctrine()->getRepository('App:UserProfile')->find($userId);
 
-        dump($moreInfo);
 
         return $this->render('profile/index.html.twig', [
             'controller_name' => 'ProfileController',
-            'firstName' => $userInfo->getFirstName(),
-            'lastName' => $userInfo->getlastName(),
-        ]);
+            'firstName' => $userInfo->getUserId()->getFirstName(),
+            'lastName' => $userInfo->getUserId()->getlastName(),
+            'city' => $userInfo->getCity(),
+            'time' => $userInfo->getUserId()->getLastLogin(),
+            'description' => $userInfo->getDescription()
+            ]);
     }
     /**
      * @Route("/profile/edit", name="editProfile")
@@ -33,16 +34,34 @@ class ProfileController extends AbstractController
     {
         $form = $this->createForm(EditProfileType::class);
         $form->handleRequest($request);
-        $userId = $this->getUser();
+        $userObj = $this->getUser();
+        $userId = $userObj->getId();
+
+        $userInfo = $this->getDoctrine()->getRepository('App:UserProfile')->find($userId);
+
 
         if ($form->isSubmitted() && $form->isValid()){
             $entityManager = $this->getDoctrine()->getManager();
-
             $profile = $form->getData();
-            $profile->setUserId($userId);
+            dump($form->getData());
 
-            $entityManager->persist($profile);
-            $entityManager->flush();
+
+            if (!$userInfo)
+            {
+
+                $profile->setUserId($userObj);
+
+                $entityManager->persist($profile);
+                $entityManager->flush();
+            }else
+            {
+                $userInfo->setCity($form["city"]->getData());
+                $userInfo->setDescription($form["description"]->getData());
+                $entityManager->persist($userInfo);
+                $entityManager->flush();
+
+            }
+
             return $this->redirectToRoute('profile');
         }
         return $this->render('profile/editProfile.html.twig', [
