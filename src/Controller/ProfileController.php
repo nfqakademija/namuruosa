@@ -14,8 +14,10 @@ class ProfileController extends AbstractController
     {
         $userId = $this->getUser()->getId();
         $userInfo = $this->getDoctrine()->getRepository('App:User')->find($userId);
+        $moreInfo = $this->getDoctrine()->getRepository('App:UserProfile')->find($userId);
 
-        dump($userInfo);
+        dump($moreInfo);
+
         return $this->render('profile/index.html.twig', [
             'controller_name' => 'ProfileController',
             'firstName' => $userInfo->getFirstName(),
@@ -28,7 +30,7 @@ class ProfileController extends AbstractController
     public function editProfile()
     {
         $userId = $this->getUser()->getId();
-        $userInfo = $this->getDoctrine()->getRepository('App:User')->find($userId);
+
 
         if (!empty($userInfo))
         {
@@ -37,8 +39,7 @@ class ProfileController extends AbstractController
         dump($userInfo);
         return $this->render('profile/editProfile.html.twig', [
             'controller_name' => 'ProfileController',
-            'firstName' => $userInfo->getFirstName(),
-            'lastName' => $userInfo->getlastName(),
+
         ]);
     }
 }
