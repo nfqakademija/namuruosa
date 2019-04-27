@@ -3,6 +3,7 @@
 
 <table class="table">
     <tr>
+        <th>Vardas</th>
         <th>Aprašymas</th>
         <th>Laikas nuo</th>
         <th>Laikas iki</th>
@@ -11,6 +12,7 @@
         <th></th>
     </tr>
         <tr>
+            <td>{{ firstName }}</td>
             <td>{{ service.description }}</td>
             <td>{{ service.activeTimeStart|date('H:i:s') }}</td>
             <td>{{ service.activeTimeEnd|date('H:i:s') }}</td>

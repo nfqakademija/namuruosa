@@ -21,13 +21,13 @@ class ServiceRepository extends EntityRepository
 //        parent::__construct($registry, Service::class);
 //    }
 
-    public function getByUserId($id)
+    public function getByUserIdQuery($id)
     {
         return $this->getEntityManager()->createQuery(
             "
-            SELECT s 
-                FROM App\Entity\Service s 
-            WHERE s.userId= :id 
+            SELECT s
+                FROM App\Entity\Service s
+            WHERE s.userId= :id
             ORDER BY s.description DESC
             "
         )
@@ -37,9 +37,9 @@ class ServiceRepository extends EntityRepository
 
 
 
-    public function getMatches($id){
+    public function getMatchesQuery($id){
 
-        $myServices = $this->getByUserId($id);
+        $myServices = $this->getByUserIdQuery($id);
         $matchesWithSearchTitle =[];
 
         /**

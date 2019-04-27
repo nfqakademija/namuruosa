@@ -14,7 +14,7 @@
                 {% endif %}
             </a>
             <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                <li><a class="dropdown-item" href="#"><i class="fa fa-fw fa-user">Profilis</i></a></li>
+                <li><a class="dropdown-item" href="{{path('profile')}}"><i class="fa fa-fw fa-user">Profilis</i></a></li>
                 <li>
                     {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
                         <a class="dropdown-item" href="{{ path('fos_user_security_logout') }}">
