@@ -1,20 +1,47 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello ProfileController!{% endblock %}
+{% block title %}Profile{% endblock %}
 
 {% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
 
-<div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
+    <section class="profile-section">
+        <div class="profile-container">
+          <aside class="profile-info">
+            <div class="main-foto">
+              <img src="" alt="">
+            </div>
+            <div class="main-data">
+              <p>Kaunas</p>
+              <p>Narys nuo</p>
+            </div>
+          </aside>
+          <article class="profile-resume">
+            <h2>{{firstName}} {{lastName}}</h2>
+            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Mollitia dolor et perspiciatis perferendis quo laboriosam voluptates libero hic, non iure, officiis minus facilis cum saepe temporibus sed magnam incidunt obcaecati. Amet voluptatibus, numquam autem magnam ab maxime. Sed, neque, animi.</p>
+          </article>
+          <aside class="profile-statistics">
+              <a href="#"><button>Redaguoti</button></a>
+            <p><span class="rating-average">4.0</span> 15 ivertinimu</p>
+            <hr>
+            <p><span class="jobs-completed">52</span> atlikti darbai</p>
+          </aside>
+        </div>
+    </section>
+    <section class="comment">
 
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code><a href="{{ '/code/src/Controller/ProfileController.php'|file_link(0) }}">src/Controller/ProfileController.php</a></code></li>
-        <li>Your template at <code><a href="{{ '/code/templates/profile/index.html.twig'|file_link(0) }}">templates/profile/index.html.twig</a></code></li>
-    </ul>
-</div>
+        <article class="comment-field">
+
+          <h3>Comment author Pries 1 diena</h3>
+          5
+          <p class="comment-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Expedita, explicabo?</p>
+        </article>
+        <article class="comment-field">
+
+          <h3>Comment author Pries 1 diena</h3>
+          5
+          <p class="comment-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Expedita, explicabo?</p>
+        </article>
+
+    </section>
+
 {% endblock %}

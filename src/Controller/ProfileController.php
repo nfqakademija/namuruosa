@@ -18,6 +18,8 @@ class ProfileController extends AbstractController
         dump($userInfo);
         return $this->render('profile/index.html.twig', [
             'controller_name' => 'ProfileController',
+            'firstName' => $userInfo->getFirstName(),
+            'lastName' => $userInfo->getlastName(),
         ]);
     }
 }
