@@ -10,7 +10,7 @@ use App\Form\EditProfileType;
 class ProfileController extends AbstractController
 {
     /**
-     * @Route("/profile/{id}", name="profile")
+     * @Route("/profile/{id<\d+>}", name="profile")
      */
     public function index($id=null)
 
@@ -26,10 +26,10 @@ class ProfileController extends AbstractController
             $user = $this->getDoctrine()->getRepository('App:User')->find($userId);
 
         }
+        dump($user);
 
         $userInfo = $this->getDoctrine()->getRepository('App:UserProfile')->find($userId);
 
-        dump($userInfo);
 
         if ($userInfo){
             $firstName = $userInfo->getUserId()->getFirstName();
