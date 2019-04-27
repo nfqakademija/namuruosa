@@ -23,24 +23,33 @@ class ServiceType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('srtviceType', ChoiceType::class, [
-                'label' => 'Ieškau paslaugos / siūlau paslaugą',
+            ->add('serviceType', ChoiceType::class, [
+
+                'label' => ' ',
+                'label_attr' => array(
+                    'class' => 'radio-inline'
+                ),
+                'expanded'=>true,
                 'choices' => [
-                   'provider', 'customer',
+                   'Ieškau paslaugos'=>'customer', 'Siūlau paslaugą'=>'provider',
                 ]
             ])
             ->add('title', TextType::class, [
+                'label'=>'Pavadinimas',
                 'required' => true,
             ])
             ->add('description', TextareaType::class, [
+                'label'=>'Aprašymas',
                 'required' => true,
             ])
             ->add('activeTimeStart', TimeType::class, [
+                'label'=>'Paslaugos pradžia',
                 'widget' => 'choice', 'minutes' => [
                     0,15,30,45
                 ],
             ])
             ->add('activeTimeEnd', TimeType::class, [
+                'label'=>'Paslaugos pabaiga',
                 'widget' => 'choice', 'minutes' => [
                     0,15,30,45
                 ]
@@ -58,11 +67,13 @@ class ServiceType extends AbstractType
                 'required' => false,
             ])
             ->add('coordinateX', ChoiceType::class, [
+                'label' => 'Koordinatė X',
                 'choices' => [
                     range(1, 100, 5)
                 ]
             ])
             ->add('coordinateY', ChoiceType::class, [
+                'label' => 'Koordinatė Y',
                 'choices' => [
                     range(1, 100, 5)
                 ]
