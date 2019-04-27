@@ -12,8 +12,8 @@
     </tr>
         <tr>
             <td>{{ service[0].description }}</td>
-            <td>{{ service[0].activeTimeStart|date('H:i:s') }}</td>
-            <td>{{ service[0].activeTimeEnd|date('H:i:s') }}</td>
+            <td>{{ service[0].activeTimeStart|date('H:i') }}</td>
+            <td>{{ service[0].activeTimeEnd|date('H:i') }}</td>
             <td>
                 {%  if service[0].transport %}
                     Transportas,

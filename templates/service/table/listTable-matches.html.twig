@@ -12,8 +12,8 @@
     {% for service in servicesBySearchTitle[3] %}
         <tr>
             <td>{{ service.title }}</td>
-            <td>{{ service.activeTimeStart|date('H:i:s') }}</td>
-            <td>{{ service.activeTimeEnd|date('H:i:s') }}</td>
+            <td>{{ service.activeTimeStart|date('H:i') }}</td>
+            <td>{{ service.activeTimeEnd|date('H:i') }}</td>
             <td>
                 {%  if service.transport %}
                     Transportas,
