@@ -12,7 +12,7 @@
         <th></th>
     </tr>
         <tr>
-            <td>{{ firstName }}</td>
+            <td><a target="_blank" href="{{ path('profile', {'id': id}) }}">{{ username }}</a></td>
             <td>{{ service.description }}</td>
             <td>{{ service.activeTimeStart|date('H:i:s') }}</td>
             <td>{{ service.activeTimeEnd|date('H:i:s') }}</td>

@@ -91,8 +91,9 @@ class ServiceController extends AbstractController
 
         return $this->render('service/show-match.html.twig', [
             'service'=>$service,
-            'firstName' => $user->getFirstName(),
-            'lastName' => $user->getLastName()
+            'username' => $user->getUsername(),
+            'id' => $user->getId(),
+
         ]);
     }
 }

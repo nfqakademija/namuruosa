@@ -10,21 +10,50 @@ use App\Form\EditProfileType;
 class ProfileController extends AbstractController
 {
     /**
-     * @Route("/profile", name="profile")
+     * @Route("/profile/{id}", name="profile")
      */
-    public function index()
+    public function index($id=null)
+
+
     {
-        $userId = $this->getUser()->getId();
+        $user = $this->getUser();
+        if($id === null)
+        {
+            $user = $this->getUser();
+            $userId = $this->getUser()->getId();
+        }else{
+            $userId = $id;
+            $user = $this->getDoctrine()->getRepository('App:User')->find($userId);
+
+        }
+
         $userInfo = $this->getDoctrine()->getRepository('App:UserProfile')->find($userId);
+
+        dump($userInfo);
+
+        if ($userInfo){
+            $firstName = $userInfo->getUserId()->getFirstName();
+            $lastName = $userInfo->getUserId()->getlastName();
+            $time = $userInfo->getUserId()->getLastLogin();
+            $userCity = $userInfo->getCity();
+            $description = $userInfo->getDescription();
+
+        }else{
+            $firstName = $user->getFirstName();
+            $lastName = $user->getlastName();
+            $time = $user->getLastLogin();
+            $userCity = '';
+            $description = '';
+        }
 
 
         return $this->render('profile/index.html.twig', [
             'controller_name' => 'ProfileController',
-            'firstName' => $userInfo->getUserId()->getFirstName(),
-            'lastName' => $userInfo->getUserId()->getlastName(),
-            'city' => $userInfo->getCity(),
-            'time' => $userInfo->getUserId()->getLastLogin(),
-            'description' => $userInfo->getDescription()
+            'firstName' => $firstName,
+            'lastName' => $lastName,
+            'city' => $userCity,
+            'time' => $time,
+            'description' => $description
             ]);
     }
     /**
