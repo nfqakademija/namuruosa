@@ -30,8 +30,12 @@ class ProfileController extends AbstractController
         $userId = $this->getUser()->getId();
         $userInfo = $this->getDoctrine()->getRepository('App:User')->find($userId);
 
+        if (!empty($userInfo))
+        {
+            dump($userInfo);
+        }
         dump($userInfo);
-        return $this->render('profile/index.html.twig', [
+        return $this->render('profile/editProfile.html.twig', [
             'controller_name' => 'ProfileController',
             'firstName' => $userInfo->getFirstName(),
             'lastName' => $userInfo->getlastName(),
