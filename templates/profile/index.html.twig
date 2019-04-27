@@ -2,6 +2,43 @@
 
 {% block title %}Profile{% endblock %}
 
+
+{% block header %}
+    {% include 'header.html.twig' %}
+    <aside>
+        <div class="sidenav navbar-dark bg-dark" id="mySidenav">
+            <ul class="navbar-nav">
+                <li class="nav-item active">
+                    <a class="nav-link" data-toggle="collapse" href="#collapse1">
+                        Paslaugos
+                        <i class="fa fa-fw fa-caret-down"></i>
+                        <span class="sr-only">(current)</span></a>
+                </li>
+
+                <div class="collapse" id="collapse1">
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ path('serviceAdd') }}">Registruoti paslaugą</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ path('serviceList') }}">Mano paslaugos</a>
+                    </li>
+                    <li class="sidenav-divider"></li>
+                </div>
+
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ path('serviceAdd') }}">Belekas</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ path('editProfile') }}">Redaguoti profili</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Pricing</a>
+                </li>
+            </ul>
+        </div>
+    </aside>
+{% endblock %}
+
 {% block body %}
 
     <section class="profile-section">
@@ -20,7 +57,7 @@
             <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Mollitia dolor et perspiciatis perferendis quo laboriosam voluptates libero hic, non iure, officiis minus facilis cum saepe temporibus sed magnam incidunt obcaecati. Amet voluptatibus, numquam autem magnam ab maxime. Sed, neque, animi.</p>
           </article>
           <aside class="profile-statistics">
-              <a href="#"><button>Redaguoti</button></a>
+
             <p><span class="rating-average">4.0</span> 15 ivertinimu</p>
             <hr>
             <p><span class="jobs-completed">52</span> atlikti darbai</p>

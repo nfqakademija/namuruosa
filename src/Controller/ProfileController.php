@@ -22,4 +22,19 @@ class ProfileController extends AbstractController
             'lastName' => $userInfo->getlastName(),
         ]);
     }
+    /**
+     * @Route("/editProfile", name="editProfile")
+     */
+    public function editProfile()
+    {
+        $userId = $this->getUser()->getId();
+        $userInfo = $this->getDoctrine()->getRepository('App:User')->find($userId);
+
+        dump($userInfo);
+        return $this->render('profile/index.html.twig', [
+            'controller_name' => 'ProfileController',
+            'firstName' => $userInfo->getFirstName(),
+            'lastName' => $userInfo->getlastName(),
+        ]);
+    }
 }
