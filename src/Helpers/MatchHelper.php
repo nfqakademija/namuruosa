@@ -1,0 +1,37 @@
+<?php
+/**
+ * Created by PhpStorm.
+ * User: dalius
+ * Date: 19.4.27
+ * Time: 21.00
+ */
+
+namespace App\Helpers;
+
+
+use App\Entity\Matches;
+use App\Entity\Repository\MatchesRepository;
+use Doctrine\DBAL\Types\DateType;
+use Doctrine\ORM\EntityManager;
+
+class MatchHelper
+{
+
+    public function createMatch($responderServiceId, $callerServiceId, EntityManager $em)
+    {
+        $serviceRepo = $em->getRepository('App\Entity\Service');
+        $responderService = $serviceRepo->find($responderServiceId);
+        $callerService = $serviceRepo->find($callerServiceId);
+        $match = new Matches();
+        $match->setCallerId($callerService->getUserId());
+        $match->setCallerServiceId($callerService);
+        $match->setResponderId($responderService->getUserId());
+        $match->setResponderServiceId($responderService);
+//        $match->setCreatedAt(new \DateTime('Now'));
+
+//        var_dump($match);
+//        exit();
+
+       return($match);
+    }
+}

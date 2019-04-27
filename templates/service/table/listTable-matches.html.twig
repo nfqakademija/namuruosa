@@ -1,5 +1,9 @@
 
-<h5 class="text-muted">Paieška pagal: <span class="text-info"> {{ servicesBySearchTitle[0] }} nuo {{ servicesBySearchTitle[1] }} iki {{ servicesBySearchTitle[2] }} </span></h5>
+<h5 class="text-muted">Paieška pagal: <span class="text-info"> {{ servicesBySearchTitle[1][0] }}
+        nuo {{ servicesBySearchTitle[1][1] }}
+        iki {{ servicesBySearchTitle[1][2] }}
+        MyServiceId: {{ servicesBySearchTitle[1][3] }}
+    </span></h5>
 <table class="table mb-5">
     <tr>
         <th style="width: 32%">Pavadinimas</th>
@@ -9,7 +13,7 @@
         <th style="width: 10%">Koordinatės</th>
         <th></th>
     </tr>
-    {% for service in servicesBySearchTitle[3] %}
+    {% for service in servicesBySearchTitle[0] %}
         <tr>
             <td >{{ service.title }}</td>
             <td >{{ service.activeTimeStart|date('H:i') }}</td>
@@ -29,7 +33,10 @@
                 X: {{ service.coordinateX }}, Y: {{ service.coordinateY }}
             </td>
             <td >
-                <a href="{{ path('showMatch', {'id': service.id}) }}"><button class="btn btn-sm btn-info">Peržiūrėti</button></a>
+                <a href="{{ path('matchShow',
+                    {'responderServiceId': service.id, 'callerServiceId':  servicesBySearchTitle[1][3] }) }}">
+                    <button class="btn btn-sm btn-info">Peržiūrėti</button>
+                </a>
             </td>
         </tr>
 

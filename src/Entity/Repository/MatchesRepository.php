@@ -11,7 +11,7 @@ namespace App\Entity\Repository;
 
 use Doctrine\ORM\EntityRepository;
 
-class MatchRepository extends EntityRepository
+class MatchesRepository extends EntityRepository
 {
 
 }

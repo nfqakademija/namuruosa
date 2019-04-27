@@ -11,25 +11,25 @@
         <th></th>
     </tr>
         <tr>
-            <td>{{ service[0].description }}</td>
-            <td>{{ service[0].activeTimeStart|date('H:i') }}</td>
-            <td>{{ service[0].activeTimeEnd|date('H:i') }}</td>
+            <td>{{ responder.description }}</td>
+            <td>{{ responder.activeTimeStart|date('H:i') }}</td>
+            <td>{{ responder.activeTimeEnd|date('H:i') }}</td>
             <td>
-                {%  if service[0].transport %}
+                {%  if responder.transport %}
                     Transportas,
                 {% endif %}
-                {%  if service[0].education %}
+                {%  if responder.education %}
                     Mokymai,
                 {% endif %}
-                {%  if service[0].education %}
+                {%  if responder.education %}
                     Valymo paslaugos,
                 {% endif %}
             </td>
             <td>
-                X: {{ service[0].coordinateX }}, Y: {{ service[0].coordinateY }}
+                X: {{ responder.coordinateX }}, Y: {{ responder.coordinateY }}
             </td>
             <td>
-                <button class="btn btn-sm btn-success">MATCH</button>
+                <a href="{{ path('matchCreate', {'responderServiceId' : responder.id, 'callerServiceId' : caller.id}) }}"><button class="btn btn-sm btn-success">MATCH</button></a>
             </td>
         </tr>
 </table>

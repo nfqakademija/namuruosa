@@ -1,0 +1,39 @@
+<h1>All my matched cases will be listed here</h1>
+
+
+{#<h5 class="text-muted">Paieška pagal: <span class="text-info"> {{ servicesBySearchTitle[0] }} nuo {{ servicesBySearchTitle[1] }} iki {{ servicesBySearchTitle[2] }} </span></h5>#}
+{#<table class="table mb-5">#}
+    {#<tr>#}
+        {#<th style="width: 32%">Pavadinimas</th>#}
+        {#<th style="width: 15%">Laikas nuo</th>#}
+        {#<th style="width: 12%">Laikas iki</th>#}
+        {#<th style="width: 25%">Kategorijos</th>#}
+        {#<th style="width: 10%">Koordinatės</th>#}
+        {#<th></th>#}
+    {#</tr>#}
+    {#{% for service in servicesBySearchTitle[3] %}#}
+        {#<tr>#}
+            {#<td >{{ service.title }}</td>#}
+            {#<td >{{ service.activeTimeStart|date('H:i') }}</td>#}
+            {#<td >{{ service.activeTimeEnd|date('H:i') }}</td>#}
+            {#<td >#}
+                {#{%  if service.transport %}#}
+                    {#Transportas,#}
+                {#{% endif %}#}
+                {#{%  if service.education %}#}
+                    {#Mokymai,#}
+                {#{% endif %}#}
+                {#{%  if service.education %}#}
+                    {#Valymo paslaugos,#}
+                {#{% endif %}#}
+            {#</td>#}
+            {#<td >#}
+                {#X: {{ service.coordinateX }}, Y: {{ service.coordinateY }}#}
+            {#</td>#}
+            {#<td >#}
+                {#<a href="{{ path('showMatch', {'id': service.id}) }}"><button class="btn btn-sm btn-info">Peržiūrėti</button></a>#}
+            {#</td>#}
+        {#</tr>#}
+
+    {#{% endfor %}#}
+{#</table>#}

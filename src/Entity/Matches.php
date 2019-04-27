@@ -12,14 +12,14 @@ use Doctrine\ORM\Mapping as ORM;
 
 
 /**
- * Class UserServices
+ *
  * @package App\Entity
  *
- * @ORM\Entity(repositoryClass="App\Entity\Repository\MatchRepository")
- * @ORM\Table(name="match")
+ * @ORM\Entity(repositoryClass="App\Entity\Repository\MatchesRepository")
+ * @ORM\Table(name="matches")
  * @ORM\HasLifecycleCallbacks()
  */
-class Match
+class Matches
 {
     /**
      * @ORM\Column(type="integer")
@@ -62,28 +62,28 @@ class Match
     /**
      * @var
      *
-     * @ORM\Column(type="datetime")
+     * @ORM\Column(type="datetime", nullable=true )
      */
     protected $acceptedAt;
 
     /**
      * @var
      *
-     * @ORM\Column(type="datetime")
+     * @ORM\Column(type="datetime", nullable=true )
      */
     protected $rejectedAt;
 
     /**
      * @var
      *
-     * @ORM\Column(type="datetime")
+     * @ORM\Column(type="datetime", nullable=true )
      */
     protected $cancelledAt;
 
     /**
      * @var
      *
-     * @ORM\Column(type="datetime")
+     * @ORM\Column(type="datetime", nullable=true )
      */
     protected $payedAt;
 
