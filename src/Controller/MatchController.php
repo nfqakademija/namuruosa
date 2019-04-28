@@ -31,6 +31,22 @@ class MatchController extends AbstractController
         return $this->redirectToRoute('matchListMyAll');
     }
 
+    /**
+     * @Route("/match/{updateType}/{matchId}", name="matchUpdate")
+     */
+    public function matchUpdate($updateType, $matchId)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $helper = new MatchHelper();
+        $match = $helper->updateMatch($updateType, $matchId, $em);
+        if (!$match) {
+            return $this->redirectToRoute('error', ['message' => 'nooperation']);
+            }
+        $em->persist($match);
+        $em->flush();
+        return $this->redirectToRoute('matchListMyAll');
+    }
+
 
     /**
      * @Route("/match/listMyAll", name="matchListMyAll")
@@ -38,12 +54,12 @@ class MatchController extends AbstractController
     public function matchListMyAll()
     {
         $myId = $this->getUser()->getId();
-        $myCalls = $this->getDoctrine()->getRepository('App:Matches')->findBy(['callerId'=>$myId]);
+        $myCalls = $this->getDoctrine()->getRepository('App:Matches')->findBy(['callerId' => $myId]);
 
-        $callsToMe = $this->getDoctrine()->getRepository('App:Matches')->findBy(['responderId'=>$myId]);
+        $callsToMe = $this->getDoctrine()->getRepository('App:Matches')->findBy(['responderId' => $myId]);
         return $this->render('match/listMyAll.html.twig', [
-            'myCalls'=> $myCalls,
-            'callsToMe'=>$callsToMe,
+            'myCalls' => $myCalls,
+            'callsToMe' => $callsToMe,
         ]);
     }
 
@@ -61,10 +77,9 @@ class MatchController extends AbstractController
             ->findServiceUserByServiceId($callerServiceId);
 
 
-
         return $this->render('match/show-match.html.twig', [
-            'responder'=>$responderServiceJoinUser,
-            'caller'=>$callerServiceJoinUser,
+            'responder' => $responderServiceJoinUser,
+            'caller' => $callerServiceJoinUser,
         ]);
     }
 

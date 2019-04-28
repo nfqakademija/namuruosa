@@ -1,0 +1,16 @@
+{% extends 'base.html.twig' %}
+
+
+
+{% block body %}
+    <h2>Pateikite papildoma informaciją</h2>
+{{ form_start(form) }}
+    {{ form_widget(form.city, {'method': 'post', 'action': path('editProfile'), 'attr': {'placeholder': 'Miestas'}})}}
+
+    {{ form_widget(form.description, {'attr': {'placeholder': 'Aprasymas'}}) }}
+    <div>
+        <input type="submit" value="Submit" />
+    </div>
+{{ form_end(form) }}
+
+{% endblock %}

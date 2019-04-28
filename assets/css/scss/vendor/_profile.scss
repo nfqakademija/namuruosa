@@ -1,0 +1,79 @@
+// body{
+//   background-color: #f7f7f7;
+// }
+
+.profile-section{
+    background-color: white;
+    box-shadow: 5px 10px 10px rgb(185, 186, 184);
+    margin-bottom: 2rem;
+}
+
+.profile-container{
+  margin: auto;
+  display: flex;
+  max-width: 90vw;
+  min-height: 50vh;
+  justify-content: space-between;
+
+}
+
+.profile-info, .profile-resume, .profile-statistics{
+  margin-right: 2rem;
+
+}
+
+.main-foto img{
+  background-color: grey;
+  height: 100px;
+  width: 100px;
+  border: 5px solid white;
+  border-radius: 50%;
+}
+
+.profile-statistics{
+  width: 20%;
+  background-color: #f7f7f7;
+  justify-content: center;
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+}
+
+hr{
+  width: 100%;
+
+}
+
+.rating-average{
+  background-color: #f77d0e;
+  border-radius: 5px;
+  color: white;
+  padding: 0.25rem;
+  margin-right: 0.05rem;
+
+}
+
+.btn-review{
+  background-color: #0992e7;
+
+}
+.profile-info{
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+}
+
+.comment-field{
+  display: flex;
+  flex-direction: column;
+  background-color: white;
+  border-radius: 1rem;
+  width: 30%;
+  box-shadow: 5px 10px 10px rgb(185, 186, 184);
+  margin-bottom: 0.5rem;
+}
+
+.comment-text{
+    padding-bottom: 2rem;
+    border-bottom: 2px grey solid;
+}

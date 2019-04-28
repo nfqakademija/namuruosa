@@ -33,6 +33,11 @@ class User extends BaseUser
      */
     protected $lastName;
 
+    /**
+     * @ORM\OneToOne(targetEntity="App\Entity\UserProfile", mappedBy="user_id", cascade={"persist", "remove"})
+     */
+    private $userProfile;
+
 
 //    ------- End Dalius ------------
 
@@ -73,5 +78,23 @@ class User extends BaseUser
     public function setLastName($lastName): void
     {
         $this->lastName = $lastName;
+    }
+
+    public function getUserProfile(): ?UserProfile
+    {
+        return $this->userProfile;
+    }
+
+    public function setUserProfile(?UserProfile $userProfile): self
+    {
+        $this->userProfile = $userProfile;
+
+        // set (or unset) the owning side of the relation if necessary
+        $newUser_id = $userProfile === null ? null : $this;
+        if ($newUser_id !== $userProfile->getUserId()) {
+            $userProfile->setUserId($newUser_id);
+        }
+
+        return $this;
     }
 }

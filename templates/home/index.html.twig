@@ -3,5 +3,16 @@
 {% block title %}{{ someVariable }}{% endblock %}
 
 {% block body %}
-    <div class="nfq-academy">{{ someVariable }}</div>
+    <div class="text-center mb-5 ">
+        <div class="nfq-academy text-info mb-0">{{ someVariable }}</div>
+        <h1 class="text-muted">Padėdamas kietiems - padėsi sau!</h1>
+    </div>
+    <div class="text-center mt-5">
+        <a href="{{ path('fos_user_registration_register') }}">
+            <button class="btn btn-lg btn-outline-info mr-5">REGISTRUOTIS</button>
+        </a>
+        <a href="{{ path('fos_user_security_login') }}">
+            <button class="btn btn-lg btn-outline-success">PRISIJUNGTI</button>
+        </a>
+    </div>
 {% endblock %}

@@ -3,9 +3,9 @@
 <table class="table mb-5">
     <tr>
         <th style="width: 10%">Data</th>
-        <th style="width: 25%">Mano paklausimas</th>
-        <th style="width: 30%">Paslauga</th>
-        <th style="width: 15%">Tiekėjas</th>
+        <th style="width: 25%">Mano skelbimas</th>
+        <th style="width: 30%">Kolegos skelbimas</th>
+        <th style="width: 15%">Kolega</th>
         <th style="width: 10%">Statusas</th>
         <th></th>
     </tr>
@@ -17,17 +17,26 @@
             <td>{{ match.responderId }}</td>
             <td >
                 {%  if match.acceptedAt %}
-                    Patvirtinta {{ match.acceptedAt|date('Y.m.d') }}
+                    <span class="text-success">Patvirtinta {{ match.acceptedAt|date('Y.m.d') }}</span>
+                    {% set responded = 1 %}
                 {% elseif match.rejectedAt %}
-                    Atmesta {{ match.rejectedAt|date('Y.m.d') }}
+                    <span class="text-danger">Atmesta {{ match.rejectedAt|date('Y.m.d') }}</span>
+                    {% set responded = 1 %}
                 {% elseif match.cancelledAt %}
-                    Atšaukta {{ match.cancelledAt|date('Y.m.d') }}
+                    <span class="text-muted">Atšaukta {{ match.cancelledAt|date('Y.m.d') }}</span>
+                    {% set responded = 1 %}
                 {% else %}
-                    Neatsakė
+                    <span>Neatsakė</span>
+                    {% set responded = 0 %}
                 {% endif %}
             </td>
             <td >
-                <a href="#"><button class="btn btn-sm btn-danger">Atšaukti</button></a>
+                {% if responded is same as(0) %}
+                    <a href="{{ path('matchUpdate',
+                        {'updateType':'cancel', 'matchId': match.id }) }}">
+                        <button class="btn btn-sm btn-danger">Atšaukti</button>
+                    </a>
+                {% endif %}
             </td>
         </tr>
     {% endfor %}
@@ -39,9 +48,9 @@
 <table class="table mb-5">
     <tr>
         <th style="width: 10%">Data</th>
-        <th style="width: 25%">Mano pasiūlymas</th>
-        <th style="width: 30%">Užklausa</th>
-        <th style="width: 15%">Klausėjas</th>
+        <th style="width: 25%">Mano skelbimas</th>
+        <th style="width: 30%">Kolegos skelbimas</th>
+        <th style="width: 15%">Kolega</th>
         <th style="width: 10%">Statusas</th>
         <th></th>
     </tr>
@@ -53,21 +62,31 @@
             <td>{{ call.callerId }}</td>
             <td >
                 {%  if call.acceptedAt %}
-                    Patvirtinta {{ match.acceptedAt|date('Y.m.d') }}
+                    <span class="text-success">Patvirtinta {{ call.acceptedAt|date('Y.m.d') }}</span>
+                    {% set responded = 1 %}
                 {% elseif call.rejectedAt %}
-                    Atmesta {{ match.rejectedAt|date('Y.m.d') }}
+                    <span class="text-danger">Atmesta {{ call.rejectedAt|date('Y.m.d') }}</span>
+                    {% set responded = 1 %}
                 {% elseif call.cancelledAt %}
-                    Atšaukta {{ match.cancelledAt|date('Y.m.d') }}
+                    <span class="text-muted">Atšaukta {{ call.cancelledAt|date('Y.m.d') }}</span>
+                    {% set responded = 1 %}
                 {% else %}
                     Neatsakyta
+                    {% set responded = 0 %}
                 {% endif %}
             </td>
             <td class="text-center">
-                <a href="#" ><button class="btn btn-sm btn-success mb-2">Sutikti</button></a>
-                <a href="#"><button class="btn btn-sm btn-danger">Atmesti</button></a>
+                {% if responded is same as(0) %}
+                    <a href="{{ path('matchUpdate',
+                        {'updateType':'accept', 'matchId': call.id }) }}" >
+                        <button class="btn btn-sm btn-success mb-2">Sutikti</button>
+                    </a>
+                    <a href="{{ path('matchUpdate',
+                        {'updateType':'reject', 'matchId': call.id }) }}">
+                        <button class="btn btn-sm btn-danger">Atmesti</button>
+                    </a>
+                {% endif %}
             </td>
         </tr>
-
     {% endfor %}
 </table>
-
