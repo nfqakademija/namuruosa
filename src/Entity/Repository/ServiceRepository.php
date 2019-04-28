@@ -19,12 +19,6 @@ class ServiceRepository extends EntityRepository
 
 // Method to find all services of a given user by ID
     public function findServicesByUserId($id)
-//    public function __construct(RegistryInterface $registry)
-//    {
-//        parent::__construct($registry, Service::class);
-//    }
-
-    public function getByUserIdQuery($id)
     {
         return $this->getEntityManager()->createQuery(
             "
@@ -43,10 +37,10 @@ class ServiceRepository extends EntityRepository
     {
 
 
-    public function getMatchesQuery($id){
+//    public function getMatchesQuery($id){
 
-        $myServices = $this->getByUserIdQuery($id);
-        $matchesWithSearchTitle =[];
+//        $myServices = $this->findServicesByUserId($id);
+//        $matchesWithSearchTitle =[];
 
         /**
          * @var $myServices Service[]

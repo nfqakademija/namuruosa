@@ -10,27 +10,19 @@ use App\Form\EditProfileType;
 class ProfileController extends AbstractController
 {
     /**
-     * @Route("/profile/{id}", name="profile")
+     * @Route("/profile/{id<\d+>}", name="profile") ///
      */
     public function index($id=null)
-
-
     {
         $user = $this->getUser();
         if($id === null)
         {
-            $user = $this->getUser();
-            $userId = $this->getUser()->getId();
+            $userId = $user->getId();
         }else{
             $userId = $id;
             $user = $this->getDoctrine()->getRepository('App:User')->find($userId);
-
         }
-
         $userInfo = $this->getDoctrine()->getRepository('App:UserProfile')->find($userId);
-
-        dump($userInfo);
-
         if ($userInfo){
             $firstName = $userInfo->getUserId()->getFirstName();
             $lastName = $userInfo->getUserId()->getlastName();
@@ -45,8 +37,6 @@ class ProfileController extends AbstractController
             $userCity = '';
             $description = '';
         }
-
-
         return $this->render('profile/index.html.twig', [
             'controller_name' => 'ProfileController',
             'firstName' => $firstName,
@@ -56,6 +46,7 @@ class ProfileController extends AbstractController
             'description' => $description
             ]);
     }
+
     /**
      * @Route("/profile/edit", name="editProfile")
      */
@@ -65,16 +56,11 @@ class ProfileController extends AbstractController
         $form->handleRequest($request);
         $userObj = $this->getUser();
         $userId = $userObj->getId();
-
         $userInfo = $this->getDoctrine()->getRepository('App:UserProfile')->find($userId);
-
 
         if ($form->isSubmitted() && $form->isValid()){
             $entityManager = $this->getDoctrine()->getManager();
             $profile = $form->getData();
-            dump($form->getData());
-
-
             if (!$userInfo)
             {
 
@@ -88,14 +74,12 @@ class ProfileController extends AbstractController
                 $userInfo->setDescription($form["description"]->getData());
                 $entityManager->persist($userInfo);
                 $entityManager->flush();
-
             }
 
             return $this->redirectToRoute('profile');
         }
         return $this->render('profile/editProfile.html.twig', [
             'form' => $form->createView(),
-
         ]);
     }
 }
