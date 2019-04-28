@@ -36,14 +36,13 @@ class ServiceController extends AbstractController
             $service->setUserId($this->getUser());
             $em->persist($service);
             $em->flush();
-            return $this->redirectToRoute('serviceAdd');
+            return $this->redirectToRoute('listMatches');
         }
 
         return $this->render('service/add.html.twig', [
             'serviceForm' => $form->createView(),
         ]);
     }
-
 
     /**
      *

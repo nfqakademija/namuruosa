@@ -34,4 +34,32 @@ class MatchHelper
 
        return($match);
     }
+
+    public function updateMatch($updateType, $matchId, EntityManager $em)
+    {
+        $matchesRepo = $em->getRepository('App\Entity\Matches');
+//        $responderService = $serviceRepo->find($responderServiceId);
+//        $callerService = $serviceRepo->find($callerServiceId);
+        $match = $matchesRepo->find($matchId);
+        $now = new \DateTime('Now');
+        if ($updateType === 'accept'){
+            $match->setAcceptedAt($now);
+        } else if ($updateType === 'reject'){
+            $match->setRejectedAt($now);
+        } else if ($updateType === 'cancel'){
+            $match->setCancelledAt($now);
+        } else {
+            return null;
+        }
+
+//        $match->setCallerServiceId($callerService);
+//        $match->setResponderId($responderService->getUserId());
+//        $match->setResponderServiceId($responderService);
+//        $match->setCreatedAt(new \DateTime('Now'));
+
+//        var_dump($match);
+//        exit();
+
+        return($match);
+    }
 }
