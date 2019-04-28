@@ -1,0 +1,84 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Profile{% endblock %}
+
+
+{% block header %}
+    {% include 'header.html.twig' %}
+    <aside>
+        <div class="sidenav navbar-dark bg-dark" id="mySidenav">
+            <ul class="navbar-nav">
+                <li class="nav-item active">
+                    <a class="nav-link" data-toggle="collapse" href="#collapse1">
+                        Paslaugos
+                        <i class="fa fa-fw fa-caret-down"></i>
+                        <span class="sr-only">(current)</span></a>
+                </li>
+
+                <div class="collapse" id="collapse1">
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ path('serviceAdd') }}">Registruoti paslaugą</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ path('serviceList') }}">Mano paslaugos</a>
+                    </li>
+                    <li class="sidenav-divider"></li>
+                </div>
+
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ path('serviceAdd') }}">Belekas</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ path('editProfile') }}">Redaguoti profili</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Pricing</a>
+                </li>
+            </ul>
+        </div>
+    </aside>
+{% endblock %}
+
+{% block body %}
+
+    <section class="profile-section">
+        <div class="profile-container">
+          <aside class="profile-info">
+            <div class="main-foto">
+              <img src="" alt="">
+            </div>
+            <div class="main-data">
+              <p>{{ city }}</p>
+              <p>{{ time | date("Y.m.d")}}</p>
+            </div>
+          </aside>
+          <article class="profile-resume">
+            <h2>{{firstName}} {{lastName}}</h2>
+            <p> {{ description }}</p>
+          </article>
+          <aside class="profile-statistics">
+
+            <p><span class="rating-average">4.0</span> 15 ivertinimu</p>
+            <hr>
+            <p><span class="jobs-completed">52</span> atlikti darbai</p>
+          </aside>
+        </div>
+    </section>
+    <section class="comment">
+
+        <article class="comment-field">
+
+          <h3>Comment author Pries 1 diena</h3>
+          5
+          <p class="comment-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Expedita, explicabo?</p>
+        </article>
+        <article class="comment-field">
+
+          <h3>Comment author Pries 1 diena</h3>
+          5
+          <p class="comment-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Expedita, explicabo?</p>
+        </article>
+
+    </section>
+
+{% endblock %}

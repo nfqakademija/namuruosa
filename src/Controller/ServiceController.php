@@ -14,6 +14,7 @@ use App\Form\ServiceType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
+use App\Entity\User;
 
 /**
  * Class ServiceController
@@ -52,6 +53,7 @@ class ServiceController extends AbstractController
     {
         $userId = $this->getUser()->getId();
         $userServices = $this->getDoctrine()->getRepository('App:Service')->findServicesByUserId($userId);
+        $services = [$this->getDoctrine()->getRepository('App:Service')->getByUserIdQuery($userId)];
         return $this->render('service/list.html.twig', [
             'servicesArray'=>[$userServices],
     ]);
@@ -69,6 +71,7 @@ class ServiceController extends AbstractController
         $myMatchingServices = $this->getDoctrine()
             ->getRepository('App:Service')
             ->findMatches($userServices);
+        $myServices = $this->getDoctrine()->getRepository('App:Service')->getMatchesQuery($userId);
 
         return $this->render('service/list-matches.html.twig', [
             'servicesArray'=>$myMatchingServices,
@@ -98,4 +101,24 @@ class ServiceController extends AbstractController
 //            'caller'=>$callerServiceJoinUser,
 //        ]);
 //    }
+    /**
+     * @Route("service/show-match/{id}", name="showMatch")
+     */
+    public function showMatch($id)
+    {
+        $serviceId = $id;
+        $service = $this->getDoctrine()->getRepository('App:Service')->find($serviceId);
+
+        $userId = $service->getUserId();
+
+        $user = $this->getDoctrine()->getRepository('App:User')->find($userId);
+
+
+        return $this->render('service/show-match.html.twig', [
+            'service'=>$service,
+            'username' => $user->getUsername(),
+            'id' => $user->getId(),
+
+        ]);
+    }
 }

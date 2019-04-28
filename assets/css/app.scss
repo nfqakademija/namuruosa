@@ -18,6 +18,7 @@ $primary: darken(#428bca, 20%);
 @import "scss/vendor/_sidenav.scss";
 @import "scss/vendor/_fos.scss";
 @import "scss/vendor/_layout.scss";
+@import "scss/vendor/_profile.scss";
 
 
 .content {
@@ -31,8 +32,3 @@ footer {
     width: 100%;
   }
 }
-
-
-
-
-

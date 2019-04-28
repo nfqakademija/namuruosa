@@ -19,6 +19,12 @@ class ServiceRepository extends EntityRepository
 
 // Method to find all services of a given user by ID
     public function findServicesByUserId($id)
+//    public function __construct(RegistryInterface $registry)
+//    {
+//        parent::__construct($registry, Service::class);
+//    }
+
+    public function getByUserIdQuery($id)
     {
         return $this->getEntityManager()->createQuery(
             "
@@ -35,6 +41,13 @@ class ServiceRepository extends EntityRepository
 // Method to find all services provided by others, that match given array of My services
     public function findMatches(array $myServices)
     {
+
+
+    public function getMatchesQuery($id){
+
+        $myServices = $this->getByUserIdQuery($id);
+        $matchesWithSearchTitle =[];
+
         /**
          * @var $myServices Service[]
          */
@@ -58,6 +71,9 @@ class ServiceRepository extends EntityRepository
             $myCoordXmax = $myCoordX + $coordinateTollerance;
             $myCoordYmin = $myCoordY - $coordinateTollerance;
             $myCoordYmax = $myCoordY + $coordinateTollerance;
+
+            $myServiceTitle = $service->getTitle();
+            $matchesWithSearchTitle =[];
 
             $qb = $this->createQueryBuilder('s')
                 ->addSelect('( (s.coordinateX - :myCoordX1) * (s.coordinateX - :myCoordX2) + (s.coordinateY - :myCoordY1) * (s.coordinateY - :myCoordY2)) AS HIDDEN distance')// Distance without sqrt - just for sorting, not for real values
