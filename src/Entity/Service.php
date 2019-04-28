@@ -51,6 +51,11 @@ class Service
     /**
      * @ORM\Column(type="string", length=255)
      */
+    private $serviceType;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
     private $title;
 
 
@@ -165,6 +170,22 @@ class Service
     public function setUpdatedAt()
     {
         $this->updatedAt = new \DateTime();
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getServiceType()
+    {
+        return $this->serviceType;
+    }
+
+    /**
+     * @param mixed $serviceType
+     */
+    public function setServiceType($serviceType): void
+    {
+        $this->serviceType = $serviceType;
     }
 
 
