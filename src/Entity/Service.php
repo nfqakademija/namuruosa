@@ -49,6 +49,17 @@ class Service
     protected $updatedAt;
 
     /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $serviceType;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $title;
+
+
+    /**
      * @ORM\Column(type="text")
      */
     protected $description;
@@ -94,6 +105,7 @@ class Service
      * @ORM\Column(type="decimal")
      */
     protected $coordinateY;
+
 
 
 //    ----------- Methods ----------
@@ -158,6 +170,35 @@ class Service
     public function setUpdatedAt()
     {
         $this->updatedAt = new \DateTime();
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getServiceType()
+    {
+        return $this->serviceType;
+    }
+
+    /**
+     * @param mixed $serviceType
+     */
+    public function setServiceType($serviceType): void
+    {
+        $this->serviceType = $serviceType;
+    }
+
+
+    public function getTitle(): ?string
+    {
+        return $this->title;
+    }
+
+    public function setTitle(string $title): self
+    {
+        $this->title = $title;
+
+        return $this;
     }
 
     /**
@@ -287,6 +328,7 @@ class Service
     {
         $this->coordinateY = $coordinateY;
     }
+
 
 
 }

@@ -1,14 +1,17 @@
 {% extends "service/layout.html.twig" %}
 
 {% block main %}
-    <h1>Naujos paslaugos registracija </h1>
+    <h2 class="text-center mb-5 text-info">Naujos paslaugos registracija </h2>
 
     {#{{ form_start(form, {'method': 'post', 'action': path('fos_user_registration_register'), 'attr': {'class': 'fos_user_registration_register'}}) }}#}
     {{ form_start(serviceForm, {'method': 'post', 'action': path('serviceAdd'), 'attr': {'class': 'fos_user_registration_register'}}) }}
     {{ form_widget(serviceForm) }}
-    <div>
-        <input type="submit" value="Submit" />
+    <div class="row mt-5">
+        <div class="col">
+            <input type="submit" class="btn btn-info col-sm-2 offset-4" value="Išsaugoti" />
+        </div>
     </div>
+
     {{ form_end(serviceForm) }}
 
 {% endblock %}

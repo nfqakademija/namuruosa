@@ -1,0 +1,12 @@
+{% extends "base.html.twig"%}
+
+{% block body %}
+
+    <div class="row">
+        <div id="main" class="col-sm-12">
+            {#{{ include('default/_flash_messages.html.twig') }}#}
+            {% block main %} {% endblock %}
+        </div>
+    </div>
+
+{% endblock %}

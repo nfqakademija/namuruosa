@@ -1,0 +1,12 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ someVariable }}: KLAIDA{% endblock %}
+
+{% block body %}
+    <div class="alert alert-{{ eType }}">KLAIDA: {{ eMsg }}</div>
+    <div class="text-center">
+        <a href="{{ path('home') }}">
+            <span class="text-info">Grįžti į Namų Ruošos Titulinį puslapį</span>
+        </a>
+    </div>
+{% endblock %}

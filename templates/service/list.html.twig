@@ -2,43 +2,8 @@
 
 {% block body %}
 
-    <h2>Mano paslaugos</h2>
-
-    <table class="table">
-        <tr>
-            <th>Aprašymas</th>
-            <th>Laikas nuo</th>
-            <th>Laikas iki</th>
-            <th>Kategorijos</th>
-            <th>Koordinatės</th>
-            <th>Redaguoti</th>
-        </tr>
-        {% for service in services %}
-            <tr>
-                <td>{{ service.description }}</td>
-                <td>{{ service.activeTimeStart|date('H:i:s') }}</td>
-                <td>{{ service.activeTimeEnd|date('H:i:s') }}</td>
-                <td>
-                    {%  if service.transport %}
-                        Transportas,
-                    {% endif %}
-                    {%  if service.education %}
-                        Mokymai,
-                    {% endif %}
-                    {%  if service.education %}
-                        Valymo paslaugos,
-                    {% endif %}
-                </td>
-                <td>
-                    X: {{ service.coordinateX }}, Y: {{ service.coordinateY }}
-                </td>
-                <td>
-                    <button class="btn btn-link">Keisti</button>
-                    <button class="btn btn-sm btn-danger">Šalinti</button>
-                </td>
-            </tr>
-
-        {% endfor %}
-    </table>
+    {% for services in servicesArray %}
+        {% include 'service/table/listTable.html.twig' %}
+    {% endfor %}
 
 {% endblock %}
