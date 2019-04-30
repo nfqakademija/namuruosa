@@ -68,6 +68,7 @@ layout:
     login: Prisijungti
     register: Registruotis
     logged_in_as: 'Prisijungęs kaip %username%'
+    profile: Profilis
 form:
     group_name: 'Grupės vardas'
     username: 'Naudotojo vardas'
