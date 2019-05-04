@@ -9,28 +9,51 @@
         <ul class="navbar-nav ml-auto ">
             <li class="nav-item ">
                 <a class="nav-link" href="{{ path('serviceAdd') }}">
-                    <button class="btn btn-warning">Registruoti darbą</button>
+                    <button class="btn btn-warning">Turiu darbą</button>
+                </a>
+            </li>
+            <li class="nav-item ">
+                <a class="nav-link" href="{{ path('serviceAdd') }}">
+                    <button class="btn btn-outline-warning">Noriu padirbėti</button>
                 </a>
             </li>
 
-            <li class="nav-item dropdown">
-                <a class="nav-link " href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
+            <li class="nav-item dropdown ">
+                <a class="nav-link text-warning" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
                    aria-haspopup="true" aria-expanded="false">
-                    <button class="btn btn-outline-info"><i class="fa fa-search"></i>
-                        Ieškoti <i class="fa fa-angle-down "></i></button>
+                    <i class="fa fa-search"></i>
+                        Ieškoti <i class="fa fa-angle-down "></i>
                 </a>
                 </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                    <a class="dropdown-item mb-0" href="{{ path ('matchListMyAll') }}">Ieškoti <span class="text-info">darbo</span>
-                        <div><span class="small text-muted mt-0">Pagal mano užklausą</span></div>
+                    <a class="dropdown-item" href="{{ path ('listMatches') }}">Ieškoti <span class="text-info">freelancerių</span>
+                        <div><span class="small text-muted mt-0">Pagal mano užklausas</span></div>
                     </a>
                     <div class="dropdown-divider"></div>
-                    <a class="dropdown-item" href="{{ path ('matchListMyAll') }}">Ieškoti <span class="text-info">freelancerių</span></a>
+                    <a class="dropdown-item mb-0" href="{{ path ('listMatches') }}">Ieškoti <span class="text-info">darbo</span>
+                        <div><span class="small text-muted mt-0">Pagal mano užklausas</span></div>
+                    </a>
                 </div>
             </li>
-            <li class="nav-item">
-                <a class="nav-link pr-4 border-right" href="#">Kaip viskas veikia</a>
+
+            <li class="nav-item dropdown">
+                <a class="nav-link text-warning" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
+                   aria-haspopup="true" aria-expanded="false">
+                        Mano sandoriai <i class="fa fa-angle-down "></i>
+                </a>
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <a class="dropdown-item" href="{{ path ('matchListMyAll') }}">Dar nesuderinti
+                    </a>
+                    <div class="dropdown-divider"></div>
+                    <a class="dropdown-item mb-0" href="{{ path ('matchListMyAll') }}">Užbaigti
+                    </a>
+                </div>
             </li>
+            {#<li class="nav-item">#}
+                {#<a class="nav-link pl-2 pr-3 border-right " href="{{ path('serviceAdd') }}">#}
+                    {#<span class="text-warning ">Nori padirbėti?</span></a>#}
+            {#</li>#}
 
             {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
                 <li class="nav-item pl-2">
@@ -59,9 +82,7 @@
                     </a>
                 </li>
             {% endif %}
-            <li class="nav-item">
-                <a class="nav-link pl-2 " href="#"><span class="text-warning">Nori padirbėti?</span></a>
-            </li>
+
         </ul>
 
 </nav>
