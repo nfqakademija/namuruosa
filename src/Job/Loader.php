@@ -38,7 +38,6 @@ class Loader
     public function loadPotMatches($userId)
     {
         $potMatches = [];
-
         $myJobs = $this->loadByUser($userId);
 
         foreach ($myJobs as $myJob) {
@@ -46,12 +45,8 @@ class Loader
             $servicesByJob[] = $myJob;
             $servicesByJob[] = $this->em->getRepository('App:Service')
                 ->findMatches($myJob);
-
-
             $potMatches[] = $servicesByJob;
         }
-
-//dump($potMatches);
         return $potMatches;
     }
 

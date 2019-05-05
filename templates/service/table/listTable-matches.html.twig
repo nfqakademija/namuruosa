@@ -2,27 +2,27 @@
     </span></h3>
 <table class="table table-lg table-hover mb-5">
 
-    {% for service in matchesByJob[1][0] %}
+    {% for service in matchesByJob[1] %}
         <tr>
             <td class="py-4" style="width: 70%">
-                <h4 class="text-info">{{ service.title }}</h4>
-                <div class="mb-1">{{ service.description }}</div>
+                <h4 class="text-info">{{ service[0].title }}</h4>
+                <div class="mb-1">{{ service[0].description }}</div>
                 <div class="text-muted small pb-2">
-                    <a href="#"><i class="fa fa-user"></i> {{ service.userId.username }}</a>
-                    <i class="fa fa-clock ml-3"></i> Paskelbta {{ service.updatedAt|date('y.m.d') }}
-                    <i class="fa fa-map-marker-alt ml-3"></i> Atstumas {{ service.coordinateX }} km
+                    <a href="#"><i class="fa fa-user"></i> {{ service[0].userId.username }}</a>
+                    <i class="fa fa-clock ml-3"></i> Paskelbta {{ service[0].updatedAt|date('y.m.d') }}
+                    <i class="fa fa-map-marker-alt ml-3"></i> Atstumas {{ service['distance'] }} km
                     <div class="d-inline-block  ml-3">
                         <a href=""><span class="badge badge-success">Valymas</span></a>
-                        <span class="badge badge-warning">{{ service.transport }}</span>
-                        <span class="badge badge-primary">{{ service.education }}</span>
-                        <span class="badge badge-danger">{{ service.cleaning }}</span>
+                        <span class="badge badge-warning">{{ service[0].transport }}</span>
+                        <span class="badge badge-primary">{{ service[0].education }}</span>
+                        <span class="badge badge-danger">{{ service[0].cleaning }}</span>
                     </div>
                 </div>
             </td>
             <td class="text-right">
                <h4 class="text-info text-right">{{ matchesByJob[0].budget }} <i class="fa fa-euro-sign fa-xs"></i> / val.</h4>
                 <a class="align-self-end" href="{{ path('matchShow',
-                    {'responderServiceId': service.id, 'callerServiceId':  matchesByJob[0].id }) }}">
+                    {'responderServiceId': service[0].id, 'callerServiceId':  matchesByJob[0].id }) }}">
                     <button class="btn btn-outline-info">Peržiūrėti</button>
                 </a>
             </td>

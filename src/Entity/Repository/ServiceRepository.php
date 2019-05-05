@@ -55,19 +55,22 @@ class ServiceRepository extends EntityRepository
 //            $myServiceId = $service->getId();
 //            $myId2 = $service->getUserId()->getId();
 
-//            $coordinateTollerance = 50;  //TODO replace with form field
+            $coordinateTollerance = 50;  //TODO replace with form field
 
 //            $myCoordXmin = $myCoordX - $coordinateTollerance;
 //            $myCoordXmax = $myCoordX + $coordinateTollerance;
 //            $myCoordYmin = $myCoordY - $coordinateTollerance;
 //            $myCoordYmax = $myCoordY + $coordinateTollerance;
 
+
+
 //            $myServiceTitle = $service->getTitle();
 //            $matchesWithSearchTitle =[];
 //
             $qb = $this->createQueryBuilder('s')
                 ->select('s')
-//                ->addSelect('( (s.coordinateX - :myCoordX1) * (s.coordinateX - :myCoordX2) + (s.coordinateY - :myCoordY1) * (s.coordinateY - :myCoordY2)) AS HIDDEN distance')// Distance without sqrt - just for sorting, not for real values
+                ->addSelect('( (s.coordinateX - :myLat) * (s.coordinateX - :myLat) + (s.coordinateY - :myLon) * (s.coordinateY - :myLon)) / 100
+                 AS distance')// Distance just for sorting, not for real values
 //                ->where('s.transport = :myTransport')
                 ->where('s.userId <> :myId')
                 ->andWhere('s.cleaning = :myCat1')
@@ -90,8 +93,8 @@ class ServiceRepository extends EntityRepository
 //                    'myCoordYmin' => $myCoordYmin,
 //                    'myCoordYmax' => $myCoordYmax,
                     'myId' => $myId,
-                ]);
-//                ->orderBy('distance', 'ASC');//TODO DOES NOT WORK!!
+                ])
+                ->orderBy('distance', 'DESC');//TODO DOES NOT WORK!!
 
 //            $qb->andWhere($qb->expr()->orX(
 //                $qb->expr()->andX(
@@ -115,11 +118,10 @@ class ServiceRepository extends EntityRepository
 //            $matchesAndAdditionalByOneServices = [];
 //            $matchesAndAdditionalByOneServices[] = $allMatchesByOneMyService;
 //            $matchesAndAdditionalByOneServices[] = $additionalData;
-            $matchesByJobs[] =  $allMatchesByOneMyService;
 
-//dump($matchesByJobs);
+//dump($allMatchesByOneMyService);
 
-        return $matchesByJobs;
+        return $allMatchesByOneMyService;
     }
 
 // Method to find service and its owning user by given Service ID
