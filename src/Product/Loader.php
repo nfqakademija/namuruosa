@@ -25,9 +25,13 @@ class Loader
         $this->em = $em;
     }
 
-    public function loadAll($id)
+    /**
+     * @param $id
+     * @return mixed
+     */
+    public function loadByUser($id)
     {
-        return $this->em->getRepository('App:Service')->findServicesByUserId($id);
+        return $this->em->getRepository('App:Job')->findByUserId($id);
     }
 
 

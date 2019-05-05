@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Form\JobType;
 use App\Form\ServiceType;
+use App\Product\Loader;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
@@ -33,19 +34,26 @@ class JobController extends AbstractController
         ]);
     }
 
-
     /**
      *
-     * @Route("jobs/myjobs", name="my_jobs")
+     * @Route("job/myjobs", name="my_jobs")
      */
-    public function listMyJobs()
+    public function listMyJobs(Loader $loader)
     {
         $userId = $this->getUser()->getId();
-        $myJobs = $this->getDoctrine()->getRepository('App:Job')->findByUserId($userId);
+        $myJobs = $loader->loadByUser($userId);
         return $this->render('job/my-jobs.html.twig', [
             'jobsArray'=>[$myJobs],
         ]);
     }
+
+    
+
+
+
+
+
+
 
     /**
      * @Route("/job", name="job")
