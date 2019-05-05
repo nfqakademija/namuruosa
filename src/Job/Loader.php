@@ -13,7 +13,6 @@ use Doctrine\ORM\EntityManagerInterface;
 
 class Loader
 {
-
     private $em;
 
     /**
@@ -49,8 +48,6 @@ class Loader
         }
         return $potMatches;
     }
-
-
 
 
 }

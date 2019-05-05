@@ -8,11 +8,11 @@
         {% if matchesByJob[1] != null %}
             {% include 'service/table/listTable-matches.html.twig' %}
         {% else %}
-            <h6 >Darbui <span class="text-success"> {{ matchesByJob[0].title }}
-    </span><span class="text-danger">šiuo metu pasiūlymų neturime</span></h6>
+            <h6>Darbui
+                <span class="text-success"> {{ matchesByJob[0].title }}</span>
+                <span class="text-danger">šiuo metu pasiūlymų neturime</span></h6>
             <hr>
         {% endif %}
     {% endfor %}
-
 
 {% endblock %}
