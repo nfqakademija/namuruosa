@@ -50,7 +50,6 @@ class ServiceController extends AbstractController
     {
         $userId = $this->getUser()->getId();
         $userServices = $this->getDoctrine()->getRepository('App:Service')->findServicesByUserId($userId);
-//        $services = [$this->getDoctrine()->getRepository('App:Service')->getByUserIdQuery($userId)];
         return $this->render('service/list.html.twig', [
             'servicesArray'=>[$userServices],
     ]);

@@ -14,25 +14,38 @@ class JobController extends AbstractController
     /**
      * @Route("/job/add", name="jobAdd")
      */
-    public function addService(Request $request)
+    public function addJob(Request $request)
     {
         $form = $this->createForm(JobType::class);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()){
             $em = $this->getDoctrine()->getManager();
-            $service = $form->getData();
-            $service->setUserId($this->getUser());
-            $em->persist($service);
+            $job = $form->getData();
+            $job->setUserId($this->getUser());
+            $em->persist($job);
             $em->flush();
-            return $this->redirectToRoute('listMatches');
+            return $this->redirectToRoute('my_jobs');
         }
 
         return $this->render('job/add.html.twig', [
-            'serviceForm' => $form->createView(),
+            'form' => $form->createView(),
         ]);
     }
 
+
+    /**
+     *
+     * @Route("jobs/myjobs", name="my_jobs")
+     */
+    public function listMyJobs()
+    {
+        $userId = $this->getUser()->getId();
+        $myJobs = $this->getDoctrine()->getRepository('App:Job')->findByUserId($userId);
+        return $this->render('job/my-jobs.html.twig', [
+            'jobsArray'=>[$myJobs],
+        ]);
+    }
 
     /**
      * @Route("/job", name="job")

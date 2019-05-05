@@ -9,7 +9,24 @@
 namespace App\Entity\Repository;
 
 
-class JobRepository
+use Doctrine\ORM\EntityRepository;
+
+class JobRepository extends EntityRepository
 {
 
+    public function findByUserId($userId)
+    {
+
+        return $this->getEntityManager()->createQuery(
+            "
+            SELECT s 
+                FROM App\Entity\Job s 
+            WHERE s.userId= :id 
+            ORDER BY s.updatedAt DESC
+            "
+        )
+            ->setParameter('id', $userId)
+            ->getResult();
+
+    }
 }
