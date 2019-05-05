@@ -4,7 +4,7 @@ namespace App\Controller;
 
 use App\Form\JobType;
 use App\Form\ServiceType;
-use App\Product\Loader;
+use App\Job\Loader;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
@@ -44,6 +44,25 @@ class JobController extends AbstractController
         $myJobs = $loader->loadByUser($userId);
         return $this->render('job/my-jobs.html.twig', [
             'jobsArray'=>[$myJobs],
+        ]);
+    }
+
+    /**
+     * @Route("job/pot-matches", name="job_pot_matches")
+     */
+    public function listPotMatches(Loader $loader)
+    {
+        $userId = $this->getUser()->getId();
+//        $userServices = $this->getDoctrine()
+//            ->getRepository('App:Service')
+//            ->findServicesByUserId($userId);
+//        $myMatchingServices = $this->getDoctrine()
+//            ->getRepository('App:Service')
+//            ->findMatches($userServices);
+        $myMatchingServices = $loader->loadPotMatches($userId);
+
+        return $this->render('service/list-matches.html.twig', [
+            'matchesByJobs'=>$myMatchingServices,
         ]);
     }
 

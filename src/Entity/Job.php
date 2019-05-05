@@ -298,17 +298,17 @@ class Job
     /**
      * @return mixed
      */
-    public function getLong()
+    public function getLon()
     {
-        return $this->long;
+        return $this->lon;
     }
 
     /**
-     * @param mixed $long
+     * @param mixed $lon
      */
-    public function setLong($long): void
+    public function setLon($lon): void
     {
-        $this->long = $long;
+        $this->lon = $lon;
     }
 
     /**

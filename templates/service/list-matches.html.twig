@@ -1,12 +1,15 @@
 {% extends 'service/layout.html.twig' %}
 
 {% block body %}
-    {% for servicesBySearchTitle in servicesArray %}
-        {%  if servicesBySearchTitle[0] != null %}
+
+    {% for matchesByJob in matchesByJobs %}
+        {%  if matchesByJob != null %}
             {% include 'service/table/listTable-matches.html.twig' %}
         {% else %}
-            <h5 class="text-danger">Šiuo metu nėra paslaugų pagal Jūsų užklausą {{ servicesBySearchTitle[0] }}</h5>
+            <h5 class="text-danger">Šiuo metu turime pasiulymu </h5>
             <hr>
         {% endif %}
     {% endfor %}
+
+
 {% endblock %}

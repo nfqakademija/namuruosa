@@ -83,6 +83,12 @@ class JobType extends AbstractType
                 'mapped' => false,
                 'required' => true,
             ])
+            ->add('lat', NumberType::class, [
+                'label' => 'Latitude',
+            ])
+            ->add('lon', NumberType::class, [
+                'label' => 'Longitude',
+            ])
         ;
     }
 

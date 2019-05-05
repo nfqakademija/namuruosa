@@ -33,7 +33,7 @@ class ServiceRepository extends EntityRepository
     }
 
 // Method to find all services provided by others, that match given array of My services
-    public function findMatches(array $myServices)
+    public function findMatches( $job)
     {
 
 
@@ -42,87 +42,84 @@ class ServiceRepository extends EntityRepository
 //        $myServices = $this->findServicesByUserId($id);
 //        $matchesWithSearchTitle =[];
 
-        /**
-         * @var $myServices Service[]
-         */
-        foreach ($myServices as $service) {
 
-            $myTimeStart = $service->getActiveTimeStart()->format('H:i');
-            $myTimeEnd = $service->getActiveTimeEnd()->format('H:i');
-            $myTransport = $service->getTransport();
-            $myCleaning = $service->getCleaning();
-            $myEducation = $service->getEducation();
-            $myCoordX = $service->getCoordinateX();
-            $myCoordY = $service->getCoordinateY();
-            $myServiceTitle = $service->getTitle();
-            $myId = $service->getUserId();
-            $myServiceId = $service->getId();
-            $myId2 = $service->getUserId()->getId();
+//            $myTimeStart = $service->getActiveTimeStart()->format('H:i');
+//            $myTimeEnd = $service->getActiveTimeEnd()->format('H:i');
+            $myCat1 = $job->getCategory1();
+            $myCat2 = $job->getCategory2();
+//            $myEducation = $service->getEducation();
+            $myLat = $job->getLat();
+            $myLon = $job->getLon();
+//            $myServiceTitle = $service->getTitle();
+            $myId = $job->getUserId()->getId();
+//            $myServiceId = $service->getId();
+//            $myId2 = $service->getUserId()->getId();
 
-            $coordinateTollerance = 50;  //TODO replace with form field
+//            $coordinateTollerance = 50;  //TODO replace with form field
 
-            $myCoordXmin = $myCoordX - $coordinateTollerance;
-            $myCoordXmax = $myCoordX + $coordinateTollerance;
-            $myCoordYmin = $myCoordY - $coordinateTollerance;
-            $myCoordYmax = $myCoordY + $coordinateTollerance;
+//            $myCoordXmin = $myCoordX - $coordinateTollerance;
+//            $myCoordXmax = $myCoordX + $coordinateTollerance;
+//            $myCoordYmin = $myCoordY - $coordinateTollerance;
+//            $myCoordYmax = $myCoordY + $coordinateTollerance;
 
-            $myServiceTitle = $service->getTitle();
-            $matchesWithSearchTitle =[];
-
+//            $myServiceTitle = $service->getTitle();
+//            $matchesWithSearchTitle =[];
+//
             $qb = $this->createQueryBuilder('s')
-                ->addSelect('( (s.coordinateX - :myCoordX1) * (s.coordinateX - :myCoordX2) + (s.coordinateY - :myCoordY1) * (s.coordinateY - :myCoordY2)) AS HIDDEN distance')// Distance without sqrt - just for sorting, not for real values
-                ->where('s.transport = :myTransport')
-                ->orWhere('s.cleaning = :myCleaning')
-                ->orWhere('s.education = :myEducation')
-                ->andWhere('s.coordinateX BETWEEN :myCoordXmin AND :myCoordXmax')
-                ->andWhere('s.coordinateY BETWEEN :myCoordYmin AND :myCoordYmax')
-                ->andWhere('s.userId <> :myId')
+                ->select('s')
+//                ->addSelect('( (s.coordinateX - :myCoordX1) * (s.coordinateX - :myCoordX2) + (s.coordinateY - :myCoordY1) * (s.coordinateY - :myCoordY2)) AS HIDDEN distance')// Distance without sqrt - just for sorting, not for real values
+//                ->where('s.transport = :myTransport')
+                ->where('s.userId <> :myId')
+                ->andWhere('s.cleaning = :myCat1')
+                ->orWhere('s.education = :myCat2')
+                ->andWhere('s.coordinateX BETWEEN :myLat AND 100')
+                ->andWhere('s.coordinateY BETWEEN :myLon AND 100')
 //                ->andWhere('distance < 500'  )
                 ->setParameters([
-                    'myTimeStart' => $myTimeStart,
-                    'myTimeEnd' => $myTimeEnd,
-                    'myTransport' => $myTransport,
-                    'myCleaning' => $myCleaning,
-                    'myEducation' => $myEducation,
-                    'myCoordX1' => $myCoordX,
-                    'myCoordX2' => $myCoordX,
-                    'myCoordY1' => $myCoordY,
-                    'myCoordY2' => $myCoordY,
-                    'myCoordXmin' => $myCoordXmin,
-                    'myCoordXmax' => $myCoordXmax,
-                    'myCoordYmin' => $myCoordYmin,
-                    'myCoordYmax' => $myCoordYmax,
+//                    'myTimeStart' => $myTimeStart,
+//                    'myTimeEnd' => $myTimeEnd,
+//                    'myTransport' => $myTransport,
+                    'myCat1' => $myCat1,
+                    'myCat2' => $myCat2,
+                    'myLat' => $myLat,
+                    'myLon' => $myLon,
+//                    'myCoordY1' => $myCoordY,
+//                    'myCoordY2' => $myCoordY,
+//                    'myCoordXmin' => $myCoordXmin,
+//                    'myCoordXmax' => $myCoordXmax,
+//                    'myCoordYmin' => $myCoordYmin,
+//                    'myCoordYmax' => $myCoordYmax,
                     'myId' => $myId,
-                ])
-                ->orderBy('distance', 'ASC');//TODO DOES NOT WORK!!
+                ]);
+//                ->orderBy('distance', 'ASC');//TODO DOES NOT WORK!!
 
-            $qb->andWhere($qb->expr()->orX(
-                $qb->expr()->andX(
-                    's.activeTimeStart <= :myTimeStart', 's.activeTimeEnd >= :myTimeStart'),
-                $qb->expr()->andX(
-                    's.activeTimeStart <= :myTimeEnd', 's.activeTimeEnd >= :myTimeEnd'),
-                $qb->expr()->andX(
-                    's.activeTimeStart >= :myTimeStart', 's.activeTimeEnd <= :myTimeEnd')
-            ));
+//            $qb->andWhere($qb->expr()->orX(
+//                $qb->expr()->andX(
+//                    's.activeTimeStart <= :myTimeStart', 's.activeTimeEnd >= :myTimeStart'),
+//                $qb->expr()->andX(
+//                    's.activeTimeStart <= :myTimeEnd', 's.activeTimeEnd >= :myTimeEnd'),
+//                $qb->expr()->andX(
+//                    's.activeTimeStart >= :myTimeStart', 's.activeTimeEnd <= :myTimeEnd')
+//            ));
 
             $query = $qb->getQuery();
             $allMatchesByOneMyService = $query->execute();
-//TODO remove addition of extra data to other method or class in the future
+////TODO remove addition of extra data to other method or class in the future
+//
+//            $additionalData = [];
+//            $additionalData[] = $myServiceTitle;
+//            $additionalData[] = $myTimeStart;
+//            $additionalData[] = $myTimeEnd;
+//            $additionalData[] = $myServiceId;
+//
+//            $matchesAndAdditionalByOneServices = [];
+//            $matchesAndAdditionalByOneServices[] = $allMatchesByOneMyService;
+//            $matchesAndAdditionalByOneServices[] = $additionalData;
+            $matchesByJobs[] =  $allMatchesByOneMyService;
 
-            $additionalData = [];
-            $additionalData[] = $myServiceTitle;
-            $additionalData[] = $myTimeStart;
-            $additionalData[] = $myTimeEnd;
-            $additionalData[] = $myServiceId;
+//dump($matchesByJobs);
 
-            $matchesAndAdditionalByOneServices = [];
-            $matchesAndAdditionalByOneServices[] = $allMatchesByOneMyService;
-            $matchesAndAdditionalByOneServices[] = $additionalData;
-            $matchesByAllMyServices[] =  $matchesAndAdditionalByOneServices;
-
-//var_dump($matchesByAllMyServices);
-        }
-        return $matchesByAllMyServices;
+        return $matchesByJobs;
     }
 
 // Method to find service and its owning user by given Service ID
