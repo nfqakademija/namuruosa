@@ -43,7 +43,7 @@ class Loader
 
         foreach ($myJobs as $myJob) {
             $servicesByJob = [];
-            $servicesByJob[] = $myJob->getTitle();
+            $servicesByJob[] = $myJob;
             $servicesByJob[] = $this->em->getRepository('App:Service')
                 ->findMatches($myJob);
 
@@ -51,7 +51,7 @@ class Loader
             $potMatches[] = $servicesByJob;
         }
 
-dump($potMatches);
+//dump($potMatches);
         return $potMatches;
     }
 
