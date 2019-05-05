@@ -47,7 +47,7 @@ class JobController extends AbstractController
         ]);
     }
 
-    
+
 
 
 
