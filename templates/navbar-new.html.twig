@@ -1,5 +1,5 @@
 <nav class="navbar navbar-expand-md navbar-dark bg-dark">
-    <a class="navbar-brand" href="/">Namų Ruoša</a>
+    <a class="navbar-brand" href="/"><i class="fa fa-hand-peace fa-2x mr-2"></i> Namų Ruoša</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
             aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
@@ -8,7 +8,7 @@
     <li class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav ml-auto ">
             <li class="nav-item ">
-                <a class="nav-link" href="{{ path('serviceAdd') }}">
+                <a class="nav-link" href="{{ path('jobAdd') }}">
                     <button class="btn btn-warning">Turiu darbą</button>
                 </a>
             </li>
@@ -26,7 +26,7 @@
                 </a>
                 </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                    <a class="dropdown-item" href="{{ path ('listMatches') }}">Ieškoti <span class="text-info">freelancerių</span>
+                    <a class="dropdown-item" href="{{ path ('job_pot_matches') }}">Ieškoti <span class="text-info">freelancerių</span>
                         <div><span class="small text-muted mt-0">Pagal mano užklausas</span></div>
                     </a>
                     <div class="dropdown-divider"></div>
@@ -39,17 +39,27 @@
             <li class="nav-item dropdown">
                 <a class="nav-link text-warning" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
                    aria-haspopup="true" aria-expanded="false">
-                        Mano sandoriai <i class="fa fa-angle-down "></i>
+                        Mano veikla <i class="fa fa-angle-down "></i>
                 </a>
                 </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                    <a class="dropdown-item" href="{{ path ('matchListMyAll') }}">Dar nesuderinti
+                    <a class="dropdown-item" href="{{ path ('matchListMyAll') }}">Sandoriai
+                        <span class="text-info">dar nesuderinti</span>
+                    </a>
+                    <a class="dropdown-item mb-0" href="{{ path ('matchListMyAll') }}">Sandoriai
+                        <span class="text-info">užbaigti</span>
                     </a>
                     <div class="dropdown-divider"></div>
-                    <a class="dropdown-item mb-0" href="{{ path ('matchListMyAll') }}">Užbaigti
+                    <a class="dropdown-item mb-0" href="{{ path ('my_jobs') }}">Skelbimai
+                        <span class="text-info">darbai </span>
+                    </a>
+                    <a class="dropdown-item mb-0" href="{{ path ('serviceList') }}">Skelbimai
+                        <span class="text-info">paslaugos </span>
                     </a>
                 </div>
             </li>
+
+
             {#<li class="nav-item">#}
                 {#<a class="nav-link pl-2 pr-3 border-right " href="{{ path('serviceAdd') }}">#}
                     {#<span class="text-warning ">Nori padirbėti?</span></a>#}
