@@ -2,11 +2,38 @@
 
 namespace App\Controller;
 
+use App\Form\JobType;
+use App\Form\ServiceType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
 class JobController extends AbstractController
 {
+
+    /**
+     * @Route("/job/add", name="jobAdd")
+     */
+    public function addService(Request $request)
+    {
+        $form = $this->createForm(JobType::class);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()){
+            $em = $this->getDoctrine()->getManager();
+            $service = $form->getData();
+            $service->setUserId($this->getUser());
+            $em->persist($service);
+            $em->flush();
+            return $this->redirectToRoute('listMatches');
+        }
+
+        return $this->render('job/add.html.twig', [
+            'serviceForm' => $form->createView(),
+        ]);
+    }
+
+
     /**
      * @Route("/job", name="job")
      */
