@@ -12,9 +12,9 @@ namespace App\Form;
 use App\Entity\Category;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
-use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
-use Symfony\Component\Form\Extension\Core\Type\TimeType;
+use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
+use Symfony\Component\Form\Extension\Core\Type\IntegerType;
+use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -25,88 +25,67 @@ class ServiceType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('serviceType', ChoiceType::class, [
-
-                'label' => ' ',
-                'label_attr' => array(
-                    'class' => 'radio-inline'
-                ),
-                'expanded'=>true,
-                'choices' => [
-                   'Ieškau paslaugos'=>'customer', 'Siūlau paslaugą'=>'provider',
-                ]
-            ])
+//            ->add('serviceType', ChoiceType::class, [
+//
+//                'label' => ' ',
+//                'label_attr' => array(
+//                    'class' => 'radio-inline'
+//                ),
+//                'expanded' => true,
+//                'choices' => [
+//                    'Ieškau paslaugos' => 'customer', 'Siūlau paslaugą' => 'provider',
+//                ]
+//            ])
             ->add('title', TextType::class, [
-                'label'=>'Pavadinimas',
+                'label' => 'Pavadinimas',
                 'required' => true,
             ])
             ->add('description', TextareaType::class, [
-                'label'=>'Aprašymas',
+                'label' => 'Aprašymas',
                 'required' => true,
             ])
-            ->add('activeTimeStart', TimeType::class, [
-                'label'=>'Paslaugos pradžia',
-                'widget' => 'choice', 'minutes' => [
-                    0,15,30,45
-                ],
+            ->add('city', TextType::class, [
+                'label' => 'Miestas',
+                'mapped' => false,
+                'required' => true,
             ])
-            ->add('activeTimeEnd', TimeType::class, [
-                'label'=>'Paslaugos pabaiga',
-                'widget' => 'choice', 'minutes' => [
-                    0,15,30,45
-                ]
+            ->add('street', TextType::class, [
+                'label' => 'Gatvė',
+                'mapped' => false,
+                'required' => true,
             ])
-            ->add('transport', CheckboxType::class, [
-                'label' => 'Transporto paslaugos',
-                'required' => false,
-            ])
-            ->add('education', CheckboxType::class, [
-                'label' => 'Mokymo paslaugos',
-                'required' => false,
-            ])
-            ->add('cleaning', CheckboxType::class, [
-                'label' => 'Valymo paslaugos',
-                'required' => false,
-            ])
-            ->add('coordinateX', ChoiceType::class, [
-                'label' => 'Koordinatė X',
-                'choices' => [
-                    range(1, 100, 5)
-                ]
-            ])
-            ->add('coordinateY', ChoiceType::class, [
-                'label' => 'Koordinatė Y',
-                'choices' => [
-                    range(1, 100, 5)
-                ]
+            ->add('houseNo', TextType::class, [
+                'label' => 'Namo Nr',
+                'mapped' => false,
+                'required' => true,
             ])
             ->add('category', EntityType::class, [
-                    'label' => 'Kategorijos',
-                    'class' => 'App:Category',
-//                        'homeCare' => 'pavadinimas',
-                    'choice_label' => function(Category $category){
-                        return $category->getName();
-                    },
-//                    'property' => 'name',
-                    'multiple' => true,
-                    'expanded' => true,
-                ]
-
-            )
-
-//            ->add('category', ChoiceType::class, [
-//                'label' => 'Kategorijos',
-//                'choices' => [
-//                    'Mokymas' => 'education',
-//                    'Vaiku prieziura' => 'kidCare',
-//                    'Transportas' => 'transport',
-//                    'Valymas' => 'houseCare',
-//                    'Automobilio remontas' => 'autoCare',
-//                    'Namu meistras' => 'houseMaster'
+                'label' => 'Kategorijos',
+                'class' => 'App:Category',
+                'choice_label' => function (Category $category) {
+                    return $category->getName();
+                },
+                'multiple' => true,
+                'expanded' => false,
+            ])
+            ->add('maxDistance', IntegerType::class, [
+                'label' => 'Kaip toli galite vykti (Km)'
+            ])
+            ->add('pricePerHour', NumberType::class, [
+                'label' => 'Valandos kaina (Eur)',
+            ])
+            ->add('activeTill', DateTimeType::class, [
+                'label' => 'Skelbimas galioja iki',
+//                'widget' => 'choice', 'minutes' => [
+//                    0, 15, 30, 45
 //                ],
-//                'expanded' => true,
-//                'multiple' => true,
-//            ])
+            ])
+            ->add('lat', NumberType::class, [
+                'label' => 'Latitude',
+            ])
+            ->add('lon', NumberType::class, [
+                'label' => 'Longitude',
+            ])
         ;
     }
 

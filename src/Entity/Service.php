@@ -23,7 +23,6 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Service
 {
-
     /**
      * @ORM\Column(type="integer")
      * @ORM\Id
@@ -39,7 +38,6 @@ class Service
 
     /**
      * @var
-     *
      * @ORM\Column(type="datetime")
      */
     protected $createdAt;
@@ -51,15 +49,15 @@ class Service
     protected $updatedAt;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $serviceType;
 
     /**
      * @ORM\Column(type="string", length=255)
+     *
      */
     private $title;
-
 
     /**
      * @ORM\Column(type="text")
@@ -68,60 +66,47 @@ class Service
 
     /**
      * @var
-     * @ORM\Column(type="time")
+     * @ORM\Column(type="datetime")
      */
-    protected $activeTimeStart;
-
-    /**
-     * @var
-     * @ORM\Column(type="time")
-     */
-    protected $activeTimeEnd;
-
-    /**
-     * @var
-     * @ORM\Column(type="boolean")
-     */
-    protected $transport;
-
-    /**
-     * @var
-     * @ORM\Column(type="boolean")
-     */
-    protected $education;
-
-    /**
-     * @var
-     * @ORM\Column(type="boolean")
-     */
-    protected $cleaning;
+    protected $activeTill;
 
     /**
      * @var
      * @ORM\Column(type="decimal")
      */
-    protected $coordinateX;
+    protected $lat;
 
     /**
      * @var
      * @ORM\Column(type="decimal")
      */
-    protected $coordinateY;
+    protected $lon;
+
+    /**
+     * @var
+     * @ORM\Column(type="decimal")
+     */
+    protected $maxDistance;
+
+    /**
+     * @var
+     * @ORM\Column(type="decimal")
+     */
+    protected $pricePerHour;
 
     /**
      * @ORM\ManyToMany(targetEntity="App\Entity\Category", inversedBy="services")
      */
     private $category;
 
+
+
+    //    ----------- Methods ----------
+
     public function __construct()
     {
         $this->category = new ArrayCollection();
     }
-
-
-
-//    ----------- Methods ----------
-
 
     /**
      * @return mixed
@@ -232,113 +217,81 @@ class Service
     /**
      * @return mixed
      */
-    public function getActiveTimeStart()
+    public function getActiveTill()
     {
-        return $this->activeTimeStart;
+        return $this->activeTill;
     }
 
     /**
-     * @param mixed $activeTimeStart
+     * @param mixed $activeTill
      */
-    public function setActiveTimeStart($activeTimeStart): void
+    public function setActiveTill($activeTill): void
     {
-        $this->activeTimeStart = $activeTimeStart;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getActiveTimeEnd()
-    {
-        return $this->activeTimeEnd;
-    }
-
-    /**
-     * @param mixed $activeTimeEnd
-     */
-    public function setActiveTimeEnd($activeTimeEnd): void
-    {
-        $this->activeTimeEnd = $activeTimeEnd;
+        $this->activeTill = $activeTill;
     }
 
     /**
      * @return mixed
      */
-    public function getTransport()
+    public function getLat()
     {
-        return $this->transport;
+        return $this->lat;
     }
 
     /**
-     * @param mixed $transport
+     * @param mixed $lat
      */
-    public function setTransport($transport): void
+    public function setLat($lat): void
     {
-        $this->transport = $transport;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getEducation()
-    {
-        return $this->education;
-    }
-
-    /**
-     * @param mixed $education
-     */
-    public function setEducation($education): void
-    {
-        $this->education = $education;
+        $this->lat = $lat;
     }
 
     /**
      * @return mixed
      */
-    public function getCleaning()
+    public function getLon()
     {
-        return $this->cleaning;
+        return $this->lon;
     }
 
     /**
-     * @param mixed $cleaning
+     * @param mixed $lon
      */
-    public function setCleaning($cleaning): void
+    public function setLon($lon): void
     {
-        $this->cleaning = $cleaning;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getCoordinateX()
-    {
-        return $this->coordinateX;
-    }
-
-    /**
-     * @param mixed $coordinateX
-     */
-    public function setCoordinateX($coordinateX): void
-    {
-        $this->coordinateX = $coordinateX;
+        $this->lon = $lon;
     }
 
     /**
      * @return mixed
      */
-    public function getCoordinateY()
+    public function getMaxDistance()
     {
-        return $this->coordinateY;
+        return $this->maxDistance;
     }
 
     /**
-     * @param mixed $coordinateY
+     * @param mixed $maxDistance
      */
-    public function setCoordinateY($coordinateY): void
+    public function setMaxDistance($maxDistance): void
     {
-        $this->coordinateY = $coordinateY;
+        $this->maxDistance = $maxDistance;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getPricePerHour()
+    {
+        return $this->pricePerHour;
+    }
+
+    /**
+     * @param mixed $pricePerHour
+     */
+    public function setPricePerHour($pricePerHour): void
+    {
+        $this->pricePerHour = $pricePerHour;
     }
 
     /**
@@ -354,7 +307,6 @@ class Service
         if (!$this->category->contains($category)) {
             $this->category[] = $category;
         }
-
         return $this;
     }
 
@@ -363,10 +315,7 @@ class Service
         if ($this->category->contains($category)) {
             $this->category->removeElement($category);
         }
-
         return $this;
     }
-
-
 
 }
