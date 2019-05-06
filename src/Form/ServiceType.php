@@ -9,6 +9,8 @@
 namespace App\Form;
 
 
+use App\Entity\Category;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
@@ -77,7 +79,35 @@ class ServiceType extends AbstractType
                 'choices' => [
                     range(1, 100, 5)
                 ]
-            ]);
+            ])
+            ->add('category', EntityType::class, [
+                    'label' => 'Kategorijos',
+                    'class' => 'App:Category',
+//                        'homeCare' => 'pavadinimas',
+                    'choice_label' => function(Category $category){
+                        return $category->getName();
+                    },
+//                    'property' => 'name',
+                    'multiple' => true,
+                    'expanded' => true,
+                ]
+
+            )
+
+//            ->add('category', ChoiceType::class, [
+//                'label' => 'Kategorijos',
+//                'choices' => [
+//                    'Mokymas' => 'education',
+//                    'Vaiku prieziura' => 'kidCare',
+//                    'Transportas' => 'transport',
+//                    'Valymas' => 'houseCare',
+//                    'Automobilio remontas' => 'autoCare',
+//                    'Namu meistras' => 'houseMaster'
+//                ],
+//                'expanded' => true,
+//                'multiple' => true,
+//            ])
+        ;
     }
 
     public function configureOptions(OptionsResolver $resolver)

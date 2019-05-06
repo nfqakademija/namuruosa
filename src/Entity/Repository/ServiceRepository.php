@@ -32,7 +32,7 @@ class ServiceRepository extends EntityRepository
             ->getResult();
     }
 
-// Method to find all services provided by others, that match given array of My services
+
     public function findMatches( $job)
     {
 
