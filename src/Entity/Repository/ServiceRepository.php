@@ -22,9 +22,9 @@ class ServiceRepository extends EntityRepository
     {
         return $this->getEntityManager()->createQuery(
             "
-            SELECT s 
-                FROM App\Entity\Service s 
-            WHERE s.userId= :id 
+            SELECT s
+                FROM App\Entity\Service s
+            WHERE s.userId= :id
             ORDER BY s.updatedAt DESC
             "
         )
@@ -69,8 +69,10 @@ class ServiceRepository extends EntityRepository
 //
             $qb = $this->createQueryBuilder('s')
                 ->select('s')
-                ->addSelect('( (s.coordinateX - :myLat) * (s.coordinateX - :myLat) + (s.coordinateY - :myLon) * (s.coordinateY - :myLon)) / 100
-                 AS distance')// Distance just for sorting, not for real values
+                ->addSelect('ST_Distance_Sphere(
+                              point(s.coordinateY, :myLon),
+                              point(s.coordinateX, :myLat)
+                              ) AS distance')// Distance just for sorting, not for real values
 //                ->where('s.transport = :myTransport')
                 ->where('s.userId <> :myId')
                 ->andWhere('s.cleaning = :myCat1')

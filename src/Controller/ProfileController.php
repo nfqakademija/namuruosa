@@ -17,7 +17,7 @@ class ProfileController extends AbstractController
         $user = $this->getUser();
 
         $profile = $user->getUserProfile();
-        \var_dump($profile);
+//        \var_dump($profile);
 
         if ($profile){
             $firstName = $profile->getUserId()->getFirstName();
