@@ -10,25 +10,21 @@ use App\Form\EditProfileType;
 class ProfileController extends AbstractController
 {
     /**
-     * @Route("/profile/{id<\d+>}", name="profile") ///
+     * @Route("/profile", name="profile") ///
      */
-    public function index($id=null)
+    public function index()
     {
         $user = $this->getUser();
-        if($id === null)
-        {
-            $userId = $user->getId();
-        }else{
-            $userId = $id;
-            $user = $this->getDoctrine()->getRepository('App:User')->find($userId);
-        }
-        $userInfo = $this->getDoctrine()->getRepository('App:UserProfile')->find($userId);
-        if ($userInfo){
-            $firstName = $userInfo->getUserId()->getFirstName();
-            $lastName = $userInfo->getUserId()->getlastName();
-            $time = $userInfo->getUserId()->getLastLogin();
-            $userCity = $userInfo->getCity();
-            $description = $userInfo->getDescription();
+
+        $profile = $user->getUserProfile();
+        \var_dump($profile);
+
+        if ($profile){
+            $firstName = $profile->getUserId()->getFirstName();
+            $lastName = $profile->getUserId()->getLastName();
+            $time = $profile->getUserId()->getLastLogin();
+            $userCity = $profile->getCity();
+            $description = $profile->getDescription();
 
         }else{
             $firstName = $user->getFirstName();
@@ -78,7 +74,7 @@ class ProfileController extends AbstractController
 
             return $this->redirectToRoute('profile');
         }
-        return $this->render('profile/editProfile.html.twig', [
+        return $this->render('profile/editProfileForm.html.twig', [
             'form' => $form->createView(),
         ]);
     }

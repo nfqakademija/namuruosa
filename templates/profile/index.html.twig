@@ -3,82 +3,95 @@
 {% block title %}Profile{% endblock %}
 
 
-{#{% block header %}#}
-    {#{% include 'header.html.twig' %}#}
-    {#<aside>#}
-        {#<div class="sidenav navbar-dark bg-dark" id="mySidenav">#}
-            {#<ul class="navbar-nav">#}
-                {#<li class="nav-item active">#}
-                    {#<a class="nav-link" data-toggle="collapse" href="#collapse1">#}
-                        {#Paslaugos#}
-                        {#<i class="fa fa-fw fa-caret-down"></i>#}
-                        {#<span class="sr-only">(current)</span></a>#}
-                {#</li>#}
-
-                {#<div class="collapse" id="collapse1">#}
-                    {#<li class="nav-item">#}
-                        {#<a class="nav-link" href="{{ path('serviceAdd') }}">Registruoti paslaugą</a>#}
-                    {#</li>#}
-                    {#<li class="nav-item">#}
-                        {#<a class="nav-link" href="{{ path('serviceList') }}">Mano paslaugos</a>#}
-                    {#</li>#}
-                    {#<li class="sidenav-divider"></li>#}
-                {#</div>#}
-
-                {#<li class="nav-item">#}
-                    {#<a class="nav-link" href="{{ path('serviceAdd') }}">Belekas</a>#}
-                {#</li>#}
-                {#<li class="nav-item">#}
-                    {#<a class="nav-link" href="{{ path('editProfile') }}">Redaguoti profili</a>#}
-                {#</li>#}
-                {#<li class="nav-item">#}
-                    {#<a class="nav-link" href="#">Pricing</a>#}
-                {#</li>#}
-            {#</ul>#}
-        {#</div>#}
-    {#</aside>#}
-{#{% endblock %}#}
+{% block header %}
+    {% include 'header.html.twig' %}#}
+{% endblock %}
 
 {% block body %}
-
-    <section class="profile-section">
-        <div class="profile-container">
-          <aside class="profile-info">
-            <div class="main-foto">
-              <img src="" alt="">
-            </div>
-            <div class="main-data">
-              <p>{{ city }}</p>
-              <p>{{ time | date("Y.m.d")}}</p>
-            </div>
-          </aside>
-          <article class="profile-resume">
-            <h2>{{firstName}} {{lastName}}</h2>
-            <p> {{ description }}</p>
-          </article>
-          <aside class="profile-statistics">
-
-            <p><span class="rating-average">4.0</span> 15 ivertinimu</p>
-            <hr>
-            <p><span class="jobs-completed">52</span> atlikti darbai</p>
-          </aside>
+<body>
+<div id="profile">
+  <aside class="profile-aside">
+    <div class="profile-pic">
+      <img src="{{asset('img/profile-icon.png')}}" alt="profile icon" title="Your profile picture!">
+    </div>
+    <div class="sidebar-content">
+      <div class="sidebar-content-text">
+        <h4 class="user-name">{{firstName}} {{lastName}}</h4>
+        <p class="job-title">Tvarkau, plaunu butus, individualius namus</p>
+        <div class="user-location">
+          {{city}}
         </div>
-    </section>
-    <section class="comment">
-
-        <article class="comment-field">
-
-          <h3>Comment author Pries 1 diena</h3>
-          5
-          <p class="comment-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Expedita, explicabo?</p>
-        </article>
-        <article class="comment-field">
-
-          <h3>Comment author Pries 1 diena</h3>
-          5
-          <p class="comment-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Expedita, explicabo?</p>
-        </article>
-
-    </section>
+        <div class="user-languages">
+          Lietuvių, anglų
+        </div>
+        <div class="user-about">
+          <p>{{description}}</p>
+        </div>
+        <div class="details-list">
+          <div class="details-list-ratings">
+            <div class="star-rating"></div>
+            <div class="total-rating">4.8</div>
+            <div class="total-reviews">(24)</div>
+          </div>
+          <div class="member-cost">10 &euro;<span>/hr</span></div>
+        </div>
+        <div class="contact-button">
+          <a class="btn-contact" href="{{path('editProfile')}}">Redaguoti</a>
+        </div>
+        <div class="skills">
+          <h4 class="job-title">Igudziai</h4>
+          <ul>
+            <li>Lorem</li>
+            <li>Lorem ipsum</li>
+            <li>Lorem ipsum dolor</li>
+            <li>Lorem</li>
+          </ul>
+        </div>
+        <div class="user-statistics">
+          <h4 class="job-title">Statistika</h4>
+          <div class="times-worked">
+            <div>
+              <p>Ivykdyta darbu</p>
+              <p>43</p>
+            </div>
+            <div>
+              <p>Pirkta paslaugu</p>
+              <p>10</p>
+            </div>
+            <div class="last-login">
+              <p>Prisiregistruota</p>
+              <p>{{time | date("Y.m.d")}}</p>
+            </div>
+        </div>
+      </div>
+      </div>
+  </aside>
+  <section>
+    <article class="offers">
+      <div class="user-review">
+        <h4 class="user-reviews-title">Recenzijos</h4>
+        <div class="reviews">
+          <div class="review">
+            <div class="project">
+              <h6>
+                <a class="project-title" href="">Project title</a>
+              </h6>
+              <a class="project-author" href="">Name <span>2019.05.07</span></a>
+            </div>
+            <div class="feedback">
+              <div class="author-rating">
+                <a class="project-author" href="">Name <span>2019.05.07</span></a>
+                <div class="rating"></div>
+              </div>
+              <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptas consequatur vel quae, est accusamus commodi!</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </article>
+  </section>
+</div>
+</body>
+</html>
 
 {% endblock %}
