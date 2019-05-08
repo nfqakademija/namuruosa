@@ -4,7 +4,7 @@
   --primary-bg-color-dark: #707276;
 
   --secondary-bg-color: #ffffff;
-  --primary-tools-color: rgb(255, 193, 6);
+  --primary-tools-color: #ffc106;
   --font-weight-medium: 300;
 }
 
@@ -22,7 +22,7 @@ body{
 
 .profile-form{
   margin: auto;
-  height: 100vh;
+  height: 100%;
   max-width: 1200px;
   display: flex;
   justify-content: center;
@@ -32,26 +32,51 @@ body{
 
 }
 
-.phone-input{
-  width: 31%;
-  display: inline-block;
+.profile-form input[id='edit_profile_phone'], .profile-form input[type='number']{
+  width: 40%;
+  margin-left: -7rem;
 }
 
-.profile-form .edit-profile{
+.form-nums{
+  display: flex;
+}
+
+.profile-form form{
   display: flex;
   flex-direction: column;
 }
 
-.edit-profile input, textarea{
+.profile-form-input, .profile-form-textarea{
   padding: 0.5rem;
+  margin-bottom: 1rem;
+  width: 100%;
+}
+
+.profile-form-input:focus, .profile-form-textarea:focus{
+   box-shadow: none;
+   border: 1px solid var(--primary-tools-color);
+}
+
+#edit_profile_skills{
   margin-bottom: 1rem;
 
 }
 
-.edit-profile label{
+// #edit_profile_photo{
+//   margin-bottom: 5rem;
+// }
+//
+// .profile-form .custom-file input[type='file']:focus{
+//   box-shadow: none;
+//   border: 1px solid var(--primary-tools-color);
+//   margin-bottom: 1rem;
+// }
+
+.profile-form-label{
   color: var(--primary-bg-color-dark);
-  margin-bottom: 0.5rem;
+  margin-bottom: 0.25rem;
   font-size: 1rem;
+  text-align: left;
 }
 
 .profile-aside{
@@ -179,13 +204,15 @@ body{
   color: var(--secondary-bg-color);
   border: 1px solid var(--primary-tools-color);
   margin-top: 1rem;
-  float: right;
+  margin-bottom: 2rem;
   transition: all 0.2s;
+  display: inline-block;
 }
 
 .btn-submit-review:hover{
     box-shadow: 0 1rem 2rem rgba(255, 193, 6, .15);
     transform: translateY(-2px);
+    color: var(--secondary-bg-color);
 }
 
 .btn-submit-review:active {
@@ -324,9 +351,11 @@ body{
   font-size: 1.5rem;
   font-weight: lighter;
   color: var(--primary-bg-color-dark);
-  margin-top: -2rem;
+  // margin-top: -2rem;
 }
 
 .profile-headers{
   width: 66%;
+  margin-bottom: 2rem;
+  margin-top: 2rem;
 }

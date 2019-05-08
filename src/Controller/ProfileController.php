@@ -25,6 +25,11 @@ class ProfileController extends AbstractController
             $time = $profile->getUserId()->getLastLogin();
             $userCity = $profile->getCity();
             $description = $profile->getDescription();
+            $langs = $profile->getLanguages();
+            $skills = \explode(',', $profile->getSkill());
+            $title = $profile->getJobTitle();
+            $photo = $profile->getPhoto();
+            $price = $profile->getHourPrice();
 
         }else{
             $firstName = $user->getFirstName();
@@ -32,6 +37,11 @@ class ProfileController extends AbstractController
             $time = $user->getLastLogin();
             $userCity = '';
             $description = '';
+            $langs = '';
+            $title = '';
+            $skills = '';
+            $photo = 'img/profile-icon.png';
+            $price = '';
         }
         return $this->render('profile/index.html.twig', [
             'controller_name' => 'ProfileController',
@@ -39,7 +49,12 @@ class ProfileController extends AbstractController
             'lastName' => $lastName,
             'city' => $userCity,
             'time' => $time,
-            'description' => $description
+            'description' => $description,
+            'languages' => $langs,
+            'title' => $title,
+            'skills' => $skills,
+            'photo' => $photo,
+            'price' => $price,
             ]);
     }
 
@@ -50,9 +65,10 @@ class ProfileController extends AbstractController
     {
         $form = $this->createForm(EditProfileType::class);
         $form->handleRequest($request);
+
         $userObj = $this->getUser();
-        $userId = $userObj->getId();
-        $userInfo = $this->getDoctrine()->getRepository('App:UserProfile')->find($userId);
+        $userInfo = $userObj->getUserProfile();
+        // $userInfo = $this->getDoctrine()->getRepository('App:UserProfile')->find($userId);
 
         if ($form->isSubmitted() && $form->isValid()){
             $entityManager = $this->getDoctrine()->getManager();

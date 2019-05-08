@@ -4,6 +4,7 @@ namespace App\Form;
 
 use App\Entity\UserProfile;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
@@ -16,19 +17,29 @@ class EditProfileType extends AbstractType
     {
         $builder
             ->add('job_title', TextType::class, [
-                'label' => 'Darbas',
                 'required' => true,
                 ])
             ->add('photo', FileType::class, [
-                'label' => 'Nuotrauka',
                 'required' => true,
                 ])
             ->add('city', TextType::class, [
-                'label' => 'Miestas',
                 'required' => true,
                 ])
+            ->add('languages', TextType::class, [
+                'required' => true,
+                ])
+            ->add('skills', TextType::class, [
+                'required' => true,
+                ])
+            ->add('per_hour', IntegerType::class, [
+                'required' => true,
+
+                ])
+            ->add('phone', TextType::class, [
+                'required' => true,
+
+                ])
             ->add('description', TextareaType::class, [
-                'label' => 'Aprasymas',
                 'required' => true,
             ]);
     }
