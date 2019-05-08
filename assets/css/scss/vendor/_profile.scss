@@ -1,10 +1,10 @@
 :root{
   --primary-bg-color:  #ecedef;
   --primary-bg-color--darker: #979b9e;
-  --primary-bg-color-dark: #707282;
+  --primary-bg-color-dark: #707276;
 
   --secondary-bg-color: #ffffff;
-  --primary-tools-color: #ffc107;
+  --primary-tools-color: rgb(255, 193, 6);
   --font-weight-medium: 300;
 }
 
@@ -20,11 +20,45 @@ body{
   display: flex;
 }
 
+.profile-form{
+  margin: auto;
+  height: 100vh;
+  max-width: 1200px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: var(--secondary-bg-color);
+  flex-direction: column;
+
+}
+
+.phone-input{
+  width: 31%;
+  display: inline-block;
+}
+
+.profile-form .edit-profile{
+  display: flex;
+  flex-direction: column;
+}
+
+.edit-profile input, textarea{
+  padding: 0.5rem;
+  margin-bottom: 1rem;
+
+}
+
+.edit-profile label{
+  color: var(--primary-bg-color-dark);
+  margin-bottom: 0.5rem;
+  font-size: 1rem;
+}
+
 .profile-aside{
   background-color: var(--secondary-bg-color);
   width: 400px;
   height: 900px;
-  margin-top: 50px;
+  margin-top: 90px;
   display: flex;
   position: relative;
 }
@@ -53,7 +87,6 @@ body{
 }
 
 .user-name{
-  margin-top: 2rem;
   font-weight: 400;
   line-height: 1.5;
   font-size: 1.4rem;
@@ -83,7 +116,6 @@ body{
   font-size: 0.8rem;
   font-weight: var(--font-weight-medium);
   line-height: 1.4;
-  margin-top: 1rem;
 }
 
 .details-list{
@@ -104,7 +136,6 @@ body{
 .details-list{
   padding-bottom: 2rem;
   padding-top: 2rem;
-  margin-top: 1rem;
 }
 
 .total-rating{
@@ -117,19 +148,24 @@ body{
   font-weight: 400;
 }
 
+/* buttons */
+
 .contact-button{
   margin-top: 1rem;;
   text-align: center;
 }
-
+.btn{
+    text-decoration: none;
+    padding: 0.7rem;
+    border-radius: 0.35rem;
+    transition: all 0.5s;
+}
 .btn-contact{
-  text-decoration: none;
+
   background-color: var(--primary-tools-color);
   color: var(--secondary-bg-color);
   border: 1px solid var(--primary-tools-color);
-  padding: 0.7rem;
-  border-radius: 0.3rem;
-  transition: all 0.5s;
+
 }
 
 .btn-contact:hover{
@@ -137,10 +173,27 @@ body{
     color: var(--primary-tools-color);
 }
 
-.skills{
-  margin-top: 2rem;
+.btn-submit-review{
+  width: 200px;
+  background-color: var(--primary-tools-color);
+  color: var(--secondary-bg-color);
+  border: 1px solid var(--primary-tools-color);
+  margin-top: 1rem;
+  float: right;
+  transition: all 0.2s;
 }
 
+.btn-submit-review:hover{
+    box-shadow: 0 1rem 2rem rgba(255, 193, 6, .15);
+    transform: translateY(-2px);
+}
+
+.btn-submit-review:active {
+        box-shadow: 0 0.5rem 1rem rgba(255, 193, 6, .15);
+        transform: translateY(0);
+    }
+
+/* skills */
 .skills ul {
   display: flex;
   list-style: none;
@@ -239,7 +292,6 @@ body{
 
 .project-title a{
   font-size: 2rem;
-
 }
 
 .feedback{
@@ -260,4 +312,21 @@ body{
 .feedback a{
   color: var(--primary-bg-color-dark);
   text-decoration: none;
+}
+
+.edit-profile-h4{
+  font-size: 2rem;
+  font-weight: lighter;
+
+}
+
+.edit-profile-h6{
+  font-size: 1.5rem;
+  font-weight: lighter;
+  color: var(--primary-bg-color-dark);
+  margin-top: -2rem;
+}
+
+.profile-headers{
+  width: 66%;
 }

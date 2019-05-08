@@ -31,6 +31,36 @@ class UserProfile
      */
     private $description;
 
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $job_title;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $photo;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $languages;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $skill;
+
+    /**
+     * @ORM\Column(type="integer")
+     */
+    private $hour_price;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $phone;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -68,6 +98,78 @@ class UserProfile
     public function setDescription(string $description): self
     {
         $this->description = $description;
+
+        return $this;
+    }
+
+    public function getJobTitle(): ?string
+    {
+        return $this->job_title;
+    }
+
+    public function setJobTitle(string $job_title): self
+    {
+        $this->job_title = $job_title;
+
+        return $this;
+    }
+
+    public function getPhoto(): ?string
+    {
+        return $this->photo;
+    }
+
+    public function setPhoto(string $photo): self
+    {
+        $this->photo = $photo;
+
+        return $this;
+    }
+
+    public function getLanguages(): ?string
+    {
+        return $this->languages;
+    }
+
+    public function setLanguages(string $languages): self
+    {
+        $this->languages = $languages;
+
+        return $this;
+    }
+
+    public function getSkill(): ?string
+    {
+        return $this->skill;
+    }
+
+    public function setSkill(string $skill): self
+    {
+        $this->skill = $skill;
+
+        return $this;
+    }
+
+    public function getHourPrice(): ?int
+    {
+        return $this->hour_price;
+    }
+
+    public function setHourPrice(int $hour_price): self
+    {
+        $this->hour_price = $hour_price;
+
+        return $this;
+    }
+
+    public function getPhone(): ?string
+    {
+        return $this->phone;
+    }
+
+    public function setPhone(string $phone): self
+    {
+        $this->phone = $phone;
 
         return $this;
     }
