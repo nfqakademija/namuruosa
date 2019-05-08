@@ -55,7 +55,7 @@ class JobController extends AbstractController
         $userId = $this->getUser()->getId();
         $myMatchingServices = $loader->loadPotMatches($userId);
 
-        return $this->render('service/list-matches.html.twig', [
+        return $this->render('job/pot-matches.html.twig', [
             'potMatchesByJobs'=>$myMatchingServices,
         ]);
     }
