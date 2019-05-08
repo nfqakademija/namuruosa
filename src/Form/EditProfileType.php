@@ -28,10 +28,10 @@ class EditProfileType extends AbstractType
             ->add('languages', TextType::class, [
                 'required' => true,
                 ])
-            ->add('skills', TextType::class, [
+            ->add('skill', TextType::class, [
                 'required' => true,
                 ])
-            ->add('per_hour', IntegerType::class, [
+            ->add('hour_price', IntegerType::class, [
                 'required' => true,
 
                 ])

@@ -17,7 +17,6 @@ class ProfileController extends AbstractController
         $user = $this->getUser();
 
         $profile = $user->getUserProfile();
-//        \var_dump($profile);
 
         if ($profile){
             $firstName = $profile->getUserId()->getFirstName();
@@ -52,7 +51,7 @@ class ProfileController extends AbstractController
             'description' => $description,
             'languages' => $langs,
             'title' => $title,
-            'skills' => $skills,
+            'skill' => $skills,
             'photo' => $photo,
             'price' => $price,
             ]);
@@ -73,10 +72,13 @@ class ProfileController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()){
             $entityManager = $this->getDoctrine()->getManager();
             $profile = $form->getData();
+
+            \var_dump($profile);
             if (!$userInfo)
             {
 
                 $profile->setUserId($userObj);
+                var_dump($profile);
 
                 $entityManager->persist($profile);
                 $entityManager->flush();

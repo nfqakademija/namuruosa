@@ -41,7 +41,7 @@
         <div class="skills">
           <h4 class="job-title">Igudziai</h4>
           <ul>
-            {% for item in skills %}
+            {% for item in skill %}
                   <li>{{item}}</li>
             {% endfor %}
 
@@ -59,7 +59,7 @@
               <p>10</p>
             </div>
             <div class="last-login">
-              <p>Prisiregistruota</p>
+              <p>Paskutinis prisijungimas</p>
               <p>{{time | date("Y.m.d")}}</p>
             </div>
         </div>
