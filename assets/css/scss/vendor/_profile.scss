@@ -86,6 +86,7 @@ body{
   margin-top: 90px;
   display: flex;
   position: relative;
+  // justify-content: center;
 }
 
 .sidebar-content{
@@ -97,6 +98,11 @@ body{
   align-items: center;
   top: 4rem;
   position: absolute;
+  width: 100%
+}
+
+.sidebar-content-text{
+  width: 100%;
 }
 
 
@@ -141,6 +147,7 @@ body{
   font-size: 0.8rem;
   font-weight: var(--font-weight-medium);
   line-height: 1.4;
+  margin-top: 1rem;
 }
 
 .details-list{
@@ -221,10 +228,15 @@ body{
     }
 
 /* skills */
+.skills{
+  margin-top: 2rem;
+}
+
 .skills ul {
   display: flex;
   list-style: none;
   flex-wrap: wrap;
+
 }
 
 .skills ul li{
@@ -253,6 +265,7 @@ body{
   justify-content: space-between;
 }
 
+// comments
 .offers{
   height: 100%;
   width: 700px;

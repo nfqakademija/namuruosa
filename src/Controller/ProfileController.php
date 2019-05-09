@@ -17,6 +17,8 @@ class ProfileController extends AbstractController
         $user = $this->getUser();
 
         $profile = $user->getUserProfile();
+        // \var_dump($profile);
+
 
         if ($profile){
             $firstName = $profile->getUserId()->getFirstName();
@@ -39,10 +41,11 @@ class ProfileController extends AbstractController
             $langs = '';
             $title = '';
             $skills = '';
-            $photo = 'img/profile-icon.png';
+            $photo = 'profile-icon.png';
             $price = '';
         }
         return $this->render('profile/index.html.twig', [
+            'profile' => $profile,
             'controller_name' => 'ProfileController',
             'firstName' => $firstName,
             'lastName' => $lastName,
@@ -72,13 +75,22 @@ class ProfileController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()){
             $entityManager = $this->getDoctrine()->getManager();
             $profile = $form->getData();
+            $file = $request->files->get('edit_profile')['photo'];
 
-            \var_dump($profile);
+            $uploads_directory = $this->getParameter('profile_pics_dir');
+
+            $fileName = md5(\uniqid()) . '.' . $file->guessExtension();
+
+            $file->move($uploads_directory, $fileName);
+            // echo "<pre>";
+            // \var_dump($fileName);
+
             if (!$userInfo)
             {
 
                 $profile->setUserId($userObj);
-                var_dump($profile);
+                $profile->setPhoto($fileName);
+                $profile->setPhoto($fileName);
 
                 $entityManager->persist($profile);
                 $entityManager->flush();
@@ -86,6 +98,7 @@ class ProfileController extends AbstractController
             {
                 $userInfo->setCity($form["city"]->getData());
                 $userInfo->setDescription($form["description"]->getData());
+                $userInfo->setPhoto($photo);
                 $entityManager->persist($userInfo);
                 $entityManager->flush();
             }

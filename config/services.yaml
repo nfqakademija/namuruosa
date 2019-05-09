@@ -5,6 +5,7 @@
 # https://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
 parameters:
     locale: 'lt'
+    profile_pics_dir: '%kernel.project_dir%/public/img/profile_pics'
 
 services:
     # default configuration for services in *this* file
@@ -35,5 +36,3 @@ services:
         class: AppBundle\Form\RegistrationType
         tags:
             - { name: form.type, alias: app_user_registration }
-
-
