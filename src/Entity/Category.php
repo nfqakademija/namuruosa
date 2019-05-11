@@ -28,9 +28,15 @@ class Category
      */
     private $services;
 
+    /**
+     * @ORM\ManyToMany(targetEntity="App\Entity\Job", mappedBy="category")
+     */
+    private $jobs;
+
     public function __construct()
     {
         $this->services = new ArrayCollection();
+        $this->jobs = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -73,6 +79,34 @@ class Category
         if ($this->services->contains($service)) {
             $this->services->removeElement($service);
             $service->removeCategory($this);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Job[]
+     */
+    public function getJobs(): Collection
+    {
+        return $this->jobs;
+    }
+
+    public function addJobs(Service $job): self
+    {
+        if (!$this->jobs->contains($job)) {
+            $this->jobs[] = $job;
+            $job->addCategory($this);
+        }
+
+        return $this;
+    }
+
+    public function removeJobs(Service $job): self
+    {
+        if ($this->jobs->contains($job)) {
+            $this->jobs->removeElement($job);
+            $job->removeCategory($this);
         }
 
         return $this;

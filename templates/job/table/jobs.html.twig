@@ -1,11 +1,8 @@
-
-
 <table class="table">
     <tr>
         <th>Pavadinimas</th>
         <th>Aprašymas</th>
-        <th>Kategorija 1</th>
-        <th>Kategorija 2</th>
+        <th>Kategorijos </th>
         <th>Kaina</th>
         <th>Redaguoti</th>
     </tr>
@@ -13,8 +10,11 @@
         <tr>
             <td>{{ job.title }}</td>
             <td>{{ job.description }}</td>
-            <td>{{ job.category1 }}</td>
-            <td>{{ job.category2 }}</td>
+            <td>
+                {% for cat in job.category %}
+                    {{ cat.name }},
+                {% endfor %}
+            </td>
             <td>{{ job.budget }}</td>
             <td>
                 <button class="btn btn-link">Keisti</button>

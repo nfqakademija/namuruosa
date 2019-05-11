@@ -8,6 +8,8 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 
@@ -36,6 +38,11 @@ class Job
     protected $userId;
 
     /**
+     * @ORM\ManyToMany(targetEntity="App\Entity\Category", inversedBy="jobs")
+     */
+    private $category;
+
+    /**
      * @var
      *
      * @ORM\Column(type="datetime")
@@ -59,15 +66,15 @@ class Job
      */
     protected $description;
 
-    /**
-     * @ORM\Column(type="text", nullable=true)
-     */
-    protected $category1;
-
-    /**
-     * @ORM\Column(type="text", nullable=true)
-     */
-    protected $category2;
+//    /**
+//     * @ORM\Column(type="text", nullable=true)
+//     */
+//    protected $category1;
+//
+//    /**
+//     * @ORM\Column(type="text", nullable=true)
+//     */
+//    protected $category2;
 
     /**
      * @ORM\Column(type="text", nullable=true)
@@ -108,7 +115,14 @@ class Job
 
 
 
+
+
 //    ----------- Methods ----------
+
+    public function __construct()
+    {
+        $this->category = new ArrayCollection();
+    }
 
     /**
      * @return mixed
@@ -132,6 +146,30 @@ class Job
     public function setUserId($userId): void
     {
         $this->userId = $userId;
+    }
+
+    /**
+     * @return Collection|Category[]
+     */
+    public function getCategory(): Collection
+    {
+        return $this->category;
+    }
+
+    public function addCategory(Category $category): self
+    {
+        if (!$this->category->contains($category)) {
+            $this->category[] = $category;
+        }
+        return $this;
+    }
+
+    public function removeCategory(Category $category): self
+    {
+        if ($this->category->contains($category)) {
+            $this->category->removeElement($category);
+        }
+        return $this;
     }
 
     /**
@@ -199,37 +237,37 @@ class Job
         $this->description = $description;
     }
 
-    /**
-     * @return mixed
-     */
-    public function getCategory1()
-    {
-        return $this->category1;
-    }
-
-    /**
-     * @param mixed $category1
-     */
-    public function setCategory1($category1): void
-    {
-        $this->category1 = $category1;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getCategory2()
-    {
-        return $this->category2;
-    }
-
-    /**
-     * @param mixed $category2
-     */
-    public function setCategory2($category2): void
-    {
-        $this->category2 = $category2;
-    }
+//    /**
+//     * @return mixed
+//     */
+//    public function getCategory1()
+//    {
+//        return $this->category1;
+//    }
+//
+//    /**
+//     * @param mixed $category1
+//     */
+//    public function setCategory1($category1): void
+//    {
+//        $this->category1 = $category1;
+//    }
+//
+//    /**
+//     * @return mixed
+//     */
+//    public function getCategory2()
+//    {
+//        return $this->category2;
+//    }
+//
+//    /**
+//     * @param mixed $category2
+//     */
+//    public function setCategory2($category2): void
+//    {
+//        $this->category2 = $category2;
+//    }
 
     /**
      * @return mixed

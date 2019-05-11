@@ -9,6 +9,7 @@
 namespace App\Entity\Repository;
 
 
+use App\Entity\Job;
 use App\Entity\Service;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\Query;
@@ -33,11 +34,12 @@ class ServiceRepository extends EntityRepository
     }
 
 
-    public function findMatches( $job)
+    public function findMatches( Job $job)
     {
 
-            $myCat1 = $job->getCategory1();
-            $myCat2 = $job->getCategory2();
+        $myCats = [];
+        $myCats = $job->getCategory()->toArray();
+
             $myLat = $job->getLat();
             $myLon = $job->getLon();
             $myId = $job->getUserId()->getId();
@@ -51,14 +53,13 @@ class ServiceRepository extends EntityRepository
 ////                ->andWhere('s.userId <> :myId')
                 ->addSelect('s.lat AS belekas')
                 ->leftJoin('s.category', 'category')
-                ->andWhere('category.name = :myCat1 OR category.name = :myCat2')
+                ->andWhere("category in (:myCats)")
                 ->andWhere('s.lat BETWEEN :minLat AND :maxLat ')
                 ->andWhere('s.lon BETWEEN :minLon AND :maxLon ')
 //                ->andWhere( 'distance <> 500'  )
 
                 ->setParameters([
-                    'myCat1' => 'Valymas', //Todo Pakeisti kategorijas
-                    'myCat2' => 'Transportas',
+                    'myCats' =>  $myCats,
                     'myLat' => $myLat,
                     'myLon' => $myLon,
                     'maxLat' => $myLat + 30,
