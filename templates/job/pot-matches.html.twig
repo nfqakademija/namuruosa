@@ -1,0 +1,23 @@
+{% extends 'job/layout.html.twig' %}
+
+{% block main %}
+
+    <h2 class="text-center mt-4 mb-5">PASLAUGOS pagal Mano darbus</h2>
+
+    {% for matchesByJob in potMatchesByJobs %}
+        {% if matchesByJob[1] != null %}
+            {% include 'job/table/pot-matches-table.html.twig' %}
+        {% endif %}
+    {% endfor %}
+
+    {% for matchesByJob in potMatchesByJobs %}
+        {% if matchesByJob[1] == null %}
+            <h6>Darbui
+                <span class="text-success"> {{ matchesByJob[0].title }}</span>
+                <span class="text-danger">šiuo metu pasiūlymų neturime</span></h6>
+            <hr>
+        {% endif %}
+    {% endfor %}
+
+
+{% endblock %}

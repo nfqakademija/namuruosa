@@ -9,6 +9,7 @@
 namespace App\Controller;
 
 use App\Form\ServiceType;
+use App\Service\Loader;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
@@ -34,7 +35,7 @@ class ServiceController extends AbstractController
             $service->setUserId($this->getUser());
             $em->persist($service);
             $em->flush();
-            return $this->redirectToRoute('listMatches');
+            return $this->redirectToRoute('service_pot_matches');
         }
 
         return $this->render('service/add.html.twig', [
@@ -44,33 +45,31 @@ class ServiceController extends AbstractController
 
     /**
      *
-     * @Route("service/list", name="serviceList")
+     * @Route("service/myservices", name="my_services")
      */
-    public function listServices()
+    public function listMyJobs(Loader $loader)
     {
         $userId = $this->getUser()->getId();
-        $userServices = $this->getDoctrine()->getRepository('App:Service')->findServicesByUserId($userId);
-        return $this->render('service/list.html.twig', [
-            'servicesArray'=>[$userServices],
-    ]);
+        $myServices = $loader->loadByUser($userId);
+
+        return $this->render('service/my-services.html.twig', [
+            'servicesArray'=>[$myServices],
+        ]);
     }
 
     /**
-     * @Route("service/list-matches", name="listMatches")
+     * @Route("service/pot-matches", name="service_pot_matches")
      */
-    public function listMatches()
+    public function listPotMatches(Loader $loader)
     {
         $userId = $this->getUser()->getId();
-        $userServices = $this->getDoctrine()
-            ->getRepository('App:Service')
-            ->findServicesByUserId($userId);
-        $myMatchingServices = $this->getDoctrine()
-            ->getRepository('App:Service')
-            ->findMatches($userServices);
-//        $myServices = $this->getDoctrine()->getRepository('App:Service')->getMatchesQuery($userId);
+        $myMatchingJobs = $loader->loadPotMatches($userId);
 
-        return $this->render('service/list-matches.html.twig', [
-            'servicesArray'=>$myMatchingServices,
+        return $this->render('service/pot-matches.html.twig', [
+            'potMatchesByServices'=>$myMatchingJobs,
         ]);
     }
+
+
+
 }

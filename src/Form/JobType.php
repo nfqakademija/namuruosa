@@ -9,6 +9,8 @@
 namespace App\Form;
 
 
+use App\Entity\Category;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
@@ -38,21 +40,30 @@ class JobType extends AbstractType
 //                    0,15,30,45
 //                ],
             ])
-            ->add('category1', ChoiceType::class, [
-                'label' => 'Kategorija 1',
-                'choices' => [
-                    'Žemės ūkis' => 'farming',
-                    'Mokymas' => 'education',
-                ],
-                'required' => false,
-            ])
-            ->add('category2', ChoiceType::class, [
-                'label' => 'Kategorija 2',
-                'choices' => [
-                    'Sodininkystė' => 'orchard',
-                    'Vaikų prežiūra' => 'children',
-                ],
-                'required' => false,
+//            ->add('category1', ChoiceType::class, [
+//                'label' => 'Kategorija 1',
+//                'choices' => [
+//                    'Žemės ūkis' => 'farming',
+//                    'Mokymas' => 'education',
+//                ],
+//                'required' => false,
+//            ])
+//            ->add('category2', ChoiceType::class, [
+//                'label' => 'Kategorija 2',
+//                'choices' => [
+//                    'Sodininkystė' => 'orchard',
+//                    'Vaikų prežiūra' => 'children',
+//                ],
+//                'required' => false,
+//            ])
+            ->add('category', EntityType::class, [
+                'label' => 'Kategorijos',
+                'class' => 'App:Category',
+                'choice_label' => function (Category $category) {
+                    return $category->getName();
+                },
+                'multiple' => true,
+                'expanded' => false,
             ])
             ->add('upload', FileType::class, [
                 'label' => 'Objekto foto',

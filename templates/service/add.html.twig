@@ -1,7 +1,7 @@
 {% extends "service/layout.html.twig" %}
 
 {% block main %}
-    <h2 class="text-center mb-5 text-info">Naujos paslaugos registracija </h2>
+    <h2 class="text-center mb-5 text-info">Nauja PASLAUGA</h2>
 
     {#{{ form_start(form, {'method': 'post', 'action': path('fos_user_registration_register'), 'attr': {'class': 'fos_user_registration_register'}}) }}#}
     {{ form_start(serviceForm, {'method': 'post', 'action': path('serviceAdd'), 'attr': {'class': 'fos_user_registration_register'}}) }}

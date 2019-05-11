@@ -4,12 +4,12 @@
 
     <h2 class="text-center mt-4 mb-5">Paslaugos pagal Jūsų darbus</h2>
 
-    {% for matchesByJob in potMatchesByJobs %}
-        {% if matchesByJob[1] != null %}
+    {% for matchesByService in potMatchesByJobs %}
+        {% if matchesByService[1] != null %}
             {% include 'service/table/listTable-matches.html.twig' %}
         {% else %}
             <h6>Darbui
-                <span class="text-success"> {{ matchesByJob[0].title }}</span>
+                <span class="text-success"> {{ matchesByService[0].title }}</span>
                 <span class="text-danger">šiuo metu pasiūlymų neturime</span></h6>
             <hr>
         {% endif %}
