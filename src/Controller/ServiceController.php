@@ -43,37 +43,51 @@ class ServiceController extends AbstractController
         ]);
     }
 
+//    /**
+//     *
+//     * @Route("service/list", name="serviceList")
+//     */
+//    public function listServices()
+//    {
+//        $userId = $this->getUser()->getId();
+//        $userServices = $this->getDoctrine()->getRepository('App:Service')->findServicesByUserId($userId);
+//        return $this->render('service/list.html.twig', [
+//            'servicesArray'=>[$userServices],
+//    ]);
+//    }
+
     /**
      *
-     * @Route("service/list", name="serviceList")
+     * @Route("service/myservices", name="my_services")
      */
-    public function listServices()
+    public function listMyJobs(Loader $loader)
     {
         $userId = $this->getUser()->getId();
-        $userServices = $this->getDoctrine()->getRepository('App:Service')->findServicesByUserId($userId);
-        return $this->render('service/list.html.twig', [
-            'servicesArray'=>[$userServices],
-    ]);
-    }
+        $myServices = $loader->loadByUser($userId);
 
-    /**
-     * @Route("service/list-matches", name="listMatches")
-     */
-    public function listMatches()
-    {
-        $userId = $this->getUser()->getId();
-        $userServices = $this->getDoctrine()
-            ->getRepository('App:Service')
-            ->findServicesByUserId($userId);
-        $myMatchingServices = $this->getDoctrine()
-            ->getRepository('App:Service')
-            ->findMatches($userServices);
-//        $myServices = $this->getDoctrine()->getRepository('App:Service')->getMatchesQuery($userId);
-
-        return $this->render('service/list-matches.html.twig', [
-            'servicesArray'=>$myMatchingServices,
+        return $this->render('service/my-services.html.twig', [
+            'servicesArray'=>[$myServices],
         ]);
     }
+//
+//    /**
+//     * @Route("service/list-matches", name="listMatches")
+//     */
+//    public function listMatches()
+//    {
+//        $userId = $this->getUser()->getId();
+//        $userServices = $this->getDoctrine()
+//            ->getRepository('App:Service')
+//            ->findServicesByUserId($userId);
+//        $myMatchingServices = $this->getDoctrine()
+//            ->getRepository('App:Service')
+//            ->findMatches($userServices);
+////        $myServices = $this->getDoctrine()->getRepository('App:Service')->getMatchesQuery($userId);
+//
+//        return $this->render('service/list-matches.html.twig', [
+//            'servicesArray'=>$myMatchingServices,
+//        ]);
+//    }
 
 
 

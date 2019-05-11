@@ -63,8 +63,6 @@ class JobController extends AbstractController
 
 
 
-
-
     /**
      * @Route("/job", name="job")
      */
