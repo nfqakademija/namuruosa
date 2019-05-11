@@ -24,7 +24,7 @@ class ServiceRepository extends EntityRepository
         return $this->getEntityManager()->createQuery(
             "
             SELECT s 
-                FROM App\Entity\Service s 
+            FROM App\Entity\Service s 
             WHERE s.userId= :id 
             ORDER BY s.updatedAt DESC
             "
@@ -37,7 +37,6 @@ class ServiceRepository extends EntityRepository
     public function findMatches( Job $job)
     {
 
-        $myCats = [];
         $myCats = $job->getCategory()->toArray();
 
             $myLat = $job->getLat();

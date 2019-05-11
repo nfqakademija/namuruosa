@@ -9,6 +9,7 @@
 namespace App\Controller;
 
 use App\Form\ServiceType;
+use App\Service\Loader;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
@@ -73,4 +74,24 @@ class ServiceController extends AbstractController
             'servicesArray'=>$myMatchingServices,
         ]);
     }
+
+
+
+
+
+    /**
+     * @Route("service/pot-matches", name="service_pot_matches")
+     */
+    public function listPotMatches(Loader $loader)
+    {
+        $userId = $this->getUser()->getId();
+        $myMatchingJobs = $loader->loadPotMatches($userId);
+
+        return $this->render('service/pot-matches.html.twig', [
+            'potMatchesByServices'=>$myMatchingJobs,
+        ]);
+    }
+
+
+
 }

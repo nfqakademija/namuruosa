@@ -9,6 +9,7 @@
 namespace App\Entity\Repository;
 
 
+use App\Entity\Service;
 use Doctrine\ORM\EntityRepository;
 
 class JobRepository extends EntityRepository
@@ -28,5 +29,47 @@ class JobRepository extends EntityRepository
             ->setParameter('id', $userId)
             ->getResult();
 
+    }
+
+
+    public function findMatches( Service $service)
+    {
+
+        $myCats = $service->getCategory()->toArray();
+
+        $myLat = $service->getLat();
+        $myLon = $service->getLon();
+        $myId = $service->getUserId()->getId();
+//            $myServiceId = $service->getId();
+//            $myId2 = $service->getUserId()->getId();
+
+        $qb = $this->createQueryBuilder('j')
+            ->select('j')
+            ->addSelect('( (j.lat - :myLat) * (j.lat - :myLat) + (j.lon - :myLon) * (j.lon - :myLon)) / 100
+                 AS distance')// Distance just for sorting, not for real values
+//                ->andWhere('s.userId <> :myId')
+            ->addSelect('j.lat AS belekas')
+            ->leftJoin('j.category', 'category')
+            ->andWhere("category in (:myCats)")
+            ->andWhere('j.lat BETWEEN :minLat AND :maxLat ')
+            ->andWhere('j.lon BETWEEN :minLon AND :maxLon ')
+//                ->andWhere( 'distance <> 500'  )
+
+            ->setParameters([
+                'myCats' =>  $myCats,
+                'myLat' => $myLat,
+                'myLon' => $myLon,
+                'maxLat' => $myLat + 30,
+                'maxLon' => $myLon + 30,
+                'minLat' => $myLat - 30,
+                'minLon' => $myLon - 30,
+//                    'myId' => $myId,
+            ])
+            ->orderBy('distance', 'DESC');//TODO DOES NOT WORK!!
+
+        $query = $qb->getQuery();
+        $allMatchesByOneMyJob = $query->execute();
+
+        return $allMatchesByOneMyJob;
     }
 }
