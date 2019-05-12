@@ -28,3 +28,7 @@ yarn-error.log
 ###> IDE files ###
 .idea/
 ###< IDE files ###
+
+###> Downloaded image files ###
+/public/img
+###< Downloaded image files ###
