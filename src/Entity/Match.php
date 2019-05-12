@@ -15,11 +15,11 @@ use Doctrine\ORM\Mapping as ORM;
  *
  * @package App\Entity
  *
- * @ORM\Entity(repositoryClass="App\Entity\Repository\MatchesRepository")
+ * @ORM\Entity(repositoryClass="App\Entity\Repository\MatchRepository")
  * @ORM\Table(name="matches")
  * @ORM\HasLifecycleCallbacks()
  */
-class Matches
+class Match
 {
     /**
      * @ORM\Column(type="integer")
@@ -43,9 +43,15 @@ class Matches
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Service")
-     * @ORM\JoinColumn(name="caller_service_id", referencedColumnName="id")
+     * @ORM\JoinColumn(name="caller_service_id", referencedColumnName="id", nullable=true)
      */
     protected $callerServiceId;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Job")
+     * @ORM\JoinColumn(name="caller_job_id", referencedColumnName="id", nullable=true)
+     */
+    protected $callerJobId;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\User")
@@ -55,9 +61,15 @@ class Matches
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Service")
-     * @ORM\JoinColumn(name="responder_service_id", referencedColumnName="id")
+     * @ORM\JoinColumn(name="responder_service_id", referencedColumnName="id", nullable=true)
      */
     protected $responderServiceId;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Job")
+     * @ORM\JoinColumn(name="responder_job_id", referencedColumnName="id", nullable=true)
+     */
+    protected $responderJobId;
 
     /**
      * @var
@@ -86,6 +98,13 @@ class Matches
      * @ORM\Column(type="datetime", nullable=true )
      */
     protected $payedAt;
+
+    /**
+     * @var
+     *
+     * @ORM\Column(type="boolean", nullable=true)
+     */
+    protected $hidden;
 
 
 //--------------- Methods -------------------
@@ -146,6 +165,38 @@ class Matches
     public function setCallerServiceId($callerServiceId): void
     {
         $this->callerServiceId = $callerServiceId;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getCallerJobId()
+    {
+        return $this->callerJobId;
+    }
+
+    /**
+     * @param mixed $callerJobId
+     */
+    public function setCallerJobId($callerJobId): void
+    {
+        $this->callerJobId = $callerJobId;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getResponderJobId()
+    {
+        return $this->responderJobId;
+    }
+
+    /**
+     * @param mixed $responderJobId
+     */
+    public function setResponderJobId($responderJobId): void
+    {
+        $this->responderJobId = $responderJobId;
     }
 
     /**
@@ -243,5 +294,23 @@ class Matches
     {
         $this->payedAt = $payedAt;
     }
+
+    /**
+     * @return mixed
+     */
+    public function getHidden()
+    {
+        return $this->hidden;
+    }
+
+    /**
+     * @param mixed $hidden
+     */
+    public function setHidden($hidden): void
+    {
+        $this->hidden = $hidden;
+    }
+
+
 
 }
