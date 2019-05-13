@@ -33,7 +33,6 @@ class Loader
         return $this->em->getRepository('App:Job')->findByUserId($userId);
     }
 
-
     public function loadPotMatches($userId)
     {
         $potMatches = [];

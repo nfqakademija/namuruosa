@@ -8,22 +8,20 @@
 
 namespace App\Entity\Repository;
 
-
 use Doctrine\ORM\EntityRepository;
 
 class MatchRepository extends EntityRepository
 {
 
-    public function findJobMatches( $userId )
+    public function findJobsMatches($userId)
     {
-
         $qb = $this->createQueryBuilder('m')
             ->select('m')
             ->leftJoin('m.callerJobId', 'callerJob')
             ->leftJoin('m.responderJobId', 'responderJob')
-            ->andWhere("callerJob.userId = :userId OR responderJob.userId = :userId") // OR responderJob.userId = :userId
+            ->andWhere("callerJob.userId = :userId OR responderJob.userId = :userId")
             ->setParameters([
-                'userId' =>  $userId,
+                'userId' => $userId,
             ])
             ->orderBy('m.createdAt', 'DESC');
         $query = $qb->getQuery();
@@ -32,16 +30,15 @@ class MatchRepository extends EntityRepository
         return $myJobsMatches;
     }
 
-    public function findServicesMatches( $userId )
+    public function findServicesMatches($userId)
     {
-
         $qb = $this->createQueryBuilder('m')
             ->select('m, callerService')
             ->leftJoin('m.callerServiceId', 'callerService')
             ->leftJoin('m.responderServiceId', 'responderService')
             ->andWhere("callerService.userId = :userId OR responderService.userId = :userId")
             ->setParameters([
-                'userId' =>  $userId,
+                'userId' => $userId,
             ])
             ->orderBy('m.createdAt', 'DESC');
         $query = $qb->getQuery();

@@ -38,12 +38,6 @@
             </td>
             <td>
                 {% if responded is same as(0) %}
-                    {#<a href="{{ path('matchUpdate',#}
-                        {#{'updateType':'cancel', 'matchId': match.id }) }}">#}
-                        {#<button class="btn btn-sm btn-danger">Atšaukti</button>#}
-                    {#</a>#}
-
-
                     {% if  match.callerServiceId %}
                         <a href="{{ path('matchUpdate',
                             {'updateType':'cancel', 'matchId': match.id }) }}">
@@ -59,8 +53,6 @@
                             <button class="btn btn-sm btn-danger">Atmesti</button>
                         </a>
                     {% endif %}
-
-
                 {% endif %}
             </td>
         </tr>

@@ -17,37 +17,29 @@ class JobRepository extends EntityRepository
 
     public function findByUserId($userId)
     {
-
         return $this->getEntityManager()->createQuery(
-            "
-            SELECT s 
-                FROM App\Entity\Job s 
+            " SELECT s 
+            FROM App\Entity\Job s 
             WHERE s.userId= :id 
-            ORDER BY s.updatedAt DESC
-            "
+            ORDER BY s.updatedAt DESC "
         )
             ->setParameter('id', $userId)
             ->getResult();
-
     }
 
 
-    public function findMatches( Service $service)
+    public function findMatches(Service $service)
     {
 
         $myCats = $service->getCategory()->toArray();
-
         $myLat = $service->getLat();
         $myLon = $service->getLon();
         $myId = $service->getUserId()->getId();
-//            $myServiceId = $service->getId();
-//            $myId2 = $service->getUserId()->getId();
 
         $qb = $this->createQueryBuilder('j')
             ->select('j')
-            ->addSelect('( (j.lat - :myLat) * (j.lat - :myLat) + (j.lon - :myLon) * (j.lon - :myLon)) / 100
-                 AS distance')// Distance just for sorting, not for real values
-//                ->andWhere('s.userId <> :myId')
+            ->addSelect('( (j.lat - :myLat) * (j.lat - :myLat) + (j.lon - :myLon) * (j.lon - :myLon)) / 100 AS distance')// Distance just for sorting, not for real values
+            ->andWhere('j.userId <> :myId')
             ->addSelect('j.lat AS belekas')
             ->leftJoin('j.category', 'category')
             ->andWhere("category in (:myCats)")
@@ -56,14 +48,14 @@ class JobRepository extends EntityRepository
 //                ->andWhere( 'distance <> 500'  )
 
             ->setParameters([
-                'myCats' =>  $myCats,
+                'myCats' => $myCats,
                 'myLat' => $myLat,
                 'myLon' => $myLon,
                 'maxLat' => $myLat + 30,
                 'maxLon' => $myLon + 30,
                 'minLat' => $myLat - 30,
                 'minLon' => $myLon - 30,
-//                    'myId' => $myId,
+                'myId' => $myId,
             ])
             ->orderBy('distance', 'DESC');//TODO DOES NOT WORK!!
 
