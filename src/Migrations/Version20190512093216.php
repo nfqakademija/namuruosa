@@ -29,10 +29,17 @@ final class Version20190512093216 extends AbstractMigration
         $this->addSql('CREATE INDEX IDX_62615BAFE680242 ON matches (responder_job_id)');
         $this->addSql('ALTER TABLE fos_user CHANGE salt salt VARCHAR(255) DEFAULT NULL, CHANGE last_login last_login DATETIME DEFAULT NULL, CHANGE confirmation_token confirmation_token VARCHAR(180) DEFAULT NULL, CHANGE password_requested_at password_requested_at DATETIME DEFAULT NULL');
         $this->addSql('ALTER TABLE service CHANGE user_id user_id INT DEFAULT NULL, CHANGE service_type service_type VARCHAR(255) DEFAULT NULL');
-        $this->addSql('ALTER TABLE user_profile DROP job_title, DROP photo, DROP languages, DROP skill, DROP hour_price, DROP phone, CHANGE user_id_id user_id_id INT DEFAULT NULL');
+
+
+
         $this->addSql('ALTER TABLE category CHANGE name name VARCHAR(255) DEFAULT NULL');
         $this->addSql('ALTER TABLE job CHANGE user_id user_id INT DEFAULT NULL, CHANGE budget budget NUMERIC(10, 0) DEFAULT NULL, CHANGE lat lat NUMERIC(10, 0) DEFAULT NULL, CHANGE lon lon NUMERIC(10, 0) DEFAULT NULL, CHANGE date_end date_end DATETIME DEFAULT NULL, CHANGE active_till active_till DATETIME DEFAULT NULL');
     }
+
+
+    // Extracted from the gap above:     $this->addSql('ALTER TABLE user_profile DROP job_title, DROP photo, DROP languages, DROP skill, DROP hour_price, DROP phone, CHANGE user_id_id user_id_id INT DEFAULT NULL');
+    
+
 
     public function down(Schema $schema) : void
     {
