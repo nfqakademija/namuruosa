@@ -138,6 +138,10 @@
                 // xhr.send("lat=" + placeinfo.coords.lat + "&lng=" + placeinfo.coords.lng + "&address=" + placeinfo.addresses.fromInput);
                 //send to PHP end
                 // Outputting start
+
+                document.getElementById("job_lat").value = placeinfo.coords.lat;
+                document.getElementById("job_lon").value = placeinfo.coords.lng;
+
                 document.getElementById("coordinates").innerHTML = "";
 
                 var node = document.createElement("li")
