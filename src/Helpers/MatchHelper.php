@@ -9,35 +9,36 @@
 namespace App\Helpers;
 
 
-use App\Entity\Matches;
-use App\Entity\Repository\MatchesRepository;
+use App\Entity\Match;
+//use App\Entity\Match;
+use App\Entity\Repository\MatchRepository;
 use Doctrine\DBAL\Types\DateType;
 use Doctrine\ORM\EntityManager;
 
 class MatchHelper
 {
 
-    public function createMatch($responderServiceId, $callerServiceId, EntityManager $em)
-    {
-        $serviceRepo = $em->getRepository('App\Entity\Service');
-        $responderService = $serviceRepo->find($responderServiceId);
-        $callerService = $serviceRepo->find($callerServiceId);
-        $match = new Matches();
-        $match->setCallerId($callerService->getUserId());
-        $match->setCallerServiceId($callerService);
-        $match->setResponderId($responderService->getUserId());
-        $match->setResponderServiceId($responderService);
-//        $match->setCreatedAt(new \DateTime('Now'));
-
-//        var_dump($match);
-//        exit();
-
-       return($match);
-    }
+//    public function createMatch($responderServiceId, $callerServiceId, EntityManager $em)
+//    {
+//        $serviceRepo = $em->getRepository('App\Entity\Service');
+//        $responderService = $serviceRepo->find($responderServiceId);
+//        $callerService = $serviceRepo->find($callerServiceId);
+//        $match = new Match();
+//        $match->setCallerId($callerService->getUserId());
+//        $match->setCallerServiceId($callerService);
+//        $match->setResponderId($responderService->getUserId());
+//        $match->setResponderServiceId($responderService);
+////        $match->setCreatedAt(new \DateTime('Now'));
+//
+////        var_dump($match);
+////        exit();
+//
+//       return($match);
+//    }
 
     public function updateMatch($updateType, $matchId, EntityManager $em)
     {
-        $matchesRepo = $em->getRepository('App\Entity\Matches');
+        $matchesRepo = $em->getRepository('App\Entity\Match');
 //        $responderService = $serviceRepo->find($responderServiceId);
 //        $callerService = $serviceRepo->find($callerServiceId);
         $match = $matchesRepo->find($matchId);

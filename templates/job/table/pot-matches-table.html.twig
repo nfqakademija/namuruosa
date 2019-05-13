@@ -21,11 +21,14 @@
             </td>
             <td class="text-right">
                {#<h4 class="text-info text-right">{{ matchesByService[0].budget }} <i class="fa fa-euro-sign fa-xs"></i> / val.</h4>#}
-                <a class="align-self-end" href="{{ path('matchShow',
-                    {'responderServiceId': service[0].id, 'callerServiceId':  matchesByJob[0].id }) }}">
-                    <button class="btn btn-outline-info">Kviesti padirbėti</button>
-                </a>
+                {#<a class="align-self-end" href="{{ path('matchShow',#}
+                    {#{'responderServiceId': service[0].id, 'callerServiceId':  matchesByJob[0].id }) }}">#}
+                    {#<button class="btn btn-outline-info">Kviesti padirbėti</button>#}
+                {#</a>#}
+
+                <a href="{{ path('match_job_create', { 'callerJobId': matchesByJob[0].id, 'responderServiceId': service[0].id }) }}"><button class="btn btn-sm btn-success"> Siūlyti darbą</button></a>
             </td>
+            <td>ResponderServiceId: {{ service[0].id }}, CallerJobId: {{ matchesByJob[0].id }}</td>
         </tr>
 
     {% endfor %}

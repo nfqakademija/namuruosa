@@ -1,0 +1,60 @@
+<h3 class="text-info mb-4">Sandoriai pagal MANO DARBUS</h3>
+
+<table class="table mb-5">
+    <tr>
+        <th style="width: 10%">Data</th>
+        <th style="width: 25%">Mano darbas</th>
+        <th style="width: 30%">Sutarta paslauga</th>
+        <th style="width: 15%">Paslaugos tiekėjas</th>
+        <th style="width: 10%">Statusas</th>
+        <th></th>
+    </tr>
+    {% for match in myJobsMatches %}
+        <tr>
+            <td>{{ match.createdAt|date('Y.m.d') }}</td>
+            {% if match.callerJobId %}
+                <td>{{ match.callerJobId.title }}</td>
+                <td>{{ match.responderServiceId.title }}</td>
+                <td>{{ match.responderId }}</td>
+            {% else %}
+                <td><b>R</b> {{ match.responderJobId.title }} </td>
+                <td>{{ match.callerServiceId.title }} </td>
+                <td>{{ match.callerId }}</td>
+            {% endif %}
+            <td>
+                {% if match.acceptedAt %}
+                    <span class="text-success">Patvirtinta {{ match.acceptedAt|date('Y.m.d') }}</span>
+                    {% set responded = 1 %}
+                {% elseif match.rejectedAt %}
+                    <span class="text-danger">Atmesta {{ match.rejectedAt|date('Y.m.d') }}</span>
+                    {% set responded = 1 %}
+                {% elseif match.cancelledAt %}
+                    <span class="text-muted">Atšaukta {{ match.cancelledAt|date('Y.m.d') }}</span>
+                    {% set responded = 1 %}
+                {% else %}
+                    <span>Neatsakyta</span>
+                    {% set responded = 0 %}
+                {% endif %}
+            </td>
+            <td>
+                {% if responded is same as(0) %}
+                    {% if  match.callerJobId %}
+                        <a href="{{ path('matchUpdate',
+                            {'updateType':'cancel', 'matchId': match.id }) }}">
+                            <button class="btn btn-sm btn-danger">Atšaukti</button>
+                        </a>
+                    {% else %}
+                        <a href="{{ path('matchUpdate',
+                            {'updateType':'accept', 'matchId': match.id }) }}">
+                            <button class="btn btn-sm btn-success mb-2">Sutikti</button>
+                        </a>
+                        <a href="{{ path('matchUpdate',
+                            {'updateType':'reject', 'matchId': match.id }) }}">
+                            <button class="btn btn-sm btn-danger">Atmesti</button>
+                        </a>
+                    {% endif %}
+                {% endif %}
+            </td>
+        </tr>
+    {% endfor %}
+</table>
