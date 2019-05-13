@@ -34,6 +34,17 @@ class JobController extends AbstractController
     }
 
     /**
+     * @Route("/job/delete/{jobId}", name="jobDelete")
+     */
+    public function deleteJob($jobId, Request $request, Loader $loader)
+    {
+        $loader->delete($jobId);
+        $referer = $request->headers->get('referer');
+        return $this->redirect($referer);
+
+    }
+
+    /**
      *
      * @Route("job/myjobs", name="my_jobs")
      */
