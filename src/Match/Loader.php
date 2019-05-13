@@ -27,8 +27,14 @@ class Loader
 
     public function getJobMatches($userId)
     {
-        $myJobsServices = $this->em->getRepository('App:Match')->findJobMatches($userId);
-        return $myJobsServices;
+        $myJobsMatches = $this->em->getRepository('App:Match')->findJobMatches($userId);
+        return $myJobsMatches;
+    }
+
+    public function getServicesMatches($userId)
+    {
+         $myServicesMatches = $this->em->getRepository('App:Match')->findServicesMatches($userId);
+        return $myServicesMatches;
     }
 
 

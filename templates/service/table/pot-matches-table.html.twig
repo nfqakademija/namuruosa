@@ -21,9 +21,9 @@
             </td>
             <td class="text-right">
                {#<h4 class="text-info text-right">{{ matchesByService[0].budget }} <i class="fa fa-euro-sign fa-xs"></i> / val.</h4>#}
-                <a class="align-self-end" href="{{ path('matchShow',
-                    {'responderServiceId': service[0].id, 'callerServiceId':  matchesByService[0].id }) }}">
-                    <button class="btn btn-outline-info">Kviesti padirbėti</button>
+                <a class="align-self-end" href="{{ path('match_service_create',
+                    {'callerServiceId':  matchesByService[0].id, 'responderJobId': service[0].id }) }}">
+                    <button class="btn btn-outline-info">Sūlyti paslaugą</button>
                 </a>
             </td>
         </tr>

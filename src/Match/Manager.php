@@ -26,32 +26,45 @@ class Manager
         $match->setResponderId($responderService->getUserId());
         $match->setResponderServiceId($responderService);
         $match->setHidden(false);
-//        $match->setCreatedAt(new \DateTime('Now'));
-
-//        var_dump($match);
-//        exit();
 
         return($match);
     }
 
-
-
-    public function createMatch($responderServiceId, $callerServiceId, EntityManager $em)
+    public function createServiceMatch( $callerServiceId, $responderJobId, EntityManager $em)
     {
+        $jobRepo = $em->getRepository('App\Entity\Job');
         $serviceRepo = $em->getRepository('App\Entity\Service');
-        $responderService = $serviceRepo->find($responderServiceId);
         $callerService = $serviceRepo->find($callerServiceId);
+        $responderJob = $jobRepo->find($responderJobId);
         $match = new Match();
         $match->setCallerId($callerService->getUserId());
         $match->setCallerServiceId($callerService);
-        $match->setResponderId($responderService->getUserId());
-        $match->setResponderServiceId($responderService);
-//        $match->setCreatedAt(new \DateTime('Now'));
-
-//        var_dump($match);
-//        exit();
+        $match->setResponderId($responderJob->getUserId());
+        $match->setResponderJobId($responderJob);
+        $match->setHidden(false);
 
         return($match);
     }
+
+
+
+
+//    public function createMatch($responderServiceId, $callerServiceId, EntityManager $em)
+//    {
+//        $serviceRepo = $em->getRepository('App\Entity\Service');
+//        $responderService = $serviceRepo->find($responderServiceId);
+//        $callerService = $serviceRepo->find($callerServiceId);
+//        $match = new Match();
+//        $match->setCallerId($callerService->getUserId());
+//        $match->setCallerServiceId($callerService);
+//        $match->setResponderId($responderService->getUserId());
+//        $match->setResponderServiceId($responderService);
+////        $match->setCreatedAt(new \DateTime('Now'));
+//
+////        var_dump($match);
+////        exit();
+//
+//        return($match);
+//    }
 
 }

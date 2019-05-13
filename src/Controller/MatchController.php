@@ -23,14 +23,27 @@ class MatchController extends AbstractController
     /**
      * @Route("/match/job/create/{callerJobId}/{responderServiceId}", name="match_job_create")
      */
-    public function matchCreate( $callerJobId, $responderServiceId)
+    public function matchJobCreate( $callerJobId, $responderServiceId)
     {
         $em = $this->getDoctrine()->getManager();
         $manager = new Manager();
         $match = $manager->createJobMatch($callerJobId, $responderServiceId,  $em);
         $em->persist($match);
         $em->flush();
-        return $this->redirectToRoute('matchListMyAll');
+        return $this->redirectToRoute('match_by_jobs');
+    }
+
+    /**
+     * @Route("/match/service/create/{callerServiceId}/{responderJobId}", name="match_service_create")
+     */
+    public function matchServiceCreate( $callerServiceId, $responderJobId)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $manager = new Manager();
+        $match = $manager->createServiceMatch($callerServiceId, $responderJobId,  $em);
+        $em->persist($match);
+        $em->flush();
+        return $this->redirectToRoute('match_by_services');
     }
 
 //
@@ -55,20 +68,29 @@ class MatchController extends AbstractController
     {
         $myId = $this->getUser()->getId();
         $em = $this->getDoctrine()->getManager();
-
         $loader = new Loader($em);
-
         $myJobsMatches = $loader->getJobMatches($myId);
 
-
-//        $callsToMe = $this->getDoctrine()->getRepository('App:Match')->findBy(['responderId' => $myId]);
-        return $this->render('match/listMyAll.html.twig', [
-            'myCalls' => $myJobsMatches,
-//            'callsToMe' => $callsToMe,
+        return $this->render('match/my-jobs-matches.twig', [
+            'myJobsMatches' => $myJobsMatches,
         ]);
     }
 
+    /**
+     * @Route("/match/by-services", name="match_by_services")
+     */
+    public function matchByServices()
+    {
+        //Todo likusi dalis
+        $myId = $this->getUser()->getId();
+        $em = $this->getDoctrine()->getManager();
+        $loader = new Loader($em);
+        $myServicesMatches = $loader->getServicesMatches($myId);
 
+        return $this->render('match/my-services-matches.twig', [
+            'myServicesMatches' => $myServicesMatches,
+        ]);
+    }
 
     /**
      * @Route("/match/{updateType}/{matchId}", name="matchUpdate")
@@ -83,7 +105,7 @@ class MatchController extends AbstractController
             }
         $em->persist($match);
         $em->flush();
-        return $this->redirectToRoute('matchListMyAll');
+        return $this->redirectToRoute('match_by_jobs');
     }
 
 //        TODO Method to be replaced by matches_jobs and matches_services
