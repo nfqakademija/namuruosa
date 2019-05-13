@@ -1,8 +1,8 @@
-<h3 class="text-warning">Darbas: <span class="text-success"> {{ matchesByService[0].title }}
-    </span></h3>
+<h5 class="text-muted">Mano darbas: <span class="text-success"> {{ matchesByJob[0].title }}
+    </span></h5>
 <table class="table table-lg table-hover mb-5">
 
-    {% for service in matchesByService[1] %}
+    {% for service in matchesByJob[1] %}
         <tr>
             <td class="py-4" style="width: 70%">
                 <h4 class="text-info">{{ service[0].title }}</h4>
@@ -20,9 +20,9 @@
                 </div>
             </td>
             <td class="text-right">
-               <h4 class="text-info text-right">{{ matchesByService[0].budget }} <i class="fa fa-euro-sign fa-xs"></i> / val.</h4>
+               {#<h4 class="text-info text-right">{{ matchesByService[0].budget }} <i class="fa fa-euro-sign fa-xs"></i> / val.</h4>#}
                 <a class="align-self-end" href="{{ path('matchShow',
-                    {'responderServiceId': service[0].id, 'callerServiceId':  matchesByService[0].id }) }}">
+                    {'responderServiceId': service[0].id, 'callerServiceId':  matchesByJob[0].id }) }}">
                     <button class="btn btn-outline-info">Kviesti padirbėti</button>
                 </a>
             </td>

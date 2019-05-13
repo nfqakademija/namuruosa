@@ -8,13 +8,11 @@
 
 namespace App\Controller;
 
-
-use App\Form\MatchType;
 use App\Form\ServiceType;
+use App\Service\Loader;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
-use App\Entity\User;
 
 /**
  * Class ServiceController
@@ -37,7 +35,7 @@ class ServiceController extends AbstractController
             $service->setUserId($this->getUser());
             $em->persist($service);
             $em->flush();
-            return $this->redirectToRoute('listMatches');
+            return $this->redirectToRoute('service_pot_matches');
         }
 
         return $this->render('service/add.html.twig', [
@@ -47,79 +45,31 @@ class ServiceController extends AbstractController
 
     /**
      *
-     * @Route("service/list", name="serviceList")
+     * @Route("service/myservices", name="my_services")
      */
-    public function listServices()
+    public function listMyJobs(Loader $loader)
     {
         $userId = $this->getUser()->getId();
-        $userServices = $this->getDoctrine()->getRepository('App:Service')->findServicesByUserId($userId);
-//        $services = [$this->getDoctrine()->getRepository('App:Service')->getByUserIdQuery($userId)];
-        return $this->render('service/list.html.twig', [
-            'servicesArray'=>[$userServices],
-    ]);
-    }
+        $myServices = $loader->loadByUser($userId);
 
-    /**
-     * @Route("service/list-matches", name="listMatches")
-     */
-    public function listMatches()
-    {
-        $userId = $this->getUser()->getId();
-        $userServices = $this->getDoctrine()
-            ->getRepository('App:Service')
-            ->findServicesByUserId($userId);
-        $myMatchingServices = $this->getDoctrine()
-            ->getRepository('App:Service')
-            ->findMatches($userServices);
-//        $myServices = $this->getDoctrine()->getRepository('App:Service')->getMatchesQuery($userId);
-
-        return $this->render('service/list-matches.html.twig', [
-            'servicesArray'=>$myMatchingServices,
+        return $this->render('service/my-services.html.twig', [
+            'servicesArray'=>[$myServices],
         ]);
     }
 
-//    /**
-//     * @Route("service/show-match/{responderServiceId}/{myServiceId}", name="showMatch")
-//     */
-//    public function showMatch($responderServiceId, $myServiceId, Request $request)
-//    {
-//        $responderServiceJoinUser = $this->getDoctrine()
-//            ->getRepository('App:Service')
-//            ->findServiceUserByServiceId($responderServiceId);
-//
-//        $callerServiceJoinUser = $this->getDoctrine()
-//            ->getRepository('App:Service')
-//            ->findServiceUserByServiceId($myServiceId);
-//
-//
-//        $forma = $this->createForm(MatchType::class);
-////        $forma->handleRequest($request);
-//
-//        return $this->render('service/show-match.html.twig', [
-////            'matchform' => $forma->createView(),
-//            'responder'=>$responderServiceJoinUser,
-//            'caller'=>$callerServiceJoinUser,
-//        ]);
-//    }
+    /**
+     * @Route("service/pot-matches", name="service_pot_matches")
+     */
+    public function listPotMatches(Loader $loader)
+    {
+        $userId = $this->getUser()->getId();
+        $myMatchingJobs = $loader->loadPotMatches($userId);
 
-//    /**
-//     * @Route("service/show-match/{id}", name="showMatch")
-//     */
-//    public function showMatch($id)
-//    {
-//        $serviceId = $id;
-//        $service = $this->getDoctrine()->getRepository('App:Service')->find($serviceId);
-//
-//        $userId = $service->getUserId();
-//
-//        $user = $this->getDoctrine()->getRepository('App:User')->find($userId);
-//
-//
-//        return $this->render('service/show-match.html.twig', [
-//            'service'=>$service,
-//            'username' => $user->getUsername(),
-//            'id' => $user->getId(),
-//
-//        ]);
-//    }
+        return $this->render('service/pot-matches.html.twig', [
+            'potMatchesByServices'=>$myMatchingJobs,
+        ]);
+    }
+
+
+
 }

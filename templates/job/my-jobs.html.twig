@@ -1,0 +1,10 @@
+{% extends 'job/layout.html.twig' %}
+
+{% block main %}
+
+    <h2>Mano darbai</h2>
+    {% for jobs in jobsArray %}
+        {% include 'job/table/jobs.html.twig' %}
+    {% endfor %}
+
+{% endblock %}

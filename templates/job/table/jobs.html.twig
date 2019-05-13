@@ -1,0 +1,26 @@
+<table class="table">
+    <tr>
+        <th>Pavadinimas</th>
+        <th>Aprašymas</th>
+        <th>Kategorijos </th>
+        <th>Kaina</th>
+        <th>Redaguoti</th>
+    </tr>
+    {% for job in jobs %}
+        <tr>
+            <td>{{ job.title }}</td>
+            <td>{{ job.description }}</td>
+            <td>
+                {% for cat in job.category %}
+                    {{ cat.name }},
+                {% endfor %}
+            </td>
+            <td>{{ job.budget }}</td>
+            <td>
+                <button class="btn btn-link">Keisti</button>
+                <button class="btn btn-sm btn-danger">Šalinti</button>
+            </td>
+        </tr>
+
+    {% endfor %}
+</table>

@@ -9,6 +9,7 @@
 namespace App\Entity\Repository;
 
 
+use App\Entity\Job;
 use App\Entity\Service;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\Query;
@@ -23,7 +24,7 @@ class ServiceRepository extends EntityRepository
         return $this->getEntityManager()->createQuery(
             "
             SELECT s 
-                FROM App\Entity\Service s 
+            FROM App\Entity\Service s 
             WHERE s.userId= :id 
             ORDER BY s.updatedAt DESC
             "
@@ -32,100 +33,50 @@ class ServiceRepository extends EntityRepository
             ->getResult();
     }
 
-// Method to find all services provided by others, that match given array of My services
-    public function findMatches(array $myServices)
+
+    public function findMatches( Job $job)
     {
 
+        $myCats = $job->getCategory()->toArray();
 
-//    public function getMatchesQuery($id){
-
-//        $myServices = $this->findServicesByUserId($id);
-//        $matchesWithSearchTitle =[];
-
-        /**
-         * @var $myServices Service[]
-         */
-        foreach ($myServices as $service) {
-
-            $myTimeStart = $service->getActiveTimeStart()->format('H:i');
-            $myTimeEnd = $service->getActiveTimeEnd()->format('H:i');
-            $myTransport = $service->getTransport();
-            $myCleaning = $service->getCleaning();
-            $myEducation = $service->getEducation();
-            $myCoordX = $service->getCoordinateX();
-            $myCoordY = $service->getCoordinateY();
-            $myServiceTitle = $service->getTitle();
-            $myId = $service->getUserId();
-            $myServiceId = $service->getId();
-            $myId2 = $service->getUserId()->getId();
-
-            $coordinateTollerance = 50;  //TODO replace with form field
-
-            $myCoordXmin = $myCoordX - $coordinateTollerance;
-            $myCoordXmax = $myCoordX + $coordinateTollerance;
-            $myCoordYmin = $myCoordY - $coordinateTollerance;
-            $myCoordYmax = $myCoordY + $coordinateTollerance;
-
-            $myServiceTitle = $service->getTitle();
-            $matchesWithSearchTitle =[];
+            $myLat = $job->getLat();
+            $myLon = $job->getLon();
+            $myId = $job->getUserId()->getId();
+//            $myServiceId = $service->getId();
+//            $myId2 = $service->getUserId()->getId();
 
             $qb = $this->createQueryBuilder('s')
-                ->addSelect('( (s.coordinateX - :myCoordX1) * (s.coordinateX - :myCoordX2) + (s.coordinateY - :myCoordY1) * (s.coordinateY - :myCoordY2)) AS HIDDEN distance')// Distance without sqrt - just for sorting, not for real values
-                ->where('s.transport = :myTransport')
-                ->orWhere('s.cleaning = :myCleaning')
-                ->orWhere('s.education = :myEducation')
-                ->andWhere('s.coordinateX BETWEEN :myCoordXmin AND :myCoordXmax')
-                ->andWhere('s.coordinateY BETWEEN :myCoordYmin AND :myCoordYmax')
-                ->andWhere('s.userId <> :myId')
-//                ->andWhere('distance < 500'  )
-                ->setParameters([
-                    'myTimeStart' => $myTimeStart,
-                    'myTimeEnd' => $myTimeEnd,
-                    'myTransport' => $myTransport,
-                    'myCleaning' => $myCleaning,
-                    'myEducation' => $myEducation,
-                    'myCoordX1' => $myCoordX,
-                    'myCoordX2' => $myCoordX,
-                    'myCoordY1' => $myCoordY,
-                    'myCoordY2' => $myCoordY,
-                    'myCoordXmin' => $myCoordXmin,
-                    'myCoordXmax' => $myCoordXmax,
-                    'myCoordYmin' => $myCoordYmin,
-                    'myCoordYmax' => $myCoordYmax,
-                    'myId' => $myId,
-                ])
-                ->orderBy('distance', 'ASC');//TODO DOES NOT WORK!!
+                ->select('s')
+                ->addSelect('( (s.lat - :myLat) * (s.lat - :myLat) + (s.lon - :myLon) * (s.lon - :myLon)) / 100
+                 AS distance')// Distance just for sorting, not for real values
+////                ->andWhere('s.userId <> :myId')
+                ->addSelect('s.lat AS belekas')
+                ->leftJoin('s.category', 'category')
+                ->andWhere("category in (:myCats)")
+                ->andWhere('s.lat BETWEEN :minLat AND :maxLat ')
+                ->andWhere('s.lon BETWEEN :minLon AND :maxLon ')
+//                ->andWhere( 'distance <> 500'  )
 
-            $qb->andWhere($qb->expr()->orX(
-                $qb->expr()->andX(
-                    's.activeTimeStart <= :myTimeStart', 's.activeTimeEnd >= :myTimeStart'),
-                $qb->expr()->andX(
-                    's.activeTimeStart <= :myTimeEnd', 's.activeTimeEnd >= :myTimeEnd'),
-                $qb->expr()->andX(
-                    's.activeTimeStart >= :myTimeStart', 's.activeTimeEnd <= :myTimeEnd')
-            ));
+                ->setParameters([
+                    'myCats' =>  $myCats,
+                    'myLat' => $myLat,
+                    'myLon' => $myLon,
+                    'maxLat' => $myLat + 30,
+                    'maxLon' => $myLon + 30,
+                    'minLat' => $myLat - 30,
+                    'minLon' => $myLon - 30,
+//                    'myId' => $myId,
+                ])
+                ->orderBy('distance', 'DESC');//TODO DOES NOT WORK!!
 
             $query = $qb->getQuery();
             $allMatchesByOneMyService = $query->execute();
-//TODO remove addition of extra data to other method or class in the future
 
-            $additionalData = [];
-            $additionalData[] = $myServiceTitle;
-            $additionalData[] = $myTimeStart;
-            $additionalData[] = $myTimeEnd;
-            $additionalData[] = $myServiceId;
-
-            $matchesAndAdditionalByOneServices = [];
-            $matchesAndAdditionalByOneServices[] = $allMatchesByOneMyService;
-            $matchesAndAdditionalByOneServices[] = $additionalData;
-            $matchesByAllMyServices[] =  $matchesAndAdditionalByOneServices;
-
-//var_dump($matchesByAllMyServices);
-        }
-        return $matchesByAllMyServices;
+        return $allMatchesByOneMyService;
     }
 
-// Method to find service and its owning user by given Service ID
+
+
     public function findServiceUserByServiceId($serviceId)
     {
         $qb = $this->createQueryBuilder('s')

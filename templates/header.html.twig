@@ -1,44 +1,4 @@
 <header>
-    <nav class="navbar navbar-dark bg-dark">
-        <a class="navbar-brand" href="javascript:void(0)" id="menuButton" >MENU<i class="fa fa-fw fa-caret-right" id="menuArrow"></i></a>
-        <a class="navbar-brand app-name" href="/"> NAMURUOSA</a>
-        <a href="{{ path('listMatches') }}"><button class="btn-outline-info">Ieškoti darbų</button></a>
-        <a href="{{ path('matchListMyAll') }}"><button class="btn-outline-success">Mano matchai</button></a>
-        <div class="dropdown dropdown-toggle-split">
-            <a class="dropdown-toggle" href="#" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
-                    {{ 'layout.logged_in_as'|trans({'%username%': app.user.username}, 'FOSUserBundle') }}
-                {% endif %}
-            </a>
-            <ul class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
 
-                {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
-                    <li>
-                        <a class="dropdown-item" href="{{ path('fos_user_profile_show') }}"><i class="fas fa-fw fa-user"></i>
-                            {{ 'layout.profile'|trans({}, 'FOSUserBundle') }}
-                        </a>
-                    </li>
-                    <li>
-                        <a class="dropdown-item" href="{{ path('fos_user_security_logout') }}">
-                            <i class="fas fa-fw fa-sign-out-alt"></i>
-                            {{ 'layout.logout'|trans({}, 'FOSUserBundle') }}
-                        </a>
-                    </li>
-                {% else %}
-                    <li>
-                        <a class="dropdown-item" href="{{ path('fos_user_security_login') }}">
-                            <i class="fas fa-sign-in-alt"></i>
-                            {{ 'layout.login'|trans({}, 'FOSUserBundle') }}
-                        </a>
-                    </li>
-                    <li>
-                        <a class="dropdown-item" href="{{ path('fos_user_registration_register') }}">
-                            <i class="fas fa-fw fa-user-plus"></i>
-                            {{ 'layout.register'|trans({}, 'FOSUserBundle') }}
-                        </a>
-                    </li>
-                {% endif %}
-            </ul>
-        </div>
-    </nav>
+    {% include 'navbar-new.html.twig' %}
 </header>
