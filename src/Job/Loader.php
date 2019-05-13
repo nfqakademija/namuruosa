@@ -24,6 +24,11 @@ class Loader
         $this->em = $em;
     }
 
+    public function getJob($jobId)
+    {
+        return $this->em->find('App:Job', $jobId);
+    }
+
     /**
      * @param $id
      * @return mixed
@@ -46,6 +51,18 @@ class Loader
             $potMatches[] = $servicesByJob;
         }
         return $potMatches;
+    }
+
+    public function delete($jobId)
+    {
+        $job = $this->getJob($jobId);
+        if ($job) {
+            $this->em->remove($job);
+            $this->em->flush();
+            return true;
+        } else {
+            return false;
+        }
     }
 
 

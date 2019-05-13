@@ -16,9 +16,10 @@
                 {% endfor %}
             </td>
             <td>{{ job.budget }}</td>
+            <td>{{ job.id }}</td>
             <td>
                 <button class="btn btn-link">Keisti</button>
-                <button class="btn btn-sm btn-danger">Šalinti</button>
+                <a href="{{ path( 'jobDelete' , { 'jobId' : job.id } ) }}"><button class="btn btn-sm btn-danger">Šalinti</button></a>
             </td>
         </tr>
 
