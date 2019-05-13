@@ -46,21 +46,6 @@ class MatchController extends AbstractController
         return $this->redirectToRoute('match_by_services');
     }
 
-//
-//    /**
-//     * @Route("/match/create/{responderServiceId}/{callerServiceId}", name="matchCreate")
-//     */
-//    public function matchCreateOrig($responderServiceId, $callerServiceId)
-//    {
-//        $em = $this->getDoctrine()->getManager();
-//        $manager = new Manager();
-//        $match = $manager->createMatch($responderServiceId, $callerServiceId, $em);
-//        $em->persist($match);
-//        $em->flush();
-//        return $this->redirectToRoute('matchListMyAll');
-//    }
-
-
     /**
      * @Route("/match/by-jobs", name="match_by_jobs")
      */
@@ -95,7 +80,7 @@ class MatchController extends AbstractController
     /**
      * @Route("/match/{updateType}/{matchId}", name="matchUpdate")
      */
-    public function matchUpdate($updateType, $matchId)
+    public function matchUpdate($updateType, $matchId, Request $request)
     {
         $em = $this->getDoctrine()->getManager();
         $helper = new MatchHelper();
@@ -105,46 +90,32 @@ class MatchController extends AbstractController
             }
         $em->persist($match);
         $em->flush();
-        return $this->redirectToRoute('match_by_jobs');
+
+        $referer = $request->headers->get('referer');
+        return $this->redirect($referer);
     }
 
-//        TODO Method to be replaced by matches_jobs and matches_services
-//    /**
-//     * @Route("/match/listMyAll", name="matchListMyAll")
-//     */
-//    public function matchListMyAllOrig()
-//    {
-//        $myId = $this->getUser()->getId();
-//        $myCalls = $this->getDoctrine()->getRepository('App:Match')->findBy(['callerId' => $myId]);
 //
-//        $callsToMe = $this->getDoctrine()->getRepository('App:Match')->findBy(['responderId' => $myId]);
-//        return $this->render('match/listMyAll.html.twig', [
-//            'myCalls' => $myCalls,
-//            'callsToMe' => $callsToMe,
+//    //TODO Method to be removed because its web page is not required any more
+//    /**
+//     * @Route("match/show/{responderServiceId}/{callerServiceId}", name="matchShow")
+//     */
+//    public function showMatch($responderServiceId, $callerServiceId, Request $request)
+//    {
+//        $responderServiceJoinUser = $this->getDoctrine()
+//            ->getRepository('App:Service')
+//            ->findServiceUserByServiceId($responderServiceId);
+//
+//        $callerServiceJoinUser = $this->getDoctrine()
+//            ->getRepository('App:Service')
+//            ->findServiceUserByServiceId($callerServiceId);
+//
+//
+//        return $this->render('match/show-match.html.twig', [
+//            'responder' => $responderServiceJoinUser,
+//            'caller' => $callerServiceJoinUser,
 //        ]);
 //    }
-
-
-    //TODO Method to be removed because its web page is not required any more
-    /**
-     * @Route("match/show/{responderServiceId}/{callerServiceId}", name="matchShow")
-     */
-    public function showMatch($responderServiceId, $callerServiceId, Request $request)
-    {
-        $responderServiceJoinUser = $this->getDoctrine()
-            ->getRepository('App:Service')
-            ->findServiceUserByServiceId($responderServiceId);
-
-        $callerServiceJoinUser = $this->getDoctrine()
-            ->getRepository('App:Service')
-            ->findServiceUserByServiceId($callerServiceId);
-
-
-        return $this->render('match/show-match.html.twig', [
-            'responder' => $responderServiceJoinUser,
-            'caller' => $callerServiceJoinUser,
-        ]);
-    }
 
 
 }

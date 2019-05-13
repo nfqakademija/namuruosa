@@ -13,12 +13,12 @@
         <tr>
             <td>{{ match.createdAt|date('Y.m.d') }}</td>
             {% if match.callerJobId %}
-                <td>{{ match.callerJobId.description }}</td>
+                <td>{{ match.callerJobId.title }}</td>
                 <td>{{ match.responderServiceId.title }}</td>
                 <td>{{ match.responderId }}</td>
             {% else %}
-                <td><b>R</b> {{ match.responderJobId.description }} </td>
-                <td><b>R</b> {{ match.callerServiceId.title }} </td>
+                <td><b>R</b> {{ match.responderJobId.title }} </td>
+                <td>{{ match.callerServiceId.title }} </td>
                 <td>{{ match.callerId }}</td>
             {% endif %}
             <td>

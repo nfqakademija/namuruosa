@@ -36,9 +36,9 @@ class MatchRepository extends EntityRepository
     {
 
         $qb = $this->createQueryBuilder('m')
-            ->select('m')
-            ->leftJoin('m.responderServiceId', 'responderService')
+            ->select('m, callerService')
             ->leftJoin('m.callerServiceId', 'callerService')
+            ->leftJoin('m.responderServiceId', 'responderService')
             ->andWhere("callerService.userId = :userId OR responderService.userId = :userId")
             ->setParameters([
                 'userId' =>  $userId,
