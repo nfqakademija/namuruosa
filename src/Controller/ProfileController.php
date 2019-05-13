@@ -6,62 +6,52 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
 use App\Form\EditProfileType;
+use App\Entity\UserProfile;
 
 class ProfileController extends AbstractController
 {
     /**
-     * @Route("/profile/{id}", name="profile", requirements={"page"="\d+"})
+     * @Route("/profile", name="profile")
      */
-    public function index($id = 0)
+    public function profile()
     {
         $user = $this->getUser();
 
         $profile = $user->getUserProfile();
 
-        if ($id !== 0) {
-            $profile = $this->getDoctrine()->getRepository('App:UserProfile')->
-            findBy(['id' => $id])[0];
-            $user = $profile->getUserId();
-        }
+        if (!$profile){
+            $profile = new UserProfile;
+            $profile->setCity('');
+            $profile->setJobTitle('');
+            $profile->setDescription('');
+            $profile->setLanguages('');
+            $profile->setSkill('igudis1, igudis2');
+            $profile->setPhoto('profile-icon.png');
+            $profile->setHourPrice(0);
 
-        if ($profile){
-            $firstName = $user->getFirstName();
-            $lastName = $user->getLastName();
-            $time = $user->getLastLogin();
-            $userCity = $profile->getCity();
-            $description = $profile->getDescription();
-            $langs = $profile->getLanguages();
-            $skills = \explode(',', $profile->getSkill());
-            $title = $profile->getJobTitle();
-            $photo = $profile->getPhoto();
-            $price = $profile->getHourPrice();
-
-        }else{
-            $firstName = $user->getFirstName();
-            $lastName = $user->getlastName();
-            $time = $user->getLastLogin();
-            $userCity = '';
-            $description = '';
-            $langs = '';
-            $title = '';
-            $skills = '';
-            $photo = 'profile-icon.png';
-            $price = '';
-        }
-        return $this->render('profile/index.html.twig', [
+      }
+        return $this->render('profile/logedUserProfile.html.twig', [
+            'user' => $user,
             'profile' => $profile,
             'controller_name' => 'ProfileController',
-            'firstName' => $firstName,
-            'lastName' => $lastName,
-            'city' => $userCity,
-            'time' => $time,
-            'description' => $description,
-            'languages' => $langs,
-            'title' => $title,
-            'skill' => $skills,
-            'photo' => $photo,
-            'price' => $price,
             ]);
+    }
+
+    /**
+     * @Route("/profile/user/{id}", name="otherUserProfile"), requirements={"id"="\d+"}
+     */
+
+    public function otherUserProfile($id)
+    {
+      $profile = $this->getDoctrine()->getRepository('App:UserProfile')->
+      findBy(['id' => $id])[0];
+      $user = $profile->getUserId();
+
+      return $this->render('profile/otherUserProfile.html.twig', [
+          'user' => $user,
+          'profile' => $profile,
+          'controller_name' => 'ProfileController',
+          ]);
     }
 
     /**
@@ -114,6 +104,7 @@ class ProfileController extends AbstractController
         }
         return $this->render('profile/editProfileForm.html.twig', [
             'form' => $form->createView(),
+            'profile' => $userInfo
         ]);
     }
 }

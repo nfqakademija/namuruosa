@@ -12,20 +12,20 @@
 <div id="profile">
   <aside class="profile-aside">
     <div class="profile-pic">
-      <img src="{{asset('img/profile_pics/') ~ photo}}" alt="profile icon" title="Your profile picture!">
+      <img src="{{asset('img/profile_pics/') ~ profile.getphoto}}" alt="profile icon" title="Your profile picture!">
     </div>
     <div class="sidebar-content">
       <div class="sidebar-content-text">
-        <h4 class="user-name">{{firstName}} {{lastName}}</h4>
-        <p class="job-title">{{title}}</p>
+        <h4 class="user-name">{{user.getfirstname}} {{user.getlastname}}</h4>
+        <p class="job-title">{{profile.getjobtitle}}</p>
         <div class="user-location">
-          {{city}}
+          {{profile.getcity}}
         </div>
         <div class="user-languages">
-          {{languages}}
+          {{profile.getlanguages}}
         </div>
         <div class="user-about">
-          <p>{{description}}</p>
+          <p>{{profile.getdescription}}</p>
         </div>
         <div class="details-list">
           <div class="details-list-ratings">
@@ -33,15 +33,18 @@
             <div class="total-rating">4.8</div>
             <div class="total-reviews">(24)</div>
           </div>
-          <div class="member-cost">{{price}} &euro;<span>/hr</span></div>
+          <div class="member-cost">{{profile.gethourprice}} &euro;<span>/hr</span></div>
         </div>
+        {% block profileButton %}
+
         <div class="contact-button">
           <a class="btn btn-contact" href="{{path('editProfile')}}">Redaguoti</a>
         </div>
+        {% endblock %}
         <div class="skills">
           <h4 class="job-title">Igudziai</h4>
           <ul>
-            {% for item in skill %}
+            {% for item in profile.getskill | split(',') %}
                   <li>{{item}}</li>
             {% endfor %}
 
@@ -60,7 +63,7 @@
             </div>
             <div class="last-login">
               <p>Paskutinis prisijungimas</p>
-              <p>{{time | date("Y.m.d")}}</p>
+              <p>{{user.getlastlogin | date("Y.m.d")}}</p>
             </div>
         </div>
       </div>
