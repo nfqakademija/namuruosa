@@ -5,26 +5,24 @@
         <span class="navbar-toggler-icon"></span>
     </button>
 
-    <li class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="collapse navbar-collapse" id="navbarSupportedContent">
 
 
-
-
-    <li class="nav-item dropdown ">
-        <a class="nav-link text-warning" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
-           aria-haspopup="true" aria-expanded="false">
-            <i class="fa fa-lock"></i>
-            Admin <i class="fa fa-angle-down "></i>
-        </a>
-        </a>
-        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-            <a class="dropdown-item" href="{{ path ('admin_category_add') }}">Papildyti kategorijas
-                <div><span class="small text-muted mt-0">Bla</span></div>
+        <li class="nav-item dropdown ">
+            <a class="nav-link text-warning" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
+               aria-haspopup="true" aria-expanded="false">
+                <i class="fa fa-lock"></i>
+                Admin <i class="fa fa-angle-down "></i>
             </a>
-            <div class="dropdown-divider"></div>
+            </a>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                <a class="dropdown-item" href="{{ path ('admin_category_add') }}">Papildyti kategorijas
+                    <div><span class="small text-muted mt-0">Bla</span></div>
+                </a>
+                <div class="dropdown-divider"></div>
 
-        </div>
-    </li>
+            </div>
+        </li>
 
 
         <ul class="navbar-nav ml-auto ">
@@ -115,5 +113,6 @@
             {% endif %}
 
         </ul>
+    </ul>
 
 </nav>
