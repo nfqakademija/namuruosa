@@ -98,7 +98,7 @@ class ProfileController extends AbstractController
             {
                 $userInfo->setCity($form["city"]->getData());
                 $userInfo->setDescription($form["description"]->getData());
-                $userInfo->setPhoto($photo);
+                $userInfo->setPhoto($fileName);
                 $entityManager->persist($userInfo);
                 $entityManager->flush();
             }
