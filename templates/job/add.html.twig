@@ -3,36 +3,21 @@
 
 {% block main %}
     <h2 class="text-center mb-5 text-info">Naujas DARBAS </h2>
-
-    {#{{ form_start(form, {'method': 'post', 'action': path('fos_user_registration_register'), 'attr': {'class': 'fos_user_registration_register'}}) }}#}
-    {{ form_start(form, {'method': 'post', 'action': path('jobAdd'), 'attr': {'class': 'fos_user_registration_register'}}) }}
-    {{ form_widget(form) }}
-    <div class="row mt-5">
-        <div class="col">
-            <input type="submit" class="btn btn-info col-sm-2 offset-4" value="Sukurti Darbą" />
-        </div>
-    </div>
-
-    {{ form_end(form) }}
-
     <div class="container">
         <div class="row">
-            <div class="col-sm-6">
-{#                <div>#}
-{#                    <input id="pac-input" class="form-control" type="search" placeholder="Įveskite adresą">#}
-{#                </div>#}
-                <div id="coordinates">
+            <div class="col-sm-8">
+                {#{{ form_start(form, {'method': 'post', 'action': path('fos_user_registration_register'), 'attr': {'class': 'fos_user_registration_register'}}) }}#}
+                {{ form_start(form, {'method': 'post', 'action': path('jobAdd'), 'attr': {'class': 'fos_user_registration_register'}}) }}
+                {{ form_widget(form) }}
+                <div class="row mt-5">
+                    <div class="col">
+                        <input type="submit" class="btn btn-info offset-6" value="Sukurti Darbą" />
+                    </div>
                 </div>
-                <div id="response">
-                </div>
-            </div>
-            <div class="col-sm-6">
-                <div id="map"></div>
-                <div id="infowindow-content">
-                    <img src="" width="16" height="16" id="place-icon">
-                    <span id="place-name" class="title"></span><br>
-                    <span id="place-address"></span>
-                </div>
+                {{ form_end(form) }}
+             </div>
+             <div class="col-sm-4">
+                {% include '/_map/map_divs.html.twig' %}
             </div>
         </div>
     </div>
@@ -42,7 +27,6 @@
 
 {% block javascripts  %}
     {{ parent() }}
-    {{ encore_entry_script_tags('map') }}
 
     <script>
         function initMap()
@@ -144,12 +128,12 @@
                 };
 
                 //send to PHP start
-                // const xhr = new XMLHttpRequest();
-                // xhr.onload = function () {
-                //     const serverResponse = document.getElementById("response");
-                //     serverResponse.innerHTML = this.responseText;
-                // };
-                // xhr.open("POST", "../job");
+                const xhr = new XMLHttpRequest();
+                xhr.onload = function () {
+                    // const serverResponse = document.getElementById("response");
+                    // serverResponse.innerHTML = this.responseText;
+                };
+                // xhr.open("POST", "");
                 // xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
                 // xhr.send("lat=" + placeinfo.coords.lat + "&lng=" + placeinfo.coords.lng + "&address=" + placeinfo.addresses.fromInput);
                 //send to PHP end
