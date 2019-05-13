@@ -92,17 +92,17 @@ class Job
     protected $budget;
 
     /**
-     * @ORM\Column(type="decimal", nullable=true)
+     * @ORM\Column(type="decimal", nullable=false, precision=17, scale=14)
      */
     protected $lat;
 
     /**
-     * @ORM\Column(type="decimal", nullable=true)
+     * @ORM\Column(type="decimal", nullable=false, precision=17, scale=14)
      */
     protected $lon;
 
     /**
-     * @ORM\Column(type="string", length=120)
+     * @ORM\Column(type="string", length=120, nullable=false)
      */
     protected $address;
 
