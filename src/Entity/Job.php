@@ -102,6 +102,11 @@ class Job
     protected $lon;
 
     /**
+     * @ORM\Column(type="string", length=120)
+     */
+    protected $address;
+
+    /**
      * @var
      * @ORM\Column(type="datetime", nullable=true)
      */
@@ -347,6 +352,22 @@ class Job
     public function setLon($lon): void
     {
         $this->lon = $lon;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getAddress()
+    {
+        return $this->address;
+    }
+
+    /**
+     * @param mixed $address
+     */
+    public function setAddress($address): void
+    {
+        $this->address=$address;
     }
 
     /**
