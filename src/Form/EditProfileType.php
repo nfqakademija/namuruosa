@@ -20,7 +20,7 @@ class EditProfileType extends AbstractType
                 'required' => true,
                 ])
             ->add('photo', FileType::class, [
-                'required' => true,
+                'required' => false,
                 ])
             ->add('city', TextType::class, [
                 'required' => true,

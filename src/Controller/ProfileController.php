@@ -10,20 +10,24 @@ use App\Form\EditProfileType;
 class ProfileController extends AbstractController
 {
     /**
-     * @Route("/profile", name="profile") ///
+     * @Route("/profile/{id}", name="profile", requirements={"page"="\d+"})
      */
-    public function index()
+    public function index($id = 0)
     {
         $user = $this->getUser();
 
         $profile = $user->getUserProfile();
-        // \var_dump($profile);
 
+        if ($id !== 0) {
+            $profile = $this->getDoctrine()->getRepository('App:UserProfile')->
+            findBy(['id' => $id])[0];
+            $user = $profile->getUserId();
+        }
 
         if ($profile){
-            $firstName = $profile->getUserId()->getFirstName();
-            $lastName = $profile->getUserId()->getLastName();
-            $time = $profile->getUserId()->getLastLogin();
+            $firstName = $user->getFirstName();
+            $lastName = $user->getLastName();
+            $time = $user->getLastLogin();
             $userCity = $profile->getCity();
             $description = $profile->getDescription();
             $langs = $profile->getLanguages();
@@ -70,26 +74,29 @@ class ProfileController extends AbstractController
 
         $userObj = $this->getUser();
         $userInfo = $userObj->getUserProfile();
-        // $userInfo = $this->getDoctrine()->getRepository('App:UserProfile')->find($userId);
 
         if ($form->isSubmitted() && $form->isValid()){
             $entityManager = $this->getDoctrine()->getManager();
             $profile = $form->getData();
             $file = $request->files->get('edit_profile')['photo'];
 
-            $uploads_directory = $this->getParameter('profile_pics_dir');
+            if ($file) {
 
-            $fileName = md5(\uniqid()) . '.' . $file->guessExtension();
+              $uploads_directory = $this->getParameter('profile_pics_dir');
 
-            $file->move($uploads_directory, $fileName);
-            // echo "<pre>";
-            // \var_dump($fileName);
+              $fileName = md5(\uniqid()) . '.' . $file->guessExtension();
+
+              $file->move($uploads_directory, $fileName);
+
+            }else {
+              $fileName = 'profile-icon.png';
+            }
+
 
             if (!$userInfo)
             {
 
                 $profile->setUserId($userObj);
-                $profile->setPhoto($fileName);
                 $profile->setPhoto($fileName);
 
                 $entityManager->persist($profile);
