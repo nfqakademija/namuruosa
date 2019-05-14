@@ -46,10 +46,7 @@
                         lat: position.coords.latitude,
                         lng: position.coords.longitude
                     };
-                    //
-                    // infoWindow.setPosition(pos);
-                    // infoWindow.setContent('Jūsų esame vieta.');
-                    // infoWindow.open(map);
+
                     map.setCenter(pos);
                 }, function () {
                     handleLocationError(true, infoWindow, map.getCenter());
@@ -127,52 +124,8 @@
                     }
                 };
 
-                //send to PHP start
-                const xhr = new XMLHttpRequest();
-                xhr.onload = function () {
-                    // const serverResponse = document.getElementById("response");
-                    // serverResponse.innerHTML = this.responseText;
-                };
-                // xhr.open("POST", "");
-                // xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-                // xhr.send("lat=" + placeinfo.coords.lat + "&lng=" + placeinfo.coords.lng + "&address=" + placeinfo.addresses.fromInput);
-                //send to PHP end
-                // Outputting start
-
                 document.getElementById("job_lat").value = placeinfo.coords.lat;
                 document.getElementById("job_lon").value = placeinfo.coords.lng;
-
-                document.getElementById("coordinates").innerHTML = "";
-
-                var node = document.createElement("li")
-                var textnode = document.createTextNode("Address from object: " + placeinfo.addresses.fromObject);
-                node.appendChild(textnode);
-                document.getElementById("coordinates").appendChild(node);
-                console.log("Address from object: " + placeinfo.addresses.fromObject);
-
-                for (i in placeinfo.coords) {
-                    console.log(i + ": " + placeinfo.coords[i]);
-                    var node = document.createElement("li");
-                    switch (i) {
-                        case "lat":
-                            var coordName = "Latitude";
-                            break;
-                        case "lng":
-                            var coordName = "Longitude";
-                            break;
-                    }
-                    var textnode = document.createTextNode(coordName + ": " + placeinfo.coords[i]);
-                    node.appendChild(textnode);
-                    document.getElementById("coordinates").appendChild(node);
-                }
-
-                var node = document.createElement("li")
-                var textnode = document.createTextNode("Address from input: " + placeinfo.addresses.fromInput);
-                node.appendChild(textnode);
-                document.getElementById("coordinates").appendChild(node);
-                console.log("Address from input: " + placeinfo.addresses.fromInput);
-                //Outputting end
-                console.log(placeinfo);
 
             });
             // uncomment below to show only addresses
@@ -190,12 +143,10 @@
             infoWindow.open(map);
         }
 
-
     </script>
 
     <script
             src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA8MhevTOOkPtWzuIgXbANypkM_S4Pc4XU&libraries=places&callback=initMap"
             async defer>
-
     </script>
 {% endblock %}
