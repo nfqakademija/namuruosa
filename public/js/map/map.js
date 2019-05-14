@@ -1,3 +1,12 @@
+let serviceTypeList = ['job', 'service'];
+let serviceType;
+for (let i = 0; i < serviceTypeList.length; i++) {
+    if (document.getElementById(serviceTypeList[i] + '_address')) {
+        serviceType = serviceTypeList[i];
+        console.log(serviceType);
+    }
+}
+
 function initMap()
 {
     var map = new google.maps.Map(document.getElementById('map'), {
@@ -26,7 +35,7 @@ function initMap()
     }
     //Geolocation end
 
-    var input = document.getElementById('job_address');
+    var input = document.getElementById(serviceType + '_address');
 
     var autocomplete = new google.maps.places.Autocomplete(input);
 
@@ -89,12 +98,12 @@ function initMap()
             },
             addresses: {
                 fromObject: address,
-                fromInput: document.getElementById('job_address').value
+                fromInput: document.getElementById(serviceType + '_address').value
             }
         };
 
-        document.getElementById("job_lat").value = placeinfo.coords.lat;
-        document.getElementById("job_lon").value = placeinfo.coords.lng;
+        document.getElementById(serviceType + "_lat").value = placeinfo.coords.lat;
+        document.getElementById(serviceType + "_lon").value = placeinfo.coords.lng;
 
     });
     // uncomment below to show only addresses
