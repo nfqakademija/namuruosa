@@ -15,10 +15,7 @@ function initMap()
                 lat: position.coords.latitude,
                 lng: position.coords.longitude
             };
-            //
-            // infoWindow.setPosition(pos);
-            // infoWindow.setContent('Jūsų esame vieta.');
-            // infoWindow.open(map);
+
             map.setCenter(pos);
         }, function () {
             handleLocationError(true, infoWindow, map.getCenter());
@@ -96,48 +93,8 @@ function initMap()
             }
         };
 
-        //send to PHP start
-        // const xhr = new XMLHttpRequest();
-        // xhr.onload = function () {
-        //     const serverResponse = document.getElementById("response");
-        //     serverResponse.innerHTML = this.responseText;
-        // };
-        // xhr.open("POST", "../job");
-        // xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-        // xhr.send("lat=" + placeinfo.coords.lat + "&lng=" + placeinfo.coords.lng + "&address=" + placeinfo.addresses.fromInput);
-        //send to PHP end
-        // Outputting start
-        document.getElementById("coordinates").innerHTML = "";
-
-        var node = document.createElement("li")
-        var textnode = document.createTextNode("Address from object: " + placeinfo.addresses.fromObject);
-        node.appendChild(textnode);
-        document.getElementById("coordinates").appendChild(node);
-        console.log("Address from object: " + placeinfo.addresses.fromObject);
-
-        for (i in placeinfo.coords) {
-            console.log(i + ": " + placeinfo.coords[i]);
-            var node = document.createElement("li");
-            switch (i) {
-                case "lat":
-                    var coordName = "Latitude";
-                    break;
-                case "lng":
-                    var coordName = "Longitude";
-                    break;
-            }
-            var textnode = document.createTextNode(coordName + ": " + placeinfo.coords[i]);
-            node.appendChild(textnode);
-            document.getElementById("coordinates").appendChild(node);
-        }
-
-        var node = document.createElement("li")
-        var textnode = document.createTextNode("Address from input: " + placeinfo.addresses.fromInput);
-        node.appendChild(textnode);
-        document.getElementById("coordinates").appendChild(node);
-        console.log("Address from input: " + placeinfo.addresses.fromInput);
-        //Outputting end
-        console.log(placeinfo);
+        document.getElementById("job_lat").value = placeinfo.coords.lat;
+        document.getElementById("job_lon").value = placeinfo.coords.lng;
 
     });
     // uncomment below to show only addresses
@@ -149,9 +106,9 @@ function handleLocationError(browserHasGeolocation, infoWindow, pos)
     infoWindow.setPosition(pos);
     infoWindow.setContent(
         browserHasGeolocation ?
-        'Error: The Geolocation service failed.' :
-        'Error: Your browser doesn\'t support geolocation.'
+            'Error: The Geolocation service failed.' :
+            'Error: Your browser doesn\'t support geolocation.'
     );
     infoWindow.open(map);
 }
-
+//TODO needs to be moved to assets
