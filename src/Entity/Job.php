@@ -92,14 +92,19 @@ class Job
     protected $budget;
 
     /**
-     * @ORM\Column(type="decimal", nullable=true)
+     * @ORM\Column(type="decimal", nullable=false, precision=17, scale=14)
      */
     protected $lat;
 
     /**
-     * @ORM\Column(type="decimal", nullable=true)
+     * @ORM\Column(type="decimal", nullable=false, precision=17, scale=14)
      */
     protected $lon;
+
+    /**
+     * @ORM\Column(type="string", length=120, nullable=false)
+     */
+    protected $address;
 
     /**
      * @var
@@ -347,6 +352,22 @@ class Job
     public function setLon($lon): void
     {
         $this->lon = $lon;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getAddress()
+    {
+        return $this->address;
+    }
+
+    /**
+     * @param mixed $address
+     */
+    public function setAddress($address): void
+    {
+        $this->address=$address;
     }
 
     /**

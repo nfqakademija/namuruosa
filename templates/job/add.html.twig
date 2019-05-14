@@ -1,17 +1,30 @@
 {% extends "job/layout.html.twig" %}
 
+
 {% block main %}
     <h2 class="text-center mb-5 text-info">Naujas DARBAS </h2>
-
-    {#{{ form_start(form, {'method': 'post', 'action': path('fos_user_registration_register'), 'attr': {'class': 'fos_user_registration_register'}}) }}#}
-    {{ form_start(form, {'method': 'post', 'action': path('jobAdd'), 'attr': {'class': 'fos_user_registration_register'}}) }}
-    {{ form_widget(form) }}
-    <div class="row mt-5">
-        <div class="col">
-            <input type="submit" class="btn btn-info col-sm-2 offset-4" value="Sukurti Darbą" />
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-8">
+                {#{{ form_start(form, {'method': 'post', 'action': path('fos_user_registration_register'), 'attr': {'class': 'fos_user_registration_register'}}) }}#}
+                {{ form_start(form, {'method': 'post', 'action': path('jobAdd'), 'attr': {'class': 'fos_user_registration_register'}}) }}
+                {{ form_widget(form) }}
+                <div class="row mt-5">
+                    <div class="col">
+                        <input type="submit" class="btn btn-info offset-6" value="Sukurti Darbą" />
+                    </div>
+                </div>
+                {{ form_end(form) }}
+             </div>
+             <div class="col-sm-4">
+                {% include '/_map/map_divs.html.twig' %}
+            </div>
         </div>
     </div>
 
-    {{ form_end(form) }}
+{% endblock %}
 
+{% block javascripts  %}
+    {{ parent() }}
+    {% include '/_map/map_js.html.twig' %}
 {% endblock %}
