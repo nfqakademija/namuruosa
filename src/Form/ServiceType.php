@@ -13,8 +13,10 @@ use App\Entity\Category;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
+use Symfony\Component\Form\Extension\Core\Type\SearchType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -44,21 +46,6 @@ class ServiceType extends AbstractType
                 'label' => 'Aprašymas',
                 'required' => true,
             ])
-            ->add('city', TextType::class, [
-                'label' => 'Miestas',
-                'mapped' => false,
-                'required' => true,
-            ])
-            ->add('street', TextType::class, [
-                'label' => 'Gatvė',
-                'mapped' => false,
-                'required' => true,
-            ])
-            ->add('houseNo', TextType::class, [
-                'label' => 'Namo Nr',
-                'mapped' => false,
-                'required' => true,
-            ])
             ->add('category', EntityType::class, [
                 'label' => 'Kategorijos',
                 'class' => 'App:Category',
@@ -80,11 +67,14 @@ class ServiceType extends AbstractType
 //                    0, 15, 30, 45
 //                ],
             ])
-            ->add('lat', NumberType::class, [
+            ->add('lat', HiddenType::class, [
                 'label' => 'Latitude',
             ])
-            ->add('lon', NumberType::class, [
+            ->add('lon', HiddenType::class, [
                 'label' => 'Longitude',
+            ])
+            ->add('address', SearchType::class, [
+                'label' => 'Adresas'
             ])
         ;
     }
