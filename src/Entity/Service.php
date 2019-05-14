@@ -72,15 +72,20 @@ class Service
 
     /**
      * @var
-     * @ORM\Column(type="decimal")
+     * @ORM\Column(type="decimal", nullable=false, precision=17, scale=14)
      */
     protected $lat;
 
     /**
      * @var
-     * @ORM\Column(type="decimal")
+     * @ORM\Column(type="decimal", nullable=false, precision=17, scale=14)
      */
     protected $lon;
+
+    /**
+     * @ORM\Column(type="string", length=120, nullable=false)
+     */
+    protected $address;
 
     /**
      * @var
@@ -260,6 +265,22 @@ class Service
     public function setLon($lon): void
     {
         $this->lon = $lon;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getAddress()
+    {
+        return $this->address;
+    }
+
+    /**
+     * @param mixed $address
+     */
+    public function setAddress($address): void
+    {
+        $this->address=$address;
     }
 
     /**
