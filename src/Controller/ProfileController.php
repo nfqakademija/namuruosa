@@ -50,6 +50,7 @@ class ProfileController extends AbstractController
       return $this->render('profile/otherUserProfile.html.twig', [
           'user' => $user,
           'profile' => $profile,
+          'id' => $id,
           'controller_name' => 'ProfileController',
           ]);
     }
@@ -106,5 +107,13 @@ class ProfileController extends AbstractController
             'form' => $form->createView(),
             'profile' => $userInfo
         ]);
+    }
+    /**
+     * @Route("/profile/review/{id}", name="reviewUser", requirements={"id"="\d+"})
+     */
+
+    public function reviewProfile()
+    {
+      return $this->render('profile/rateUser.html.twig');
     }
 }
