@@ -3,6 +3,8 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use FOS\UserBundle\Model\User as BaseUser;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -38,6 +40,11 @@ class User extends BaseUser
      */
     private $userProfile;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Reviews", mappedBy="user_id")
+     */
+    private $hasReviews;
+
 
 //    ------- End Dalius ------------
 
@@ -45,6 +52,7 @@ class User extends BaseUser
     public function __construct()
     {
         parent::__construct();
+        $this->hasReviews = new ArrayCollection();
         // your own logic
     }
 
@@ -93,6 +101,37 @@ class User extends BaseUser
         $newUser_id = $userProfile === null ? null : $this;
         if ($newUser_id !== $userProfile->getUserId()) {
             $userProfile->setUserId($newUser_id);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Reviews[]
+     */
+    public function getHasReviews(): Collection
+    {
+        return $this->hasReviews;
+    }
+
+    public function addHasReviews(Reviews $hasReviews): self
+    {
+        if (!$this->hasReviews->contains($hasReviews)) {
+            $this->hasReviews[] = $hasReviews;
+            $hasReviews->setUserId($this);
+        }
+
+        return $this;
+    }
+
+    public function removeHasReviews(Reviews $hasReviews): self
+    {
+        if ($this->hasReviews->contains($hasReviews)) {
+            $this->hasReviews->removeElement($hasReviews);
+            // set the owning side to null (unless already changed)
+            if ($hasReviews->getUserId() === $this) {
+                $hasReviews->setUserId(null);
+            }
         }
 
         return $this;

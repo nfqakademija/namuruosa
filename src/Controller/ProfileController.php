@@ -6,45 +6,53 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
 use App\Form\EditProfileType;
+use App\Entity\UserProfile;
 
 class ProfileController extends AbstractController
 {
     /**
-     * @Route("/profile/{id<\d+>}", name="profile") ///
+     * @Route("/profile", name="profile")
      */
-    public function index($id=null)
+    public function profile()
     {
         $user = $this->getUser();
-        if($id === null)
-        {
-            $userId = $user->getId();
-        }else{
-            $userId = $id;
-            $user = $this->getDoctrine()->getRepository('App:User')->find($userId);
-        }
-        $userInfo = $this->getDoctrine()->getRepository('App:UserProfile')->find($userId);
-        if ($userInfo){
-            $firstName = $userInfo->getUserId()->getFirstName();
-            $lastName = $userInfo->getUserId()->getlastName();
-            $time = $userInfo->getUserId()->getLastLogin();
-            $userCity = $userInfo->getCity();
-            $description = $userInfo->getDescription();
 
-        }else{
-            $firstName = $user->getFirstName();
-            $lastName = $user->getlastName();
-            $time = $user->getLastLogin();
-            $userCity = '';
-            $description = '';
-        }
-        return $this->render('profile/index.html.twig', [
+        $profile = $user->getUserProfile();
+
+        if (!$profile){
+            $profile = new UserProfile;
+            $profile->setCity('');
+            $profile->setJobTitle('');
+            $profile->setDescription('');
+            $profile->setLanguages('');
+            $profile->setSkill('igudis1, igudis2');
+            $profile->setPhoto('profile-icon.png');
+            $profile->setHourPrice(0);
+
+      }
+        return $this->render('profile/logedUserProfile.html.twig', [
+            'user' => $user,
+            'profile' => $profile,
             'controller_name' => 'ProfileController',
-            'firstName' => $firstName,
-            'lastName' => $lastName,
-            'city' => $userCity,
-            'time' => $time,
-            'description' => $description
             ]);
+    }
+
+    /**
+     * @Route("/profile/user/{id}", name="otherUserProfile"), requirements={"id"="\d+"}
+     */
+
+    public function otherUserProfile($id)
+    {
+      $profile = $this->getDoctrine()->getRepository('App:UserProfile')->
+      findBy(['id' => $id])[0];
+      $user = $profile->getUserId();
+
+      return $this->render('profile/otherUserProfile.html.twig', [
+          'user' => $user,
+          'profile' => $profile,
+          'id' => $id,
+          'controller_name' => 'ProfileController',
+          ]);
     }
 
     /**
@@ -54,17 +62,33 @@ class ProfileController extends AbstractController
     {
         $form = $this->createForm(EditProfileType::class);
         $form->handleRequest($request);
+
         $userObj = $this->getUser();
-        $userId = $userObj->getId();
-        $userInfo = $this->getDoctrine()->getRepository('App:UserProfile')->find($userId);
+        $userInfo = $userObj->getUserProfile();
 
         if ($form->isSubmitted() && $form->isValid()){
             $entityManager = $this->getDoctrine()->getManager();
             $profile = $form->getData();
+            $file = $request->files->get('edit_profile')['photo'];
+
+            if ($file) {
+
+              $uploads_directory = $this->getParameter('profile_pics_dir');
+
+              $fileName = md5(\uniqid()) . '.' . $file->guessExtension();
+
+              $file->move($uploads_directory, $fileName);
+
+            }else {
+              $fileName = 'profile-icon.png';
+            }
+
+
             if (!$userInfo)
             {
 
                 $profile->setUserId($userObj);
+                $profile->setPhoto($fileName);
 
                 $entityManager->persist($profile);
                 $entityManager->flush();
@@ -72,14 +96,24 @@ class ProfileController extends AbstractController
             {
                 $userInfo->setCity($form["city"]->getData());
                 $userInfo->setDescription($form["description"]->getData());
+                $userInfo->setPhoto($fileName);
                 $entityManager->persist($userInfo);
                 $entityManager->flush();
             }
 
             return $this->redirectToRoute('profile');
         }
-        return $this->render('profile/editProfile.html.twig', [
+        return $this->render('profile/editProfileForm.html.twig', [
             'form' => $form->createView(),
+            'profile' => $userInfo
         ]);
+    }
+    /**
+     * @Route("/profile/review/{id}", name="reviewUser", requirements={"id"="\d+"})
+     */
+
+    public function reviewProfile()
+    {
+      return $this->render('profile/rateUser.html.twig');
     }
 }

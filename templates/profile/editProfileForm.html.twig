@@ -1,0 +1,46 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+<div class="profile-form">
+  <div class="profile-headers">
+    <h4 class="edit-profile-h4">Redaguokite profilį</h4>
+    <h6 class="edit-profile-h6">Užpildykite laukelius</h6>
+  </div>
+  {{form_start(form,  {'method': 'post', 'action': path('editProfile')})}}
+    {{ form_label(form.job_title, 'Darbas', {'label_attr': {'class': 'profile-form-label'}}) }}
+      {{form_widget(form.job_title, {'attr': {'class': 'profile-form-input', 'placeholder': 'Ką dirbsite'}}) }}
+
+    {{ form_label(form.photo, 'Nuotrauka', {'label_attr': {'class': 'profile-form-label'}}) }}
+      {{form_widget(form.photo)}}
+
+    {{ form_label(form.job_title, 'Miestas', {'label_attr': {'class': 'profile-form-label'}}) }}
+      {{form_widget(form.city, {'attr': {'class': 'profile-form-input', 'placeholder': 'Miestas, kuriame gyvenate'}}) }}
+
+    {{ form_label(form.languages, 'Kalbos', {'label_attr': {'class': 'profile-form-label'}}) }}
+      {{form_widget(form.languages, {'attr': {'class': 'profile-form-input', 'placeholder': 'Lietuvių, anglu ir t.t.'}}) }}
+
+    {{ form_label(form.skill, 'Įgūdžiai', {'label_attr': {'class': 'profile-form-label'}}) }}
+      {{form_widget(form.skill, {'attr': {'class': 'profile-form-input', 'placeholder': 'Langų valymas, vaismedžių genėjimas'}}) }}
+
+    <div class="form-nums">
+      {{ form_label(form.hour_price, 'Užmokestis', {'label_attr': {'class': 'profile-form-label'}}) }}
+      {{form_widget(form.hour_price
+      , {'attr': {'class': 'profile-form-input', 'placeholder': '€/hr'}}) }}
+
+      {{ form_label(form.phone, 'Telefonas', {'label_attr': {'class': 'profile-form-label'}}) }}
+      {{form_widget(form.phone
+      , {'attr': {'class': 'profile-form-input', 'placeholder': '+370'}}) }}
+
+    </div>
+
+    {{ form_label(form.description, 'Aprasymas', {'label_attr': {'class': 'profile-form-label'}}) }}
+    {{form_widget(form.description
+    , {'attr': {'class': 'profile-form-textarea', 'placeholder': 'Trumpai apie save', 'cols': '80', 'rows': '8'}}) }}
+
+    <input class=" btn btn-submit-review" type="submit" value="Pateikti">
+
+  {{form_end(form)}}
+</div>
+
+{% endblock %}
