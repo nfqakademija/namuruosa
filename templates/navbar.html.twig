@@ -1,0 +1,107 @@
+<nav class="navbar navbar-expand-md navbar-dark bg-dark">
+    <a class="navbar-brand" href="/"><i class="fa fa-hand-peace fa-2x mr-2"></i> Namų Ruoša</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <ul class="collapse navbar-collapse" id="navbarSupportedContent">
+
+        <li class="nav-item dropdown">
+            <a class="nav-link text-warning" href="#" id="adminNavbarDropdown" role="button" data-toggle="dropdown"
+               aria-haspopup="true" aria-expanded="false">
+                <i class="fa fa-lock"></i>
+                Admin <i class="fa fa-angle-down"></i>
+            </a>
+            <div class="dropdown-menu" aria-labelledby="adminNavbarDropdown">
+                <a class="dropdown-item" href="{{ path ('admin_category_add') }}">Papildyti kategorijas
+                    <div><span class="small text-muted mt-0">Bla</span></div>
+                </a>
+                <div class="dropdown-divider"></div>
+            </div>
+        </li>
+
+        <div class="ml-auto">
+        </div>
+
+        <li class="nav-item">
+            <a class="nav-link" href="{{ path('jobAdd') }}">
+                <button class="btn btn-warning">Turiu darbą</button>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="{{ path('serviceAdd') }}">
+                <button class="btn btn-outline-warning">Noriu padirbėti</button>
+            </a>
+        </li>
+
+        <li class="nav-item dropdown">
+            <a class="nav-link text-warning" href="#" role="button" id="searchDropdownMenuButton" data-toggle="dropdown"
+               aria-haspopup="true" aria-expanded="false">
+                <i class="fa fa-search"></i>
+                    Ieškoti <i class="fa fa-angle-down"></i>
+            </a>
+            <div class="dropdown-menu" aria-labelledby="searchDropdownMenuButton">
+                <a class="dropdown-item" href="{{ path ('job_pot_matches') }}">Ieškoti <span class="text-info">paslaugų</span>
+                    <div><span class="small text-muted mt-0">Pagal mano užklausas</span></div>
+                </a>
+                <div class="dropdown-divider"></div>
+                <a class="dropdown-item mb-0" href="{{ path ('service_pot_matches') }}">Ieškoti <span class="text-info">darbų</span>
+                    <div><span class="small text-muted mt-0">Pagal mano užklausas</span></div>
+                </a>
+            </div>
+        </li>
+
+        <li class="nav-item dropdown">
+            <a class="nav-link text-warning" href="#" id="myworkDropdownMenuButton" role="button" data-toggle="dropdown"
+               aria-haspopup="true" aria-expanded="false">
+                    Mano veikla <i class="fa fa-angle-down"></i>
+            </a>
+            <div class="dropdown-menu" aria-labelledby="myworkDropdownMenuButton">
+                <a class="dropdown-item" href="{{ path ('match_by_jobs') }}">Sandoriai
+                    <span class="text-info">MANO DARBAI</span>
+                </a>
+                <a class="dropdown-item mb-0" href="{{ path ('match_by_services') }}">Sandoriai
+                    <span class="text-info">MANO PASLAUGOS</span>
+                </a>
+                <div class="dropdown-divider"></div>
+                <a class="dropdown-item mb-0" href="{{ path ('my_jobs') }}">Skelbimai
+                    <span class="text-info">darbai </span>
+                </a>
+                <a class="dropdown-item mb-0" href="{{ path ('my_services') }}">Skelbimai
+                    <span class="text-info">paslaugos </span>
+                </a>
+            </div>
+        </li>
+
+        {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+            <li class="nav-item">
+                <a class="nav-link" href="{{ path('fos_user_profile_show') }}">
+                    <i class="fas fa-fw fa-user"></i>
+                    {{ app.user.username }}
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{{ path('fos_user_security_logout') }}">
+                    <i class="fas fa-fw fa-sign-out-alt"></i>
+                    {{ 'layout.logout'|trans({}, 'FOSUserBundle') }}
+                </a>
+            </li>
+        {% else %}
+            <li class="nav-item">
+                <a class="nav-link" href="{{ path('fos_user_security_login') }}">
+                    <i class="fas fa-sign-in-alt"></i>
+                    {{ 'layout.login'|trans({}, 'FOSUserBundle') }}
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{{ path('fos_user_registration_register') }}">
+                    <i class="fas fa-fw fa-user-plus"></i>
+                    {{ 'layout.register'|trans({}, 'FOSUserBundle') }}
+                </a>
+            </li>
+        {% endif %}
+
+    </ul>
+
+</nav>
