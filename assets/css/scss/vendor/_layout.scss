@@ -1,7 +1,7 @@
 .container-under-fixednav{
   padding-top: 70px;
   padding-bottom: 50px;
-  min-height: 89vh;
+  min-height: calc(100vh - 50px);
 }
 
 .jobWrapper{
