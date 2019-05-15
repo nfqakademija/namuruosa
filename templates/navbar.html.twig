@@ -76,26 +76,26 @@
 
         {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
             <li class="nav-item">
-                <a class="nav-link" href="{{ path('fos_user_profile_show') }}">
+                <a class="nav-link color-white" href="{{ path('fos_user_profile_show') }}">
                     <i class="fas fa-fw fa-user"></i>
                     {{ app.user.username }}
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="{{ path('fos_user_security_logout') }}">
+                <a class="nav-link color-white" href="{{ path('fos_user_security_logout') }}">
                     <i class="fas fa-fw fa-sign-out-alt"></i>
                     {{ 'layout.logout'|trans({}, 'FOSUserBundle') }}
                 </a>
             </li>
         {% else %}
             <li class="nav-item">
-                <a class="nav-link" href="{{ path('fos_user_security_login') }}">
+                <a class="nav-link color-white" href="{{ path('fos_user_security_login') }}">
                     <i class="fas fa-sign-in-alt"></i>
                     {{ 'layout.login'|trans({}, 'FOSUserBundle') }}
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="{{ path('fos_user_registration_register') }}">
+                <a class="nav-link color-white" href="{{ path('fos_user_registration_register') }}">
                     <i class="fas fa-fw fa-user-plus"></i>
                     {{ 'layout.register'|trans({}, 'FOSUserBundle') }}
                 </a>

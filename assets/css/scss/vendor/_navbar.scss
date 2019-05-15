@@ -1,6 +1,13 @@
 li.nav-item{
   display: flex;
   align-items: center;
+  a.color-white{
+    color: $white;
+    opacity: 0.5;
+  }
+  a.color-white:hover{
+    opacity: 0.8;
+  }
 }
 
 #navbarSupportedContent {
