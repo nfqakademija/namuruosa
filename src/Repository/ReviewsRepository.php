@@ -33,6 +33,16 @@ class ReviewsRepository extends ServiceEntityRepository
             ->getResult()
         ;
     }
+    public function getTotalReviews($id)
+    {
+        return $this->createQueryBuilder('r')
+            ->andWhere('r.user_id = :id')
+            ->setParameter('id', $id)
+            ->select('COUNT(r)')
+            ->getQuery()
+            ->getResult()
+        ;
+    }
 
     public function getAverageRating($id)
 

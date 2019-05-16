@@ -23,10 +23,11 @@ class ProfileController extends AbstractController
         $profile = $user->getUserProfile();
 
         $reviews = $reviewsRepo->findAllUserReviews($user->getId());
-
+        $totalReviews = $reviewsRepo->getTotalReviews($user->getId());
         $rating = $reviewsRepo->getAverageRating($user->getId());
 
-        dump($rating);
+        dump($totalReviews);
+
         if (!$profile){
             $profile = new UserProfile;
             $profile->setCity('');
@@ -43,6 +44,7 @@ class ProfileController extends AbstractController
             'profile' => $profile,
             'reviews' =>$reviews,
             'rating' => $rating[0][1],
+            'reviewsCount' => $totalReviews[0][1],
             'controller_name' => 'ProfileController',
             ]);
     }
