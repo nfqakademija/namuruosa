@@ -38,26 +38,14 @@ class JobType extends AbstractType
             ])
             ->add('dateEnd', DateTimeType::class, [
                 'label'=>'Atlikimo terminas',
-//                'widget' => 'choice', 'minutes' => [
-//                    0,15,30,45
-//                ],
+                'date_widget' => 'single_text',
+                'with_minutes' => false,
+                'with_seconds' => false,
+                'placeholder' => [
+                    'hour' => 'Valandos',
+                    'date' => 'Data'
+                ]
             ])
-//            ->add('category1', ChoiceType::class, [
-//                'label' => 'Kategorija 1',
-//                'choices' => [
-//                    'Žemės ūkis' => 'farming',
-//                    'Mokymas' => 'education',
-//                ],
-//                'required' => false,
-//            ])
-//            ->add('category2', ChoiceType::class, [
-//                'label' => 'Kategorija 2',
-//                'choices' => [
-//                    'Sodininkystė' => 'orchard',
-//                    'Vaikų prežiūra' => 'children',
-//                ],
-//                'required' => false,
-//            ])
             ->add('category', EntityType::class, [
                 'label' => 'Kategorijos',
                 'class' => 'App:Category',
