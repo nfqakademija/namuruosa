@@ -34,6 +34,20 @@ class ReviewsRepository extends ServiceEntityRepository
         ;
     }
 
+    public function getAverageRating($id)
+
+    {
+      $entityManager = $this->getEntityManager();
+
+      $query = $entityManager->createQuery(
+        'SELECT AVG(r.rating)
+         FROM APP\Entity\Reviews r
+         WHERE r.user_id = :id'
+        )->setParameter('id', $id);
+
+        return $query->execute();
+    }
+
 
     /*
     public function findOneBySomeField($value): ?Reviews
