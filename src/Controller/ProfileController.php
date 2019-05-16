@@ -9,17 +9,20 @@ use App\Form\EditProfileType;
 use App\Form\RatingType;
 use App\Entity\UserProfile;
 use Symfony\Component\Validator\Constraints\DateTime;
+use App\Repository\ReviewsRepository;
 
 class ProfileController extends AbstractController
 {
     /**
      * @Route("/profile", name="profile")
      */
-    public function profile()
+    public function profile(ReviewsRepository $reviewsRepo)
     {
         $user = $this->getUser();
 
         $profile = $user->getUserProfile();
+        $reviews = $reviewsRepo->findAllUserReviews($user->getId());
+        dump($reviews);
 
         if (!$profile){
             $profile = new UserProfile;
@@ -35,6 +38,7 @@ class ProfileController extends AbstractController
         return $this->render('profile/logedUserProfile.html.twig', [
             'user' => $user,
             'profile' => $profile,
+            'reviews' =>$reviews,
             'controller_name' => 'ProfileController',
             ]);
     }

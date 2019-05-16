@@ -75,19 +75,15 @@
         <h4 class="user-reviews-title">Recenzijos</h4>
         <div class="reviews">
           <div class="review">
-            <div class="project">
-              <h6>
-                <a class="project-title" href="">Project title</a>
-              </h6>
-              <a class="project-author" href="">Name <span>2019.05.07</span></a>
-            </div>
-            <div class="feedback">
-              <div class="author-rating">
-                <a class="project-author" href="">Name <span>2019.05.07</span></a>
-                <div class="rating"></div>
+            {% for review in reviews %}
+              <div class="project">
+                <div class="author-rating">
+                  <a class="project-author" href="">{{review.getEstimatorId.getUsername}} <span>{{review.getCreatedAt | date('Y/m/d')}}</span></a>
+                  <div class="rating">{{review.getRating}}</div>
+                </div>
+                <p>{{review.getComment}}</p>
               </div>
-              <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptas consequatur vel quae, est accusamus commodi!</p>
-            </div>
+            {% endfor %}
           </div>
         </div>
       </div>

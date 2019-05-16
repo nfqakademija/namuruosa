@@ -19,22 +19,21 @@ class ReviewsRepository extends ServiceEntityRepository
         parent::__construct($registry, Reviews::class);
     }
 
-    // /**
-    //  * @return Reviews[] Returns an array of Reviews objects
-    //  */
-    /*
-    public function findByExampleField($value)
+     /*
+     * @return Reviews[] Returns an array of Reviews objects
+    */
+
+    public function findAllUserReviews($id)
     {
         return $this->createQueryBuilder('r')
-            ->andWhere('r.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('r.id', 'ASC')
-            ->setMaxResults(10)
+            ->andWhere('r.user_id = :id')
+            ->setParameter('id', $id)
+            ->orderBy('r.created_at', 'ASC')
             ->getQuery()
             ->getResult()
         ;
     }
-    */
+
 
     /*
     public function findOneBySomeField($value): ?Reviews
