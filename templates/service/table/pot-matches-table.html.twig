@@ -1,28 +1,26 @@
-<h5 class="text-muted">Mano paslauga: <span class="text-success"> {{ matchesByService[0].title }}
-    </span></h5>
+<h5 class="text-muted">Mano paslauga: <span class="text-danger"><b> {{ matchesByService[0].title }}</b></span></h5>
 <table class="table table-lg table-hover mb-5">
 
-    {% for service in matchesByService[1] %}
+    {% for job in matchesByService[1] %}
         <tr>
             <td class="py-4" style="width: 70%">
-                <h4 class="text-info">{{ service[0].title }}</h4>
-                <div class="mb-1">{{ service[0].description }}</div>
+                <h4 class="text-info">{{ job[0].title }}</h4>
+                <div class="mb-1">{{ job[0].description }}</div>
                 <div class="text-muted small pb-2">
-                    <a href="#"><i class="fa fa-user"></i> {{ service[0].userId.username }}</a>
-                    <i class="fa fa-clock ml-3"></i> Paskelbta {{ service[0].updatedAt|date('y.m.d') }}
-                    <i class="fa fa-map-marker-alt ml-3"></i> Atstumas {{ service['distance'] }} km
+                    <a href="#"><i class="fa fa-user"></i> {{ job[0].userId.username }}</a>
+                    <i class="fa fa-clock ml-3"></i> Paskelbta {{ job[0].updatedAt|date('y.m.d') }}
+                    <i class="fa fa-map-marker-alt ml-3"></i> Atstumas {{ job['distance'] }} km
                     <div class="d-inline-block  ml-3">
-                        <a href=""><span class="badge badge-success">Valymas</span></a>
-                        {%  for cat in service[0].category %}
+                        {%  for cat in job[0].category %}
                         <span class="badge badge-warning">{{ cat.name }}</span>
                         {%  endfor %}
                     </div>
                 </div>
             </td>
             <td class="text-right">
-               {#<h4 class="text-info text-right">{{ matchesByService[0].budget }} <i class="fa fa-euro-sign fa-xs"></i> / val.</h4>#}
+               <h4 class="text-info text-right">{{ job[0].budget }} <i class="fa fa-euro-sign fa-xs"></i> / val.</h4>
                 <a class="align-self-end" href="{{ path('match_service_create',
-                    {'callerServiceId':  matchesByService[0].id, 'responderJobId': service[0].id }) }}">
+                    {'callerServiceId':  matchesByService[0].id, 'responderJobId': job[0].id }) }}">
                     <button class="btn btn-outline-info">Sūlyti paslaugą</button>
                 </a>
             </td>

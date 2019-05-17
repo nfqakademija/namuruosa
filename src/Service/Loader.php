@@ -24,6 +24,11 @@ class Loader
         $this->em = $em;
     }
 
+    public function getService($serviceId)
+    {
+        return $this->em->find('App:Service', $serviceId);
+    }
+
     /**
      * @param $id
      * @return mixed
@@ -50,4 +55,16 @@ class Loader
     }
 
 
+
+    public function delete($serviceId)
+    {
+        $service = $this->getService($serviceId);
+        if ($service) {
+            $this->em->remove($service);
+            $this->em->flush();
+            return true;
+        } else {
+            return false;
+        }
+    }
 }
