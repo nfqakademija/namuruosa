@@ -12,7 +12,7 @@ namespace App\Form;
 use App\Entity\Category;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
+use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
@@ -27,17 +27,6 @@ class ServiceType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-//            ->add('serviceType', ChoiceType::class, [
-//
-//                'label' => ' ',
-//                'label_attr' => array(
-//                    'class' => 'radio-inline'
-//                ),
-//                'expanded' => true,
-//                'choices' => [
-//                    'Ieškau paslaugos' => 'customer', 'Siūlau paslaugą' => 'provider',
-//                ]
-//            ])
             ->add('title', TextType::class, [
                 'label' => 'Pavadinimas',
                 'required' => true,
@@ -45,6 +34,11 @@ class ServiceType extends AbstractType
             ->add('description', TextareaType::class, [
                 'label' => 'Aprašymas',
                 'required' => true,
+            ])
+            ->add('activeTill', DateType::class, [
+                'label' => 'Atlikimo terminas',
+                'widget' => 'single_text',
+                'attr' => ['value' => date('Y-m-d')],
             ])
             ->add('category', EntityType::class, [
                 'label' => 'Kategorijos',
@@ -55,26 +49,20 @@ class ServiceType extends AbstractType
                 'multiple' => true,
                 'expanded' => false,
             ])
+            ->add('address', SearchType::class, [
+                'label' => 'Adresas'
+            ])
             ->add('maxDistance', IntegerType::class, [
                 'label' => 'Kaip toli galite vykti (Km)'
             ])
             ->add('pricePerHour', NumberType::class, [
                 'label' => 'Valandos kaina (Eur)',
             ])
-            ->add('activeTill', DateTimeType::class, [
-                'label' => 'Skelbimas galioja iki',
-//                'widget' => 'choice', 'minutes' => [
-//                    0, 15, 30, 45
-//                ],
-            ])
             ->add('lat', HiddenType::class, [
                 'label' => 'Latitude',
             ])
             ->add('lon', HiddenType::class, [
                 'label' => 'Longitude',
-            ])
-            ->add('address', SearchType::class, [
-                'label' => 'Adresas'
             ])
         ;
     }

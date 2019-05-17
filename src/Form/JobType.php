@@ -13,7 +13,7 @@ use App\Entity\Category;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
-use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
+use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
@@ -36,15 +36,10 @@ class JobType extends AbstractType
                 'label'=>'Aprašymas',
                 'required' => true,
             ])
-            ->add('dateEnd', DateTimeType::class, [
-                'label'=>'Atlikimo terminas',
-                'date_widget' => 'single_text',
-                'with_minutes' => false,
-                'with_seconds' => false,
-                'placeholder' => [
-                    'hour' => 'Valandos',
-                    'date' => 'Data'
-                ]
+            ->add('dateEnd', DateType::class, [
+                'label' => 'Atlikimo terminas',
+                'widget' => 'single_text',
+                'attr' => ['value' => date('Y-m-d')],
             ])
             ->add('category', EntityType::class, [
                 'label' => 'Kategorijos',
@@ -59,6 +54,9 @@ class JobType extends AbstractType
                 'label' => 'Objekto foto',
                 'required' => false,
             ])
+            ->add('address', SearchType::class, [
+                'label' => 'Adresas'
+            ])
             ->add('payType', ChoiceType::class, [
                 'label' => 'Apmokėjimas',
                 'choices' => [
@@ -69,31 +67,12 @@ class JobType extends AbstractType
             ->add('budget', NumberType::class, [
                 'label' => 'Suma EUR',
             ])
-//            ->add('city', TextType::class, [
-//                'label'=>'Miestas',
-//                'mapped' => false,
-//                'required' => true,
-//            ])
-//            ->add('street', TextType::class, [
-//                'label'=>'Gatvė',
-//                'mapped' => false,
-//                'required' => true,
-//            ])
-//            ->add('houseNo', TextType::class, [
-//                'label'=>'Namo Nr',
-//                'mapped' => false,
-//                'required' => true,
-//            ])
             ->add('lat', HiddenType::class, [
                 'label' => 'Latitude',
             ])
             ->add('lon', HiddenType::class, [
                 'label' => 'Longitude',
             ])
-            ->add('address', SearchType::class, [
-                'label' => 'Adresas'
-            ])
-
         ;
     }
 
@@ -102,6 +81,10 @@ class JobType extends AbstractType
         $resolver->setDefaults([
             'data_class' => 'App\Entity\Job'
         ]);
+    }
+
+    public function hi(){
+
     }
 
 }
