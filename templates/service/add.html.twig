@@ -4,7 +4,7 @@
     <h2 class="text-center mb-5 text-info">Nauja PASLAUGA</h2>
     <div class="container">
         <div class="row">
-            <div class="col-sm-8">
+            <div class="col-md-6">
                 {#{{ form_start(form, {'method': 'post', 'action': path('fos_user_registration_register'), 'attr': {'class': 'fos_user_registration_register'}}) }}#}
                 {{ form_start(serviceForm, {'method': 'post', 'action': path('serviceAdd'), 'attr': {'class': 'fos_user_registration_register'}}) }}
                 {{ form_widget(serviceForm) }}
@@ -16,7 +16,7 @@
 
                 {{ form_end(serviceForm) }}
              </div>
-            <div class="col-sm-4">
+            <div class="col-md-6">
                 {% include '/_map/map_divs.html.twig' %}
             </div>
         </div>
