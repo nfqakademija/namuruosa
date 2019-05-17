@@ -5,7 +5,7 @@
     <h2 class="text-center mb-5 text-info">Naujas DARBAS </h2>
     <div class="container">
         <div class="row">
-            <div class="col-sm-8">
+            <div class="col-md-6">
                 {#{{ form_start(form, {'method': 'post', 'action': path('fos_user_registration_register'), 'attr': {'class': 'fos_user_registration_register'}}) }}#}
                 {{ form_start(form, {'method': 'post', 'action': path('jobAdd'), 'attr': {'class': 'fos_user_registration_register'}}) }}
                 {{ form_widget(form) }}
@@ -16,7 +16,7 @@
                 </div>
                 {{ form_end(form) }}
              </div>
-             <div class="col-sm-4">
+             <div class="col-md-6">
                 {% include '/_map/map_divs.html.twig' %}
             </div>
         </div>
