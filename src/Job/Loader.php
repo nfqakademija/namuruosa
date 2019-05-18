@@ -61,6 +61,7 @@ class Loader
         $potMatches = [];
         $myJobs = $this->loadByUser($userId);
         foreach ($myJobs as $myJob) {
+            $servicesByJob = [];
             $jobLat = $myJob->getLat();
             $jobLon = $myJob->getLon();
             $servicesByJob[] = $myJob;
