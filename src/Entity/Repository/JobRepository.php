@@ -37,16 +37,12 @@ class JobRepository extends EntityRepository
         $myId = $service->getUserId()->getId();
 
         $qb = $this->createQueryBuilder('j')
-            ->select('j')
-            ->addSelect('( (j.lat - :myLat) * (j.lat - :myLat) + (j.lon - :myLon) * (j.lon - :myLon)) / 100 AS distance')// Distance just for sorting, not for real values
+            ->addSelect('( (j.lat - :myLat) * (j.lat - :myLat) + (j.lon - :myLon) * (j.lon - :myLon)) / 100 AS HIDDEN distance')// Distance for sorting purpose ONLY
             ->andWhere('j.userId <> :myId')
-            ->addSelect('j.lat AS belekas')
             ->leftJoin('j.category', 'category')
             ->andWhere("category in (:myCats)")
             ->andWhere('j.lat BETWEEN :minLat AND :maxLat ')
             ->andWhere('j.lon BETWEEN :minLon AND :maxLon ')
-//                ->andWhere( 'distance <> 500'  )
-
             ->setParameters([
                 'myCats' => $myCats,
                 'myLat' => $myLat,
@@ -57,7 +53,7 @@ class JobRepository extends EntityRepository
                 'minLon' => $myLon - 30,
                 'myId' => $myId,
             ])
-            ->orderBy('distance', 'DESC');//TODO DOES NOT WORK!!
+            ->orderBy('distance', 'ASC');
 
         $query = $qb->getQuery();
         $allMatchesByOneMyJob = $query->execute();
