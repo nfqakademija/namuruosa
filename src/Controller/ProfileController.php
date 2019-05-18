@@ -9,24 +9,22 @@ use App\Form\EditProfileType;
 use App\Form\RatingType;
 use App\Entity\UserProfile;
 use Symfony\Component\Validator\Constraints\DateTime;
-use App\Repository\ReviewsRepository;
+use App\Profile\Manager;
 
 class ProfileController extends AbstractController
 {
     /**
      * @Route("/profile", name="profile")
      */
-    public function profile(ReviewsRepository $reviewsRepo)
+    public function profile(Manager $manager)
     {
         $user = $this->getUser();
-
+        $userId = $user->getId();
         $profile = $user->getUserProfile();
 
-        $reviews = $reviewsRepo->findAllUserReviews($user->getId());
-        $totalReviews = $reviewsRepo->getTotalReviews($user->getId());
-        $rating = $reviewsRepo->getAverageRating($user->getId());
-
-        dump($totalReviews);
+        $reviews = $user->getReviews();
+        $totalReviews = $manager->getCountReviews($userId);
+        $rating = $manager->getAverageRating($userId);
 
         if (!$profile){
             $profile = new UserProfile;
@@ -53,16 +51,17 @@ class ProfileController extends AbstractController
      * @Route("/profile/user/{id}", name="otherUserProfile"), requirements={"id"="\d+"}
      */
 
-    public function otherUserProfile($id, ReviewsRepository $reviewsRepo)
+    public function otherUserProfile($id, Manager $manager)
     {
-      $profile = $this->getDoctrine()->getRepository('App:UserProfile')->
+      $profile = $this->getDoctrine()->getRepository(UserProfile::class)->
       find($id);
 
       $user = $profile->getUserId();
+      $userId = $user->getId();
 
-      $reviews = $reviewsRepo->findAllUserReviews($user->getId());
-      $totalReviews = $reviewsRepo->getTotalReviews($user->getId());
-      $rating = $reviewsRepo->getAverageRating($user->getId());
+      $reviews = $user->getReviews();
+      $totalReviews = $manager->getCountReviews($userId);
+      $rating = $manager->getAverageRating($userId);
 
       return $this->render('profile/otherUserProfile.html.twig', [
           'user' => $user,
@@ -154,7 +153,6 @@ class ProfileController extends AbstractController
 
       $estimator = $this->getUser();
       $ratedUser = $this->getDoctrine()->getRepository('App:UserProfile')->find($id)->getUserId();
-      dump($ratedUser);
 
       if ($form->isSubmitted() && $form->isValid()) {
         $entityManager = $this->getDoctrine()->getManager();

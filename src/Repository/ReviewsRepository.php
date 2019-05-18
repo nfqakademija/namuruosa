@@ -33,7 +33,7 @@ class ReviewsRepository extends ServiceEntityRepository
             ->getResult()
         ;
     }
-    public function getTotalReviews($id)
+    public function getCountReviews($id)
     {
         return $this->createQueryBuilder('r')
             ->andWhere('r.user_id = :id')

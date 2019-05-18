@@ -20,9 +20,9 @@ class ServiceRepository extends EntityRepository
     public function findServicesByUserId($id)
     {
         return $this->getEntityManager()->createQuery(
-            " SELECT s 
-            FROM App\Entity\Service s 
-            WHERE s.userId= :id 
+            " SELECT s
+            FROM App\Entity\Service s
+            WHERE s.userId= :id
             ORDER BY s.updatedAt DESC "
         )
             ->setParameter('id', $id)
