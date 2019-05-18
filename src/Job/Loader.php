@@ -9,20 +9,34 @@
 namespace App\Job;
 
 
+use App\Entity\Job;
+use App\Entity\Service;
+use App\Helpers\CalcHelper;
 use Doctrine\ORM\EntityManagerInterface;
 
 class Loader
 {
+    /**
+     * @var EntityManagerInterface
+     */
     private $em;
 
     /**
-     * Loader constructor.
-     * @param $em
+     * @var CalcHelper
      */
-    public function __construct(EntityManagerInterface $em)
+    private $calcDist;
+
+    /**
+     * Loader constructor.
+     * @param EntityManagerInterface $em
+     * @param CalcHelper $calculator
+     */
+    public function __construct(EntityManagerInterface $em, CalcHelper $calDist)
     {
         $this->em = $em;
+        $this->calcDist = $calDist;
     }
+
 
     public function getJob($jobId)
     {
@@ -30,28 +44,50 @@ class Loader
     }
 
     /**
-     * @param $id
-     * @return mixed
+     * @param $userId
+     * @return Job[]|null
      */
-    public function loadByUser($userId)
+    public function loadByUser($userId): ?array
     {
-        return $this->em->getRepository('App:Job')->findByUserId($userId);
+        return $this->em->getRepository(Job::class)->findByUserId($userId);
     }
 
+    /**
+     * @param $userId int
+     * @return array
+     */
     public function loadPotMatches($userId)
     {
         $potMatches = [];
         $myJobs = $this->loadByUser($userId);
-
         foreach ($myJobs as $myJob) {
             $servicesByJob = [];
+            $jobLat = $myJob->getLat();
+            $jobLon = $myJob->getLon();
             $servicesByJob[] = $myJob;
-            $servicesByJob[] = $this->em->getRepository('App:Service')
-                ->findMatches($myJob);
+            $services = $this->em->getRepository(Service::class)->findMatches($myJob);
+            foreach ($services as $service) {
+                $service->setDistance($this->calcDistance($jobLat, $jobLon, $service));
+            }
+            $servicesByJob[] = $services;
             $potMatches[] = $servicesByJob;
         }
         return $potMatches;
     }
+
+    /**
+     * @param $jobLat float
+     * @param $jobLon float
+     * @param $service Service
+     * @return float
+     */
+    private function calcDistance($jobLat, $jobLon, $service)
+    {
+        $serviceLat = $service->getLat();
+        $serviceLon = $service->getLon();
+        return $this->calcDist->getDistanceFromCoordinates($jobLat, $jobLon, $serviceLat, $serviceLon);
+    }
+
 
     public function delete($jobId)
     {

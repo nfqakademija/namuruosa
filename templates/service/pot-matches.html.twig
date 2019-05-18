@@ -3,20 +3,21 @@
 {% block main %}
 
     <h2 class="text-center mt-4 mb-5">DARBAI pagal mano paslaugas</h2>
-
+    {% set servicesWithNoJobs = [] %}
     {% for matchesByService in potMatchesByServices %}
         {% if matchesByService[1] != null %}
             {% include 'service/table/pot-matches-table.html.twig' %}
+        {% else %}
+            {% set servicesWithNoJobs = servicesWithNoJobs|merge([matchesByService[0].title]) %}
         {% endif %}
     {% endfor %}
-
-    {% for matchesByService in potMatchesByServices %}
-        {% if matchesByService[1] == null %}
-            <h6>Paslaugai
-                <span class="text-success"> {{ matchesByService[0].title }}</span>
-                <span class="text-danger"> darbų nėra</span></h6>
-            <hr>
-        {% endif %}
-    {% endfor %}
+    {% if servicesWithNoJobs != [] %}
+        <div class="alert alert-danger">
+            {% for service in  servicesWithNoJobs %}
+                <h5 class="text-info">Paslaugai <span class="text-danger">{{ service }}</span>
+                    šiuo metu pasiūlymų neturime</h5>
+            {% endfor %}
+        </div>
+    {% endif %}
 
 {% endblock %}
