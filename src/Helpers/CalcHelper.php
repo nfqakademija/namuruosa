@@ -8,12 +8,12 @@
 
 namespace App\Helpers;
 
-
-class Calculations
+class CalcHelper
 {
-    function getDistanceFromCoordinates($lat1, $lon1, $lat2, $lon2, $earthRadius = 6371000)
+    const EARTH_RADIUS = 6371000;
+
+    public function getDistanceFromCoordinates($lat1, $lon1, $lat2, $lon2)
     {
-        // convert from degrees to radians
         $latFrom = deg2rad($lat1);
         $lonFrom = deg2rad($lon1);
         $latTo = deg2rad($lat2);
@@ -24,7 +24,6 @@ class Calculations
 
         $angle = 2 * asin(sqrt(pow(sin($latDelta / 2), 2) +
                 cos($latFrom) * cos($latTo) * pow(sin($lonDelta / 2), 2)));
-        return ($angle * $earthRadius)/1000;
+        return round(($angle * self::EARTH_RADIUS)/1000, 2);
     }
-
 }

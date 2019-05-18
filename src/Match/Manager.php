@@ -10,7 +10,7 @@ namespace App\Match;
 
 
 use App\Entity\Match;
-use App\Helpers\Calculations;
+use App\Helpers\CalcHelper;
 use Doctrine\ORM\EntityManager;
 
 class Manager
@@ -45,7 +45,7 @@ class Manager
         return($match);
     }
 
-    public function createServiceMatch($callerServiceId, $responderJobId, Calculations $distCalculator)
+    public function createServiceMatch($callerServiceId, $responderJobId, CalcHelper $distCalculator)
     {
         $jobRepo = $this->em->getRepository('App\Entity\Job');
         $serviceRepo = $this->em->getRepository('App\Entity\Service');
@@ -56,15 +56,8 @@ class Manager
         $match->setCallerServiceId($callerService);
         $match->setResponderId($responderJob->getUserId());
         $match->setResponderJobId($responderJob);
-
-
         $match->setHidden(false);
 
         return($match);
     }
-
-//    public function getDistance($lat1, $lon1, $lat2, $lon2, Calculations $distCalculator)
-//    {
-//        return
-//    }
 }

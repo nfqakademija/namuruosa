@@ -38,15 +38,12 @@ class ServiceRepository extends EntityRepository
         $myId = $job->getUserId()->getId();
 
         $qb = $this->createQueryBuilder('s')
-            ->select('s')
-            ->addSelect('( (s.lat - :myLat) * (s.lat - :myLat) + (s.lon - :myLon) * (s.lon - :myLon)) / 100 AS distance')// Distance just for sorting ONLY
+            ->addSelect('( (s.lat - :myLat) * (s.lat - :myLat) + (s.lon - :myLon) * (s.lon - :myLon)) / 100 AS HIDDEN distance')// Distance for sorting purpose ONLY
             ->andWhere('s.userId <> :myId')
-            ->addSelect('s.lat AS belekas')
             ->leftJoin('s.category', 'category')
             ->andWhere("category in (:myCats)")
             ->andWhere('s.lat BETWEEN :minLat AND :maxLat ')
             ->andWhere('s.lon BETWEEN :minLon AND :maxLon ')
-//                ->andWhere( 'distance <> 500'  )
             ->setParameters([
                 'myCats' => $myCats,
                 'myLat' => $myLat,
@@ -57,25 +54,11 @@ class ServiceRepository extends EntityRepository
                 'minLon' => $myLon - 30,
                 'myId' => $myId,
             ])
-            ->orderBy('distance', 'DESC');//TODO DOES NOT WORK!!
+            ->orderBy('distance', 'ASC');
 
         $query = $qb->getQuery();
         $allMatchesByOneMyService = $query->execute();
 
         return $allMatchesByOneMyService;
     }
-
-
-//    public function findServiceUserByServiceId($serviceId)
-//    {
-//        $qb = $this->createQueryBuilder('s')
-//            ->select('s')
-//            ->where('s.id = :serviceId')
-//            ->leftJoin('s.userId', 'u')
-//            ->setParameter('serviceId', $serviceId)
-//            ->getQuery();
-//        $serviceAndUser = $qb->getOneOrNullResult();;
-//
-//        return $serviceAndUser;
-//    }
 }
