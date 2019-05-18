@@ -9,6 +9,7 @@
 namespace App\Job;
 
 
+use App\Entity\Service;
 use Doctrine\ORM\EntityManagerInterface;
 
 class Loader
@@ -38,6 +39,7 @@ class Loader
         return $this->em->getRepository('App:Job')->findByUserId($userId);
     }
 
+
     public function loadPotMatches($userId)
     {
         $potMatches = [];
@@ -46,12 +48,22 @@ class Loader
         foreach ($myJobs as $myJob) {
             $servicesByJob = [];
             $servicesByJob[] = $myJob;
-            $servicesByJob[] = $this->em->getRepository('App:Service')
+            $servicesByJob[] = $this->em->getRepository(Service::class)
                 ->findMatches($myJob);
+
+dump($servicesByJob);
+//            $lat1 = $match->getCallerServiceId()->getLat();
+//            $lon1 = $match->getCallerServiceId()->getLon();
+//            $lat2 = $match->getResponderJobId()->getLat();
+//            $lon2 = $match->getResponderJobId()->getLon();
+
+
             $potMatches[] = $servicesByJob;
         }
         return $potMatches;
     }
+
+
 
     public function delete($jobId)
     {

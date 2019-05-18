@@ -10,14 +10,29 @@ namespace App\Match;
 
 
 use App\Entity\Match;
+use App\Helpers\Calculations;
 use Doctrine\ORM\EntityManager;
 
 class Manager
 {
-    public function createJobMatch( $callerJobId, $responderServiceId, EntityManager $em)
+    /**
+     * @var EntityManager
+     */
+    private $em;
+
+    /**
+     * Manager constructor.
+     * @param EntityManager $em
+     */
+    public function __construct(EntityManager $em)
     {
-        $jobRepo = $em->getRepository('App\Entity\Job');
-        $serviceRepo = $em->getRepository('App\Entity\Service');
+        $this->em = $em;
+    }
+
+    public function createJobMatch($callerJobId, $responderServiceId)
+    {
+        $jobRepo = $this->em->getRepository('App\Entity\Job');
+        $serviceRepo = $this->em->getRepository('App\Entity\Service');
         $responderService = $serviceRepo->find($responderServiceId);
         $callerJob = $jobRepo->find($callerJobId);
         $match = new Match();
@@ -30,10 +45,10 @@ class Manager
         return($match);
     }
 
-    public function createServiceMatch( $callerServiceId, $responderJobId, EntityManager $em)
+    public function createServiceMatch($callerServiceId, $responderJobId, Calculations $distCalculator)
     {
-        $jobRepo = $em->getRepository('App\Entity\Job');
-        $serviceRepo = $em->getRepository('App\Entity\Service');
+        $jobRepo = $this->em->getRepository('App\Entity\Job');
+        $serviceRepo = $this->em->getRepository('App\Entity\Service');
         $callerService = $serviceRepo->find($callerServiceId);
         $responderJob = $jobRepo->find($responderJobId);
         $match = new Match();
@@ -41,30 +56,15 @@ class Manager
         $match->setCallerServiceId($callerService);
         $match->setResponderId($responderJob->getUserId());
         $match->setResponderJobId($responderJob);
+
+
         $match->setHidden(false);
 
         return($match);
     }
 
-
-
-
-//    public function createMatch($responderServiceId, $callerServiceId, EntityManager $em)
+//    public function getDistance($lat1, $lon1, $lat2, $lon2, Calculations $distCalculator)
 //    {
-//        $serviceRepo = $em->getRepository('App\Entity\Service');
-//        $responderService = $serviceRepo->find($responderServiceId);
-//        $callerService = $serviceRepo->find($callerServiceId);
-//        $match = new Match();
-//        $match->setCallerId($callerService->getUserId());
-//        $match->setCallerServiceId($callerService);
-//        $match->setResponderId($responderService->getUserId());
-//        $match->setResponderServiceId($responderService);
-////        $match->setCreatedAt(new \DateTime('Now'));
-//
-////        var_dump($match);
-////        exit();
-//
-//        return($match);
+//        return
 //    }
-
 }
