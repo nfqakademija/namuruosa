@@ -53,17 +53,24 @@ class ProfileController extends AbstractController
      * @Route("/profile/user/{id}", name="otherUserProfile"), requirements={"id"="\d+"}
      */
 
-    public function otherUserProfile($id)
+    public function otherUserProfile($id, ReviewsRepository $reviewsRepo)
     {
       $profile = $this->getDoctrine()->getRepository('App:UserProfile')->
       find($id);
 
       $user = $profile->getUserId();
 
+      $reviews = $reviewsRepo->findAllUserReviews($user->getId());
+      $totalReviews = $reviewsRepo->getTotalReviews($user->getId());
+      $rating = $reviewsRepo->getAverageRating($user->getId());
+
       return $this->render('profile/otherUserProfile.html.twig', [
           'user' => $user,
           'profile' => $profile,
           'id' => $id,
+          'reviews' => $reviews,
+          'rating' => $rating[0][1],
+          'reviewsCount' => $totalReviews[0][1],
           'controller_name' => 'ProfileController',
           ]);
     }
@@ -105,6 +112,12 @@ class ProfileController extends AbstractController
 
                 $entityManager->persist($profile);
                 $entityManager->flush();
+
+
+                $this->addFlash(
+                  'notice',
+                  'Jūsų profilis sukurtas!'
+                );
             }else
             {
                 $userInfo->setCity($form["city"]->getData());
@@ -116,6 +129,11 @@ class ProfileController extends AbstractController
                 $userInfo->setPhoto($fileName);
                 $entityManager->persist($userInfo);
                 $entityManager->flush();
+
+                $this->addFlash(
+                  'notice',
+                  'Jūsų profilis atnaujintas!'
+                );
             }
 
             return $this->redirectToRoute('profile');

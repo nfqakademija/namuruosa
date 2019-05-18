@@ -43,8 +43,12 @@ class User extends BaseUser
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Reviews", mappedBy="user_id")
      */
-    private $hasReviews;
+    private $Reviews;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Reviews", mappedBy="estimator_id")
+     */
+    private $estimators;
 
 //    ------- End Dalius ------------
 
@@ -109,28 +113,28 @@ class User extends BaseUser
     /**
      * @return Collection|Reviews[]
      */
-    public function getHasReviews(): Collection
+    public function getReviews(): Collection
     {
-        return $this->hasReviews;
+        return $this->Reviews;
     }
 
-    public function addHasReviews(Reviews $hasReviews): self
+    public function addReviews(Reviews $Reviews): self
     {
-        if (!$this->hasReviews->contains($hasReviews)) {
-            $this->hasReviews[] = $hasReviews;
-            $hasReviews->setUserId($this);
+        if (!$this->Reviews->contains($Reviews)) {
+            $this->Reviews[] = $Reviews;
+            $Reviews->setUserId($this);
         }
 
         return $this;
     }
 
-    public function removeHasReviews(Reviews $hasReviews): self
+    public function removeReviews(Reviews $Reviews): self
     {
-        if ($this->hasReviews->contains($hasReviews)) {
-            $this->hasReviews->removeElement($hasReviews);
+        if ($this->Reviews->contains($Reviews)) {
+            $this->Reviews->removeElement($Reviews);
             // set the owning side to null (unless already changed)
-            if ($hasReviews->getUserId() === $this) {
-                $hasReviews->setUserId(null);
+            if ($Reviews->getUserId() === $this) {
+                $Reviews->setUserId(null);
             }
         }
 
