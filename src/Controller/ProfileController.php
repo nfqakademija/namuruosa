@@ -16,13 +16,14 @@ class ProfileController extends AbstractController
     /**
      * @Route("/profile", name="profile")
      */
-    public function profile(Manager $manager)
+    public function profile(Manager $manager, Request $request)
     {
         $user = $this->getUser();
         $userId = $user->getId();
         $profile = $user->getUserProfile();
 
-        $reviews = $user->getReviews();
+        // $reviews = $user->getReviews();
+        $reviews = $manager->getAllReviews($userId, $request);
         $totalReviews = $manager->getCountReviews($userId);
         $rating = $manager->getAverageRating($userId);
 
@@ -51,7 +52,7 @@ class ProfileController extends AbstractController
      * @Route("/profile/user/{id}", name="otherUserProfile"), requirements={"id"="\d+"}
      */
 
-    public function otherUserProfile($id, Manager $manager)
+    public function otherUserProfile($id, Manager $manager, Request $request)
     {
       $profile = $this->getDoctrine()->getRepository(UserProfile::class)->
       find($id);
@@ -59,7 +60,7 @@ class ProfileController extends AbstractController
       $user = $profile->getUserId();
       $userId = $user->getId();
 
-      $reviews = $user->getReviews();
+      $reviews = $manager->getAllReviews($userId, $request);
       $totalReviews = $manager->getCountReviews($userId);
       $rating = $manager->getAverageRating($userId);
 

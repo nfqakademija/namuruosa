@@ -23,7 +23,7 @@ class ReviewsRepository extends ServiceEntityRepository
      * @return Reviews[] Returns an array of Reviews objects
     */
 
-    public function findAllUserReviews($id)
+    public function findAllUserReviews(int $id)
     {
         return $this->createQueryBuilder('r')
             ->andWhere('r.user_id = :id')
@@ -31,6 +31,18 @@ class ReviewsRepository extends ServiceEntityRepository
             ->orderBy('r.created_at', 'ASC')
             ->getQuery()
             ->getResult()
+        ;
+    }
+     /*
+     * @param int|null $id
+    */
+
+    public function getAllUserReviews(int $id)
+    {
+        return $this->createQueryBuilder('r')
+            ->andWhere('r.user_id = :id')
+            ->setParameter('id', $id)
+            ->orderBy('r.created_at', 'ASC')
         ;
     }
     public function getCountReviews($id)
