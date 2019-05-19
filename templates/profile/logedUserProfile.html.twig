@@ -8,6 +8,12 @@
 {% endblock %}
 
 {% block body %}
+
+    {% block banner %}
+        <div>
+
+        </div>
+    {% endblock %}
     {% block message %}
         {% for message in app.flashes('notice') %}
             <div class="alert alert-success alert-dismissible">
