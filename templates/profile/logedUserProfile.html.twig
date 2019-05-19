@@ -1,4 +1,4 @@
-{% extends 'service/layout.html.twig' %}
+{% embed 'base.html.twig' %}
 
 {% block title %}Profile{% endblock %}
 
@@ -6,14 +6,15 @@
 {% block header %}
     {% include 'header.html.twig' %}#}
 {% endblock %}
-
 {% block body %}
 
-    {% block banner %}
-        <div>
+{% block banner %}
+<div id="banner-image">
+  <img src="{{ asset('build/images/panMan.jpg') }}" alt="">
+</div>
+{% endblock %}
 
-        </div>
-    {% endblock %}
+
     {% block message %}
         {% for message in app.flashes('notice') %}
             <div class="alert alert-success alert-dismissible">
@@ -22,7 +23,10 @@
             </div>
         {% endfor %}
     {% endblock %}
-    <body>
+
+
+
+
     <div id="profile">
         <aside class="profile-aside">
             <div class="profile-pic">
@@ -109,7 +113,7 @@
         </section>
 
     </div>
-    </body>
-    </html>
+
 
 {% endblock %}
+{% endembed %}

@@ -14,3 +14,5 @@ $(document).ready(function() {
 });
 
 //custom imports:
+const panMan = require('../images/panMan.jpg');
+const bathroom = require('../images/bathroom.jpg');
