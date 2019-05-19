@@ -40,16 +40,6 @@ class User extends BaseUser
      */
     private $userProfile;
 
-    /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Reviews", mappedBy="user_id")
-     */
-    private $Reviews;
-
-    /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Reviews", mappedBy="estimator_id")
-     */
-    private $estimators;
-
 //    ------- End Dalius ------------
 
 
@@ -108,36 +98,4 @@ class User extends BaseUser
         }
 
         return $this;
-    }
-
-    /**
-     * @return Collection|Reviews[]
-     */
-    public function getReviews(): Collection
-    {
-        return $this->Reviews;
-    }
-
-    public function addReviews(Reviews $Reviews): self
-    {
-        if (!$this->Reviews->contains($Reviews)) {
-            $this->Reviews[] = $Reviews;
-            $Reviews->setUserId($this);
-        }
-
-        return $this;
-    }
-
-    public function removeReviews(Reviews $Reviews): self
-    {
-        if ($this->Reviews->contains($Reviews)) {
-            $this->Reviews->removeElement($Reviews);
-            // set the owning side to null (unless already changed)
-            if ($Reviews->getUserId() === $this) {
-                $Reviews->setUserId(null);
-            }
-        }
-
-        return $this;
-    }
-}
+      }}
