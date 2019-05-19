@@ -7,13 +7,14 @@
     {% include 'header.html.twig' %}#}
 {% endblock %}
 
+{% block banner %}
+    <div class="banner-panMan" style="display: flex; height:250px; margin-top:35px; margin-bottom: -200px; justify-content: space-between;">
+        <div class="" style="background-image: linear-gradient(to right, grey , white);height:100%; width: 75%; display: inline-block"></div>
+        <img src="{{ asset('build/images/panMan.93ccdad6.jpg') }}" style=" height:100%; width:auto;  display: inline-block; "   alt="">
+    </div>
+{% endblock %}
+
 {% block body %}
-
-    {% block banner %}
-        <div>
-
-        </div>
-    {% endblock %}
     {% block message %}
         {% for message in app.flashes('notice') %}
             <div class="alert alert-success alert-dismissible">
