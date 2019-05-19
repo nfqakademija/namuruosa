@@ -93,7 +93,7 @@ body{
 .profile-aside{
   background-color: var(--secondary-bg-color);
   width: 400px;
-  height: 900px;
+  //height: 900px;
   margin-top: 90px;
   display: flex;
   position: relative;
@@ -278,7 +278,7 @@ body{
 
 // comments
 .offers{
-  height: 100%;
+  min-height: 300px;
   width: 700px;
   background-color: var(--secondary-bg-color);
   margin-left: 1.5rem;
