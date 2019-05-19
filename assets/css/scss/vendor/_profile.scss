@@ -20,6 +20,16 @@ body{
   display: flex;
 }
 
+.author-rating{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.author-rating .rating{
+  padding: 0.5rem;
+}
+
 .profile-form{
   margin: auto;
   height: 100%;
@@ -29,6 +39,7 @@ body{
   align-items: center;
   background-color: var(--secondary-bg-color);
   flex-direction: column;
+  margin-top: 2rem;
 
 }
 
@@ -301,13 +312,14 @@ body{
   padding-left: 1rem;
   height: 7rem;
   width: 37rem;
-  border-left: 2px solid var(--primary-tools-color);
+  border-left: 2px solid var(--primary-bg-color);
   border-right: 1px solid var(--primary-bg-color);
   border-bottom: 1px solid var(--primary-bg-color);
   border-top: 1px solid var(--primary-bg-color);
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  transition: all 0.5s;
 
 }
 
@@ -323,6 +335,7 @@ body{
 
 .project:hover{
   background-color: var(--primary-bg-color);
+  border-left: 2px solid var(--primary-tools-color);
 }
 
 .project-author span{

@@ -1,16 +1,19 @@
 {% extends 'base.html.twig' %}
 
-
 {% block body %}
 
 <div class="profile-form">
-  <form action="">
-    <h6 class="user-name">Įvertinkite vartotoją!</h6>
-    <textarea name="comment" rows="15" cols="85"></textarea>
+    <div class="profile-headers">
+      <h6 class="edit-profile-h6">Įvertinkite vartotoją!</h6>
+    </div>
+    <!-- <textarea name="comment" rows="15" cols="85"></textarea> -->
+    {{form_start(form,  {'method': 'post', 'action': path('reviewProfile', {'id': id})})}}
+    {{form_widget(form.comment, {'attr': {'class': 'profile-form-textarea', 'placeholder': 'Jūsų nuomonė apie vartotoją', 'cols': '80', 'rows': '5'}}) }}
+    {{form_widget(form.rating, {'attr': {'class': 'profile-form-input', }}) }}
+
     <div class="star-rate"></div>
     <input class="btn btn-submit-review" type="submit">
-  </form>
+    {{form_end(form)}}
+
 </div>
-
-
 {% endblock %}
