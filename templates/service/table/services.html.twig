@@ -18,7 +18,7 @@
             <td>{{ service.pricePerHour }}</td>
             <td>
                 <button class="btn btn-link">Keisti</button>
-                <button class="btn btn-sm btn-danger">Šalinti</button>
+                <a href="{{ path( 'serviceDelete' , { 'serviceId' : service.id } ) }}"><button class="btn btn-sm btn-danger">Šalinti</button></a>
             </td>
         </tr>
 

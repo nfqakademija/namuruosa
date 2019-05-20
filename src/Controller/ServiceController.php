@@ -44,6 +44,17 @@ class ServiceController extends AbstractController
     }
 
     /**
+     * @Route("/service/delete/{serviceId}", name="serviceDelete")
+     */
+    public function deleteJob($serviceId, Request $request, Loader $loader)
+    {
+        $loader->delete($serviceId);
+        $referer = $request->headers->get('referer');
+        return $this->redirect($referer);
+
+    }
+
+    /**
      *
      * @Route("service/myservices", name="my_services")
      */

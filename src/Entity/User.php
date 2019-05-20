@@ -40,12 +40,6 @@ class User extends BaseUser
      */
     private $userProfile;
 
-    /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Reviews", mappedBy="user_id")
-     */
-    private $hasReviews;
-
-
 //    ------- End Dalius ------------
 
 
@@ -104,36 +98,4 @@ class User extends BaseUser
         }
 
         return $this;
-    }
-
-    /**
-     * @return Collection|Reviews[]
-     */
-    public function getHasReviews(): Collection
-    {
-        return $this->hasReviews;
-    }
-
-    public function addHasReviews(Reviews $hasReviews): self
-    {
-        if (!$this->hasReviews->contains($hasReviews)) {
-            $this->hasReviews[] = $hasReviews;
-            $hasReviews->setUserId($this);
-        }
-
-        return $this;
-    }
-
-    public function removeHasReviews(Reviews $hasReviews): self
-    {
-        if ($this->hasReviews->contains($hasReviews)) {
-            $this->hasReviews->removeElement($hasReviews);
-            // set the owning side to null (unless already changed)
-            if ($hasReviews->getUserId() === $this) {
-                $hasReviews->setUserId(null);
-            }
-        }
-
-        return $this;
-    }
-}
+      }}

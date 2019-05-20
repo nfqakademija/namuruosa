@@ -1,8 +1,10 @@
+
 {% extends 'profile/logedUserProfile.html.twig' %}
+
 
 {% block profileButton %}
 
 <div class="contact-button">
-  <a class="btn btn-contact" href="{{path('reviewUser', {'id': id})}}">Įvertinti</a>
+  <a class="btn btn-contact" href="{{path('reviewProfile', {'id': id})}}">Įvertinti</a>
 </div>
 {% endblock %}

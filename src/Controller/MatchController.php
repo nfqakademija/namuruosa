@@ -23,7 +23,7 @@ class MatchController extends AbstractController
     public function matchJobCreate( $callerJobId, $responderServiceId)
     {
         $em = $this->getDoctrine()->getManager();
-        $manager = new Manager();
+        $manager = new Manager($em);
         $match = $manager->createJobMatch($callerJobId, $responderServiceId,  $em);
         $em->persist($match);
         $em->flush();
@@ -36,8 +36,8 @@ class MatchController extends AbstractController
     public function matchServiceCreate( $callerServiceId, $responderJobId)
     {
         $em = $this->getDoctrine()->getManager();
-        $manager = new Manager();
-        $match = $manager->createServiceMatch($callerServiceId, $responderJobId,  $em);
+        $manager = new Manager($em);
+        $match = $manager->createServiceMatch($callerServiceId, $responderJobId);
         $em->persist($match);
         $em->flush();
         return $this->redirectToRoute('match_by_services');

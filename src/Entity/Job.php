@@ -107,6 +107,12 @@ class Job
     protected $address;
 
     /**
+     * @ORM\Column(type="decimal", nullable=true)
+     */
+    protected $distance;
+
+
+    /**
      * @var
      * @ORM\Column(type="datetime", nullable=true)
      */
@@ -242,38 +248,6 @@ class Job
         $this->description = $description;
     }
 
-//    /**
-//     * @return mixed
-//     */
-//    public function getCategory1()
-//    {
-//        return $this->category1;
-//    }
-//
-//    /**
-//     * @param mixed $category1
-//     */
-//    public function setCategory1($category1): void
-//    {
-//        $this->category1 = $category1;
-//    }
-//
-//    /**
-//     * @return mixed
-//     */
-//    public function getCategory2()
-//    {
-//        return $this->category2;
-//    }
-//
-//    /**
-//     * @param mixed $category2
-//     */
-//    public function setCategory2($category2): void
-//    {
-//        $this->category2 = $category2;
-//    }
-
     /**
      * @return mixed
      */
@@ -368,6 +342,22 @@ class Job
     public function setAddress($address): void
     {
         $this->address=$address;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getDistance()
+    {
+        return $this->distance;
+    }
+
+    /**
+     * @param mixed $distance
+     */
+    public function setDistance($distance): void
+    {
+        $this->distance = $distance;
     }
 
     /**

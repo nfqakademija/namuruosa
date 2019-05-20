@@ -88,6 +88,11 @@ class Service
     protected $address;
 
     /**
+     * @ORM\Column(type="decimal", nullable=true)
+     */
+    protected $distance;
+
+    /**
      * @var
      * @ORM\Column(type="decimal")
      */
@@ -281,6 +286,22 @@ class Service
     public function setAddress($address): void
     {
         $this->address=$address;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getDistance()
+    {
+        return $this->distance;
+    }
+
+    /**
+     * @param mixed $distance
+     */
+    public function setDistance($distance): void
+    {
+        $this->distance = $distance;
     }
 
     /**
