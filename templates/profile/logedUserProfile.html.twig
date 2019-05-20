@@ -7,94 +7,110 @@
     {% include 'header.html.twig' %}#}
 {% endblock %}
 
-{% block body %}
-<body>
-<div id="profile">
-  <aside class="profile-aside">
-    <div class="profile-pic">
-      <img src="{{asset('img/profile_pics/') ~ profile.getphoto}}" alt="profile icon" title="Your profile picture!">
+{% block banner %}
+    <div class="banner-panMan" style="display: flex; height:250px; margin-top:35px; margin-bottom: -200px; justify-content: space-between;">
+        <div class="" style="background-image: linear-gradient(to right, grey , white);height:100%; width: 75%; display: inline-block"></div>
+        <img src="{{ asset('build/images/panMan.93ccdad6.jpg') }}" style=" height:100%; width:auto;  display: inline-block; "   alt="">
     </div>
-    <div class="sidebar-content">
-      <div class="sidebar-content-text">
-        <h4 class="user-name">{{user.getfirstname}} {{user.getlastname}}</h4>
-        <p class="job-title">{{profile.getjobtitle}}</p>
-        <div class="user-location">
-          {{profile.getcity}}
-        </div>
-        <div class="user-languages">
-          {{profile.getlanguages}}
-        </div>
-        <div class="user-about">
-          <p>{{profile.getdescription}}</p>
-        </div>
-        <div class="details-list">
-          <div class="details-list-ratings">
-            <div class="star-rating"></div>
-            <div class="total-rating">4.8</div>
-            <div class="total-reviews">(24)</div>
-          </div>
-          <div class="member-cost">{{profile.gethourprice}} &euro;<span>/hr</span></div>
-        </div>
-        {% block profileButton %}
+{% endblock %}
 
-        <div class="contact-button">
-          <a class="btn btn-contact" href="{{path('editProfile')}}">Redaguoti</a>
-        </div>
-        {% endblock %}
-        <div class="skills">
-          <h4 class="job-title">Igudziai</h4>
-          <ul>
-            {% for item in profile.getskill | split(',') %}
-                  <li>{{item}}</li>
-            {% endfor %}
+{% block body %}
+    {% block message %}
+        {% for message in app.flashes('notice') %}
+            <div class="alert alert-success alert-dismissible">
+                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                {{ message }}
+            </div>
+        {% endfor %}
+    {% endblock %}
+    <body>
+    <div id="profile">
+        <aside class="profile-aside">
+            <div class="profile-pic">
+                <img src="{{ asset('img/profile_pics/') ~ profile.getphoto }}" alt="profile icon"
+                     title="Your profile picture!">
+            </div>
+            <div class="sidebar-content">
+                <div class="sidebar-content-text">
+                    <h4 class="user-name">{{ user.getfirstname }} {{ user.getlastname }}</h4>
+                    <p class="job-title">{{ profile.getjobtitle }}</p>
+                    <div class="user-location">
+                        {{ profile.getcity }}
+                    </div>
+                    <div class="user-languages">
+                        {{ profile.getlanguages }}
+                    </div>
+                    <div class="user-about">
+                        <p>{{ profile.getdescription }}</p>
+                    </div>
+                    <div class="details-list">
+                        <div class="details-list-ratings">
+                            <div class="star-rating"></div>
+                            <div class="total-rating">{{ rating | number_format(1) }}</div>
+                            <div class="total-reviews">({{ reviewsCount }})</div>
+                        </div>
+                        <div class="member-cost">{{ profile.gethourprice }} &euro;<span>/hr</span></div>
+                    </div>
+                    {% block profileButton %}
 
-          </ul>
-        </div>
-        <div class="user-statistics">
-          <h4 class="job-title">Statistika</h4>
-          <div class="times-worked">
-            <div>
-              <p>Ivykdyta darbu</p>
-              <p>43</p>
-            </div>
-            <div>
-              <p>Pirkta paslaugu</p>
-              <p>10</p>
-            </div>
-            <div class="last-login">
-              <p>Paskutinis prisijungimas</p>
-              <p>{{user.getlastlogin | date("Y.m.d")}}</p>
-            </div>
-        </div>
-      </div>
-      </div>
-  </aside>
-  <section>
-    <article class="offers">
-      <div class="user-review">
-        <h4 class="user-reviews-title">Recenzijos</h4>
-        <div class="reviews">
-          <div class="review">
-            <div class="project">
-              <h6>
-                <a class="project-title" href="">Project title</a>
-              </h6>
-              <a class="project-author" href="">Name <span>2019.05.07</span></a>
-            </div>
-            <div class="feedback">
-              <div class="author-rating">
-                <a class="project-author" href="">Name <span>2019.05.07</span></a>
-                <div class="rating"></div>
-              </div>
-              <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptas consequatur vel quae, est accusamus commodi!</p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </article>
-  </section>
-</div>
-</body>
-</html>
+                        <div class="contact-button">
+                            <a class="btn btn-contact" href="{{ path('editProfile') }}">Redaguoti</a>
+                        </div>
+                    {% endblock %}
+                    <div class="skills">
+                        <h4 class="job-title">Igudziai</h4>
+                        <ul>
+                            {% for item in profile.getskill | split(',') %}
+                                <li>{{ item }}</li>
+                            {% endfor %}
+
+                        </ul>
+                    </div>
+                    <div class="user-statistics">
+                        <h4 class="job-title">Statistika</h4>
+                        <div class="times-worked">
+                            <div>
+                                <p>Ivykdyta darbu</p>
+                                <p>43</p>
+                            </div>
+                            <div>
+                                <p>Pirkta paslaugu</p>
+                                <p>10</p>
+                            </div>
+                            <div class="last-login">
+                                <p>Paskutinis prisijungimas</p>
+                                <p>{{ user.getlastlogin | date("Y.m.d") }}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+        </aside>
+        <section>
+            <article class="offers">
+                <div class="user-review">
+                    <h4 class="user-reviews-title">Recenzijos</h4>
+                    <div class="reviews">
+                        <div class="review">
+                            {% for review in reviews %}
+                                <div class="project">
+                                    <div class="author-rating">
+                                        <a class="project-author"
+                                           href="{{ path('otherUserProfile', {'id': review.getEstimatorId.getUserProfile.getId}) }}">{{ review.getEstimatorId.getUsername }}
+                                            <span>{{ review.getCreatedAt | date('Y/m/d') }}</span></a>
+                                        <div class="rating">{{ review.getRating }}</div>
+                                    </div>
+                                    <p>{{ review.getComment }}</p>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                    {{ knp_pagination_render(reviews) }}
+                </div>
+            </article>
+        </section>
+
+    </div>
+    </body>
+    </html>
 
 {% endblock %}

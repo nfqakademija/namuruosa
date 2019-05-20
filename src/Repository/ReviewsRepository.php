@@ -19,22 +19,57 @@ class ReviewsRepository extends ServiceEntityRepository
         parent::__construct($registry, Reviews::class);
     }
 
-    // /**
-    //  * @return Reviews[] Returns an array of Reviews objects
-    //  */
-    /*
-    public function findByExampleField($value)
+     /*
+     * @return Reviews[] Returns an array of Reviews objects
+    */
+
+    public function findAllUserReviews(int $id)
     {
         return $this->createQueryBuilder('r')
-            ->andWhere('r.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('r.id', 'ASC')
-            ->setMaxResults(10)
+            ->andWhere('r.user_id = :id')
+            ->setParameter('id', $id)
+            ->orderBy('r.created_at', 'ASC')
             ->getQuery()
             ->getResult()
         ;
     }
+     /*
+     * @param int|null $id
     */
+
+    public function getAllUserReviews(int $id)
+    {
+        return $this->createQueryBuilder('r')
+            ->andWhere('r.user_id = :id')
+            ->setParameter('id', $id)
+            ->orderBy('r.created_at', 'ASC')
+        ;
+    }
+    public function getCountReviews($id)
+    {
+        return $this->createQueryBuilder('r')
+            ->andWhere('r.user_id = :id')
+            ->setParameter('id', $id)
+            ->select('COUNT(r)')
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+
+    public function getAverageRating($id)
+
+    {
+      $entityManager = $this->getEntityManager();
+
+      $query = $entityManager->createQuery(
+        'SELECT AVG(r.rating)
+         FROM APP\Entity\Reviews r
+         WHERE r.user_id = :id'
+        )->setParameter('id', $id);
+
+        return $query->execute();
+    }
+
 
     /*
     public function findOneBySomeField($value): ?Reviews
