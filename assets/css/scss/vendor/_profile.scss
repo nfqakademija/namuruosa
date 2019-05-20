@@ -375,7 +375,9 @@ body{
 }
 
 // banner-image
-//
-#banner-image img{
-  width: 100%;
+
+.banner-image{
+  background: linear-gradient(to right, #ffc106, #ffffff);
+  height: 30vh;
+  margin-bottom: -200px;
 }

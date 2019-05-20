@@ -19,17 +19,17 @@
         {% include 'aside.html.twig' %}
     {% endblock %}
 
+    {% block banner %}
+
+    {% endblock %}
+
+
+    <div class="container container-under-fixednav">
         {% block body %}
 
-          {% block banner %}
-
-          {% endblock %}
-
-        <div class="container container-under-fixednav">
-
             {% include 'main.html.twig' %}
-        </div>
         {% endblock %}
+    </div>
 
     {% block footer %}
         {% include 'foooter.html.twig' %}

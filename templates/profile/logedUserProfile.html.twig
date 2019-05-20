@@ -6,14 +6,13 @@
 {% block header %}
     {% include 'header.html.twig' %}#}
 {% endblock %}
-{% block body %}
 
 {% block banner %}
-<div id="banner-image">
-  <img src="{{ asset('build/images/panMan.jpg') }}" alt="">
+<div class="banner-image" style="background: url('{{ asset('build/images/bathroom.jpg') }}') no-repeat center center/cover; height: 30vh; margin-top: 45px;">
 </div>
 {% endblock %}
 
+{% block body %}
 
     {% block message %}
         {% for message in app.flashes('notice') %}

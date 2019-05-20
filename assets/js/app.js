@@ -5,6 +5,7 @@ require('bootstrap');
 
 require('../css/app.scss');
 
+
 // or you can include specific pieces
 // require('bootstrap/js/dist/tooltip');
 // require('bootstrap/js/dist/popover');
@@ -14,5 +15,5 @@ $(document).ready(function() {
 });
 
 //custom imports:
-const panMan = require('../images/panMan.jpg');
-const bathroom = require('../images/bathroom.jpg');
+require('../images/panMan.jpg');
+require('../images/bathroom.jpg');
