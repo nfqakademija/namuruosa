@@ -45,7 +45,7 @@ class Manager
         return($match);
     }
 
-    public function createServiceMatch($callerServiceId, $responderJobId, CalcHelper $distCalculator)
+    public function createServiceMatch($callerServiceId, $responderJobId)
     {
         $jobRepo = $this->em->getRepository('App\Entity\Job');
         $serviceRepo = $this->em->getRepository('App\Entity\Service');

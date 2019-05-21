@@ -4,6 +4,8 @@ const $ = require('jquery');
 require('bootstrap');
 
 require('../css/app.scss');
+require('../images/panMan.jpg');
+
 
 
 // or you can include specific pieces
