@@ -1,26 +1,28 @@
-<table class="table">
-    <tr>
-        <th>Pavadinimas</th>
-        <th>Aprašymas</th>
-        <th>Kategorijos </th>
-        <th>Eur / val.</th>
-        <th>Redaguoti</th>
-    </tr>
-    {% for service in services %}
+<div class="table-responsive">
+    <table class="table">
         <tr>
-            <td>{{ service.title }}</td>
-            <td>{{ service.description }}</td>
-            <td>
-                {% for cat in service.category %}
-                    {{ cat.name }},
-                {% endfor %}
-            </td>
-            <td>{{ service.pricePerHour }}</td>
-            <td>
-                <button class="btn btn-link">Keisti</button>
-                <a href="{{ path( 'serviceDelete' , { 'serviceId' : service.id } ) }}"><button class="btn btn-sm btn-danger">Šalinti</button></a>
-            </td>
+            <th>Pavadinimas</th>
+            <th>Aprašymas</th>
+            <th>Kategorijos </th>
+            <th>Eur / val.</th>
+            <th>Redaguoti</th>
         </tr>
+        {% for service in services %}
+            <tr>
+                <td>{{ service.title }}</td>
+                <td>{{ service.description }}</td>
+                <td>
+                    {% for cat in service.category %}
+                        {{ cat.name }},
+                    {% endfor %}
+                </td>
+                <td>{{ service.pricePerHour }}</td>
+                <td>
+                    <button class="btn btn-link">Keisti</button>
+                    <a href="{{ path( 'serviceDelete' , { 'serviceId' : service.id } ) }}"><button class="btn btn-sm btn-danger">Šalinti</button></a>
+                </td>
+            </tr>
 
-    {% endfor %}
-</table>
+        {% endfor %}
+    </table>
+</div>

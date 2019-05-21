@@ -1,27 +1,29 @@
-<table class="table">
-    <tr>
-        <th>Pavadinimas</th>
-        <th>Aprašymas</th>
-        <th>Kategorijos </th>
-        <th>Kaina</th>
-        <th>Redaguoti</th>
-    </tr>
-    {% for job in jobs %}
+<div class="table-responsive">
+    <table class="table">
         <tr>
-            <td>{{ job.title }}</td>
-            <td>{{ job.description }}</td>
-            <td>
-                {% for cat in job.category %}
-                    {{ cat.name }},
-                {% endfor %}
-            </td>
-            <td>{{ job.budget }}</td>
-            <td>{{ job.id }}</td>
-            <td>
-                <button class="btn btn-link">Keisti</button>
-                <a href="{{ path( 'jobDelete' , { 'jobId' : job.id } ) }}"><button class="btn btn-sm btn-danger">Šalinti</button></a>
-            </td>
+            <th>Pavadinimas</th>
+            <th>Aprašymas</th>
+            <th>Kategorijos </th>
+            <th>Kaina</th>
+            <th>Redaguoti</th>
         </tr>
+        {% for job in jobs %}
+            <tr>
+                <td>{{ job.title }}</td>
+                <td>{{ job.description }}</td>
+                <td>
+                    {% for cat in job.category %}
+                        {{ cat.name }},
+                    {% endfor %}
+                </td>
+                <td>{{ job.budget }}</td>
+                <td>{{ job.id }}</td>
+                <td>
+                    <button class="btn btn-link">Keisti</button>
+                    <a href="{{ path( 'jobDelete' , { 'jobId' : job.id } ) }}"><button class="btn btn-sm btn-danger">Šalinti</button></a>
+                </td>
+            </tr>
 
-    {% endfor %}
-</table>
+        {% endfor %}
+    </table>
+</div>
