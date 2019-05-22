@@ -1,0 +1,7 @@
+<h3 class="text-center">Pridėti kategoriją </h3>
+
+{{ form_start(form, {'method': 'post', 'action': path('admin_category'), 'attr': {'class': 'fos_user_registration_register'}}) }}
+{{ form_widget(form) }}
+<input type="submit" class="btn btn-info btn-sm" value="Sukurti Kategoriją" />
+
+{{ form_end(form) }}

@@ -19,38 +19,28 @@ use Symfony\Component\Routing\Annotation\Route;
 class AdminController extends AbstractController {
 
     /**
-     * @Route("/adminas/category/add", name="admin_category_add")
+     * @Route("/admin/category", name="admin_category")
      */
-    public function addJob(Request $request)
+    public function adminHome(Request $request)
     {
+        $categories = $this->getDoctrine()
+            ->getRepository(Category::class)
+            ->getAllCategories();
+
         $form = $this->createForm(CategoryType::class);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()){
             $em = $this->getDoctrine()->getManager();
             $category = $form->getData();
-//            $job->setUserId($this->getUser());
             $em->persist($category);
             $em->flush();
             return $this->redirectToRoute('my_jobs');
         }
 
-        return $this->render('admin/add.html.twig', [
+        return $this->render('admin/categories.html.twig', [
+            'categories' => $categories,
             'form' => $form->createView(),
-        ]);
-    }
-
-    /**
-     * @Route("/adminas", name="admin_home")
-     */
-    public function adminHome()
-    {
-        $categories = $this->getDoctrine()
-            ->getRepository(Category::class)
-            ->getAllCategories();
-
-        return $this->render('admin/categories/getAll.html.twig', [
-            'categories' => $categories
         ]);
     }
 

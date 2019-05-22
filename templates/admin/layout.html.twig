@@ -1,12 +1,9 @@
 {% extends "base.html.twig"%}
 
 {% block body %}
-
-    <div class="row adminWrapper">
-        <div id="main" class="col-sm-12">
-            {#{{ include('default/_flash_messages.html.twig') }}#}
-            {% block main %} {% endblock %}
-        </div>
+    <div id="main" class="col-sm-12">
+        {#{{ include('default/_flash_messages.html.twig') }}#}
+        {% block main %}
+        {% endblock %}
     </div>
-
 {% endblock %}

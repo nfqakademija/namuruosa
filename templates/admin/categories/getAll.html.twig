@@ -1,13 +1,14 @@
-<table>
+<h3 class="text-center">Kategorijų sąrašas</h3>
+<table class="table table-responsive table-bordered table-striped">
     <thead>
-    <tr>
-        <th>ID</th>
-        <th>Pavadinimas</th>
-        <th>Paslaugų kiekis</th>
-        <th>Darbų kiekis</th>
-        <th>Keisti</th>
-        <th>Ištrinti</th>
-    </tr>
+        <tr>
+            <th>ID</th>
+            <th>Pavadinimas</th>
+            <th>Paslaugų kiekis</th>
+            <th>Darbų kiekis</th>
+            <th>Keisti</th>
+            <th>Ištrinti</th>
+        </tr>
     </thead>
     <tbody>
     {% for category in categories %}
@@ -17,7 +18,7 @@
             <td>{{ category.service_count }}</td>
             <td>{{ category.job_count }}</td>
             <td>Keisti</td>
-            <td>Ištrinti</td>s
+            <td>Ištrinti</td>
         </tr>
     {% endfor %}
     </tbody>
