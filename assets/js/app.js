@@ -4,7 +4,7 @@ const $ = require('jquery');
 require('bootstrap');
 
 require('../css/app.scss');
-require('../images/panMan.jpg');
+require('../images/chores.jpg');
 
 
 

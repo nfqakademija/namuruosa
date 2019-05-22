@@ -31,11 +31,13 @@ class ProfileController extends AbstractController
 
         if (!$profile){
             $profile = new UserProfile;
+            $profile->setUserId($user);
             $profile->setCity('');
             $profile->setDescription('');
             $profile->setLanguages('');
             $profile->setSkill('igudis1, igudis2');
             $profile->setProfilePhoto('profile-icon.png');
+            $profile->setBannerPhoto('build/images/chores.3210a158.jpg');
             $profile->setPhone('profile-icon.png');
             $entityManager->persist($profile);
             $entityManager->flush();
@@ -88,6 +90,7 @@ class ProfileController extends AbstractController
 
         $userObj = $this->getUser();
         $userProfile = $userObj->getUserProfile();
+        dump($userProfile);
 
         if ($form->isSubmitted() && $form->isValid()){
             $saver->saveForm($form, $userProfile);

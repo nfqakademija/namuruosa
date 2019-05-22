@@ -16,10 +16,10 @@ class EditProfileType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('job_title', TextType::class, [
-                'required' => true,
+            ->add('profilePhoto', FileType::class, [
+                'required' => false,
                 ])
-            ->add('photo', FileType::class, [
+            ->add('bannerPhoto', FileType::class, [
                 'required' => false,
                 ])
             ->add('city', TextType::class, [
@@ -30,10 +30,6 @@ class EditProfileType extends AbstractType
                 ])
             ->add('skill', TextType::class, [
                 'required' => true,
-                ])
-            ->add('hour_price', IntegerType::class, [
-                'required' => true,
-
                 ])
             ->add('phone', TextType::class, [
                 'required' => true,
