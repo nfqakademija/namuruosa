@@ -18,7 +18,12 @@
             <td>{{ category.service_count }}</td>
             <td>{{ category.job_count }}</td>
             <td>Keisti</td>
-            <td>Ištrinti</td>
+            <td>
+                <a onclick="javascript: return confirm('Ar tikrai norite ištrinti? Tai gali pakenkti kitiems įrašams'); " class="text-danger" href="{{ path('admin_category_delete', {'id': category.id}) }}">
+                    Ištrinti
+                </a>
+{#                todo perdaryti javascript#}
+            </td>
         </tr>
     {% endfor %}
     </tbody>
