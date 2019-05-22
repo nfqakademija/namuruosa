@@ -1,18 +1,65 @@
-{% extends 'base.html.twig' %}
+{% extends 'layout/layout-fluid-container.html.twig' %}
 
 {% block title %}{{ someVariable }}{% endblock %}
 
-{% block body %}
-    <div class="text-center mb-5 ">
-        <div class="nfq-academy text-info mb-0">{{ someVariable }}</div>
-        <h1 class="text-muted">Padėdamas kietiems - padėsi sau!</h1>
+{% block landing %}
+    {#<div class="container-fluid">#}
+        <div class="row landing main">
+            <div class="col-sm-6 landing half left">
+                <ul class="ch-grid mt-5">
+                    <li>
+                        <div class="ch-item ch-img-1">
+                            <div class="ch-info">
+                                <h3>TRŪKSTA PAJĖGUMŲ?</h3>
+                                <p>YRA kas gali padėti<a href="{{ path('fos_user_registration_register') }}">Užregistruok savo darbelį</a>
+                                </p>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+                <p>Namuose - galybė darbų, o galimybių viską padaryti neturi? Paskirk kelias minutes
+                    užsiregistravimui ir sutaupyk kelias valandas savo gyvenimui.</p>
+
+                <div class="text-right mt-5">
+                    <h6>Norėtum pabandyti? </h6>
+                    <a href="{{ path('fos_user_registration_register') }}">
+                        <button class="btn btn-lg btn-warning">REGISTRUOTIS</button>
+                    </a>
+                </div>
+
+            </div>
+
+            <div class="center">
+                <h2>&nbsp; NAMŲ <span>RUOŠA</span></h2>
+                <h4>Čia žmonės savo laisvą laiką ir turimus resursus paverčia
+                    papildomomis pajamomis. Gi tie, kuriems kasdieninėje buityje reikalinga pagalba - suranda norinčių padėti.</h4>
+            </div>
+
+            <div class="col-sm-6 landing half right">
+                <ul class="ch-grid mt-5">
+                    <li>
+                        <div class="ch-item ch-img-2">
+                            <div class="ch-info">
+                                <h3>Turi laisvo laiko?</h3>
+                                <p>Nešvaistyk jo veltui <a href="{{ path('fos_user_registration_register') }}">Žmonėms reikia tavo pagalbos</a>
+                                </p>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+
+                <p>Turi laisvo laiko ir norėtum paversti jį pinigais? Prisijunk prie mūsų bendruomenės ir atrask įvairių būdų save realizuoti.</p>
+                <div class="text-left mt-5">
+                    <h6>Esi jau prisiregistravęs?</h6>
+                    <a href="{{ path('fos_user_security_login') }}">
+                        <button class="btn btn-lg btn-info">PRISIJUNGTI</button>
+                    </a>
+                </div>
+            </div>
+        </div>
     </div>
-    <div class="text-center mt-5">
-        <a href="{{ path('fos_user_registration_register') }}">
-            <button class="btn btn-lg btn-outline-info mr-5">REGISTRUOTIS</button>
-        </a>
-        <a href="{{ path('fos_user_security_login') }}">
-            <button class="btn btn-lg btn-outline-success">PRISIJUNGTI</button>
-        </a>
-    </div>
+
+
+
+    {#</div>#}
 {% endblock %}

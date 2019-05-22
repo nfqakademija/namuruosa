@@ -22,11 +22,13 @@
     {% block banner %}
     {% endblock %}
 
-    <div class="container container-under-fixednav">
-        {% block body %}
-            {% include 'main.html.twig' %}
+    {#<div class="container container-under-fixednav">#}
+        {% block layout_wrapper %}
         {% endblock %}
-    </div>
+    {#</div>#}
+
+    {% block landing %}
+    {% endblock %}
 
     {% block footer %}
 {#        {% include 'foooter.html.twig' %}#}
@@ -34,6 +36,9 @@
 
     {% block javascripts %}
         {{ encore_entry_script_tags('app') }}
+        <script type="text/javascript" src="{{ asset('js/circles/modernizr.custom.79639.js') }}"></script>
+
+
     {% endblock %}
 
     </body>
