@@ -19,32 +19,27 @@ class CategoryRepository extends ServiceEntityRepository
         parent::__construct($registry, Category::class);
     }
 
-    // /**
-    //  * @return Category[] Returns an array of Category objects
-    //  */
-    /*
-    public function findByExampleField($value)
+    public function getAllCategories()
     {
-        return $this->createQueryBuilder('c')
-            ->andWhere('c.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('c.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
-    }
-    */
+        $conn = $this->getEntityManager()->getConnection();
 
-    /*
-    public function findOneBySomeField($value): ?Category
-    {
-        return $this->createQueryBuilder('c')
-            ->andWhere('c.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
+        $sql = '
+                SELECT 
+                    c.id, 
+                    c.name, 
+                    COUNT(DISTINCT s.service_id) as service_count, 
+                    COUNT(DISTINCT j.job_id) AS job_count
+                FROM 
+                    category c
+                    LEFT JOIN service_category s 
+                        ON c.id = s.category_id
+                    LEFT JOIN job_category j 
+                        ON c.id = j.category_id
+                GROUP BY c.id
+                ';
+
+        $query = $conn->prepare($sql);
+        $query->execute();
+        return $query->fetchAll();
     }
-    */
 }
