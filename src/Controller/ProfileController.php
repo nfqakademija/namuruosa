@@ -10,6 +10,8 @@ use App\Form\RatingType;
 use App\Entity\UserProfile;
 use Symfony\Component\Validator\Constraints\DateTime;
 use App\Profile\Manager;
+use App\Profile\saveForm;
+
 
 class ProfileController extends AbstractController
 {
@@ -21,8 +23,8 @@ class ProfileController extends AbstractController
         $user = $this->getUser();
         $userId = $user->getId();
         $profile = $user->getUserProfile();
+        $entityManager = $this->getDoctrine()->getManager();
 
-        // $reviews = $user->getReviews();
         $reviews = $manager->getAllReviews($userId, $request);
         $totalReviews = $manager->getCountReviews($userId);
         $rating = $manager->getAverageRating($userId);
@@ -30,12 +32,13 @@ class ProfileController extends AbstractController
         if (!$profile){
             $profile = new UserProfile;
             $profile->setCity('');
-            $profile->setJobTitle('');
             $profile->setDescription('');
             $profile->setLanguages('');
             $profile->setSkill('igudis1, igudis2');
-            $profile->setPhoto('profile-icon.png');
-            $profile->setHourPrice(0);
+            $profile->setProfilePhoto('profile-icon.png');
+            $profile->setPhone('profile-icon.png');
+            $entityManager->persist($profile);
+            $entityManager->flush();
 
       }
         return $this->render('profile/logedUserProfile.html.twig', [
@@ -78,69 +81,20 @@ class ProfileController extends AbstractController
     /**
      * @Route("/profile/edit", name="editProfile")
      */
-    public function editProfile(Request $request)
+    public function editProfile(Request $request, saveForm $saver)
     {
         $form = $this->createForm(EditProfileType::class);
         $form->handleRequest($request);
 
         $userObj = $this->getUser();
-        $userInfo = $userObj->getUserProfile();
+        $userProfile = $userObj->getUserProfile();
 
         if ($form->isSubmitted() && $form->isValid()){
-            $entityManager = $this->getDoctrine()->getManager();
-            $profile = $form->getData();
-            $file = $request->files->get('edit_profile')['photo'];
-
-            if ($file) {
-
-              $uploads_directory = $this->getParameter('profile_pics_dir');
-
-              $fileName = md5(\uniqid()) . '.' . $file->guessExtension();
-
-              $file->move($uploads_directory, $fileName);
-
-            }else {
-              $fileName = 'profile-icon.png';
-            }
-
-
-            if (!$userInfo)
-            {
-
-                $profile->setUserId($userObj);
-                $profile->setPhoto($fileName);
-
-                $entityManager->persist($profile);
-                $entityManager->flush();
-
-
-                $this->addFlash(
-                  'notice',
-                  'Jūsų profilis sukurtas!'
-                );
-            }else
-            {
-                $userInfo->setCity($form["city"]->getData());
-                $userInfo->setLanguages($form["languages"]->getData());
-                $userInfo->setSkill($form["skill"]->getData());
-                $userInfo->setPhone($form["phone"]->getData());
-                $userInfo->setHourPrice($form["hour_price"]->getData());
-                $userInfo->setDescription($form["description"]->getData());
-                $userInfo->setPhoto($fileName);
-                $entityManager->persist($userInfo);
-                $entityManager->flush();
-
-                $this->addFlash(
-                  'notice',
-                  'Jūsų profilis atnaujintas!'
-                );
-            }
-
-            return $this->redirectToRoute('profile');
+            $saver->saveForm($form, $userProfile);
         }
         return $this->render('profile/editProfileForm.html.twig', [
             'form' => $form->createView(),
-            'profile' => $userInfo
+            'profile' => $userProfile
         ]);
     }
     /**
