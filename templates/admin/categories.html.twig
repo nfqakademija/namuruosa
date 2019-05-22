@@ -1,0 +1,14 @@
+{% extends "admin/layout.html.twig" %}
+
+{% block main %}
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6">
+                {% include 'admin/categories/add.html.twig' %}
+            </div>
+            <div class="col-md-6">
+                {% include 'admin/categories/getAll.html.twig' %}
+            </div>
+        </div>
+    </div>
+{% endblock %}
