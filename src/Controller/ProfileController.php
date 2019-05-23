@@ -11,6 +11,7 @@ use App\Entity\UserProfile;
 use Symfony\Component\Validator\Constraints\DateTime;
 use App\Profile\Manager;
 use App\Profile\saveForm;
+use App\Profile\fileUploader;
 
 
 class ProfileController extends AbstractController
@@ -76,7 +77,7 @@ class ProfileController extends AbstractController
           'id' => $id,
           'reviews' => $reviews,
           'rating' => $rating[0][1],
-          'reviewsCount' => $totalReviews[0][1],
+          'reviewsCount'=> $totalReviews[0][1],
           'controller_name' => 'ProfileController',
           ]);
     }
@@ -84,17 +85,16 @@ class ProfileController extends AbstractController
     /**
      * @Route("/profile/edit", name="editProfile")
      */
-    public function editProfile(Request $request, saveForm $saver)
+    public function editProfile(Request $request, saveForm $saver, fileUploader $uploader)
     {
         $form = $this->createForm(EditProfileType::class);
         $form->handleRequest($request);
-        $entityManager = $this->getDoctrine()->getManager();
 
         $userObj = $this->getUser();
         $userProfile = $userObj->getUserProfile();
 
         if ($form->isSubmitted() && $form->isValid()){
-            $saver->saveForm($form, $entityManager, $request, $userProfile);
+            $saver->saveProfileForm($form, $userProfile, $uploader);
 
             $this->addFlash(
               'notice',

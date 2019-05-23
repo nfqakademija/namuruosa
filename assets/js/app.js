@@ -17,5 +17,3 @@ $(document).ready(function() {
 });
 
 //custom imports:
-require('../images/panMan.jpg');
-require('../images/bathroom.jpg');

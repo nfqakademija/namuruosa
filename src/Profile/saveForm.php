@@ -3,33 +3,39 @@
 namespace App\Profile;
 
 use App\Profile\fileUploader;
+use Symfony\Component\HttpFoundation\RequestStack;
+use Doctrine\ORM\EntityManagerInterface;
 
 class saveForm
 {
+  private $entityManager;
+  protected $requestStack;
 
-  public function saveForm($form, $entityManager, $request, $userProfile){
+  public function __construct(EntityManagerInterface $manager, RequestStack $request){
+    $this->entityManager = $manager;
+    $this->requestStack =  $request;
+  }
+
+  public function saveProfileForm($form, $userProfile, $uploader){
 
     $formData = $form->getData();
 
-    $profilePhoto = $request->files->get('edit_profile')['profilePhoto'];
-    $bannerPhoto = $request->files->get('edit_profile')['bannerPhoto'];
-
-    $uploader = new fileUploader;
+    $profilePhoto = $this->requestStack->getCurrentRequest()->files->get('edit_profile')['profilePhoto'];
+    $bannerPhoto = $this->requestStack->getCurrentRequest()->files->get('edit_profile')['bannerPhoto'];
 
     if ($profilePhoto) {
-        $profilePhototoName = $uploader->uploadImage($profilePhoto, 'profile_pics_dir');
+        $profilePhotoName = $uploader->uploadImage($profilePhoto, 'profile_pics_dir');
 
     }else {
-        $profilePhototoName = 'profile-icon.png';
+        $profilePhotoName = 'profile-icon.png';
     }
 
     if ($bannerPhoto) {
-        $bannerPhototoName = $uploader->uploadImage($bannerPhoto, 'profile_pics_dir');
+        $bannerPhotoName = $uploader->uploadImage($bannerPhoto, 'banner_pics_dir');
 
     }else {
-        $bannerPhototoName = 'profile-icon.png';
+        $bannerPhototoName = 'chore.jpg';
     }
-
 
     if (!$userProfile)
     {
@@ -37,8 +43,8 @@ class saveForm
         $profile->setUserId($userObj);
         $profile->setPhoto($profilePhotoName);
 
-        $entityManager->persist($formData);
-        $entityManager->flush();
+        $this->entityManager->persist($formData);
+        $this->entityManager->flush();
 
     }else
     {
@@ -47,9 +53,10 @@ class saveForm
         $userProfile->setSkill($form["skill"]->getData());
         $userProfile->setPhone($form["phone"]->getData());
         $userProfile->setDescription($form["description"]->getData());
-        $userProfile->setProfilePhoto($fileName);
-        $entityManager->persist($userProfile);
-        $entityManager->flush();
+        $userProfile->setProfilePhoto($profilePhotoName);
+        $userProfile->setBannerPhoto($bannerPhotoName);
+        $this->entityManager->persist($userProfile);
+        $this->entityManager->flush();
 
     }
 
