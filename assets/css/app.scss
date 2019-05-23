@@ -13,6 +13,11 @@ $primary: darken(#428bca, 20%);
 }
 
 //imports customization of .dropdown class
+@import "circles/normalize.css";
+@import "circles/common.css";
+@import "circles/style.css";
+
+
 @import "scss/vendor/_header.scss";
 @import "scss/vendor/_footer.scss";
 @import "scss/vendor/_dropdown.scss";
@@ -22,6 +27,12 @@ $primary: darken(#428bca, 20%);
 @import "scss/vendor/_profile.scss";
 @import "scss/vendor/_navbar.scss";
 @import "scss/vendor/_maps.scss";
+@import "scss/vendor/_landing.scss";
+
+
+
+
+
 
 
 

@@ -1,0 +1,71 @@
+.landing.main {
+  background-image: url("../../../images/landing/collaboration_1.jpg");
+  background-size: cover;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: stretch;
+  min-height: 100vh;
+  font-family: "DejaVu Sans";
+  position: relative;
+  color: #FFFFFF;
+
+}
+
+.landing.half {
+  padding: 450px 10% 100px;
+
+}
+
+.landing .center {
+  position: absolute;
+  top: 100px;
+  z-index: 1;
+  max-width: 1000px;
+  width: 80%;
+  margin: auto;
+  text-align: center;
+  line-height: 1.7;
+}
+
+.landing.main h2{
+  font-size: 70px;
+  line-height: 1.7;
+}
+
+.landing.main h4{
+  margin-top: 20px;
+  font-weight: bold;
+  color: #fff0da;
+  line-height: 1.7;
+  padding: 20px;
+  font-size: 28px;
+  text-shadow: -1px 0 #3b3b3b,
+}
+.landing.main h2 span{
+  color: rgb(52, 79, 122);
+}
+
+.landing.half.left {
+  background-color: rgba(52, 79, 122, 0.85);
+  color: rgb(235, 207, 21);
+}
+
+.landing.half.left a h5{
+  color: rgb(235, 207, 21);
+  text-decoration: underline ;
+}
+
+.landing.half.right a h5{
+  color: rgb(52, 79, 122);
+  text-decoration: underline ;
+}
+
+.landing.half.right {
+  background-color: rgba(235, 207, 21, 0.8);
+  color: rgb(52, 79, 122);
+}
+
+.landing.main p{
+  font-size: 20px;
+  font-weight: bold;
+}

@@ -1,14 +1,10 @@
-{% extends "base.html.twig"%}
+{% extends "layout/layout-container.html.twig"%}
 
 {% block body %}
-
     <div class="row jobWrapper">
         <div id="main" class="col-sm-12">
             {#{{ include('default/_flash_messages.html.twig') }}#}
             {% block main %} {% endblock %}
         </div>
     </div>
-
-
-
 {% endblock %}
