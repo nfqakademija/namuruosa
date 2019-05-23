@@ -24,6 +24,6 @@ class CalcHelper
 
         $angle = 2 * asin(sqrt(pow(sin($latDelta / 2), 2) +
                 cos($latFrom) * cos($latTo) * pow(sin($lonDelta / 2), 2)));
-        return round(($angle * self::EARTH_RADIUS)/1000, 2);
+        return round(($angle * self::EARTH_RADIUS)/1000, 1);
     }
 }
