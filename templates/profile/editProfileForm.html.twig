@@ -19,18 +19,18 @@
       {{form_widget(form.city, {'attr': {'class': 'profile-form-input', 'placeholder': 'Miestas, kuriame gyvenate', 'value': profile.getCity}}) }}
 
     {{ form_label(form.languages, 'Kalbos', {'label_attr': {'class': 'profile-form-label'}}) }}
-      {{form_widget(form.languages, {'attr': {'class': 'profile-form-input', 'placeholder': 'Lietuvių, anglu ir t.t.'}}) }}
+      {{form_widget(form.languages, {'attr': {'class': 'profile-form-input', 'placeholder': 'Lietuvių, anglu ir t.t.', 'value': profile.getlanguages}}) }}
 
     {{ form_label(form.skill, 'Įgūdžiai', {'label_attr': {'class': 'profile-form-label'}}) }}
-      {{form_widget(form.skill, {'attr': {'class': 'profile-form-input', 'placeholder': 'Langų valymas, vaismedžių genėjimas'}}) }}
+      {{form_widget(form.skill, {'attr': {'class': 'profile-form-input', 'placeholder': 'Langų valymas, vaismedžių genėjimas', 'value': profile.getskill}}) }}
 
       {{ form_label(form.phone, 'Telefonas', {'label_attr': {'class': 'profile-form-label'}}) }}
       {{form_widget(form.phone
-      , {'attr': {'class': 'profile-form-input', 'placeholder': '+370'}}) }}
+      , {'attr': {'class': 'profile-form-input', 'placeholder': '+370', 'value': profile.getphone}}) }}
 
     {{ form_label(form.description, 'Aprasymas', {'label_attr': {'class': 'profile-form-label'}}) }}
     {{form_widget(form.description
-    , {'attr': {'class': 'profile-form-textarea', 'placeholder': 'Trumpai apie save', 'cols': '80', 'rows': '8'}}) }}
+    , {'attr': {'class': 'profile-form-textarea', 'placeholder': 'Trumpai apie save', 'value': profile.getdescription, 'cols': '80', 'rows': '8'}}) }}
 
     <input class=" btn btn-submit-review" type="submit" value="Pateikti">
 

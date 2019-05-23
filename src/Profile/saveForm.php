@@ -3,33 +3,31 @@
 namespace App\Profile;
 
 use App\Profile\fileUploader;
-use Symfony\Component\HttpFoundation\Request;
 
 class saveForm
 {
-  // public $request;
-  //
-  // public function __construct(Request $request){
-  //   $this->request = $request;
-  // }
 
-  public function saveForm($form, $userProfile, $request){
+  public function saveForm($form, $entityManager, $request, $userProfile){
 
-    $entityManager = $this->getDoctrine()->getManager();
     $formData = $form->getData();
-    dump($request);
-    $file = $request->files->get('edit_profile')['profile_photo'];
 
-    if ($file) {
+    $profilePhoto = $request->files->get('edit_profile')['profilePhoto'];
+    $bannerPhoto = $request->files->get('edit_profile')['bannerPhoto'];
 
-      $uploads_directory = $this->getParameter('profile_pics_dir');
+    $uploader = new fileUploader;
 
-      $fileName = md5(\uniqid()) . '.' . $file->guessExtension();
-
-      $file->move($uploads_directory, $fileName);
+    if ($profilePhoto) {
+        $profilePhototoName = $uploader->uploadImage($profilePhoto, 'profile_pics_dir');
 
     }else {
-      $fileName = 'profile-icon.png';
+        $profilePhototoName = 'profile-icon.png';
+    }
+
+    if ($bannerPhoto) {
+        $bannerPhototoName = $uploader->uploadImage($bannerPhoto, 'profile_pics_dir');
+
+    }else {
+        $bannerPhototoName = 'profile-icon.png';
     }
 
 
@@ -37,38 +35,24 @@ class saveForm
     {
 
         $profile->setUserId($userObj);
-        $profile->setPhoto($fileName);
+        $profile->setPhoto($profilePhotoName);
 
         $entityManager->persist($formData);
         $entityManager->flush();
 
-
-        $this->addFlash(
-          'notice',
-          'Jūsų profilis sukurtas!'
-        );
     }else
     {
         $userProfile->setCity($form["city"]->getData());
         $userProfile->setLanguages($form["languages"]->getData());
         $userProfile->setSkill($form["skill"]->getData());
         $userProfile->setPhone($form["phone"]->getData());
-        $userProfile->setHourPrice($form["hour_price"]->getData());
         $userProfile->setDescription($form["description"]->getData());
-        $userProfile->setPhoto($fileName);
+        $userProfile->setProfilePhoto($fileName);
         $entityManager->persist($userProfile);
         $entityManager->flush();
 
-        $this->addFlash(
-          'notice',
-          'Jūsų profilis atnaujintas!'
-        );
     }
 
-    return $this->redirectToRoute('profile');
   }
-
-
-
 
 }

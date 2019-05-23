@@ -15,6 +15,7 @@ use App\Profile\saveForm;
 
 class ProfileController extends AbstractController
 {
+
     /**
      * @Route("/profile", name="profile")
      */
@@ -87,13 +88,20 @@ class ProfileController extends AbstractController
     {
         $form = $this->createForm(EditProfileType::class);
         $form->handleRequest($request);
+        $entityManager = $this->getDoctrine()->getManager();
 
         $userObj = $this->getUser();
         $userProfile = $userObj->getUserProfile();
-        dump($userProfile);
 
         if ($form->isSubmitted() && $form->isValid()){
-            $saver->saveForm($form, $userProfile);
+            $saver->saveForm($form, $entityManager, $request, $userProfile);
+
+            $this->addFlash(
+              'notice',
+              'Jūsų profilis atnaujintas!'
+            );
+
+            return $this->redirectToRoute('profile');
         }
         return $this->render('profile/editProfileForm.html.twig', [
             'form' => $form->createView(),
