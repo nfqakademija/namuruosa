@@ -9,8 +9,6 @@ require('../css/app.scss');
 require('../images/panMan.jpg');
 
 
-require('./circles/modernizr.custom.79639');
-
 // or you can include specific pieces
 // require('bootstrap/js/dist/tooltip');
 // require('bootstrap/js/dist/popover');
