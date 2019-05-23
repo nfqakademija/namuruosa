@@ -11,19 +11,21 @@
                         <div class="ch-item ch-img-1">
                             <div class="ch-info">
                                 <h3>TRŪKSTA PAJĖGUMŲ?</h3>
-                                <p>YRA kas gali padėti<a href="{{ path('fos_user_registration_register') }}">Užregistruok savo darbelį</a>
+                                <p>YRA kas gali padėti<a href="{{ path('jobAdd') }}">Užregistruok savo darbelį</a>
                                 </p>
                             </div>
                         </div>
                     </li>
                 </ul>
-                <p>Namuose - galybė darbų, o galimybių viską padaryti neturi? Paskirk kelias minutes
-                    užsiregistravimui ir sutaupyk kelias valandas savo gyvenimui.</p>
+                <p>Namuose - tiek darbų, kad neužtektų viso gyvenimo? Nepatikėsi, kiek žmonių norėtų tau padėti. Prisijunk ir įsitikink!</p>
 
                 <div class="text-right mt-5">
-                    <h6>Norėtum pabandyti? </h6>
+                    <a href="{{ path('job_pot_matches') }}">
+                        <button class="btn btn-lg btn-warning">Ieškoti PASLAUGŲ</button>
+                    </a>
+                    <h6 class="mt-5">Dar neprisiregistravai?</h6>
                     <a href="{{ path('fos_user_registration_register') }}">
-                        <button class="btn btn-lg btn-warning">REGISTRUOTIS</button>
+                        <h5>Registruoti naują vartotoją</h5>
                     </a>
                 </div>
 
@@ -32,7 +34,7 @@
             <div class="center">
                 <h2>&nbsp; NAMŲ <span>RUOŠA</span></h2>
                 <h4>Čia žmonės savo laisvą laiką ir turimus resursus paverčia
-                    papildomomis pajamomis. Gi tie, kuriems kasdieninėje buityje reikalinga pagalba - suranda norinčių padėti.</h4>
+                    papildomomis pajamomis. O jei tau namuose reikalinga pagalba - tai tikrai atsiras norinčių padėti.</h4>
             </div>
 
             <div class="col-sm-6 landing half right">
@@ -41,7 +43,7 @@
                         <div class="ch-item ch-img-2">
                             <div class="ch-info">
                                 <h3>Turi laisvo laiko?</h3>
-                                <p>Nešvaistyk jo veltui <a href="{{ path('fos_user_registration_register') }}">Žmonėms reikia tavo pagalbos</a>
+                                <p>Nešvaistyk jo veltui <a href="{{ path('serviceAdd') }}">Žmonėms reikia tavo pagalbos</a>
                                 </p>
                             </div>
                         </div>
@@ -50,10 +52,15 @@
 
                 <p>Turi laisvo laiko ir norėtum paversti jį pinigais? Prisijunk prie mūsų bendruomenės ir atrask įvairių būdų save realizuoti.</p>
                 <div class="text-left mt-5">
-                    <h6>Esi jau prisiregistravęs?</h6>
-                    <a href="{{ path('fos_user_security_login') }}">
-                        <button class="btn btn-lg btn-info">PRISIJUNGTI</button>
+
+                    <a href="{{ path('service_pot_matches') }}">
+                        <button class="btn btn-lg btn-info">Peržvelgti DARBUS</button>
                     </a>
+                    <h6 class="mt-5">Dar neprisiregistravai?</h6>
+                    <a href="{{ path('fos_user_registration_register') }}">
+                        <h5>Registruoti naują vartotoją</h5>
+                    </a>
+
                 </div>
             </div>
         </div>
