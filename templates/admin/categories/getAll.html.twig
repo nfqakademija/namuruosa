@@ -1,6 +1,7 @@
 <h3 class="text-center">Kategorijų sąrašas</h3>
-<table class="table table-responsive table-bordered table-striped">
-    <thead>
+<div class="table-responsive">
+    <table class="table table-bordered table-striped">
+        <thead>
         <tr>
             <th>ID</th>
             <th>Pavadinimas</th>
@@ -9,22 +10,23 @@
             <th>Keisti</th>
             <th>Ištrinti</th>
         </tr>
-    </thead>
-    <tbody>
-    {% for category in categories %}
-        <tr>
-            <td>{{ category.id }}</td>
-            <td>{{ category.name }}</td>
-            <td>{{ category.service_count }}</td>
-            <td>{{ category.job_count }}</td>
-            <td>Keisti</td>
-            <td>
-                <a onclick="javascript: return confirm('Ar tikrai norite ištrinti? Tai gali pakenkti kitiems įrašams'); " class="text-danger" href="{{ path('admin_category_delete', {'id': category.id}) }}">
-                    Ištrinti
-                </a>
-{#                todo perdaryti javascript#}
-            </td>
-        </tr>
-    {% endfor %}
-    </tbody>
-</table>
+        </thead>
+        <tbody>
+        {% for category in categories %}
+            <tr>
+                <td>{{ category.id }}</td>
+                <td>{{ category.name }}</td>
+                <td>{{ category.service_count }}</td>
+                <td>{{ category.job_count }}</td>
+                <td>Keisti</td>
+                <td>
+                    <a onclick="return confirm('Ar tikrai norite ištrinti? Tai gali pakenkti kitiems įrašams'); " class="text-danger" href="{{ path('admin_category_delete', {'id': category.id}) }}">
+                        Ištrinti
+                    </a>
+                    {#                todo perdaryti javascript#}
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>

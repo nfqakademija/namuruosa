@@ -15,10 +15,21 @@
                 Admin <i class="fa fa-angle-down"></i>
             </a>
             <div class="dropdown-menu" aria-labelledby="adminNavbarDropdown">
-                <a class="dropdown-item" href="{{ path ('admin_category') }}">Kategorijos
-                    <div><span class="small text-muted mt-0">Bla</span></div>
+                <a href="#" class="dropdown-item">
+                    Vartotojai
                 </a>
-                <div class="dropdown-divider"></div>
+                <a href="#" class="dropdown-item">
+                    Darbai
+                </a>
+                <a href="#" class="dropdown-item">
+                    Paslaugos
+                </a>
+                <a href="#" class="dropdown-item">
+                    Subendrinti darbai
+                </a>
+                <a class="dropdown-item" href="{{ path ('admin_category') }}">
+                    Kategorijos
+                </a>
             </div>
         </li>
         {% endif %}
