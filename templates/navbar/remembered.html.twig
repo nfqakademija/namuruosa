@@ -31,6 +31,18 @@
     </a>
     <div class="dropdown-menu dropdown-menu-lg-right" aria-labelledby="myInfoDropdownMenuButton">
 
+        {% if 'service' in app.request.attributes.all["_route"] %}
+            <a class="dropdown-item" href="{{ path('jobAdd') }}"> {#todo perkelti į /service/home kai bus#}
+                Darbų puslapis
+            </a>
+            <div class="dropdown-divider"></div>
+        {% elseif 'job' in app.request.attributes.all["_route"] %}
+            <a class="dropdown-item" href="{{ path('serviceAdd') }}"> {#todo perkelti į /service/home kai bus#}
+                Paslaugų puslapis
+            </a>
+            <div class="dropdown-divider"></div>
+        {% endif %}
+
         <a href="{{ path('fos_user_profile_show') }}" class="dropdown-item">
             <i class="fas fa-fw fa-user"></i>
             Profilis
