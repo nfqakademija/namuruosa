@@ -1,17 +1,13 @@
 {% extends 'service/layout.html.twig' %}
-{#{% embed 'base.html.twig' %}#}
-
-
 
 {% block title %}Profile{% endblock %}
-
 
 {% block header %}
     {% include 'header.html.twig' %}#}
 {% endblock %}
 
 {% block banner %}
-<div class="banner-image" style="background: url('{{ asset(profile.getbannerphoto)}}') no-repeat center center/cover; height: 30vh; margin-top: 45px;">
+<div class="banner-image" style="background: url('{{ asset(profile.getbannerphoto)}}') no-repeat center center/cover; height: 30vh; margin-top: 35px;">
 </div>
 {% endblock %}
 
@@ -28,11 +24,11 @@
 
     <div id="profile">
         <aside class="profile-aside">
-            <div class="profile-pic">
-                <img src="{{ asset(profile.getprofilephoto)}}" alt="profile icon"
-                     title="Your profile picture!">
-            </div>
             <div class="sidebar-content">
+              <div class="profile-pic">
+                <img src="{{ asset(profile.getprofilephoto)}}" alt="profile icon"
+                title="Your profile picture!">
+              </div>
                 <div class="sidebar-content-text">
                     <h4 class="user-name">{{ user.getfirstname }} {{ user.getlastname }}</h4>
                     <div class="user-location">
@@ -84,6 +80,7 @@
                             </div>
                         </div>
                     </div>
+                    {% block reportbutton %}{% endblock %}
                 </div>
             </div>
         </aside>
@@ -97,7 +94,7 @@
                                 <div class="project">
                                     <div class="author-rating">
                                         <a class="project-author"
-                                           href="{{ path('otherUserProfile', {'userId': review.getEstimatorId}) }}">{{ review.getEstimatorId.getUsername }}
+                                           href="{{ path('otherUserProfile', {'userId': review.getEstimatorId.getId}) }}">{{ review.getEstimatorId.getfirstname ~ ' ' ~ review.getEstimatorId.getlastname }}
                                             <span>{{ review.getCreatedAt | date('Y/m/d') }}</span></a>
                                         <div class="rating">{{ review.getRating }}</div>
                                     </div>
@@ -115,4 +112,3 @@
 
 
 {% endblock %}
-{#{% endembed %}#}

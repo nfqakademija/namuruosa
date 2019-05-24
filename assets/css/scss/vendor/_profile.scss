@@ -13,6 +13,12 @@ body{
   box-sizing: border-box;
 }
 
+.job-title{
+  font-size: 1rem;
+  font-weight: var(--font-weight-medium);
+  line-height: 2rem;
+}
+
 #profile{
   margin: auto;
   height: 100vh;
@@ -41,11 +47,6 @@ body{
   flex-direction: column;
   margin-top: 2rem;
 
-}
-
-.profile-form input[id='edit_profile_phone'], .profile-form input[type='number']{
-  width: 40%;
-  margin-left: -7rem;
 }
 
 .form-nums{
@@ -81,11 +82,11 @@ body{
 }
 
 .profile-aside{
-  background-color: var(--secondary-bg-color);
   width: 400px;
-  margin-top: 90px;
+  // margin-top: 90px;
   display: flex;
   position: relative;
+  // background-color: var(--secondary-bg-color);
 
 }
 
@@ -98,13 +99,14 @@ body{
   align-items: center;
   top: 4rem;
   position: absolute;
-  width: 100%
+  width: 100%;
+  background-color: var(--secondary-bg-color);
 }
 
 .sidebar-content-text{
   width: 100%;
+  margin-top: 5rem;
 }
-
 
 .profile-pic img{
   max-width: 130px;
@@ -121,12 +123,6 @@ body{
   font-weight: 400;
   line-height: 1.5;
   font-size: 1.4rem;
-}
-
-.job-title{
-  font-size: 1rem;
-  font-weight: var(--font-weight-medium);
-  line-height: 2rem;
 }
 
 .user-location{
@@ -193,7 +189,6 @@ body{
     transition: all 0.5s;
 }
 .btn-contact{
-
   background-color: var(--primary-tools-color);
   color: var(--secondary-bg-color);
   border: 1px solid var(--primary-tools-color);
@@ -299,7 +294,6 @@ body{
 
 .project{
   padding-left: 1rem;
-  height: 7rem;
   width: 37rem;
   border-left: 2px solid var(--primary-bg-color);
   border-right: 1px solid var(--primary-bg-color);
@@ -308,6 +302,7 @@ body{
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  margin-bottom: 0.5rem;
   transition: all 0.5s;
 
 }
@@ -381,4 +376,16 @@ body{
   background: linear-gradient(to right, #ffc106, #ffffff);
   height: 30vh;
   margin-bottom: -200px;
+}
+
+// report button
+
+.report{
+  margin-top: 2rem;
+}
+
+.report a{
+  text-decoration: none;
+  color: var(--primary-bg-color-dark);
+  font-size: .8rem;
 }
