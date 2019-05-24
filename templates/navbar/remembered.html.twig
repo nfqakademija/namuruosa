@@ -1,52 +1,28 @@
-<li class="nav-item">
-    <a class="nav-link" href="{{ path('jobAdd') }}">
-        <button class="btn btn-warning">Turiu darbą</button>
-    </a>
-</li>
-<li class="nav-item">
-    <a class="nav-link" href="{{ path('serviceAdd') }}">
-        <button class="btn btn-outline-warning">Noriu padirbėti</button>
-    </a>
-</li>
+{% if 'service' in app.request.attributes.all["_route"] %}
 
-<li class="nav-item dropdown">
-    <a class="nav-link text-warning" href="#" role="button" id="searchDropdownMenuButton" data-toggle="dropdown"
-       aria-haspopup="true" aria-expanded="false">
-        <i class="fa fa-search"></i>
-        Ieškoti <i class="fa fa-angle-down"></i>
-    </a>
-    <div class="dropdown-menu" aria-labelledby="searchDropdownMenuButton">
-        <a class="dropdown-item" href="{{ path ('job_pot_matches') }}">Ieškoti <span class="text-info">paslaugų</span>
-            <div><span class="small text-muted mt-0">Pagal mano užklausas</span></div>
-        </a>
-        <div class="dropdown-divider"></div>
-        <a class="dropdown-item mb-0" href="{{ path ('service_pot_matches') }}">Ieškoti <span class="text-info">darbų</span>
-            <div><span class="small text-muted mt-0">Pagal mano užklausas</span></div>
-        </a>
-    </div>
-</li>
+    {% include 'navbar/links/links_service.html.twig' %}
 
-<li class="nav-item dropdown">
-    <a class="nav-link text-warning" href="#" id="myworkDropdownMenuButton" role="button" data-toggle="dropdown"
-       aria-haspopup="true" aria-expanded="false">
-        Mano veikla <i class="fa fa-angle-down"></i>
-    </a>
-    <div class="dropdown-menu" aria-labelledby="myworkDropdownMenuButton">
-        <a class="dropdown-item" href="{{ path ('match_by_jobs') }}">Sandoriai
-            <span class="text-info">MANO DARBAI</span>
+{% elseif 'job' in app.request.attributes.all["_route"] %}
+
+    {% include 'navbar/links/links_job.html.twig' %}
+
+{% else %}
+    <li class="nav-item">
+        <a class="navbar-item" href="{{ path('serviceAdd') }}"> {#todo perkelti į /service/home kai bus#}
+            <button class="btn btn-info">
+                Paslaugos
+            </button>
         </a>
-        <a class="dropdown-item mb-0" href="{{ path ('match_by_services') }}">Sandoriai
-            <span class="text-info">MANO PASLAUGOS</span>
+    </li>
+    <li class="nav-item">
+        <a class="navbar-item" href="{{ path('jobAdd') }}">  {#todo perkelti į /job/home kai bus#}
+            <button class="btn btn-warning">
+                Darbai
+            </button>
         </a>
-        <div class="dropdown-divider"></div>
-        <a class="dropdown-item mb-0" href="{{ path ('my_jobs') }}">Skelbimai
-            <span class="text-info">darbai </span>
-        </a>
-        <a class="dropdown-item mb-0" href="{{ path ('my_services') }}">Skelbimai
-            <span class="text-info">paslaugos </span>
-        </a>
-    </div>
-</li>
+    </li>
+{% endif %}
+
 
 <li class="nav-item dropdown">
     <a class="nav-link color-white" href="#" id="myInfoDropdownMenuButton" role="button" data-toggle="dropdown"

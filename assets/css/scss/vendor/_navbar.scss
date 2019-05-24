@@ -17,3 +17,11 @@ li.nav-item{
   padding: 2.5px 2.5px 2.5px 10px;
 }
 
+.navbar-item {
+  padding-right: 1rem;
+  @media (max-width: 992px) {
+    padding-top: 0.5rem;
+    padding-left: 8px;
+  }
+}
+
