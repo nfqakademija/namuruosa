@@ -1,8 +1,9 @@
-{% extends "layout/layout-container.html.twig"%}
+{% extends "layout/layout-no-container.html.twig"%}
 
 {% block body %}
-    <div class="row jobWrapper">
-        <div id="main" class="col-sm-12">
+    <div class="jobWrapper"> {#row#}
+        <div id="main" class="container-under-fixednav" >
+            {#class=" col-sm-12"#}
             {#{{ include('default/_flash_messages.html.twig') }}#}
             {% block main %} {% endblock %}
         </div>
