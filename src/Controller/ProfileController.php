@@ -20,14 +20,14 @@ class ProfileController extends AbstractController
     /**
      * @Route("/profile", name="profile")
      */
-    public function profile(dataLoader $dataLoader)
+    public function profile(dataLoader $dataLoader, Request $request)
     {
         $user = $this->getUser();
         $userId = $user->getId();
         $profile = $user->getUserProfile();
         $entityManager = $this->getDoctrine()->getManager();
 
-        $reviews = $dataLoader->getAllReviews($userId);
+        $reviews = $dataLoader->getAllReviews($userId, $request);
         $totalReviews = $dataLoader->getCountReviews($userId);
         $rating = $dataLoader->getAverageRating($userId);
 

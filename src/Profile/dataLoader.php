@@ -4,29 +4,27 @@ namespace App\Profile;
 
 use App\Repository\ReviewsRepository;
 use Knp\Component\Pager\PaginatorInterface;
-use Symfony\Component\HttpFoundation\RequestStack;
 
 class dataLoader
 {
 
     private $reviews;
     private $paginator;
-    private $request;
 
-    public function __construct(ReviewsRepository $reviews, PaginatorInterface $paginator, RequestStack $request)
+    public function __construct(ReviewsRepository $reviews, PaginatorInterface $paginator)
     {
         $this->reviews = $reviews;
         $this->paginator = $paginator;
-        $this->request = $request;
+
     }
 
-    public function getAllReviews($userId)
+    public function getAllReviews($userId, $request)
     {
-        $queryBuilder = $this->reviews->getAllUserReviews($userId);
+        $queryBuilder = $this->reviews->getAllUserReviews($userId, $request);
 
         $pagination = $this->paginator->paginate(
             $queryBuilder, /* query NOT result */
-            $this->request->query->getInt('page', 1)/*page number*/,
+            $request->query->getInt('page', 1)/*page number*/,
             6/*limit per page*/
         );
 
