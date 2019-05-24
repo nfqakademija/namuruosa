@@ -38,7 +38,7 @@ class ProfileController extends AbstractController
             $profile->setDescription('');
             $profile->setLanguages('');
             $profile->setSkill('igudis1, igudis2');
-            $profile->setProfilePhoto('profile-icon.png');
+            $profile->setProfilePhoto('build/images/profile-icon.png');
             $profile->setBannerPhoto('build/images/chores.jpg');
             $profile->setPhone('');
             $entityManager->persist($profile);

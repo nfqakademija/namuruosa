@@ -8,7 +8,7 @@
 {% endblock %}
 
 {% block banner %}
-<div class="banner-image" style="background: url('{{ asset('uploads/banner_pics/')~ profile.getbannerphoto }}') no-repeat center center/cover; height: 30vh; margin-top: 45px;">
+<div class="banner-image" style="background: url('{{ asset(profile.getbannerphoto)}}') no-repeat center center/cover; height: 30vh; margin-top: 45px;">
 </div>
 {% endblock %}
 
@@ -26,7 +26,7 @@
     <div id="profile">
         <aside class="profile-aside">
             <div class="profile-pic">
-                <img src="{{ asset('uploads/profile_pics/') ~ profile.getprofilephoto }}" alt="profile icon"
+                <img src="{{ asset(profile.getprofilephoto)}}" alt="profile icon"
                      title="Your profile picture!">
             </div>
             <div class="sidebar-content">
@@ -94,7 +94,7 @@
                                 <div class="project">
                                     <div class="author-rating">
                                         <a class="project-author"
-                                           href="{{ path('otherUserProfile', {'id': review.getEstimatorId.getUserProfile.getId}) }}">{{ review.getEstimatorId.getUsername }}
+                                           href="{{ path('otherUserProfile', {'userId': review.getEstimatorId}) }}">{{ review.getEstimatorId.getUsername }}
                                             <span>{{ review.getCreatedAt | date('Y/m/d') }}</span></a>
                                         <div class="rating">{{ review.getRating }}</div>
                                     </div>

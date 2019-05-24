@@ -24,14 +24,14 @@ class saveForm
     $bannerPhoto = $this->requestStack->getCurrentRequest()->files->get('edit_profile')['bannerPhoto'];
 
     if ($profilePhoto) {
-        $profilePhotoName = $uploader->uploadImage($profilePhoto, 'profile_pics_dir');
+        $profilePhotoName = $uploader->uploadImage($profilePhoto, 'profile_pics_dir', 'uploads/profile_pics/');
 
     }else {
         $profilePhotoName = 'profile-icon.png';
     }
 
     if ($bannerPhoto) {
-        $bannerPhotoName = $uploader->uploadImage($bannerPhoto, 'banner_pics_dir');
+        $bannerPhotoName = $uploader->uploadImage($bannerPhoto, 'banner_pics_dir', 'uploads/banner_pics/');
 
     }else {
         $bannerPhototoName = 'chore.jpg';
