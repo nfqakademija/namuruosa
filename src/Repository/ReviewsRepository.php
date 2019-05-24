@@ -20,43 +20,29 @@ class ReviewsRepository extends ServiceEntityRepository
     }
 
      /*
-     * @return Reviews[] Returns an array of Reviews objects
-    */
-
-    public function findAllUserReviews(int $id)
-    {
-        return $this->createQueryBuilder('r')
-            ->andWhere('r.user_id = :id')
-            ->setParameter('id', $id)
-            ->orderBy('r.created_at', 'ASC')
-            ->getQuery()
-            ->getResult()
-        ;
-    }
-     /*
      * @param int|null $id
     */
 
-    public function getAllUserReviews(int $id)
+    public function getAllUserReviews(int $userId)
     {
         return $this->createQueryBuilder('r')
-            ->andWhere('r.user_id = :id')
-            ->setParameter('id', $id)
+            ->andWhere('r.user_id = :userId')
+            ->setParameter('userId', $userId)
             ->orderBy('r.created_at', 'ASC')
         ;
     }
-    public function getCountReviews($id)
+    public function getCountReviews($userId)
     {
         return $this->createQueryBuilder('r')
-            ->andWhere('r.user_id = :id')
-            ->setParameter('id', $id)
+            ->andWhere('r.user_id = :userId')
+            ->setParameter('userId', $userId)
             ->select('COUNT(r)')
             ->getQuery()
             ->getResult()
         ;
     }
 
-    public function getAverageRating($id)
+    public function getAverageRating($userId)
 
     {
       $entityManager = $this->getEntityManager();
@@ -64,22 +50,9 @@ class ReviewsRepository extends ServiceEntityRepository
       $query = $entityManager->createQuery(
         'SELECT AVG(r.rating)
          FROM APP\Entity\Reviews r
-         WHERE r.user_id = :id'
-        )->setParameter('id', $id);
+         WHERE r.user_id = :userId'
+        )->setParameter('userId', $userId);
 
         return $query->execute();
     }
-
-
-    /*
-    public function findOneBySomeField($value): ?Reviews
-    {
-        return $this->createQueryBuilder('r')
-            ->andWhere('r.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
-    }
-    */
 }

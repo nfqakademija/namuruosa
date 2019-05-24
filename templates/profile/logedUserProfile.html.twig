@@ -1,4 +1,7 @@
 {% extends 'service/layout.html.twig' %}
+{#{% embed 'base.html.twig' %}#}
+
+
 
 {% block title %}Profile{% endblock %}
 
@@ -8,13 +11,12 @@
 {% endblock %}
 
 {% block banner %}
-    <div class="banner-panMan" style="display: flex; height:250px; margin-top:35px; margin-bottom: -200px; justify-content: space-between;">
-        <div class="" style="background-image: linear-gradient(to right, grey , white);height:100%; width: 75%; display: inline-block"></div>
-        <img src="{{ asset('build/images/panMan.93ccdad6.jpg') }}" style=" height:100%; width:auto;  display: inline-block; "   alt="">
-    </div>
+<div class="banner-image" style="background: url('{{ asset(profile.getbannerphoto)}}') no-repeat center center/cover; height: 30vh; margin-top: 45px;">
+</div>
 {% endblock %}
 
 {% block body %}
+
     {% block message %}
         {% for message in app.flashes('notice') %}
             <div class="alert alert-success alert-dismissible">
@@ -23,17 +25,16 @@
             </div>
         {% endfor %}
     {% endblock %}
-    <body>
+
     <div id="profile">
         <aside class="profile-aside">
             <div class="profile-pic">
-                <img src="{{ asset('img/profile_pics/') ~ profile.getphoto }}" alt="profile icon"
+                <img src="{{ asset(profile.getprofilephoto)}}" alt="profile icon"
                      title="Your profile picture!">
             </div>
             <div class="sidebar-content">
                 <div class="sidebar-content-text">
                     <h4 class="user-name">{{ user.getfirstname }} {{ user.getlastname }}</h4>
-                    <p class="job-title">{{ profile.getjobtitle }}</p>
                     <div class="user-location">
                         {{ profile.getcity }}
                     </div>
@@ -49,7 +50,7 @@
                             <div class="total-rating">{{ rating | number_format(1) }}</div>
                             <div class="total-reviews">({{ reviewsCount }})</div>
                         </div>
-                        <div class="member-cost">{{ profile.gethourprice }} &euro;<span>/hr</span></div>
+                        <div class="member-cost">1000 &euro;<span>/hr</span></div>
                     </div>
                     {% block profileButton %}
 
@@ -96,7 +97,7 @@
                                 <div class="project">
                                     <div class="author-rating">
                                         <a class="project-author"
-                                           href="{{ path('otherUserProfile', {'id': review.getEstimatorId.getUserProfile.getId}) }}">{{ review.getEstimatorId.getUsername }}
+                                           href="{{ path('otherUserProfile', {'userId': review.getEstimatorId}) }}">{{ review.getEstimatorId.getUsername }}
                                             <span>{{ review.getCreatedAt | date('Y/m/d') }}</span></a>
                                         <div class="rating">{{ review.getRating }}</div>
                                     </div>
@@ -111,7 +112,7 @@
         </section>
 
     </div>
-    </body>
-    </html>
+
 
 {% endblock %}
+{#{% endembed %}#}
