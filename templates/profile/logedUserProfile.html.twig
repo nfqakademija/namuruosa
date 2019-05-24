@@ -1,4 +1,7 @@
-{% embed 'base.html.twig' %}
+{% extends 'service/layout.html.twig' %}
+{#{% embed 'base.html.twig' %}#}
+
+
 
 {% block title %}Profile{% endblock %}
 
@@ -94,7 +97,7 @@
                                 <div class="project">
                                     <div class="author-rating">
                                         <a class="project-author"
-                                           href="{{ path('otherUserProfile', {'id': review.getEstimatorId.getUserProfile.getId}) }}">{{ review.getEstimatorId.getUsername }}
+                                           href="{{ path('otherUserProfile', {'userId': review.getEstimatorId.getUserProfile.getId}) }}">{{ review.getEstimatorId.getUsername }}
                                             <span>{{ review.getCreatedAt | date('Y/m/d') }}</span></a>
                                         <div class="rating">{{ review.getRating }}</div>
                                     </div>
@@ -112,4 +115,4 @@
 
 
 {% endblock %}
-{% endembed %}
+{#{% endembed %}#}

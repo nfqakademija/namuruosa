@@ -78,7 +78,7 @@ text-overflow: ellipsis;">{{ service.description }}</h6>
                                 </a>
                             </div>
                             <div class="col px-1">
-                                <a href="{{ path('reviewProfile', { 'id': service.userId.id}) }}"><i class="fa fa-user"></i> {{ service.userId.username }}</a>
+                                <a href="{{ path('otherUserProfile', { 'userId': service.userId.id}) }}"><i class="fa fa-user"></i> {{ service.userId.username }}</a>
                             </div>
                             <div class="col px-1">
                                 <a href="tel:+123456789"><i class="fas fa-phone"></i></a>
