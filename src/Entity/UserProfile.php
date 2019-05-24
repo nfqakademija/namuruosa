@@ -34,12 +34,12 @@ class UserProfile
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $job_title;
+    private $profilePhoto;
 
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $photo;
+    private $bannerPhoto;
 
     /**
      * @ORM\Column(type="string", length=255)
@@ -50,11 +50,6 @@ class UserProfile
      * @ORM\Column(type="string", length=255)
      */
     private $skill;
-
-    /**
-     * @ORM\Column(type="integer")
-     */
-    private $hour_price;
 
     /**
      * @ORM\Column(type="string", length=255)
@@ -102,26 +97,26 @@ class UserProfile
         return $this;
     }
 
-    public function getJobTitle(): ?string
+    public function getProfilePhoto(): ?string
     {
-        return $this->job_title;
+        return $this->profilePhoto;
     }
 
-    public function setJobTitle(string $job_title): self
+    public function setProfilePhoto(string $profilePhoto): self
     {
-        $this->job_title = $job_title;
+        $this->profilePhoto = $profilePhoto;
 
         return $this;
     }
 
-    public function getPhoto(): ?string
+    public function getBannerPhoto(): ?string
     {
-        return $this->photo;
+        return $this->bannerPhoto;
     }
 
-    public function setPhoto(string $photo): self
+    public function setBannerPhoto(string $bannerPhoto): self
     {
-        $this->photo = $photo;
+        $this->bannerPhoto = $bannerPhoto;
 
         return $this;
     }
@@ -146,18 +141,6 @@ class UserProfile
     public function setSkill(string $skill): self
     {
         $this->skill = $skill;
-
-        return $this;
-    }
-
-    public function getHourPrice(): ?int
-    {
-        return $this->hour_price;
-    }
-
-    public function setHourPrice(int $hour_price): self
-    {
-        $this->hour_price = $hour_price;
 
         return $this;
     }

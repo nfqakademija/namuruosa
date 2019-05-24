@@ -6,7 +6,7 @@ use App\Repository\ReviewsRepository;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\HttpFoundation\Request;
 
-class Manager
+class dataLoader
 {
 
     private $reviews;

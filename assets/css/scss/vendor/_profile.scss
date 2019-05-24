@@ -73,16 +73,6 @@ body{
 
 }
 
-// #edit_profile_photo{
-//   margin-bottom: 5rem;
-// }
-//
-// .profile-form .custom-file input[type='file']:focus{
-//   box-shadow: none;
-//   border: 1px solid var(--primary-tools-color);
-//   margin-bottom: 1rem;
-// }
-
 .profile-form-label{
   color: var(--primary-bg-color-dark);
   margin-bottom: 0.25rem;
@@ -93,11 +83,10 @@ body{
 .profile-aside{
   background-color: var(--secondary-bg-color);
   width: 400px;
-  //height: 900px;
   margin-top: 90px;
   display: flex;
   position: relative;
-  // justify-content: center;
+
 }
 
 .sidebar-content{
@@ -384,4 +373,12 @@ body{
   width: 66%;
   margin-bottom: 2rem;
   margin-top: 2rem;
+}
+
+// banner-image
+
+.banner-image{
+  background: linear-gradient(to right, #ffc106, #ffffff);
+  height: 30vh;
+  margin-bottom: -200px;
 }
