@@ -1,0 +1,14 @@
+.jobWrapper #main .job-matches .job-odd-even{
+  background-color: #7c98c2;
+  background-image: url("https://www.transparenttextures.com/patterns/stucco.png");
+  padding: 40px 30px 30px;
+}
+
+.jobWrapper #main .job-matches .job-odd-even:nth-child(odd) {
+  background-color: #7c98c2;
+  background-image: url("https://www.transparenttextures.com/patterns/stucco.png");
+}
+.jobWrapper #main .job-matches .job-odd-even:nth-child(even) {
+  background-color: #fab300;
+  background-image: url("https://www.transparenttextures.com/patterns/stucco.png");
+}
