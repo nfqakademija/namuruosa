@@ -9,29 +9,29 @@ use Doctrine\ORM\EntityManagerInterface;
 class saveForm
 {
   private $entityManager;
-  protected $requestStack;
+  protected $request;
 
-  public function __construct(EntityManagerInterface $manager, RequestStack $request){
+  public function __construct(EntityManagerInterface $manager, RequestStack $requestStack){
     $this->entityManager = $manager;
-    $this->requestStack =  $request;
+    $this->request =  $requestStack;
   }
 
   public function saveProfileForm($form, $userProfile, $uploader){
 
     $formData = $form->getData();
 
-    $profilePhoto = $this->requestStack->getCurrentRequest()->files->get('edit_profile')['profilePhoto'];
-    $bannerPhoto = $this->requestStack->getCurrentRequest()->files->get('edit_profile')['bannerPhoto'];
+    $profilePhoto = $this->request->getCurrentRequest()->files->get('edit_profile')['profilePhoto'];
+    $bannerPhoto = $this->request->getCurrentRequest()->files->get('edit_profile')['bannerPhoto'];
 
     if ($profilePhoto) {
-        $profilePhotoName = $uploader->uploadImage($profilePhoto, 'profile_pics_dir');
+        $profilePhotoName = $uploader->uploadImage($profilePhoto, 'profile_pics_dir', 'uploads/profile_pics/');
 
     }else {
         $profilePhotoName = 'profile-icon.png';
     }
 
     if ($bannerPhoto) {
-        $bannerPhotoName = $uploader->uploadImage($bannerPhoto, 'banner_pics_dir');
+        $bannerPhotoName = $uploader->uploadImage($bannerPhoto, 'banner_pics_dir', 'uploads/banner_pics/');
 
     }else {
         $bannerPhototoName = 'chore.jpg';

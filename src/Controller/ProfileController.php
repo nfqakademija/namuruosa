@@ -20,14 +20,14 @@ class ProfileController extends AbstractController
     /**
      * @Route("/profile", name="profile")
      */
-    public function profile(dataLoader $dataLoader, Request $request)
+    public function profile(dataLoader $dataLoader)
     {
         $user = $this->getUser();
         $userId = $user->getId();
         $profile = $user->getUserProfile();
         $entityManager = $this->getDoctrine()->getManager();
 
-        $reviews = $dataLoader->getAllReviews($userId, $request);
+        $reviews = $dataLoader->getAllReviews($userId);
         $totalReviews = $dataLoader->getCountReviews($userId);
         $rating = $dataLoader->getAverageRating($userId);
 
@@ -38,7 +38,7 @@ class ProfileController extends AbstractController
             $profile->setDescription('');
             $profile->setLanguages('');
             $profile->setSkill('igudis1, igudis2');
-            $profile->setProfilePhoto('profile-icon.png');
+            $profile->setProfilePhoto('build/images/profile-icon.png');
             $profile->setBannerPhoto('build/images/chores.jpg');
             $profile->setPhone('');
             $entityManager->persist($profile);

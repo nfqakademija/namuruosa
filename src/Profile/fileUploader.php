@@ -14,7 +14,7 @@ class fileUploader
       $this->params = $params;
   }
 
-  public function uploadImage($photo, $uploads){
+  public function uploadImage($photo, $uploads, $path){
 
     $uploads_directory = $this->params->get($uploads);
 
@@ -22,6 +22,8 @@ class fileUploader
 
     $photo->move($uploads_directory, $photoName);
 
+    $photoName = $path . $photoName;
+    
     return $photoName;
   }
 

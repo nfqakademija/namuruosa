@@ -4,8 +4,8 @@ const $ = require('jquery');
 require('bootstrap');
 
 require('../css/app.scss');
-require('../images/chores.jpg');
-require('../images/profile-icon.jpg');
+// require('../images/chores.jpg');
+// require('../images/profile-icon.png');
 
 
 
