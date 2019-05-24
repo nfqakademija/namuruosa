@@ -26,7 +26,7 @@ class dataLoader
 
         $pagination = $this->paginator->paginate(
             $queryBuilder, /* query NOT result */
-            $this->request->query->getInt('page', 1)/*page number*/,
+            $this->request->getCurrentRequest()->query->getInt('page', 1)/*page number*/,
             6/*limit per page*/
         );
 
