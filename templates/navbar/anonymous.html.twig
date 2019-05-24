@@ -1,0 +1,12 @@
+<li class="nav-item">
+    <a class="nav-link color-white" href="{{ path('fos_user_security_login') }}">
+        <i class="fas fa-sign-in-alt"></i>
+        {{ 'layout.login'|trans({}, 'FOSUserBundle') }}
+    </a>
+</li>
+<li class="nav-item">
+    <a class="nav-link color-white" href="{{ path('fos_user_registration_register') }}">
+        <i class="fas fa-fw fa-user-plus"></i>
+        {{ 'layout.register'|trans({}, 'FOSUserBundle') }}
+    </a>
+</li>
