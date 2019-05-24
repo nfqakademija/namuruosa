@@ -51,24 +51,10 @@
 <li class="nav-item dropdown">
     <a class="nav-link color-white" href="#" id="myInfoDropdownMenuButton" role="button" data-toggle="dropdown"
        aria-haspopup="true" aria-expanded="false">
-        {{ app.user.firstName }} {{ app.user.lastName }} <i class="fa fa-angle-down"></i>
+        <i class="fas fa-fw fa-user"></i> {{ app.user.firstName }} {{ app.user.lastName }} <i class="fa fa-angle-down"></i>
     </a>
     <div class="dropdown-menu dropdown-menu-lg-right" aria-labelledby="myInfoDropdownMenuButton">
 
-        <a class="dropdown-item" href="{{ path ('match_by_jobs') }}">Sandoriai
-            <span class="text-info">MANO DARBAI</span>
-        </a>
-        <a class="dropdown-item mb-0" href="{{ path ('match_by_services') }}">Sandoriai
-            <span class="text-info">MANO PASLAUGOS</span>
-        </a>
-        <div class="dropdown-divider"></div>
-        <a class="dropdown-item mb-0" href="{{ path ('my_jobs') }}">Skelbimai
-            <span class="text-info">darbai </span>
-        </a>
-        <a class="dropdown-item mb-0" href="{{ path ('my_services') }}">Skelbimai
-            <span class="text-info">paslaugos </span>
-        </a>
-        <div class="dropdown-divider"></div>
         <a href="{{ path('fos_user_profile_show') }}" class="dropdown-item">
             <i class="fas fa-fw fa-user"></i>
             Profilis
