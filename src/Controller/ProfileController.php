@@ -9,7 +9,7 @@ use App\Form\EditProfileType;
 use App\Form\RatingType;
 use App\Entity\UserProfile;
 use Symfony\Component\Validator\Constraints\DateTime;
-use App\Profile\Manager;
+use App\Profile\dataLoader;
 use App\Profile\saveForm;
 use App\Profile\fileUploader;
 
@@ -20,16 +20,16 @@ class ProfileController extends AbstractController
     /**
      * @Route("/profile", name="profile")
      */
-    public function profile(Manager $manager, Request $request)
+    public function profile(dataLoader $dataLoader, Request $request)
     {
         $user = $this->getUser();
         $userId = $user->getId();
         $profile = $user->getUserProfile();
         $entityManager = $this->getDoctrine()->getManager();
 
-        $reviews = $manager->getAllReviews($userId, $request);
-        $totalReviews = $manager->getCountReviews($userId);
-        $rating = $manager->getAverageRating($userId);
+        $reviews = $dataLoader->getAllReviews($userId, $request);
+        $totalReviews = $dataLoader->getCountReviews($userId);
+        $rating = $dataLoader->getAverageRating($userId);
 
         if (!$profile){
             $profile = new UserProfile;
@@ -39,8 +39,8 @@ class ProfileController extends AbstractController
             $profile->setLanguages('');
             $profile->setSkill('igudis1, igudis2');
             $profile->setProfilePhoto('profile-icon.png');
-            $profile->setBannerPhoto('build/images/chores.3210a158.jpg');
-            $profile->setPhone('profile-icon.png');
+            $profile->setBannerPhoto('build/images/chores.jpg');
+            $profile->setPhone('');
             $entityManager->persist($profile);
             $entityManager->flush();
 
@@ -56,25 +56,24 @@ class ProfileController extends AbstractController
     }
 
     /**
-     * @Route("/profile/user/{id}", name="otherUserProfile"), requirements={"id"="\d+"}
+     * @Route("/profile/user/{userId}", name="otherUserProfile"), requirements={"userId"="\d+"}
      */
 
-    public function otherUserProfile($id, Manager $manager, Request $request)
+    public function otherUserProfile($userId, dataLoader $dataLoader, Request $request)
     {
       $profile = $this->getDoctrine()->getRepository(UserProfile::class)->
-      find($id);
+      findOneBy(['user_id' => $userId]);
 
       $user = $profile->getUserId();
-      $userId = $user->getId();
 
-      $reviews = $manager->getAllReviews($userId, $request);
-      $totalReviews = $manager->getCountReviews($userId);
-      $rating = $manager->getAverageRating($userId);
+      $reviews = $dataLoader->getAllReviews($userId, $request);
+      $totalReviews = $dataLoader->getCountReviews($userId);
+      $rating = $dataLoader->getAverageRating($userId);
 
       return $this->render('profile/otherUserProfile.html.twig', [
           'user' => $user,
           'profile' => $profile,
-          'id' => $id,
+          'userId' => $userId,
           'reviews' => $reviews,
           'rating' => $rating[0][1],
           'reviewsCount'=> $totalReviews[0][1],
@@ -109,16 +108,16 @@ class ProfileController extends AbstractController
         ]);
     }
     /**
-     * @Route("/profile/review/{id}", name="reviewProfile", requirements={"id"="\d+"})
+     * @Route("/profile/review/{userId}", name="reviewProfile", requirements={"userId"="\d+"})
      */
 
-    public function reviewProfile(Request $request, $id)
+    public function reviewProfile(Request $request, $userId)
     {
       $form = $this->createForm(RatingType::class);
       $form->handleRequest($request);
 
       $estimator = $this->getUser();
-      $ratedUser = $this->getDoctrine()->getRepository('App:UserProfile')->find($id)->getUserId();
+      $ratedUser = $this->getDoctrine()->getRepository(User::class)->find($userId);
 
       if ($form->isSubmitted() && $form->isValid()) {
         $entityManager = $this->getDoctrine()->getManager();
@@ -136,12 +135,12 @@ class ProfileController extends AbstractController
           'Jūsų vertinimas išsaugotas!'
         );
 
-        return $this->redirectToRoute('otherUserProfile', ['id' => $id]);
+        return $this->redirectToRoute('otherUserProfile', ['userId' => $userId]);
       }
 
       return $this->render('profile/rateUser.html.twig', [
         'form' => $form->createView(),
-        'id' => $id
+        'userId' => $userId
       ]);
     }
 }
