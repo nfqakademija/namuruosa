@@ -1,5 +1,9 @@
-admin_category:
-    path: /admin/category
+admin_users:
+    path: /admin/users
+    controller: App\Controller\Admin\UsersController::getAllUsers
+
+admin_categories:
+    path: /admin/categories
     controller: App\Controller\Admin\CategoriesController::adminGetCategories
 
 admin_category_delete:

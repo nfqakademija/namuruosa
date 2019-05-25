@@ -31,7 +31,7 @@ class CategoriesController extends AbstractController
             $newCategory = $form->getData();
             $em->persist($newCategory);
             $em->flush();
-            return $this->redirectToRoute('admin_category');
+            return $this->redirectToRoute('admin_categories');
         }
         return $this->render('admin/categories.html.twig', [
             'categories' => $categories,
@@ -53,7 +53,7 @@ class CategoriesController extends AbstractController
         $em->remove($category);
         $em->flush();
 
-        return $this->redirectToRoute('admin_category');
+        return $this->redirectToRoute('admin_categories');
     }
 
 }

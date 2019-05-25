@@ -1,0 +1,37 @@
+<h3 class="text-center">Vartotojų sąrašas</h3>
+<div class="table-responsive">
+    <table class="table table-bordered table-striped">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Vardas Pavardė</th>
+            <th>Vartotojo vardas</th>
+            <th>Darbų kiekis</th>
+            <th>Paslaugų kiekis</th>
+            <th>Priimtų sandorių kiekis</th>
+            <th>Nepriimtų sandorių kiekis</th>
+            <th>Atmestų sandorių kiekis</th>
+            <th>Email</th>
+            <th>Paskutinis prisijungimas</th>
+            <th>Rolės</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for user in users %}
+            <tr>
+                <td>{{ user.id }}</td>
+                <td><a href="{{ path('otherUserProfile', {'userId': user.id}) }}">{{ user.first_name }} {{ user.last_name }}</a></td>
+                <td>{{ user.username }}</td>
+                <td>{{ user.job_count }}</td>
+                <td>{{ user.service_count }}</td>
+                <td>{{ user.accepted_match_count }}</td>
+                <td>{{ user.not_accepted_match_count }}</td>
+                <td>{{ user.rejected_match_count }}</td>
+                <td>{{ user.email }}</td>
+                <td>{{ user.last_login }}</td>
+                <td>{{ user.roles }}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
