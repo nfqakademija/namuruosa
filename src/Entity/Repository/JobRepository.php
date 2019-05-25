@@ -60,4 +60,21 @@ class JobRepository extends EntityRepository
 
         return $allMatchesByOneMyJob;
     }
+
+    public function getAllJobs()
+    {
+        $conn = $this->getEntityManager()->getConnection();
+
+        $sql = "
+                SELECT 
+                       j.id, j.title, j.created_at, j.date_end, j.user_id,
+                       u.username, u.first_name, u.last_name
+                FROM job j
+                    LEFT JOIN fos_user u
+                        ON j.user_id = u.id";
+
+        $query = $conn->prepare($sql);
+        $query->execute();
+        return $query->fetchAll();
+    }
 }
