@@ -1,14 +1,30 @@
-.jobWrapper #main .job-matches .job-odd-even{
-  background-color: #7c98c2;
-  background-image: url("https://www.transparenttextures.com/patterns/stucco.png");
+.pot-matches-wrapper .pot-match-odd-even{
   padding: 40px 30px 30px;
 }
-
-.jobWrapper #main .job-matches .job-odd-even:nth-child(odd) {
+.jobWrapper .pot-matches-wrapper .pot-match-odd-even:nth-child(odd) {
   background-color: #7c98c2;
   background-image: url("https://www.transparenttextures.com/patterns/stucco.png");
 }
-.jobWrapper #main .job-matches .job-odd-even:nth-child(even) {
+.jobWrapper .pot-matches-wrapper .pot-match-odd-even:nth-child(even) {
   background-color: #fab300;
   background-image: url("https://www.transparenttextures.com/patterns/stucco.png");
+}
+
+.serviceWrapper .pot-matches-wrapper .pot-match-odd-even:nth-child(odd) {
+  background-color: #7c98c2;
+  background-image: url("https://www.transparenttextures.com/patterns/stucco.png");
+}
+.serviceWrapper .pot-matches-wrapper .pot-match-odd-even:nth-child(even) {
+  background-color: #84acc9;
+  background-image: url("https://www.transparenttextures.com/patterns/stucco.png");
+}
+
+.page-title-elipse{
+  font-size: 30px;
+  color: #FFFFFF;
+  background-color: rgba(100,100,100,0.3);
+  text-shadow:  2px 2px grey;
+  padding: 10px;
+  border: 1px solid lightGrey;
+  border-radius: 10px;
 }

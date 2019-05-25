@@ -1,30 +1,68 @@
-<h5 class="text-muted">Mano paslauga: <span class="text-danger"><b> {{ matchesByService[0].title }}</b></span></h5>
-<table class="table table-lg table-hover mb-5">
+<div class="pot-match-odd-even">
+    <h3 class="text-muted">Mano paslauga: <span class="text-white"><b> {{ matchesByService[0].title }}</b></span></h3>
+    <div class="row">
+        {% set imageNo = 86 %}
+        {% for job in matchesByService[1] %}
 
-    {% for job in matchesByService[1] %}
-        <tr>
-            <td class="py-4" style="width: 70%">
-                <h4 class="text-info">{{ job.title }}</h4>
-                <div class="mb-1">{{ job.description }}</div>
-                <div class="text-muted small pb-2">
-                    <a href="#"><i class="fa fa-user"></i> {{ job.userId.username }}</a>
-                    <i class="fa fa-clock ml-3"></i> Paskelbta {{ job.updatedAt|date('y.m.d') }}
-                    <i class="fa fa-map-marker-alt ml-3"></i> Atstumas {{ job.distance }} km
-                    <div class="d-inline-block  ml-3">
-                        {%  for cat in job.category %}
-                        <span class="badge badge-warning">{{ cat.name }}</span>
-                        {%  endfor %}
+            {% if job.payType == "per_hour" %}
+                {% set payType = "val." %}
+            {% elseif job.payType == "per_job" %}
+                {% set payType = "darbas" %}
+            {% else %}
+                {% set payType = "" %}
+            {% endif %}
+
+            <div class="col-md-6 col-lg-4 col-xl-3 mt-3">
+                <div class="card text-center">
+                    <div class="card-top" >
+                         <span class="price">{{ job.budget }}
+                             <i class="fa fa-euro-sign fa-xs"></i> / {{ payType }}
+                         </span>
+                        <img class="card-img-top card-half-height"
+                             src="https://source.unsplash.com/collection/1390{{ imageNo }}/300x100"
+                             alt="Card image cap">
+                        {% set imageNo = imageNo - 3 %}
+                    </div>
+                    <div class="card-body">
+                        <h5 class="card-title" style="height: 50px;">{{ job.title }}</h5>
+                        <hr>
+                        <h6 style="height: 80px; display: -webkit-box;
+                            -webkit-line-clamp: 4;
+                            -webkit-box-orient: vertical;
+                            overflow: hidden;
+                            text-overflow: ellipsis;">{{ job.description }}
+                        </h6>
+                        <div class="mb-3 text-left">
+                            {% for cat in job.category %}
+                                <span class="badge badge-warning">{{ cat.name }}</span>
+                            {% endfor %}
+                        </div>
+                        <iframe src="https://maps.google.com/maps?q={{ job.lat }},{{ job.lon }}&hl=en;z=14&amp;output=embed"
+                                width="100%" height="200" frameborder="0" style="border:0" allowfullscreen></iframe>
+                        <div class="align-content-center mt-3">
+                            <a href="{{ path('match_service_create', { 'callerServiceId': matchesByService[0].id, 'responderJobId': job.id }) }}">
+                                <button class="btn btn-outline-success font-weight-bold px-3">Siūlyti paslaugas</button>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="card-footer text-muted">
+                        <div class="row">
+                            <div class="col px-1">
+                                <a href=""><i class="fas fa-route"></i>
+                                    <small> {{ job.distance }} km</small>
+                                </a>
+                            </div>
+                            <div class="col px-1">
+                                <a href="{{ path('otherUserProfile', { 'userId': job.userId.id}) }}"><i
+                                            class="fa fa-user"></i> {{ job.userId.username }}</a>
+                            </div>
+                            <div class="col px-1">
+                                <a href="#"><i class="text-warning fas fa-star"></i> {{ job.userRating }}</a>
+                            </div>
+                        </div>
                     </div>
                 </div>
-            </td>
-            <td class="text-right">
-               <h4 class="text-info text-right">{{ job.budget }} <i class="fa fa-euro-sign fa-xs"></i> / val.</h4>
-                <a class="align-self-end" href="{{ path('match_service_create',
-                    {'callerServiceId':  matchesByService[0].id, 'responderJobId': job.id }) }}">
-                    <button class="btn btn-outline-info">Sūlyti paslaugą</button>
-                </a>
-            </td>
-        </tr>
-
-    {% endfor %}
-</table>
+            </div>
+        {% endfor %}
+    </div>
+</div>
