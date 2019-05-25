@@ -50,13 +50,9 @@ class ProfileController extends AbstractController
             'user' => $user,
             'profile' => $profile,
             'reviews' =>$reviews,
-<<<<<<< HEAD
-            'rating' => $rating[0][1],
-            'reviewsCount' => $totalReviews,
-=======
+
             'rating' => $rating,
-            'reviewsCount' => $totalReviews[0][1],
->>>>>>> master
+            'reviewsCount' => $totalReviews,
             'controller_name' => 'ProfileController',
             ]);
     }
@@ -81,13 +77,8 @@ class ProfileController extends AbstractController
           'profile' => $profile,
           'userId' => $userId,
           'reviews' => $reviews,
-<<<<<<< HEAD
-          'rating' => $rating[0][1],
-          'reviewsCount'=> $totalReviews,
-=======
           'rating' => $rating,
-          'reviewsCount'=> $totalReviews[0][1],
->>>>>>> master
+          'reviewsCount'=> $totalReviews,
           'controller_name' => 'ProfileController',
           ]);
     }
