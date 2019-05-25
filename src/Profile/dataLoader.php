@@ -35,7 +35,7 @@ class dataLoader
 
     public function getCountReviews($userId)
     {
-        return $this->reviews->getCountReviews($userId);
+        return $this->reviews->getCountReviews($userId)[0][1];
     }
 
     public function getAverageRating($userId)
