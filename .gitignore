@@ -31,4 +31,5 @@ yarn-error.log
 
 ###> Downloaded image files ###
 /public/img
+/public/uploads
 ###< Downloaded image files ###

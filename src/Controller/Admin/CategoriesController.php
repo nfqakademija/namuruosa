@@ -1,30 +1,23 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: dalius
- * Date: 19.5.11
- * Time: 11.56
- */
 
-namespace App\Controller;
+
+namespace App\Controller\Admin;
 
 
 use App\Entity\Category;
 use App\Form\CategoryType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpFoundation\RedirectResponse;
-use Symfony\Component\Routing\Annotation\Route;
 
-class AdminController extends AbstractController {
-
+class CategoriesController extends AbstractController
+{
     /**
-     * @Route("/admin/category", name="admin_category")
      * @param Request $request
      * @return RedirectResponse|Response
      */
-    public function adminHome(Request $request)
+    public function adminGetCategories(Request $request)
     {
         $categories = $this->getDoctrine()
             ->getRepository(Category::class)
@@ -38,7 +31,7 @@ class AdminController extends AbstractController {
             $newCategory = $form->getData();
             $em->persist($newCategory);
             $em->flush();
-            return $this->redirectToRoute('admin_category');
+            return $this->redirectToRoute('admin_categories');
         }
         return $this->render('admin/categories.html.twig', [
             'categories' => $categories,
@@ -48,10 +41,9 @@ class AdminController extends AbstractController {
 
     /**
      * @param $id
-     * @Route("admin/category/delete/{id}", name="admin_category_delete")
      * @return RedirectResponse
      */
-    public function delete($id)
+    public function adminDeleteCategory($id)
     {
         $em = $this->getDoctrine()->getManager();
         $category = $em
@@ -61,7 +53,7 @@ class AdminController extends AbstractController {
         $em->remove($category);
         $em->flush();
 
-        return $this->redirectToRoute('admin_category');
+        return $this->redirectToRoute('admin_categories');
     }
 
 }
