@@ -1,20 +1,28 @@
-<div class="job-odd-even">
+<div class="pot-match-odd-even">
     <h3 class="text-muted">Mano paslauga: <span class="text-white"><b> {{ matchesByService[0].title }}</b></span></h3>
     <div class="row">
         {% set imageNo = 86 %}
         {% for job in matchesByService[1] %}
+
+            {% if job.payType == "per_hour" %}
+                {% set payType = "val." %}
+            {% elseif job.payType == "per_job" %}
+                {% set payType = "darbas" %}
+            {% else %}
+                {% set payType = "" %}
+            {% endif %}
+
             <div class="col-md-6 col-lg-4 col-xl-3 mt-3">
                 <div class="card text-center">
-                    <div style="position: relative">
-                         <span class="text-warning text-right text-price">{{ job.budget }} <i
-                                     class="fa fa-euro-sign fa-xs"></i> / val.
-                            </span>
+                    <div class="card-top" >
+                         <span class="price">{{ job.budget }}
+                             <i class="fa fa-euro-sign fa-xs"></i> / {{ payType }}
+                         </span>
                         <img class="card-img-top card-half-height"
                              src="https://source.unsplash.com/collection/1390{{ imageNo }}/300x100"
                              alt="Card image cap">
+                        {% set imageNo = imageNo - 3 %}
                     </div>
-
-                    {% set imageNo = imageNo - 3 %}
                     <div class="card-body">
                         <h5 class="card-title" style="height: 50px;">{{ job.title }}</h5>
                         <hr>
@@ -49,7 +57,7 @@
                                             class="fa fa-user"></i> {{ job.userId.username }}</a>
                             </div>
                             <div class="col px-1">
-                                <a href="tel:+123456789"><i class="fas fa-phone"></i></a>
+                                <a href="#"><i class="text-warning fas fa-star"></i> {{ job.userRating }}</a>
                             </div>
                         </div>
                     </div>

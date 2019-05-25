@@ -1,4 +1,4 @@
-<div class="job-odd-even">
+<div class="pot-match-odd-even">
     <h3 class="text-muted">Mano darbas: <span class="text-white"> <b>{{ matchesByJob[0].title }}
     </b></span></h3>
     <div class="row">
@@ -6,16 +6,15 @@
         {% for service in matchesByJob[1] %}
             <div class="col-md-6 col-lg-4 col-xl-3 mt-3">
                 <div class="card text-center">
-                    <div style="position: relative">
-                         <span class="text-warning text-right text-price">{{ service.pricePerHour }} <i
-                                     class="fa fa-euro-sign fa-xs"></i> / val.
-                            </span>
+                    <div class="card-top">
+                         <span class="price">{{ service.pricePerHour }}
+                             <i class="fa fa-euro-sign fa-xs"></i> / val.
+                         </span>
                         <img class="card-img-top card-half-height"
                              src="https://source.unsplash.com/collection/1390{{ imageNo }}/300x100"
                              alt="Card image cap">
+                        {% set imageNo = imageNo - 1 %}
                     </div>
-
-                    {% set imageNo = imageNo - 1 %}
                     <div class="card-body">
                         <h5 class="card-title" style="height: 50px;">{{ service.title }}</h5>
                         <hr>
@@ -49,7 +48,7 @@ text-overflow: ellipsis;">{{ service.description }}</h6>
                                             class="fa fa-user"></i> {{ service.userId.username }}</a>
                             </div>
                             <div class="col px-1">
-                                <a href="tel:+123456789"><i class="fas fa-phone"></i></a>
+                                <a href="#"><i class="text-warning fas fa-star"></i> {{ service.userRating }}</a>
                             </div>
                         </div>
                     </div>
