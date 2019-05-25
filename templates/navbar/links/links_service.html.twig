@@ -1,0 +1,30 @@
+<li class="nav-item">
+    <a class="navbar-item" href="{{ path('serviceAdd') }}">
+        <button class="btn btn-info">
+            Siūlyti paslaugą
+        </button>
+    </a>
+</li>
+<li class="nav-item">
+    <a class="navbar-item" href="{{ path ('service_pot_matches') }}">
+        <button class="btn btn-outline-info">
+            Darbai man
+        </button>
+    </a>
+</li>
+
+<li class="nav-item dropdown">
+    <a class="nav-link text-info" href="#" id="myworkDropdownMenuButton" role="button" data-toggle="dropdown"
+       aria-haspopup="true" aria-expanded="false">
+        Mano veikla <i class="fa fa-angle-down"></i>
+    </a>
+    <div class="dropdown-menu" aria-labelledby="myworkDropdownMenuButton">
+        <a class="dropdown-item mb-0" href="{{ path ('match_by_services') }}">Sandoriai
+            <span class="text-info">MANO PASLAUGOS</span>
+        </a>
+        <div class="dropdown-divider"></div>
+        <a class="dropdown-item mb-0" href="{{ path ('my_services') }}">Skelbimai
+            <span class="text-info">paslaugos </span>
+        </a>
+    </div>
+</li>

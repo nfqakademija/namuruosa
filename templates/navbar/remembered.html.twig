@@ -1,0 +1,56 @@
+{% if 'service' in app.request.attributes.all["_route"] %}
+
+    {% include 'navbar/links/links_service.html.twig' %}
+
+{% elseif 'job' in app.request.attributes.all["_route"] %}
+
+    {% include 'navbar/links/links_job.html.twig' %}
+
+{% else %}
+    <li class="nav-item">
+        <a class="navbar-item" href="{{ path('serviceAdd') }}"> {#todo perkelti į /service/home kai bus#}
+            <button class="btn btn-info">
+                Paslaugos
+            </button>
+        </a>
+    </li>
+    <li class="nav-item">
+        <a class="navbar-item" href="{{ path('jobAdd') }}">  {#todo perkelti į /job/home kai bus#}
+            <button class="btn btn-warning">
+                Darbai
+            </button>
+        </a>
+    </li>
+{% endif %}
+
+
+<li class="nav-item dropdown">
+    <a class="nav-link color-white" href="#" id="myInfoDropdownMenuButton" role="button" data-toggle="dropdown"
+       aria-haspopup="true" aria-expanded="false">
+        <i class="fas fa-fw fa-user"></i> {{ app.user.firstName }} {{ app.user.lastName }} <i class="fa fa-angle-down"></i>
+    </a>
+    <div class="dropdown-menu dropdown-menu-lg-right" aria-labelledby="myInfoDropdownMenuButton">
+
+        {% if 'service' in app.request.attributes.all["_route"] %}
+            <a class="dropdown-item" href="{{ path('jobAdd') }}"> {#todo perkelti į /service/home kai bus#}
+                Darbų puslapis
+            </a>
+            <div class="dropdown-divider"></div>
+        {% elseif 'job' in app.request.attributes.all["_route"] %}
+            <a class="dropdown-item" href="{{ path('serviceAdd') }}"> {#todo perkelti į /service/home kai bus#}
+                Paslaugų puslapis
+            </a>
+            <div class="dropdown-divider"></div>
+        {% endif %}
+
+        <a href="{{ path('fos_user_profile_show') }}" class="dropdown-item">
+            <i class="fas fa-fw fa-user"></i>
+            Profilis
+        </a>
+        <div class="dropdown-divider"></div>
+        <a href="{{ path('fos_user_security_logout') }}" class="dropdown-item">
+            <i class="fas fa-fw fa-sign-out-alt"></i>
+            {{ 'layout.logout'|trans({}, 'FOSUserBundle') }}
+        </a>
+    </div>
+</li>

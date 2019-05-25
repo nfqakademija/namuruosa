@@ -1,0 +1,31 @@
+<li class="nav-item">
+    <a class="navbar-item" href="{{ path('jobAdd') }}">
+        <button class="btn btn-warning">
+            Siūlyti darbą
+        </button>
+    </a>
+</li>
+<li class="nav-item">
+    <a class="navbar-item" href="{{ path ('job_pot_matches') }}">
+        <button class="btn btn-outline-warning">
+            Paslaugos man
+        </button>
+    </a>
+</li>
+
+<li class="nav-item dropdown">
+    <a class="nav-link text-warning" href="#" id="myworkDropdownMenuButton" role="button" data-toggle="dropdown"
+       aria-haspopup="true" aria-expanded="false">
+        Mano veikla <i class="fa fa-angle-down"></i>
+    </a>
+    <div class="dropdown-menu" aria-labelledby="myworkDropdownMenuButton">
+        <a class="dropdown-item" href="{{ path ('match_by_jobs') }}">Sandoriai
+            <span class="text-info">MANO DARBAI</span>
+        </a>
+        <div class="dropdown-divider"></div>
+        <a class="dropdown-item mb-0" href="{{ path ('my_jobs') }}">Skelbimai
+            <span class="text-info">darbai </span>
+        </a>
+
+    </div>
+</li>
