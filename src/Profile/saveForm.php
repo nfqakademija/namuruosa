@@ -16,7 +16,7 @@ class saveForm
     $this->request =  $requestStack;
   }
 
-  public function saveProfileForm($form, $userProfile, $uploader){
+  public function saveProfileForm($form, $userProfile, $uploader, $userObj){
 
     $formData = $form->getData();
 
@@ -39,9 +39,8 @@ class saveForm
 
     if (!$userProfile)
     {
-
-        $profile->setUserId($userObj);
-        $profile->setPhoto($profilePhotoName);
+        $userProfile->setUserId($userObj);
+        $userProfile->setPhoto($profilePhotoName);
 
         $this->entityManager->persist($formData);
         $this->entityManager->flush();

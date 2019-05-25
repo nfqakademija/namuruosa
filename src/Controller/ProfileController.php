@@ -95,7 +95,7 @@ class ProfileController extends AbstractController
         $userProfile = $userObj->getUserProfile();
 
         if ($form->isSubmitted() && $form->isValid()){
-            $saver->saveProfileForm($form, $userProfile, $uploader);
+            $saver->saveProfileForm($form, $userProfile, $uploader, $userObj);
 
             $this->addFlash(
               'notice',
