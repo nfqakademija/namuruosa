@@ -74,18 +74,9 @@ class Loader
             $servicesByJob[] = $myJob;
             $services = $this->em->getRepository(Service::class)->findMatches($myJob);
             foreach ($services as $service) {
-                $service->setDistance($this->calcDistance($jobLat, $jobLon, $service));
-
-
                 $serviceUserId = $service->getUserId()->getId();
-//                if ($this->profileLoader->getAverageRating($serviceUserId)) {
-
-                dump($serviceUserId);
-                dump($this->profileLoader->getAverageRating($serviceUserId));
-                    $service->setUserRating($this->profileLoader->getAverageRating($serviceUserId));
-//                } else {
-//                    $service->setUserRating(0);
-//                }
+                $service->setUserRating($this->profileLoader->getAverageRating($serviceUserId));
+                $service->setDistance($this->calcDistance($jobLat, $jobLon, $service));
             }
             $servicesByJob[] = $services;
             $potMatches[] = $servicesByJob;

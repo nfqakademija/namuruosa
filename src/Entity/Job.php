@@ -124,7 +124,7 @@ class Job
      */
     protected $activeTill;
 
-
+    protected $userRating;
 
 
 
@@ -390,6 +390,22 @@ class Job
     public function setActiveTill($activeTill): void
     {
         $this->activeTill = $activeTill;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getUserRating()
+    {
+        return $this->userRating;
+    }
+
+    /**
+     * @param mixed $userRating
+     */
+    public function setUserRating($userRating): void
+    {
+        $this->userRating = $userRating;
     }
 
 
