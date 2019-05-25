@@ -27,14 +27,14 @@ class saveForm
         $profilePhotoName = $uploader->uploadImage($profilePhoto, 'profile_pics_dir', 'uploads/profile_pics/');
 
     }else {
-        $profilePhotoName = 'profile-icon.png';
+        $profilePhotoName = 'build/images/profile-icon.png';
     }
 
     if ($bannerPhoto) {
         $bannerPhotoName = $uploader->uploadImage($bannerPhoto, 'banner_pics_dir', 'uploads/banner_pics/');
 
     }else {
-        $bannerPhotoName = 'chore.jpg';
+        $bannerPhotoName = 'build/images/chore.jpg';
     }
 
     if (!$userProfile)
@@ -53,9 +53,13 @@ class saveForm
         $userProfile->setSkill($form["skill"]->getData());
         $userProfile->setPhone($form["phone"]->getData());
         $userProfile->setDescription($form["description"]->getData());
-        $userProfile->setProfilePhoto($profilePhotoName);
-        $userProfile->setBannerPhoto($bannerPhotoName);
-        $this->entityManager->persist($userProfile);
+        if ($profilePhoto) {
+          $userProfile->setProfilePhoto($profilePhotoName);
+        }
+
+        if ($bannerPhoto) {
+          $userProfile->setBannerPhoto($bannerPhotoName);
+        }
         $this->entityManager->flush();
 
     }
