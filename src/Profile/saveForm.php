@@ -34,7 +34,7 @@ class saveForm
         $bannerPhotoName = $uploader->uploadImage($bannerPhoto, 'banner_pics_dir', 'uploads/banner_pics/');
 
     }else {
-        $bannerPhototoName = 'chore.jpg';
+        $bannerPhotoName = 'chore.jpg';
     }
 
     if (!$userProfile)
