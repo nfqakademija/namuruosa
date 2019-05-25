@@ -40,7 +40,11 @@ class dataLoader
 
     public function getAverageRating($userId)
     {
-        return $this->reviews->getAverageRating($userId);
+        $avRating = 0;
+        if (!$this->reviews->getAverageRating($userId)[0][1] == null) {
+            $avRating = $this->reviews->getAverageRating($userId)[0][1];
+        }
+        return round($avRating, 1);
     }
 
 }

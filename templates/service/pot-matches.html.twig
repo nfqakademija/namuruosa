@@ -5,7 +5,7 @@
         <h2 class="text-center page-title-elipse">DARBAI</h2>
         <h4 class="text-center text-muted mb-5">Pagal mano paslaugas</h4>
         {% set servicesWithNoJobs = [] %}
-        <div class="job-matches">
+        <div class="pot-matches-wrapper">
             {% for matchesByService in potMatchesByServices %}
                 {% if matchesByService[1] != null %}
                     {% include 'service/table/pot-matches-table.html.twig' %}

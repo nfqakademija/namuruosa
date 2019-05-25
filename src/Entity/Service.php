@@ -109,6 +109,8 @@ class Service
      */
     private $category;
 
+    protected $userRating;
+
 
 
     //    ----------- Methods ----------
@@ -359,5 +361,23 @@ class Service
         }
         return $this;
     }
+
+    /**
+     * @return mixed
+     */
+    public function getUserRating()
+    {
+        return $this->userRating;
+    }
+
+    /**
+     * @param mixed $userRating
+     */
+    public function setUserRating($userRating): void
+    {
+        $this->userRating = $userRating;
+    }
+
+
 
 }

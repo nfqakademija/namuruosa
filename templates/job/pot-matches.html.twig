@@ -5,7 +5,7 @@
         <h2 class="text-center page-title-elipse">PASLAUGOS </h2>
         <h4 class="text-center text-muted mb-5">Pagal mano darbus</h4>
         {% set jobsWithNoServices = [] %}
-        <div class="job-matches">
+        <div class="pot-matches-wrapper">
             {% for matchesByJob in potMatchesByJobs %}
                 {% if matchesByJob[1] != null %}
                     {% include 'job/table/pot-matches-table.html.twig' %}

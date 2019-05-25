@@ -19,18 +19,18 @@ class ReviewsRepository extends ServiceEntityRepository
         parent::__construct($registry, Reviews::class);
     }
 
-     /*
-     * @param int|null $id
-    */
+    /*
+    * @param int|null $id
+   */
 
     public function getAllUserReviews(int $userId)
     {
         return $this->createQueryBuilder('r')
             ->andWhere('r.user_id = :userId')
             ->setParameter('userId', $userId)
-            ->orderBy('r.created_at', 'ASC')
-        ;
+            ->orderBy('r.created_at', 'ASC');
     }
+
     public function getCountReviews($userId)
     {
         return $this->createQueryBuilder('r')
@@ -38,21 +38,18 @@ class ReviewsRepository extends ServiceEntityRepository
             ->setParameter('userId', $userId)
             ->select('COUNT(r)')
             ->getQuery()
-            ->getResult()
-        ;
+            ->getResult();
     }
 
     public function getAverageRating($userId)
-
     {
-      $entityManager = $this->getEntityManager();
+        $entityManager = $this->getEntityManager();
 
-      $query = $entityManager->createQuery(
-        'SELECT AVG(r.rating)
+        $query = $entityManager->createQuery(
+            'SELECT AVG(r.rating) 
          FROM APP\Entity\Reviews r
          WHERE r.user_id = :userId'
         )->setParameter('userId', $userId);
-
         return $query->execute();
     }
 }

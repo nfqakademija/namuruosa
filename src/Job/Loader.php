@@ -12,6 +12,7 @@ namespace App\Job;
 use App\Entity\Job;
 use App\Entity\Service;
 use App\Helpers\CalcHelper;
+use App\Profile\dataLoader;
 use Doctrine\ORM\EntityManagerInterface;
 
 class Loader
@@ -27,14 +28,20 @@ class Loader
     private $calcDist;
 
     /**
+     * @var dataLoader
+     */
+    private $profileLoader;
+
+    /**
      * Loader constructor.
      * @param EntityManagerInterface $em
      * @param CalcHelper $calculator
      */
-    public function __construct(EntityManagerInterface $em, CalcHelper $calDist)
+    public function __construct(EntityManagerInterface $em, CalcHelper $calDist, dataLoader $profileLoader)
     {
         $this->em = $em;
         $this->calcDist = $calDist;
+        $this->profileLoader = $profileLoader;
     }
 
 
@@ -68,6 +75,17 @@ class Loader
             $services = $this->em->getRepository(Service::class)->findMatches($myJob);
             foreach ($services as $service) {
                 $service->setDistance($this->calcDistance($jobLat, $jobLon, $service));
+
+
+                $serviceUserId = $service->getUserId()->getId();
+//                if ($this->profileLoader->getAverageRating($serviceUserId)) {
+
+                dump($serviceUserId);
+                dump($this->profileLoader->getAverageRating($serviceUserId));
+                    $service->setUserRating($this->profileLoader->getAverageRating($serviceUserId));
+//                } else {
+//                    $service->setUserRating(0);
+//                }
             }
             $servicesByJob[] = $services;
             $potMatches[] = $servicesByJob;
