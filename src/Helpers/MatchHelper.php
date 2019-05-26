@@ -28,4 +28,6 @@ class MatchHelper
         }
         return ($match);
     }
+
+    // Jus some text
 }
