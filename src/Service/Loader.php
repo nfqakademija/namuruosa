@@ -41,9 +41,7 @@ class Loader
         $this->em = $em;
         $this->calcDist = $calcDist;
         $this->profileLoader = $profileLoader;
-
     }
-
 
     public function getService($serviceId)
     {
@@ -96,7 +94,6 @@ class Loader
         $jobLon = $job->getLon();
         return $this->calcDist->getDistanceFromCoordinates($jobLat, $jobLon, $serviceLat, $serviceLon);
     }
-
 
 
     public function delete($serviceId)

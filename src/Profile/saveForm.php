@@ -8,13 +8,14 @@ use Doctrine\ORM\EntityManagerInterface;
 
 class saveForm
 {
-  private $entityManager;
-  protected $request;
+    private $entityManager;
+    protected $request;
 
-  public function __construct(EntityManagerInterface $manager, RequestStack $requestStack){
-    $this->entityManager = $manager;
-    $this->request =  $requestStack;
-  }
+    public function __construct(EntityManagerInterface $manager, RequestStack $requestStack)
+    {
+        $this->entityManager = $manager;
+        $this->request = $requestStack;
+    }
 
   public function saveProfileForm($form, $userProfile, $uploader, $userObj){
 

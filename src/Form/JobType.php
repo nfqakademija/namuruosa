@@ -8,7 +8,6 @@
 
 namespace App\Form;
 
-
 use App\Entity\Category;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
@@ -29,11 +28,11 @@ class JobType extends AbstractType
     {
         $builder
             ->add('title', TextType::class, [
-                'label'=>'Pavadinimas',
+                'label' => 'Pavadinimas',
                 'required' => true,
             ])
             ->add('description', TextareaType::class, [
-                'label'=>'Aprašymas',
+                'label' => 'Aprašymas',
                 'required' => true,
             ])
             ->add('dateEnd', DateType::class, [
@@ -72,8 +71,7 @@ class JobType extends AbstractType
             ])
             ->add('lon', HiddenType::class, [
                 'label' => 'Longitude',
-            ])
-        ;
+            ]);
     }
 
     public function configureOptions(OptionsResolver $resolver)
@@ -83,8 +81,8 @@ class JobType extends AbstractType
         ]);
     }
 
-    public function hi(){
+    public function hi()
+    {
 
     }
-
 }
