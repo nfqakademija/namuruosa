@@ -33,7 +33,7 @@ class ProfileController extends AbstractController
         $rating = $dataLoader->getAverageRating($userId);
         $userServices = $dataLoader->countUserServices($userId);
         $userJobs = $dataLoader->countUserJobs($userId);
-
+        $money = $dataLoader->countUserMoney($userId);
 
         if (!$profile){
             $profile = new UserProfile;
@@ -55,6 +55,7 @@ class ProfileController extends AbstractController
             'reviews' =>$reviews,
             'services' => $userServices,
             'jobs' => $userJobs,
+            'money' => $money,
             'rating' => $rating,
             'reviewsCount' => $totalReviews,
             'controller_name' => 'ProfileController',
@@ -77,6 +78,7 @@ class ProfileController extends AbstractController
       $rating = $dataLoader->getAverageRating($userId);
       $userServices = $dataLoader->countUserServices($userId);
       $userJobs = $dataLoader->countUserJobs($userId);
+      $money = $dataLoader->countUserAvgSalary($userId);
 
       return $this->render('profile/otherUserProfile.html.twig', [
           'user' => $user,
@@ -84,6 +86,7 @@ class ProfileController extends AbstractController
           'userId' => $userId,
           'services' => $userServices,
           'jobs' => $userJobs,
+          'money' => $money,
           'reviews' => $reviews,
           'rating' => $rating,
           'reviewsCount'=> $totalReviews,

@@ -60,4 +60,32 @@ class dataLoader
       return $this->entityManager->getRepository('App:Match')->countUserJobs($userId)[0][1];
     }
 
+    public function countUserMoney($userId): array
+    {
+      $money = [];
+      $servicesPrices = [];
+      $jobsPrices = [];
+
+
+      $userServices = $this->entityManager->getRepository('App:Service')->findBy([
+        'userId' => $userId
+      ]);
+
+      $userJobs = $this->entityManager->getRepository('App:Job')->findBy([
+        'userId' => $userId
+      ]);
+
+      foreach ($userServices as $key => $service) {
+        array_push($servicesPrices, intval($service->getPricePerHour()));
+      }
+      foreach ($userJobs as $key => $job) {
+        array_push($jobsPrices, intval($job->getBudget()));
+      }
+
+      array_push($money, (array_sum($jobsPrices) / count($jobsPrices)));
+      array_push($money, (array_sum($servicesPrices) / count($servicesPrices)));
+
+      return $money;
+    }
+
 }
