@@ -32,7 +32,7 @@ class ProfileController extends AbstractController
         $totalReviews = $dataLoader->getCountReviews($userId);
         $rating = $dataLoader->getAverageRating($userId);
 
-        if (!$profile){
+        if (!$profile) {
             $profile = new UserProfile;
             $profile->setUserId($user);
             $profile->setCity('');
@@ -45,15 +45,15 @@ class ProfileController extends AbstractController
             $entityManager->persist($profile);
             $entityManager->flush();
 
-      }
+        }
         return $this->render('profile/logedUserProfile.html.twig', [
             'user' => $user,
             'profile' => $profile,
-            'reviews' =>$reviews,
+            'reviews' => $reviews,
             'rating' => $rating,
             'reviewsCount' => $totalReviews[0][1],
             'controller_name' => 'ProfileController',
-            ]);
+        ]);
     }
 
     /**
@@ -62,24 +62,24 @@ class ProfileController extends AbstractController
 
     public function otherUserProfile($userId, dataLoader $dataLoader, Request $request)
     {
-      $profile = $this->getDoctrine()->getRepository(UserProfile::class)->
-      findOneBy(['user_id' => $userId]);
+        $profile = $this->getDoctrine()->getRepository(UserProfile::class)->
+        findOneBy(['user_id' => $userId]);
 
-      $user = $profile->getUserId();
+        $user = $profile->getUserId();
 
-      $reviews = $dataLoader->getAllReviews($userId, $request);
-      $totalReviews = $dataLoader->getCountReviews($userId);
-      $rating = $dataLoader->getAverageRating($userId);
+        $reviews = $dataLoader->getAllReviews($userId, $request);
+        $totalReviews = $dataLoader->getCountReviews($userId);
+        $rating = $dataLoader->getAverageRating($userId);
 
-      return $this->render('profile/otherUserProfile.html.twig', [
-          'user' => $user,
-          'profile' => $profile,
-          'userId' => $userId,
-          'reviews' => $reviews,
-          'rating' => $rating,
-          'reviewsCount'=> $totalReviews[0][1],
-          'controller_name' => 'ProfileController',
-          ]);
+        return $this->render('profile/otherUserProfile.html.twig', [
+            'user' => $user,
+            'profile' => $profile,
+            'userId' => $userId,
+            'reviews' => $reviews,
+            'rating' => $rating,
+            'reviewsCount' => $totalReviews[0][1],
+            'controller_name' => 'ProfileController',
+        ]);
     }
 
     /**
@@ -93,12 +93,12 @@ class ProfileController extends AbstractController
         $userObj = $this->getUser();
         $userProfile = $userObj->getUserProfile();
 
-        if ($form->isSubmitted() && $form->isValid()){
+        if ($form->isSubmitted() && $form->isValid()) {
             $saver->saveProfileForm($form, $userProfile, $uploader);
 
             $this->addFlash(
-              'notice',
-              'Jūsų profilis atnaujintas!'
+                'notice',
+                'Jūsų profilis atnaujintas!'
             );
 
             return $this->redirectToRoute('profile');
@@ -108,40 +108,41 @@ class ProfileController extends AbstractController
             'profile' => $userProfile
         ]);
     }
+
     /**
      * @Route("/profile/review/{userId}", name="reviewProfile", requirements={"userId"="\d+"})
      */
 
     public function reviewProfile(Request $request, $userId)
     {
-      $form = $this->createForm(RatingType::class);
-      $form->handleRequest($request);
+        $form = $this->createForm(RatingType::class);
+        $form->handleRequest($request);
 
-      $estimator = $this->getUser();
-      $ratedUser = $this->getDoctrine()->getRepository(User::class)->find($userId);
+        $estimator = $this->getUser();
+        $ratedUser = $this->getDoctrine()->getRepository(User::class)->find($userId);
 
-      if ($form->isSubmitted() && $form->isValid()) {
-        $entityManager = $this->getDoctrine()->getManager();
-        $review = $form->getData();
+        if ($form->isSubmitted() && $form->isValid()) {
+            $entityManager = $this->getDoctrine()->getManager();
+            $review = $form->getData();
 
-        $review->setUserId($ratedUser);
-        $review->setEstimatorId($estimator);
-        $review->setCreatedAt(new \DateTime());
+            $review->setUserId($ratedUser);
+            $review->setEstimatorId($estimator);
+            $review->setCreatedAt(new \DateTime());
 
-        $entityManager->persist($review);
-        $entityManager->flush();
+            $entityManager->persist($review);
+            $entityManager->flush();
 
-        $this->addFlash(
-          'notice',
-          'Jūsų vertinimas išsaugotas!'
-        );
+            $this->addFlash(
+                'notice',
+                'Jūsų vertinimas išsaugotas!'
+            );
 
-        return $this->redirectToRoute('otherUserProfile', ['userId' => $userId]);
-      }
+            return $this->redirectToRoute('otherUserProfile', ['userId' => $userId]);
+        }
 
-      return $this->render('profile/rateUser.html.twig', [
-        'form' => $form->createView(),
-        'userId' => $userId
-      ]);
+        return $this->render('profile/rateUser.html.twig', [
+            'form' => $form->createView(),
+            'userId' => $userId
+        ]);
     }
 }

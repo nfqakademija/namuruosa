@@ -19,7 +19,7 @@ class JobController extends AbstractController
         $form = $this->createForm(JobType::class);
         $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()){
+        if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
             $job = $form->getData();
             $job->setUserId($this->getUser());
@@ -41,7 +41,6 @@ class JobController extends AbstractController
         $loader->delete($jobId);
         $referer = $request->headers->get('referer');
         return $this->redirect($referer);
-
     }
 
     /**
@@ -54,7 +53,7 @@ class JobController extends AbstractController
         $myJobs = $loader->loadByUser($userId);
 
         return $this->render('job/my-jobs.html.twig', [
-            'jobsArray'=>[$myJobs],
+            'jobsArray' => [$myJobs],
         ]);
     }
 
@@ -67,7 +66,7 @@ class JobController extends AbstractController
         $myMatchingServices = $loader->loadPotMatches($userId);
 
         return $this->render('job/pot-matches.html.twig', [
-            'potMatchesByJobs'=>$myMatchingServices,
+            'potMatchesByJobs' => $myMatchingServices,
         ]);
     }
 }

@@ -8,7 +8,6 @@
 
 namespace App\Entity\Repository;
 
-
 use App\Entity\Job;
 use App\Entity\Service;
 use Doctrine\ORM\EntityRepository;
@@ -28,7 +27,6 @@ class ServiceRepository extends EntityRepository
             ->setParameter('id', $id)
             ->getResult();
     }
-
 
     public function findMatches(Job $job)
     {

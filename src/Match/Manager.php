@@ -8,7 +8,6 @@
 
 namespace App\Match;
 
-
 use App\Entity\Match;
 use App\Helpers\CalcHelper;
 use Doctrine\ORM\EntityManager;

@@ -8,7 +8,6 @@ use Symfony\Component\HttpFoundation\RequestStack;
 
 class dataLoader
 {
-
     private $reviews;
     private $paginator;
     private $request;
@@ -23,7 +22,6 @@ class dataLoader
     public function getAllReviews($userId)
     {
         $queryBuilder = $this->reviews->getAllUserReviews($userId);
-
         $pagination = $this->paginator->paginate(
             $queryBuilder, /* query NOT result */
             $this->request->getCurrentRequest()->query->getInt('page', 1)/*page number*/,
@@ -46,5 +44,4 @@ class dataLoader
         }
         return round($avRating, 1);
     }
-
 }

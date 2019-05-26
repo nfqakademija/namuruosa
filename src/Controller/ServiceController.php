@@ -29,7 +29,7 @@ class ServiceController extends AbstractController
         $form = $this->createForm(ServiceType::class);
         $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()){
+        if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
             $service = $form->getData();
             $service->setUserId($this->getUser());
@@ -51,7 +51,6 @@ class ServiceController extends AbstractController
         $loader->delete($serviceId);
         $referer = $request->headers->get('referer');
         return $this->redirect($referer);
-
     }
 
     /**
@@ -64,7 +63,7 @@ class ServiceController extends AbstractController
         $myServices = $loader->loadByUser($userId);
 
         return $this->render('service/my-services.html.twig', [
-            'servicesArray'=>[$myServices],
+            'servicesArray' => [$myServices],
         ]);
     }
 
@@ -77,10 +76,7 @@ class ServiceController extends AbstractController
         $myMatchingJobs = $loader->loadPotMatches($userId);
 
         return $this->render('service/pot-matches.html.twig', [
-            'potMatchesByServices'=>$myMatchingJobs,
+            'potMatchesByServices' => $myMatchingJobs,
         ]);
     }
-
-
-
 }

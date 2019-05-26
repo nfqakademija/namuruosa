@@ -8,12 +8,10 @@
 
 namespace App\Match;
 
-
 use Doctrine\ORM\EntityManagerInterface;
 
 class Loader
 {
-
     private $em;
 
     /**
@@ -33,9 +31,7 @@ class Loader
 
     public function getServicesMatches($userId)
     {
-         $myServicesMatches = $this->em->getRepository('App:Match')->findServicesMatches($userId);
+        $myServicesMatches = $this->em->getRepository('App:Match')->findServicesMatches($userId);
         return $myServicesMatches;
     }
-
-
 }

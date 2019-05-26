@@ -8,7 +8,6 @@
 
 namespace App\Form;
 
-
 use App\Entity\Category;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
@@ -63,8 +62,7 @@ class ServiceType extends AbstractType
             ])
             ->add('lon', HiddenType::class, [
                 'label' => 'Longitude',
-            ])
-        ;
+            ]);
     }
 
     public function configureOptions(OptionsResolver $resolver)
@@ -73,5 +71,4 @@ class ServiceType extends AbstractType
             'data_class' => 'App\Entity\Service'
         ]);
     }
-
 }

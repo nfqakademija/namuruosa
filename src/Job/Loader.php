@@ -35,7 +35,8 @@ class Loader
     /**
      * Loader constructor.
      * @param EntityManagerInterface $em
-     * @param CalcHelper $calculator
+     * @param CalcHelper $calDist
+     * @param dataLoader $profileLoader
      */
     public function __construct(EntityManagerInterface $em, CalcHelper $calDist, dataLoader $profileLoader)
     {
@@ -43,7 +44,6 @@ class Loader
         $this->calcDist = $calDist;
         $this->profileLoader = $profileLoader;
     }
-
 
     public function getJob($jobId)
     {
@@ -109,6 +109,4 @@ class Loader
             return false;
         }
     }
-
-
 }
