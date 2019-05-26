@@ -80,9 +80,4 @@ class JobType extends AbstractType
             'data_class' => 'App\Entity\Job'
         ]);
     }
-
-    public function hi()
-    {
-
-    }
 }

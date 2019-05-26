@@ -17,53 +17,49 @@ class saveForm
         $this->request = $requestStack;
     }
 
-  public function saveProfileForm($form, $userProfile, $uploader, $userObj){
-
-    $formData = $form->getData();
-
-    $profilePhoto = $this->request->getCurrentRequest()->files->get('edit_profile')['profilePhoto'];
-    $bannerPhoto = $this->request->getCurrentRequest()->files->get('edit_profile')['bannerPhoto'];
-
-    if ($profilePhoto) {
-        $profilePhotoName = $uploader->uploadImage($profilePhoto, 'profile_pics_dir', 'uploads/profile_pics/');
-
-    }else {
-        $profilePhotoName = 'build/images/profile-icon.png';
-    }
-
-    if ($bannerPhoto) {
-        $bannerPhotoName = $uploader->uploadImage($bannerPhoto, 'banner_pics_dir', 'uploads/banner_pics/');
-
-    }else {
-        $bannerPhotoName = 'build/images/chore.jpg';
-    }
-
-    if (!$userProfile)
+    public function saveProfileForm($form, $userProfile, $uploader, $userObj) //
     {
-        $userProfile->setUserId($userObj);
-        $userProfile->setPhoto($profilePhotoName);
 
-        $this->entityManager->persist($formData);
-        $this->entityManager->flush();
+        $formData = $form->getData();
 
-    }else
-    {
-        $userProfile->setCity($form["city"]->getData());
-        $userProfile->setLanguages($form["languages"]->getData());
-        $userProfile->setSkill($form["skill"]->getData());
-        $userProfile->setPhone($form["phone"]->getData());
-        $userProfile->setDescription($form["description"]->getData());
+        $profilePhoto = $this->request->getCurrentRequest()->files->get('edit_profile')['profilePhoto'];
+        $bannerPhoto = $this->request->getCurrentRequest()->files->get('edit_profile')['bannerPhoto'];
+
         if ($profilePhoto) {
-          $userProfile->setProfilePhoto($profilePhotoName);
+            $profilePhotoName = $uploader->uploadImage($profilePhoto, 'profile_pics_dir', 'uploads/profile_pics/');
+
+        } else {
+            $profilePhotoName = 'build/images/profile-icon.png';
         }
 
         if ($bannerPhoto) {
-          $userProfile->setBannerPhoto($bannerPhotoName);
+            $bannerPhotoName = $uploader->uploadImage($bannerPhoto, 'banner_pics_dir', 'uploads/banner_pics/');
+
+        } else {
+            $bannerPhotoName = 'build/images/chore.jpg';
         }
-        $this->entityManager->flush();
 
+        if (!$userProfile) {
+            $userProfile->setUserId($userObj);
+            $userProfile->setPhoto($profilePhotoName);
+
+            $this->entityManager->persist($formData);
+            $this->entityManager->flush();
+
+        } else {
+            $userProfile->setCity($form["city"]->getData());
+            $userProfile->setLanguages($form["languages"]->getData());
+            $userProfile->setSkill($form["skill"]->getData());
+            $userProfile->setPhone($form["phone"]->getData());
+            $userProfile->setDescription($form["description"]->getData());
+            if ($profilePhoto) {
+                $userProfile->setProfilePhoto($profilePhotoName);
+            }
+
+            if ($bannerPhoto) {
+                $userProfile->setBannerPhoto($bannerPhotoName);
+            }
+            $this->entityManager->flush();
+        }
     }
-
-  }
-
 }

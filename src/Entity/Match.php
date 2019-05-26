@@ -10,7 +10,6 @@ namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
-
 /**
  *
  * @package App\Entity
@@ -310,7 +309,4 @@ class Match
     {
         $this->hidden = $hidden;
     }
-
-
-
 }

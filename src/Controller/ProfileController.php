@@ -9,11 +9,9 @@ use Symfony\Component\HttpFoundation\Request;
 use App\Form\EditProfileType;
 use App\Form\RatingType;
 use App\Entity\UserProfile;
-use Symfony\Component\Validator\Constraints\DateTime;
-use App\Profile\dataLoader;
+use App\Profile\DataLoader;
 use App\Profile\saveForm;
 use App\Profile\fileUploader;
-
 
 class ProfileController extends AbstractController
 {
@@ -21,7 +19,7 @@ class ProfileController extends AbstractController
     /**
      * @Route("/profile", name="profile")
      */
-    public function profile(dataLoader $dataLoader)
+    public function profile(DataLoader $dataLoader)
     {
         $user = $this->getUser();
         $userId = $user->getId();
@@ -44,7 +42,6 @@ class ProfileController extends AbstractController
             $profile->setPhone('');
             $entityManager->persist($profile);
             $entityManager->flush();
-
         }
         return $this->render('profile/logedUserProfile.html.twig', [
             'user' => $user,
@@ -60,7 +57,7 @@ class ProfileController extends AbstractController
      * @Route("/profile/user/{userId}", name="otherUserProfile"), requirements={"userId"="\d+"}
      */
 
-    public function otherUserProfile($userId, dataLoader $dataLoader, Request $request)
+    public function otherUserProfile($userId, DataLoader $dataLoader, Request $request)
     {
         $profile = $this->getDoctrine()->getRepository(UserProfile::class)->
         findOneBy(['user_id' => $userId]);
@@ -94,7 +91,7 @@ class ProfileController extends AbstractController
         $userProfile = $userObj->getUserProfile();
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $saver->saveProfileForm($form, $userProfile, $uploader);
+            $saver->saveProfileForm($form, $userProfile, $uploader, $userObj);
 
             $this->addFlash(
                 'notice',

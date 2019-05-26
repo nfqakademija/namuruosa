@@ -10,7 +10,8 @@ class HomeController extends AbstractController
     /**
      * @Route("/", name="home")
      */
-    public function index() {
+    public function index()
+    {
 
         return $this->render('home/index.html.twig', [
             'someVariable' => 'NAMŲ RUOŠA',
@@ -20,7 +21,8 @@ class HomeController extends AbstractController
     /**
      * @Route("/klaida/{message}", name="error", defaults={"message"="nooperation"})
      */
-    public function displayErrorPage($message) {
+    public function displayErrorPage($message)
+    {
         $eType = 'danger';
         $eMsg = 'Jūsų vykdoma operacija negalima.';
 

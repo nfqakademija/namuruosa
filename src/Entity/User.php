@@ -98,5 +98,5 @@ class User extends BaseUser
         }
 
         return $this;
-      }
+    }
 }

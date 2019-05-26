@@ -1,8 +1,6 @@
 <?php
 
-
 namespace App\Controller\Admin;
-
 
 use App\Entity\Category;
 use App\Form\CategoryType;
@@ -26,7 +24,7 @@ class CategoriesController extends AbstractController
         $form = $this->createForm(CategoryType::class)
             ->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()){
+        if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
             $newCategory = $form->getData();
             $em->persist($newCategory);
@@ -55,5 +53,4 @@ class CategoriesController extends AbstractController
 
         return $this->redirectToRoute('admin_categories');
     }
-
 }

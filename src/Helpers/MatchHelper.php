@@ -19,9 +19,9 @@ class MatchHelper
         $now = new \DateTime('Now');
         if ($updateType === 'accept') {
             $match->setAcceptedAt($now);
-        } else if ($updateType === 'reject') {
+        } elseif ($updateType === 'reject') {
             $match->setRejectedAt($now);
-        } else if ($updateType === 'cancel') {
+        } elseif ($updateType === 'cancel') {
             $match->setCancelledAt($now);
         } else {
             return null;

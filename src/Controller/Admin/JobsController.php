@@ -1,8 +1,6 @@
 <?php
 
-
 namespace App\Controller\Admin;
-
 
 use App\Entity\Job;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;

@@ -8,11 +8,10 @@
 
 namespace App\Job;
 
-
 use App\Entity\Job;
 use App\Entity\Service;
 use App\Helpers\CalcHelper;
-use App\Profile\dataLoader;
+use App\Profile\DataLoader;
 use Doctrine\ORM\EntityManagerInterface;
 
 class Loader
@@ -36,9 +35,9 @@ class Loader
      * Loader constructor.
      * @param EntityManagerInterface $em
      * @param CalcHelper $calDist
-     * @param dataLoader $profileLoader
+     * @param DataLoader $profileLoader
      */
-    public function __construct(EntityManagerInterface $em, CalcHelper $calDist, dataLoader $profileLoader)
+    public function __construct(EntityManagerInterface $em, CalcHelper $calDist, DataLoader $profileLoader)
     {
         $this->em = $em;
         $this->calcDist = $calDist;
