@@ -1,26 +1,30 @@
-{% extends 'layout/layout-no-container.html.twig' %}
+{% extends 'layout/layout-fluid-container.html.twig' %}
 
 {% block body %}
-    <div class="jobWrapper container-under-fixednav">
-        <h2 class="text-center page-title-elipse">PASLAUGOS </h2>
-        <h4 class="text-center text-muted mb-5">Pagal mano darbus</h4>
-        {% set jobsWithNoServices = [] %}
-        <div class="pot-matches-wrapper">
-            {% for matchesByJob in potMatchesByJobs %}
-                {% if matchesByJob[1] != null %}
-                    {% include 'job/table/pot-matches-table.html.twig' %}
-                {% else %}
-                    {% set jobsWithNoServices = jobsWithNoServices|merge([matchesByJob[0].title]) %}
-                {% endif %}
-            {% endfor %}
-        </div>
-        {% if jobsWithNoServices != [] %}
-            <div class="alert alert-danger mt-5">
-                {% for job in  jobsWithNoServices %}
-                    <h5 class="text-info">Darbui <span class="text-danger">{{ job }}</span>
-                        šiuo metu pasiūlymų neturime</h5>
+    <div class="row">
+        <div class="jobWrapper container-under-fixednav">
+            <div class="page-title-elipse">
+                <h2 class="text-center ">PASLAUGOS </h2>
+                <h5 class="text-center text-muted">Pagal mano darbus</h5>
+            </div>
+            {% set jobsWithNoServices = [] %}
+            <div class="pot-matches-wrapper">
+                {% for matchesByJob in potMatchesByJobs %}
+                    {% if matchesByJob[1] != null %}
+                        {% include 'job/table/pot-matches-table.html.twig' %}
+                    {% else %}
+                        {% set jobsWithNoServices = jobsWithNoServices|merge([matchesByJob[0].title]) %}
+                    {% endif %}
                 {% endfor %}
             </div>
-        {% endif %}
+            {% if jobsWithNoServices != [] %}
+                <div class="alert alert-danger mt-5">
+                    {% for job in  jobsWithNoServices %}
+                        <h5 class="text-info">Darbui <span class="text-danger">{{ job }}</span>
+                            šiuo metu pasiūlymų neturime</h5>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        </div>
     </div>
 {% endblock %}
