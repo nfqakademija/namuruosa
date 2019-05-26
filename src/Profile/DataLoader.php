@@ -6,7 +6,7 @@ use App\Repository\ReviewsRepository;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\HttpFoundation\RequestStack;
 
-class dataLoader
+class DataLoader
 {
     private $reviews;
     private $paginator;
