@@ -7,7 +7,7 @@
 {% endblock %}
 
 {% block banner %}
-<div class="banner-image" style="background: url('{{ asset(profile.getbannerphoto)}}') no-repeat center center/cover; height: 30vh; margin-top: 35px;">
+<div class="banner-image" style="background: url('{{ asset(profile.getbannerphoto)}}') no-repeat center center/cover; height: 30vh; position: relative; margin-top: 35px;">
 </div>
 {% endblock %}
 
@@ -55,7 +55,7 @@
                         </div>
                     {% endblock %}
                     <div class="skills">
-                        <h4 class="job-title">Igudziai</h4>
+                        <h4 class="job-title">Igūdžiai</h4>
                         <ul>
                             {% for item in profile.getskill | split(',') %}
                                 <li>{{ item }}</li>
@@ -67,11 +67,11 @@
                         <h4 class="job-title">Statistika</h4>
                         <div class="times-worked">
                             <div>
-                                <p>Ivykdyta darbu</p>
+                                <p>Ivykdyta darbų</p>
                                 <p>{{services}}</p>
                             </div>
                             <div>
-                                <p>Pirkta paslaugu</p>
+                                <p>Pirkta paslaugų</p>
                                 <p>{{jobs}}</p>
                             </div>
                             <div class="last-login">
