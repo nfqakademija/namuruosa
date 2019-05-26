@@ -3,6 +3,7 @@
 namespace App\Profile;
 
 use App\Repository\ReviewsRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\HttpFoundation\RequestStack;
 
@@ -12,12 +13,14 @@ class dataLoader
     private $reviews;
     private $paginator;
     private $request;
+    private $entityManager;
 
-    public function __construct(ReviewsRepository $reviews, PaginatorInterface $paginator, RequestStack $request)
+    public function __construct(ReviewsRepository $reviews, PaginatorInterface $paginator, RequestStack $request, EntityManagerInterface $manager)
     {
         $this->reviews = $reviews;
         $this->paginator = $paginator;
         $this->request = $request;
+        $this->entityManager = $manager;
     }
 
     public function getAllReviews($userId)
@@ -45,6 +48,16 @@ class dataLoader
             $avRating = $this->reviews->getAverageRating($userId)[0][1];
         }
         return round($avRating, 1);
+    }
+
+    public function countUserServices($userId)
+    {
+      return $this->entityManager->getRepository('App:Match')->countUserServices($userId)[0][1];
+    }
+
+    public function countUserJobs($userId)
+    {
+      return $this->entityManager->getRepository('App:Match')->countUserJobs($userId)[0][1];
     }
 
 }

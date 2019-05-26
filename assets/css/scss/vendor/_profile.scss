@@ -109,9 +109,8 @@ body{
 }
 
 .profile-pic img{
-  max-width: 130px;
-  max-height: 130px;
-  border: 4px solid var(--primary-bg-color-dark);
+  width: 130px;
+  border: 4px solid var(--primary-tools-color);
   border-radius: 50%;
   background-color: var(--secondary-bg-color);
   position: absolute;
