@@ -14,10 +14,14 @@ admin_matches:
     path: /admin/matches
     controller: App\Controller\Admin\MatchesController::getAllMatches
 
+admin_match_delete:
+    path: /admin/matches/delete/{id}
+    controller: App\Controller\Admin\MatchesController::adminDeleteMatch
+
 admin_categories:
     path: /admin/categories
     controller: App\Controller\Admin\CategoriesController::adminGetCategories
 
 admin_category_delete:
-    path: /admin/category/delete/{id}
+    path: /admin/categories/delete/{id}
     controller: App\Controller\Admin\CategoriesController::adminDeleteCategory
