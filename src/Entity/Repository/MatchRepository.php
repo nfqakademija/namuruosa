@@ -75,4 +75,38 @@ class MatchRepository extends EntityRepository
 
     return $query->execute();
     }
+
+    public function getAllMatches()
+    {
+        $conn = $this->getEntityManager()->getConnection();
+
+//        $sql = "
+//                SELECT
+//                       s.id, s.title, s.created_at, s.active_till, s.user_id,
+//                       u.username, u.first_name, u.last_name
+//                FROM service s
+//                    LEFT JOIN fos_user u
+//                        ON s.user_id = u.id";
+
+        $sql = "
+                SELECT m.id, m.caller_id, m.caller_service_id, m.responder_id,
+                       m.responder_job_id, m.created_at, m.accepted_at, m.rejected_at, m.cancelled_at,
+                       c.username as caller_username, r.username as responder_username,
+                       s.title as service_title,
+                       j.title as job_title
+                FROM matches m
+                    LEFT JOIN fos_user c 
+                        ON m.caller_id = c.id
+                    LEFT join fos_user r
+                        ON m.responder_id = r.id
+                    LEFT JOIN service s 
+                        ON m.caller_service_id = s.id
+                    LEFT JOIN job j 
+                        ON m.responder_job_id = j.id
+                        ";
+
+        $query = $conn->prepare($sql);
+        $query->execute();
+        return $query->fetchAll();
+    }
 }
