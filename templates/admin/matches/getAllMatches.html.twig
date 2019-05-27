@@ -1,0 +1,33 @@
+<h3 class="text-center">Sandorių sąrašas</h3>
+<div class="table-responsive">
+    <table class="table table-bordered table-striped">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Paslaugos pavadinimas</th>
+            <th>Darbo pavadinimas</th>
+            <th>Pasiūlęs vartotojas</th>
+            <th>Sutikęs vartotojas</th>
+            <th>Pasiūlyta</th>
+            <th>Sutikta</th>
+            <th>Atmesta</th>
+            <th>Atšaukta</th>
+          </tr>
+        </thead>
+        <tbody class="text-nowrap">
+        {% for match in matches %}
+            <tr>
+                <td>{{ match.id }}</td>
+                <td>{{ match.service_title }}</td>
+                <td>{{ match.job_title }}</td>
+                <td><a href="{{ path('otherUserProfile', {'userId': match.caller_id}) }}">{{ match.caller_username }}</a></td>
+                <td><a href="{{ path('otherUserProfile', {'userId': match.responder_id}) }}">{{ match.responder_username }}</a></td>
+                <td>{{ match.created_at|date('Y-m-d') }}</td>
+                <td>{% if match.accepted_at is not null %}{{ match.accepted_at|date('Y-m-d') }}{% endif %}</td>
+                <td>{% if match.rejected_at is not null %}{{ match.rejected_at|date('Y-m-d') }}{% endif %}</td>
+                <td>{% if match.cancelled_at is not null %}{{ match.cancelled_at|date('Y-m-d') }}{% endif %}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>

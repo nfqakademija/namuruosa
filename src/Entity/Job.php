@@ -22,7 +22,6 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Job
 {
-
     /**
      * @ORM\Column(type="integer")
      * @ORM\Id
@@ -59,21 +58,10 @@ class Job
      */
     private $title;
 
-
     /**
      * @ORM\Column(type="text")
      */
     protected $description;
-
-//    /**
-//     * @ORM\Column(type="text", nullable=true)
-//     */
-//    protected $category1;
-//
-//    /**
-//     * @ORM\Column(type="text", nullable=true)
-//     */
-//    protected $category2;
 
     /**
      * @ORM\Column(type="text", nullable=true)
@@ -110,7 +98,6 @@ class Job
      */
     protected $distance;
 
-
     /**
      * @var
      * @ORM\Column(type="datetime", nullable=true)
@@ -124,10 +111,6 @@ class Job
     protected $activeTill;
 
     protected $userRating;
-
-
-
-//    ----------- Methods ----------
 
     public function __construct()
     {

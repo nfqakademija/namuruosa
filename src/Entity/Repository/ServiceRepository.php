@@ -59,4 +59,21 @@ class ServiceRepository extends EntityRepository
 
         return $allMatchesByOneMyService;
     }
+
+    public function getAllServices()
+    {
+        $conn = $this->getEntityManager()->getConnection();
+
+        $sql = "
+                SELECT 
+                       s.id, s.title, s.created_at, s.active_till, s.user_id,
+                       u.username, u.first_name, u.last_name
+                FROM service s
+                    LEFT JOIN fos_user u
+                        ON s.user_id = u.id";
+
+        $query = $conn->prepare($sql);
+        $query->execute();
+        return $query->fetchAll();
+    }
 }
