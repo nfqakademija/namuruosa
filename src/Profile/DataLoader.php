@@ -58,30 +58,48 @@ class DataLoader
       return $this->entityManager->getRepository('App:Match')->countUserJobs($userId)[0][1];
     }
 
+    private function packPrices(array $userServices, string $method): array
+    {
+
+      $servicesPrices = [];
+
+      foreach ($userServices as $key => $service) {
+        array_push($servicesPrices, intval($service->$method()));
+      }
+
+      return $servicesPrices;
+    }
+
     public function countUserMoney($userId): array
     {
-      $money = [];
-      $servicesPrices = [];
-      $jobsPrices = [];
-
 
       $userServices = $this->entityManager->getRepository('App:Service')->findBy([
         'userId' => $userId
       ]);
-
       $userJobs = $this->entityManager->getRepository('App:Job')->findBy([
         'userId' => $userId
       ]);
 
-      foreach ($userServices as $key => $service) {
-        array_push($servicesPrices, intval($service->getPricePerHour()));
+      $servicesPrices = $this->packPrices($userServices, 'getPricePerHour');
+
+      $jobsPrices = $this->packPrices($userJobs, 'getBudget');
+
+      $jobsLength = count($jobsPrices);
+      $servicesLength = count($servicesPrices);
+
+      $avgServicePrice = 0;
+      $avgJobPrice = 0;
+
+      if ($jobsLength > 0) {
+          $avgJobPrice = array_sum($jobsPrices) / $jobsLength;
       }
-      foreach ($userJobs as $key => $job) {
-        array_push($jobsPrices, intval($job->getBudget()));
+      if ($servicesLength > 0) {
+        $avgServicePrice = array_sum($servicesPrices) / $servicesLength;
       }
 
-      array_push($money, (array_sum($jobsPrices) / count($jobsPrices)));
-      array_push($money, (array_sum($servicesPrices) / count($servicesPrices)));
+      $money = [];
+      array_push($money, $avgJobPrice);
+      array_push($money, $avgServicePrice);
 
       return $money;
     }
