@@ -1,11 +1,12 @@
 .container-under-fixednav{
   padding-top: 100px;
   padding-bottom: 50px;
-  min-height: calc(100vh - 50px);
+  //min-height: calc(100vh - 50px);
+  min-height: 100vh;
 }
 
 .jobWrapper{
-  background-color: #fab300;
+  //background-color: #fab300;
 }
 
 .serviceWrapper{
