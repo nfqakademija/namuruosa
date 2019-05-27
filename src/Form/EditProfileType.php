@@ -4,6 +4,7 @@ namespace App\Form;
 
 use App\Entity\UserProfile;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\TelType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\AbstractType;
@@ -18,9 +19,11 @@ class EditProfileType extends AbstractType
         $builder
             ->add('profilePhoto', FileType::class, [
                 'required' => false,
+                'data_class' => null
                 ])
             ->add('bannerPhoto', FileType::class, [
                 'required' => false,
+                'data_class' => null
                 ])
             ->add('city', TextType::class, [
                 'required' => true,
@@ -31,7 +34,7 @@ class EditProfileType extends AbstractType
             ->add('skill', TextType::class, [
                 'required' => true,
                 ])
-            ->add('phone', TextType::class, [
+            ->add('phone', TelType::class, [
                 'required' => true,
 
                 ])

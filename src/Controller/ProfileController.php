@@ -96,11 +96,12 @@ class ProfileController extends AbstractController
      */
     public function editProfile(Request $request, SaveForm $saver, FileUploader $uploader)
     {
-        $form = $this->createForm(EditProfileType::class);
-        $form->handleRequest($request);
 
         $userObj = $this->getUser();
         $userProfile = $userObj->getUserProfile();
+
+        $form = $this->createForm(EditProfileType::class, $userProfile);
+        $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $saver->saveProfileForm($form, $userProfile, $uploader, $userObj);
@@ -111,10 +112,14 @@ class ProfileController extends AbstractController
             );
 
             return $this->redirectToRoute('profile');
-        }
+        }else {
+          // Set default value
+          $form->get('description')->setData(
+          $userProfile->getdescription()
+        );
+      }
         return $this->render('profile/editProfileForm.html.twig', [
             'form' => $form->createView(),
-            'profile' => $userProfile
         ]);
     }
 
