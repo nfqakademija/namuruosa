@@ -6,7 +6,7 @@ use App\Profile\fileUploader;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Doctrine\ORM\EntityManagerInterface;
 
-class saveForm
+class SaveForm
 {
     private $entityManager;
     protected $request;

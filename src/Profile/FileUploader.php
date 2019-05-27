@@ -4,7 +4,7 @@ namespace App\Profile;
 
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 
-class fileUploader
+class FileUploader
 {
     private $params;
 

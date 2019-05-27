@@ -10,8 +10,8 @@ use App\Form\EditProfileType;
 use App\Form\RatingType;
 use App\Entity\UserProfile;
 use App\Profile\DataLoader;
-use App\Profile\saveForm;
-use App\Profile\fileUploader;
+use App\Profile\SaveForm;
+use App\Profile\FileUploader;
 
 class ProfileController extends AbstractController
 {
@@ -94,7 +94,7 @@ class ProfileController extends AbstractController
     /**
      * @Route("/profile/edit", name="editProfile")
      */
-    public function editProfile(Request $request, saveForm $saver, fileUploader $uploader)
+    public function editProfile(Request $request, SaveForm $saver, FileUploader $uploader)
     {
         $form = $this->createForm(EditProfileType::class);
         $form->handleRequest($request);
