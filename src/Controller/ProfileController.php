@@ -10,8 +10,8 @@ use App\Form\EditProfileType;
 use App\Form\RatingType;
 use App\Entity\UserProfile;
 use App\Profile\DataLoader;
-use App\Profile\saveForm;
-use App\Profile\fileUploader;
+use App\Profile\SaveForm;
+use App\Profile\FileUploader;
 
 class ProfileController extends AbstractController
 {
@@ -29,6 +29,9 @@ class ProfileController extends AbstractController
         $reviews = $dataLoader->getAllReviews($userId);
         $totalReviews = $dataLoader->getCountReviews($userId);
         $rating = $dataLoader->getAverageRating($userId);
+        $userServices = $dataLoader->countUserServices($userId);
+        $userJobs = $dataLoader->countUserJobs($userId);
+        $money = $dataLoader->countUserMoney($userId);
 
         if (!$profile) {
             $profile = new UserProfile;
@@ -46,7 +49,10 @@ class ProfileController extends AbstractController
         return $this->render('profile/logedUserProfile.html.twig', [
             'user' => $user,
             'profile' => $profile,
-            'reviews' => $reviews,
+            'reviews' =>$reviews,
+            'services' => $userServices,
+            'jobs' => $userJobs,
+            'money' => $money,
             'rating' => $rating,
             'reviewsCount' => $totalReviews,
             'controller_name' => 'ProfileController',
@@ -59,30 +65,36 @@ class ProfileController extends AbstractController
 
     public function otherUserProfile($userId, DataLoader $dataLoader, Request $request)
     {
-        $profile = $this->getDoctrine()->getRepository(UserProfile::class)->
-        findOneBy(['user_id' => $userId]);
+      $profile = $this->getDoctrine()->getRepository(UserProfile::class)->
+      findOneBy(['user_id' => $userId]);
 
-        $user = $profile->getUserId();
+      $user = $profile->getUserId();
 
-        $reviews = $dataLoader->getAllReviews($userId, $request);
-        $totalReviews = $dataLoader->getCountReviews($userId);
-        $rating = $dataLoader->getAverageRating($userId);
+      $reviews = $dataLoader->getAllReviews($userId, $request);
+      $totalReviews = $dataLoader->getCountReviews($userId);
+      $rating = $dataLoader->getAverageRating($userId);
+      $userServices = $dataLoader->countUserServices($userId);
+      $userJobs = $dataLoader->countUserJobs($userId);
+      $money = $dataLoader->countUserMoney($userId);
 
-        return $this->render('profile/otherUserProfile.html.twig', [
-            'user' => $user,
-            'profile' => $profile,
-            'userId' => $userId,
-            'reviews' => $reviews,
-            'rating' => $rating,
-            'reviewsCount' => $totalReviews[0][1],
-            'controller_name' => 'ProfileController',
-        ]);
+      return $this->render('profile/otherUserProfile.html.twig', [
+          'user' => $user,
+          'profile' => $profile,
+          'userId' => $userId,
+          'services' => $userServices,
+          'jobs' => $userJobs,
+          'money' => $money,
+          'reviews' => $reviews,
+          'rating' => $rating,
+          'reviewsCount'=> $totalReviews,
+          'controller_name' => 'ProfileController',
+          ]);
     }
 
     /**
      * @Route("/profile/edit", name="editProfile")
      */
-    public function editProfile(Request $request, saveForm $saver, fileUploader $uploader)
+    public function editProfile(Request $request, SaveForm $saver, FileUploader $uploader)
     {
         $form = $this->createForm(EditProfileType::class);
         $form->handleRequest($request);

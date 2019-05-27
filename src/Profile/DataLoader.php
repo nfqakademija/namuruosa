@@ -3,20 +3,23 @@
 namespace App\Profile;
 
 use App\Repository\ReviewsRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\HttpFoundation\RequestStack;
 
-class dataLoader
+class DataLoader
 {
     private $reviews;
     private $paginator;
     private $request;
+    private $entityManager;
 
-    public function __construct(ReviewsRepository $reviews, PaginatorInterface $paginator, RequestStack $request)
+    public function __construct(ReviewsRepository $reviews, PaginatorInterface $paginator, RequestStack $request, EntityManagerInterface $manager)
     {
         $this->reviews = $reviews;
         $this->paginator = $paginator;
         $this->request = $request;
+        $this->entityManager = $manager;
     }
 
     public function getAllReviews($userId)
@@ -44,4 +47,43 @@ class dataLoader
         }
         return round($avRating, 1);
     }
+
+    public function countUserServices($userId)
+    {
+      return $this->entityManager->getRepository('App:Match')->countUserServices($userId)[0][1];
+    }
+
+    public function countUserJobs($userId)
+    {
+      return $this->entityManager->getRepository('App:Match')->countUserJobs($userId)[0][1];
+    }
+
+    public function countUserMoney($userId): array
+    {
+      $money = [];
+      $servicesPrices = [];
+      $jobsPrices = [];
+
+
+      $userServices = $this->entityManager->getRepository('App:Service')->findBy([
+        'userId' => $userId
+      ]);
+
+      $userJobs = $this->entityManager->getRepository('App:Job')->findBy([
+        'userId' => $userId
+      ]);
+
+      foreach ($userServices as $key => $service) {
+        array_push($servicesPrices, intval($service->getPricePerHour()));
+      }
+      foreach ($userJobs as $key => $job) {
+        array_push($jobsPrices, intval($job->getBudget()));
+      }
+
+      array_push($money, (array_sum($jobsPrices) / count($jobsPrices)));
+      array_push($money, (array_sum($servicesPrices) / count($servicesPrices)));
+
+      return $money;
+    }
+
 }

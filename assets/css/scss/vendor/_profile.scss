@@ -109,14 +109,13 @@ body{
 }
 
 .profile-pic img{
-  max-width: 130px;
-  max-height: 130px;
+  width: 130px;
   border: 4px solid var(--primary-bg-color-dark);
   border-radius: 50%;
   background-color: var(--secondary-bg-color);
   position: absolute;
   top: -65px;
-  left: 135px;
+  left: 128px;
 }
 
 .user-name{
@@ -373,9 +372,19 @@ body{
 // banner-image
 
 .banner-image{
-  background: linear-gradient(to right, #ffc106, #ffffff);
   height: 30vh;
   margin-bottom: -200px;
+
+}
+
+.banner-image::before{
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.3);
 }
 
 // report button

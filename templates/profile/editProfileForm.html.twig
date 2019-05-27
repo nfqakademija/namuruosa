@@ -12,7 +12,7 @@
     {{ form_label(form.profilePhoto, 'Profilio Nuotrauka', {'label_attr': {'class': 'profile-form-label'}}) }}
       {{form_widget(form.profilePhoto)}}
 
-    {{ form_label(form.bannerPhoto, 'Nuotrauka', {'label_attr': {'class': 'profile-form-label'}}) }}
+    {{ form_label(form.bannerPhoto, 'Viršelio Nuotrauka', {'label_attr': {'class': 'profile-form-label'}}) }}
       {{form_widget(form.bannerPhoto)}}
 
     {{ form_label(form.city, 'Miestas', {'label_attr': {'class': 'profile-form-label'}}) }}
@@ -28,7 +28,7 @@
       {{form_widget(form.phone
       , {'attr': {'class': 'profile-form-input', 'placeholder': '+370', 'value': profile.getphone}}) }}
 
-    {{ form_label(form.description, 'Aprasymas', {'label_attr': {'class': 'profile-form-label'}}) }}
+    {{ form_label(form.description, 'Aprašymas', {'label_attr': {'class': 'profile-form-label'}}) }}
     {{form_widget(form.description
     , {'attr': {'class': 'profile-form-textarea', 'placeholder': 'Trumpai apie save', 'value': profile.getdescription, 'cols': '80', 'rows': '8'}}) }}
 

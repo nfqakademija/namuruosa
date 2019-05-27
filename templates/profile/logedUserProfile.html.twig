@@ -7,7 +7,7 @@
 {% endblock %}
 
 {% block banner %}
-<div class="banner-image" style="background: url('{{ asset(profile.getbannerphoto)}}') no-repeat center center/cover; height: 30vh; margin-top: 35px;">
+<div class="banner-image" style="background: url('{{ asset(profile.getbannerphoto)}}') no-repeat center center/cover; height: 30vh; position: relative; margin-top: 35px;">
 </div>
 {% endblock %}
 
@@ -43,10 +43,10 @@
                     <div class="details-list">
                         <div class="details-list-ratings">
                             <div class="star-rating"></div>
-                            <div class="total-rating">{{ rating | number_format(1) }}</div>
+                            <div class="total-rating"><i class="text-warning fas fa-star"></i> {{ rating }}</div>
                             <div class="total-reviews">({{ reviewsCount }})</div>
                         </div>
-                        <div class="member-cost">1000 &euro;<span>/hr</span></div>
+                        <div class="member-cost"> {{money[1]}} &euro;<span>/hr /</span> {{money[0]}} &euro;<span>/hr (prašo/siūlo)</span> </div>
                     </div>
                     {% block profileButton %}
 
@@ -55,7 +55,7 @@
                         </div>
                     {% endblock %}
                     <div class="skills">
-                        <h4 class="job-title">Igudziai</h4>
+                        <h4 class="job-title">Igūdžiai</h4>
                         <ul>
                             {% for item in profile.getskill | split(',') %}
                                 <li>{{ item }}</li>
@@ -67,12 +67,12 @@
                         <h4 class="job-title">Statistika</h4>
                         <div class="times-worked">
                             <div>
-                                <p>Ivykdyta darbu</p>
-                                <p>43</p>
+                                <p>Ivykdyta darbų</p>
+                                <p>{{services}}</p>
                             </div>
                             <div>
-                                <p>Pirkta paslaugu</p>
-                                <p>10</p>
+                                <p>Pirkta paslaugų</p>
+                                <p>{{jobs}}</p>
                             </div>
                             <div class="last-login">
                                 <p>Paskutinis prisijungimas</p>

@@ -45,4 +45,34 @@ class MatchRepository extends EntityRepository
 
         return $myServicesMatches;
     }
+
+    public function countUserServices($userId): array
+    {
+      $entityManager = $this->getEntityManager();
+
+      $query = $entityManager->createQuery(
+        'SELECT COUNT(m)
+         FROM App\Entity\Match m
+         WHERE ((m.callerId = :userId  AND m.callerServiceId IS NOT NULL)
+         OR (m.responderId = :userId AND m.responderServiceId IS NOT NULL))
+         AND m.payedAt IS NOT NULL'
+    )->setParameter('userId', $userId);
+
+    return $query->execute();
+    }
+
+    public function countUserJobs($userId): array
+    {
+      $entityManager = $this->getEntityManager();
+
+      $query = $entityManager->createQuery(
+        'SELECT COUNT(m)
+         FROM App\Entity\Match m
+         WHERE ((m.callerId = :userId  AND m.callerJobId IS NOT NULL)
+         OR (m.responderId = :userId AND m.responderJobId IS NOT NULL))
+         AND m.payedAt IS NOT NULL'
+    )->setParameter('userId', $userId);
+
+    return $query->execute();
+    }
 }
