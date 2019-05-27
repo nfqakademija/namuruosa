@@ -80,14 +80,6 @@ class MatchRepository extends EntityRepository
     {
         $conn = $this->getEntityManager()->getConnection();
 
-//        $sql = "
-//                SELECT
-//                       s.id, s.title, s.created_at, s.active_till, s.user_id,
-//                       u.username, u.first_name, u.last_name
-//                FROM service s
-//                    LEFT JOIN fos_user u
-//                        ON s.user_id = u.id";
-
         $sql = "
                 SELECT m.id, m.caller_id, m.caller_service_id, m.responder_id,
                        m.responder_job_id, m.created_at, m.accepted_at, m.rejected_at, m.cancelled_at,
@@ -100,9 +92,9 @@ class MatchRepository extends EntityRepository
                     LEFT join fos_user r
                         ON m.responder_id = r.id
                     LEFT JOIN service s 
-                        ON m.caller_service_id = s.id
+                        ON IF(m.caller_service_id IS NULL, m.responder_service_id, m.caller_service_id) = s.id
                     LEFT JOIN job j 
-                        ON m.responder_job_id = j.id
+                        ON IF(m.caller_job_id IS NULL, m.responder_job_id, m.caller_job_id) = j.id
                         ";
 
         $query = $conn->prepare($sql);

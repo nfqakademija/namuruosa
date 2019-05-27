@@ -15,7 +15,7 @@ class MatchesController extends AbstractController
         $matches = $this->getDoctrine()
             ->getRepository(Match::class)
             ->getAllMatches();
-
+        dump($matches);
         return $this->render('admin/matches.html.twig', [
             'matches' => $matches,
         ]);
