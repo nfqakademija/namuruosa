@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Job;
 use App\Form\JobType;
 use App\Job\Loader;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -33,6 +34,30 @@ class JobController extends AbstractController
         ]);
     }
 
+
+    /**
+     * @Route("/job/edit/{id}", name="jobEdit")
+     */
+    public function editJob( Request $request, int $id, Loader $loader)
+    {
+        $job = $loader->getJob($id);
+        $form = $this->createForm(JobType::class, $job);
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $em = $this->getDoctrine()->getManager();
+            $job = $form->getData();
+            $job->setUserId($this->getUser());
+            $em->persist($job);
+            $em->flush();
+            return $this->redirectToRoute('my_jobs');
+        }
+
+        return $this->render('job/add.html.twig', [
+            'form' => $form->createView(),
+        ]);
+    }
+
+
     /**
      * @Route("/job/delete/{jobId}", name="jobDelete")
      */
@@ -53,7 +78,7 @@ class JobController extends AbstractController
         $myJobs = $loader->loadByUser($userId);
 
         return $this->render('job/my-jobs.html.twig', [
-            'jobsArray' => [$myJobs],
+            'jobs' => $myJobs,
         ]);
     }
 

@@ -1,10 +1,12 @@
-{% extends 'job/layout.html.twig' %}
+{% extends 'layout/layout-fluid-container.html.twig' %}
 
-{% block main %}
-
-    <h2>Mano darbai</h2>
-    {% for jobs in jobsArray %}
-        {% include 'job/table/jobs.html.twig' %}
-    {% endfor %}
-
+{% block body %}
+    <div class="row">
+        <div class="jobWrapper container-under-fixednav">
+            <div class="page-title-elipse">
+                <h2>MANO DARBAI</h2>
+            </div>
+            {% include 'job/table/jobs.html.twig' %}
+        </div>
+    </div>
 {% endblock %}
