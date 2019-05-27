@@ -6,6 +6,10 @@ admin_jobs:
     path: /admin/jobs
     controller: App\Controller\Admin\JobsController::getAllJobs
 
+admin_services:
+    path: /admin/services
+    controller: App\Controller\Admin\ServicesController::getAllServices
+
 admin_categories:
     path: /admin/categories
     controller: App\Controller\Admin\CategoriesController::adminGetCategories
