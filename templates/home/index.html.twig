@@ -3,9 +3,14 @@
 {% block title %}{{ someVariable }}{% endblock %}
 
 {% block landing %}
-    {#<div class="container-fluid">#}
+    <div class="container-fluid">
         <div class="row landing main">
-            <div class="col-sm-6 landing half left">
+            <div class="center">
+                <h2>&nbsp; NAMŲ <span>RUOŠA</span></h2>
+                <h4>Čia tavo laisvas laikas ir žinios gali virsti
+                    papildomomis pajamomis, o "neįveikiamas" darbas namuose - lengva ir greita užduotėle.</h4>
+            </div>
+            <div class="col-md-6 landing half left">
                 <ul class="ch-grid mt-5">
                     <li>
                         <div class="ch-item ch-img-1">
@@ -18,26 +23,16 @@
                     </li>
                 </ul>
                 <p>Namuose - tiek darbų, kad neužtektų viso gyvenimo? Nepatikėsi, kiek žmonių norėtų tau padėti. Prisijunk ir įsitikink!</p>
-
                 <div class="text-right mt-5">
                     <a href="{{ path('job_pot_matches') }}">
-                        <button class="btn btn-lg btn-warning">Ieškoti PASLAUGŲ</button>
-                    </a>
+                        <button class="btn btn-lg btn-warning">Ieškoti PASLAUGŲ</button></a>
                     <h6 class="mt-5">Dar neprisiregistravai?</h6>
                     <a href="{{ path('fos_user_registration_register') }}">
                         <h5>Registruoti naują vartotoją</h5>
                     </a>
                 </div>
-
             </div>
-
-            <div class="center">
-                <h2>&nbsp; NAMŲ <span>RUOŠA</span></h2>
-                <h4>Čia žmonės savo laisvą laiką ir turimus resursus paverčia
-                    papildomomis pajamomis. O jei tau namuose reikalinga pagalba - tai tikrai atsiras norinčių padėti.</h4>
-            </div>
-
-            <div class="col-sm-6 landing half right">
+            <div class="col-md-6 landing half right">
                 <ul class="ch-grid mt-5">
                     <li>
                         <div class="ch-item ch-img-2">
@@ -49,24 +44,15 @@
                         </div>
                     </li>
                 </ul>
-
                 <p>Turi laisvo laiko ir norėtum paversti jį pinigais? Prisijunk prie mūsų bendruomenės ir atrask įvairių būdų save realizuoti.</p>
                 <div class="text-left mt-5">
-
                     <a href="{{ path('service_pot_matches') }}">
-                        <button class="btn btn-lg btn-info">Peržvelgti DARBUS</button>
-                    </a>
+                        <button class="btn btn-lg btn-info">Peržvelgti DARBUS</button></a>
                     <h6 class="mt-5">Dar neprisiregistravai?</h6>
                     <a href="{{ path('fos_user_registration_register') }}">
-                        <h5>Registruoti naują vartotoją</h5>
-                    </a>
-
+                        <h5>Registruoti naują vartotoją</h5></a>
                 </div>
             </div>
         </div>
     </div>
-
-
-
-    {#</div>#}
 {% endblock %}

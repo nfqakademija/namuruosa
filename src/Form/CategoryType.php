@@ -8,7 +8,6 @@
 
 namespace App\Form;
 
-
 use App\Entity\Category;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
@@ -29,9 +28,7 @@ class CategoryType extends AbstractType
             ->add('name', TextType::class, [
                 'label'=>'Pavadinimas',
                 'required' => true,
-            ])
-
-        ;
+            ]);
     }
 
     public function configureOptions(OptionsResolver $resolver)
@@ -40,5 +37,4 @@ class CategoryType extends AbstractType
             'data_class' => 'App\Entity\Category'
         ]);
     }
-
 }

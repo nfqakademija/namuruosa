@@ -1,23 +1,23 @@
 <li class="nav-item dropdown">
-    <a class="nav-link text-warning" href="#" id="adminNavbarDropdown" role="button" data-toggle="dropdown"
+    <a class="nav-link text-danger" href="#" id="adminNavbarDropdown" role="button" data-toggle="dropdown"
        aria-haspopup="true" aria-expanded="false">
         <i class="fa fa-lock"></i>
         Admin <i class="fa fa-angle-down"></i>
     </a>
     <div class="dropdown-menu" aria-labelledby="adminNavbarDropdown">
-        <a href="#" class="dropdown-item">
+        <a class="dropdown-item" href="{{ path('admin_users') }}">
             Vartotojai
         </a>
-        <a href="#" class="dropdown-item">
+        <a class="dropdown-item" href="{{ path('admin_jobs') }}">
             Darbai
         </a>
-        <a href="#" class="dropdown-item">
+        <a class="dropdown-item" href="#">
             Paslaugos
         </a>
-        <a href="#" class="dropdown-item">
+        <a class="dropdown-item" href="#">
             Subendrinti darbai
         </a>
-        <a class="dropdown-item" href="{{ path ('admin_category') }}">
+        <a class="dropdown-item" href="{{ path ('admin_categories') }}">
             Kategorijos
         </a>
     </div>

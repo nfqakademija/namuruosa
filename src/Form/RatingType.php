@@ -15,18 +15,17 @@ class RatingType extends AbstractType
     {
         $builder
             ->add('comment', TextareaType::class, [
-              'label' => 'comment'
+                'label' => 'comment'
             ])
             ->add('rating', ChoiceType::class, [
-              'choices' => [
-                '1' => 1,
-                '2' => 2,
-                '3' => 3,
-                '4' => 4,
-                '5' => 5
-],
-    ]);
-
+                'choices' => [
+                    '1' => 1,
+                    '2' => 2,
+                    '3' => 3,
+                    '4' => 4,
+                    '5' => 5
+                ],
+            ]);
     }
 
     public function configureOptions(OptionsResolver $resolver)

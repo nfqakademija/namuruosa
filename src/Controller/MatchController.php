@@ -20,11 +20,11 @@ class MatchController extends AbstractController
     /**
      * @Route("/match/job/create/{callerJobId}/{responderServiceId}", name="match_job_create")
      */
-    public function matchJobCreate( $callerJobId, $responderServiceId)
+    public function matchJobCreate($callerJobId, $responderServiceId)
     {
         $em = $this->getDoctrine()->getManager();
         $manager = new Manager($em);
-        $match = $manager->createJobMatch($callerJobId, $responderServiceId,  $em);
+        $match = $manager->createJobMatch($callerJobId, $responderServiceId, $em);
         $em->persist($match);
         $em->flush();
         return $this->redirectToRoute('match_by_jobs');
@@ -33,7 +33,7 @@ class MatchController extends AbstractController
     /**
      * @Route("/match/service/create/{callerServiceId}/{responderJobId}", name="match_service_create")
      */
-    public function matchServiceCreate( $callerServiceId, $responderJobId)
+    public function matchServiceCreate($callerServiceId, $responderJobId)
     {
         $em = $this->getDoctrine()->getManager();
         $manager = new Manager($em);
@@ -84,35 +84,11 @@ class MatchController extends AbstractController
         $match = $helper->updateMatch($updateType, $matchId, $em);
         if (!$match) {
             return $this->redirectToRoute('error', ['message' => 'nooperation']);
-            }
+        }
         $em->persist($match);
         $em->flush();
 
         $referer = $request->headers->get('referer');
         return $this->redirect($referer);
     }
-
-//
-//    //TODO Method to be removed because its web page is not required any more
-//    /**
-//     * @Route("match/show/{responderServiceId}/{callerServiceId}", name="matchShow")
-//     */
-//    public function showMatch($responderServiceId, $callerServiceId, Request $request)
-//    {
-//        $responderServiceJoinUser = $this->getDoctrine()
-//            ->getRepository('App:Service')
-//            ->findServiceUserByServiceId($responderServiceId);
-//
-//        $callerServiceJoinUser = $this->getDoctrine()
-//            ->getRepository('App:Service')
-//            ->findServiceUserByServiceId($callerServiceId);
-//
-//
-//        return $this->render('match/show-match.html.twig', [
-//            'responder' => $responderServiceJoinUser,
-//            'caller' => $callerServiceJoinUser,
-//        ]);
-//    }
-
-
 }

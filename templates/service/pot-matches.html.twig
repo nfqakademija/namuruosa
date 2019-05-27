@@ -1,27 +1,30 @@
-{% extends 'layout/layout-no-container.html.twig' %}
+{% extends 'layout/layout-fluid-container.html.twig' %}
 
 {% block body %}
-    <div class="serviceWrapper container-under-fixednav">
-        <h2 class="text-center page-title-elipse">DARBAI</h2>
-        <h4 class="text-center text-muted mb-5">Pagal mano paslaugas</h4>
-        {% set servicesWithNoJobs = [] %}
-        <div class="pot-matches-wrapper">
-            {% for matchesByService in potMatchesByServices %}
-                {% if matchesByService[1] != null %}
-                    {% include 'service/table/pot-matches-table.html.twig' %}
-                {% else %}
-                    {% set servicesWithNoJobs = servicesWithNoJobs|merge([matchesByService[0].title]) %}
-                {% endif %}
-            {% endfor %}
-        </div>
-        {% if servicesWithNoJobs != [] %}
-            <div class="alert alert-danger">
-                {% for service in  servicesWithNoJobs %}
-                    <h5 class="text-info">Paslaugai <span class="text-danger">{{ service }}</span>
-                        šiuo metu pasiūlymų neturime</h5>
+    <div class="row">
+        <div class="serviceWrapper container-under-fixednav">
+            <div class="page-title-elipse">
+                <h2 class="text-center ">DARBŲ PASIŪLYMAI</h2>
+                <h5 class="text-center text-muted">Pagal mano paslaugas</h5>
+            </div>
+            {% set servicesWithNoJobs = [] %}
+            <div class="pot-matches-wrapper">
+                {% for matchesByService in potMatchesByServices %}
+                    {% if matchesByService[1] != null %}
+                        {% include 'service/table/pot-matches-table.html.twig' %}
+                    {% else %}
+                        {% set servicesWithNoJobs = servicesWithNoJobs|merge([matchesByService[0].title]) %}
+                    {% endif %}
                 {% endfor %}
             </div>
-        {% endif %}
+            {% if servicesWithNoJobs != [] %}
+                <div class="alert alert-danger">
+                    {% for service in  servicesWithNoJobs %}
+                        <h5 class="text-info">Paslaugai <span class="text-danger">{{ service }}</span>
+                            šiuo metu pasiūlymų neturime</h5>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        </div>
     </div>
-
 {% endblock %}

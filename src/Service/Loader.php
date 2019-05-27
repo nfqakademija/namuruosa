@@ -8,10 +8,9 @@
 
 namespace App\Service;
 
-
 use App\Entity\Job;
 use App\Helpers\CalcHelper;
-use App\Profile\dataLoader;
+use App\Profile\DataLoader;
 use Doctrine\ORM\EntityManagerInterface;
 
 class Loader
@@ -35,15 +34,14 @@ class Loader
      * Loader constructor.
      * @param EntityManagerInterface $em
      * @param CalcHelper $calcDist
+     * @param DataLoader $profileLoader
      */
-    public function __construct(EntityManagerInterface $em, CalcHelper $calcDist, dataLoader $profileLoader)
+    public function __construct(EntityManagerInterface $em, CalcHelper $calcDist, DataLoader $profileLoader)
     {
         $this->em = $em;
         $this->calcDist = $calcDist;
         $this->profileLoader = $profileLoader;
-
     }
-
 
     public function getService($serviceId)
     {
@@ -96,7 +94,6 @@ class Loader
         $jobLon = $job->getLon();
         return $this->calcDist->getDistanceFromCoordinates($jobLat, $jobLon, $serviceLat, $serviceLon);
     }
-
 
 
     public function delete($serviceId)

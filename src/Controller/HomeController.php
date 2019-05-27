@@ -21,13 +21,12 @@ class HomeController extends AbstractController
     /**
      * @Route("/klaida/{message}", name="error", defaults={"message"="nooperation"})
      */
-    public function displayErrorPage( $message )
+    public function displayErrorPage($message)
     {
-
         $eType = 'danger';
         $eMsg = 'Jūsų vykdoma operacija negalima.';
 
-        if ( $message == 'nooperation'){
+        if ($message == 'nooperation') {
             $eType = 'danger';
             $eMsg = 'Jūsų vykdoma operacija negalima.';
         }

@@ -12,7 +12,6 @@ use Doctrine\ORM\EntityRepository;
 
 class MatchRepository extends EntityRepository
 {
-
     public function findJobsMatches($userId)
     {
         $qb = $this->createQueryBuilder('m')
