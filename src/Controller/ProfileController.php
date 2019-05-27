@@ -78,7 +78,7 @@ class ProfileController extends AbstractController
       $rating = $dataLoader->getAverageRating($userId);
       $userServices = $dataLoader->countUserServices($userId);
       $userJobs = $dataLoader->countUserJobs($userId);
-      $money = $dataLoader->countUserAvgSalary($userId);
+      $money = $dataLoader->countUserMoney($userId);
 
       return $this->render('profile/otherUserProfile.html.twig', [
           'user' => $user,
