@@ -64,4 +64,19 @@ class ReportsRepository extends ServiceEntityRepository
         $query->execute();
         return $query->fetchAll();
     }
+
+    public function solveReport($id)
+    {
+        $conn = $this->getEntityManager()->getConnection();
+
+        $sql = "
+                UPDATE reports r
+                SET r.solved_at = NOW()
+                WHERE r.id = :id
+                ";
+
+        $query = $conn->prepare($sql);
+        $query->execute(['id' => $id]);
+        return $query;
+    }
 }

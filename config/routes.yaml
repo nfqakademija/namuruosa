@@ -37,3 +37,7 @@ admin_reports_new:
 admin_reports_solved:
     path: /admin/reports/solved
     controller: App\Controller\Admin\ReportsController::getSolvedReports
+
+admin_report_solve:
+    path: /admin/report/solve/{id}
+    controller: App\Controller\Admin\ReportsController::solveReport

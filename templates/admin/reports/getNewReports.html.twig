@@ -13,6 +13,7 @@
             <th>Skirta</th>
             <th>Skundas</th>
             <th>Sukurta</th>
+            <th>Veiksmai</th>
           </tr>
         </thead>
         <tbody>
@@ -23,6 +24,7 @@
                 <td><a href="{{ path('otherUserProfile', {'userId': report.reported_user_id}) }}">{{ report.reported_username }}</a></td>
                 <td>{{ report.report }}</td>
                 <td>{{ report.created_at|date('Y-m-d H:m') }}</td>
+                <td><a class="text-info" href="{{ path('admin_report_solve', {'id': report.id}) }}">Išspręsti</a></td>
             </tr>
         {% endfor %}
         </tbody>
