@@ -1,4 +1,6 @@
-<h3 class="text-center">Nusiskundimų sąrašas</h3>
+{% include 'admin/reports/linksBetween.html.twig' %}
+
+<h3 class="text-center">Naujų skundų sąrašas</h3>
 <div class="table-responsive">
     <table class="table table-bordered table-striped">
         <thead>
@@ -8,6 +10,8 @@
             <th>Skirta</th>
             <th>Skundas</th>
             <th>Sukurta</th>
+            <th>Išspręsta</th>
+            <th>Veiksmai</th>
           </tr>
         </thead>
         <tbody>
@@ -18,6 +22,8 @@
                 <td><a href="{{ path('otherUserProfile', {'userId': report.reported_user_id}) }}">{{ report.reported_username }}</a></td>
                 <td>{{ report.report }}</td>
                 <td>{{ report.created_at|date('Y-m-d H:m') }}</td>
+                <td>{{ report.solved_at|date('Y-m-d H:m') }}</td>
+                <td><a class="text-info" href="{{ path('admin_report_unsolve', {'id': report.id}) }}">Padaryti neišspręstą</a></td>
             </tr>
         {% endfor %}
         </tbody>

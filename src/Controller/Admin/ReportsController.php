@@ -9,14 +9,48 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class ReportsController extends AbstractController
 {
-    public function getAllReports()
+    public function homeReports()
+    {
+        return $this->redirectToRoute('admin_reports_new');
+    }
+
+    public function getNewReports()
     {
         $reports = $this->getDoctrine()
             ->getRepository(Reports::class)
-            ->getAllReports();
+            ->getNewReports();
 
         return $this->render('admin/reports.html.twig', [
             'reports' => $reports,
         ]);
+    }
+
+    public function getSolvedReports()
+    {
+        $reports = $this->getDoctrine()
+            ->getRepository(Reports::class)
+            ->getSolvedReports();
+
+        return $this->render('admin/reports.html.twig', [
+            'reports' => $reports,
+        ]);
+    }
+
+    public function solveReport($id)
+    {
+        $this->getDoctrine()
+            ->getRepository(Reports::class)
+            ->solveReport($id);
+
+        return $this->redirectToRoute('admin_reports_new');
+    }
+
+    public function unsolveReport($id)
+    {
+        $this->getDoctrine()
+            ->getRepository(Reports::class)
+            ->unsolveReport($id);
+
+        return $this->redirectToRoute('admin_reports_solved');
     }
 }

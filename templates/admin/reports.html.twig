@@ -4,7 +4,11 @@
     <div class="container">
         <div class="row">
             <div class="col-md-12">
-                {% include 'admin/reports/getAllReports.html.twig' %}
+                {% if app.request.attributes.all["_route"] == "admin_reports_new" %}
+                    {% include 'admin/reports/getNewReports.html.twig' %}
+                {% elseif app.request.attributes.all['_route'] == "admin_reports_solved"  %}
+                    {% include 'admin/reports/getSolvedReports.html.twig' %}
+                {% endif %}
             </div>
         </div>
     </div>

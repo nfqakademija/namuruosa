@@ -28,4 +28,20 @@ admin_category_delete:
 
 admin_reports:
     path: /admin/reports
-    controller: App\Controller\Admin\ReportsController::getAllReports
+    controller: App\Controller\Admin\ReportsController::homeReports
+
+admin_reports_new:
+    path: /admin/reports/new
+    controller: App\Controller\Admin\ReportsController::getNewReports
+
+admin_reports_solved:
+    path: /admin/reports/solved
+    controller: App\Controller\Admin\ReportsController::getSolvedReports
+
+admin_report_solve:
+    path: /admin/report/solve/{id}
+    controller: App\Controller\Admin\ReportsController::solveReport
+
+admin_report_unsolve:
+    path: /admin/report/unsolve/{id}
+    controller: App\Controller\Admin\ReportsController::unsolveReport
