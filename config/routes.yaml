@@ -25,3 +25,7 @@ admin_categories:
 admin_category_delete:
     path: /admin/categories/delete/{id}
     controller: App\Controller\Admin\CategoriesController::adminDeleteCategory
+
+admin_reports:
+    path: /admin/reports
+    controller: App\Controller\Admin\ReportsController::getAllReports
