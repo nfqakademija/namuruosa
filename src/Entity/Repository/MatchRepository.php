@@ -23,6 +23,7 @@ class MatchRepository extends EntityRepository
                 'userId' => $userId,
             ])
             ->orderBy('m.createdAt', 'DESC');
+
         $query = $qb->getQuery();
         $myJobsMatches = $query->execute();
 
@@ -55,7 +56,7 @@ class MatchRepository extends EntityRepository
          FROM App\Entity\Match m
          WHERE ((m.callerId = :userId  AND m.callerServiceId IS NOT NULL)
          OR (m.responderId = :userId AND m.responderServiceId IS NOT NULL))
-         AND m.payedAt IS NOT NULL'
+         AND m.acceptedAt IS NOT NULL'
     )->setParameter('userId', $userId);
 
     return $query->execute();
@@ -70,7 +71,7 @@ class MatchRepository extends EntityRepository
          FROM App\Entity\Match m
          WHERE ((m.callerId = :userId  AND m.callerJobId IS NOT NULL)
          OR (m.responderId = :userId AND m.responderJobId IS NOT NULL))
-         AND m.payedAt IS NOT NULL'
+         AND m.acceptedAt IS NOT NULL'
     )->setParameter('userId', $userId);
 
     return $query->execute();
