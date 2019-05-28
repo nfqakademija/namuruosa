@@ -13,6 +13,7 @@
             <th>Skundas</th>
             <th>Sukurta</th>
             <th>Išspręsta</th>
+            <th>Veiksmai</th>
           </tr>
         </thead>
         <tbody>
@@ -24,6 +25,7 @@
                 <td>{{ report.report }}</td>
                 <td>{{ report.created_at|date('Y-m-d H:m') }}</td>
                 <td>{{ report.solved_at|date('Y-m-d H:m') }}</td>
+                <td><a class="text-info" href="{{ path('admin_report_unsolve', {'id': report.id}) }}">Padaryti neišspręstą</a></td>
             </tr>
         {% endfor %}
         </tbody>

@@ -44,4 +44,13 @@ class ReportsController extends AbstractController
 
         return $this->redirectToRoute('admin_reports_new');
     }
+
+    public function unsolveReport($id)
+    {
+        $this->getDoctrine()
+            ->getRepository(Reports::class)
+            ->unsolveReport($id);
+
+        return $this->redirectToRoute('admin_reports_solved');
+    }
 }

@@ -41,3 +41,7 @@ admin_reports_solved:
 admin_report_solve:
     path: /admin/report/solve/{id}
     controller: App\Controller\Admin\ReportsController::solveReport
+
+admin_report_unsolve:
+    path: /admin/report/unsolve/{id}
+    controller: App\Controller\Admin\ReportsController::unsolveReport
