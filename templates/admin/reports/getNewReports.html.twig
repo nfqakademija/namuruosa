@@ -1,7 +1,4 @@
-<div>
-    <a class="text-secondary float-left" href="{{ path('admin_reports_new') }}">Nauji skundai</a>
-    <a class="text-primary float-right" href="{{ path('admin_reports_solved') }}">Įspręsti skundai</a>
-</div>
+{% include 'admin/reports/linksBetween.html.twig' %}
 
 <h3 class="text-center">Nusiskundimų sąrašas</h3>
 <div class="table-responsive">
