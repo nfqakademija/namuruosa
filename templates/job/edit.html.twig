@@ -4,15 +4,14 @@
     <div class="row ">
         <div class="jobWrapper container-under-fixednav">
             <div class="page-title-elipse">
-                <h2>NAUJAS DARBAS</h2>
+                <h2>DARBO SKELBIMO REDAGAVIMAS</h2>
             </div>
             <div class="container">
-                {{ form_start(form, {'method': 'post', 'action': path('jobAdd'), 'attr': {'class': 'fos_user_registration_register'}}) }}
+                {{ form_start(form, {'method': 'post', 'action': path('jobEdit', {'id' : id}), 'attr': {'class': 'fos_user_registration_register'}}) }}
                {% include 'job/table/newJob.html.twig' %}
-
                 <div class="row">
                     <div class="col-md-6 offset-md-3 mt-3">
-                        <input type="submit" class="btn btn-info btn-lg btn-block" value="Sukurti Darbą"/>
+                        <input type="submit" class="btn btn-info btn-lg btn-block" value="Išsaugoti pakeitimus"/>
                     </div>
                 </div>
                 {{ form_end(form) }}
