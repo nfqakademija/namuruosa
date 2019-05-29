@@ -6,12 +6,10 @@
     <div class="profile-headers">
       <h6 class="edit-profile-h6">Įvertinkite vartotoją!</h6>
     </div>
-    <!-- <textarea name="comment" rows="15" cols="85"></textarea> -->
     {{form_start(form,  {'method': 'post', 'action': path('reviewProfile', {'userId': userId})})}}
     {{form_widget(form.comment, {'attr': {'class': 'profile-form-textarea', 'placeholder': 'Jūsų nuomonė apie vartotoją', 'cols': '80', 'rows': '5'}}) }}
-    {{form_widget(form.rating, {'attr': {'class': 'profile-form-input', }}) }}
+    {{form_widget(form.rating) }}
 
-    <div class="star-rate"></div>
     <input class="btn btn-submit-review" type="submit">
     {{form_end(form)}}
 

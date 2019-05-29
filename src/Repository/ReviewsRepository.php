@@ -28,7 +28,7 @@ class ReviewsRepository extends ServiceEntityRepository
         return $this->createQueryBuilder('r')
             ->andWhere('r.user_id = :userId')
             ->setParameter('userId', $userId)
-            ->orderBy('r.created_at', 'ASC');
+            ->orderBy('r.created_at', 'DESC');
     }
 
     public function getCountReviews($userId)
@@ -46,7 +46,7 @@ class ReviewsRepository extends ServiceEntityRepository
         $entityManager = $this->getEntityManager();
 
         $query = $entityManager->createQuery(
-            'SELECT AVG(r.rating) 
+            'SELECT AVG(r.rating)
          FROM APP\Entity\Reviews r
          WHERE r.user_id = :userId'
         )->setParameter('userId', $userId);

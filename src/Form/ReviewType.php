@@ -8,8 +8,9 @@ use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Brokoskokoli\StarRatingBundle\Form\StarRatingType;
 
-class RatingType extends AbstractType
+class ReviewType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
@@ -17,15 +18,9 @@ class RatingType extends AbstractType
             ->add('comment', TextareaType::class, [
                 'label' => 'comment'
             ])
-            ->add('rating', ChoiceType::class, [
-                'choices' => [
-                    '1' => 1,
-                    '2' => 2,
-                    '3' => 3,
-                    '4' => 4,
-                    '5' => 5
-                ],
-            ]);
+            ->add('rating', StarRatingType::class, [
+    	'label' => 'Rating'
+    ]);
     }
 
     public function configureOptions(OptionsResolver $resolver)

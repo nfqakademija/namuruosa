@@ -1,6 +1,6 @@
 {
-    "blackknight467/star-rating-bundle": {
-        "version": "v2.0.1"
+    "brokoskokoli/star-rating-bundle": {
+        "version": "v3.0.7"
     },
     "doctrine/annotations": {
         "version": "1.0",

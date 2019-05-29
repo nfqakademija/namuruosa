@@ -7,7 +7,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
 use App\Form\EditProfileType;
-use App\Form\RatingType;
+use App\Form\ReviewType;
 use App\Entity\UserProfile;
 use App\Profile\DataLoader;
 use App\Profile\SaveForm;
@@ -129,7 +129,7 @@ class ProfileController extends AbstractController
 
     public function reviewProfile(Request $request, $userId)
     {
-        $form = $this->createForm(RatingType::class);
+        $form = $this->createForm(ReviewType::class);
         $form->handleRequest($request);
 
         $estimator = $this->getUser();
