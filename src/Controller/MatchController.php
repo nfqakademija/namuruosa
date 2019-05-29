@@ -21,29 +21,30 @@ class MatchController extends AbstractController
 {
     private $em;
     private $loader;
+    private $manager;
 
     /**
      * JobController constructor.
      * @param EntityManagerInterface $em
      * @param Loader $loader
+     * @param Manager $manager
      */
-    public function __construct(EntityManagerInterface $em, Loader $loader)
+    public function __construct(EntityManagerInterface $em, Loader $loader, Manager $manager)
     {
         $this->em = $em;
         $this->loader = $loader;
+        $this->manager = $manager;
     }
-
 
     /**
      * @Route("/match/job/create/{callerJobId}/{responderServiceId}", name="match_job_create")
      */
     public function matchJobCreate($callerJobId, $responderServiceId)
     {
-        $em = $this->getDoctrine()->getManager();
-        $manager = new Manager($em);
-        $match = $manager->createJobMatch($callerJobId, $responderServiceId, $em);
-        $em->persist($match);
-        $em->flush();
+        $match = $this->manager->createJobMatch($callerJobId, $responderServiceId, $this->em);
+        $this->em->persist($match);
+        $this->em->flush();
+
         return $this->redirectToRoute('match_by_jobs');
     }
 
@@ -52,11 +53,10 @@ class MatchController extends AbstractController
      */
     public function matchServiceCreate($callerServiceId, $responderJobId)
     {
-        $em = $this->getDoctrine()->getManager();
-        $manager = new Manager($em);
-        $match = $manager->createServiceMatch($callerServiceId, $responderJobId);
-        $em->persist($match);
-        $em->flush();
+        $match = $this->manager->createServiceMatch($callerServiceId, $responderJobId);
+        $this->em->persist($match);
+        $this->em->flush();
+
         return $this->redirectToRoute('match_by_services');
     }
 
@@ -66,9 +66,7 @@ class MatchController extends AbstractController
     public function matchByJobs()
     {
         $myId = $this->getUser()->getId();
-        $em = $this->getDoctrine()->getManager();
-        $loader = new Loader($em);
-        $myJobsMatches = $loader->getJobMatches($myId);
+        $myJobsMatches = $this->loader->getJobMatches($myId);
 
         return $this->render('match/my-jobs-matches.twig', [
             'myJobsMatches' => $myJobsMatches,
@@ -80,11 +78,8 @@ class MatchController extends AbstractController
      */
     public function matchByServices()
     {
-        //Todo likusi dalis
         $myId = $this->getUser()->getId();
-        $em = $this->getDoctrine()->getManager();
-        $loader = new Loader($em);
-        $myServicesMatches = $loader->getServicesMatches($myId);
+        $myServicesMatches = $this->loader->getServicesMatches($myId);
 
         return $this->render('match/my-services-matches.twig', [
             'myServicesMatches' => $myServicesMatches,
@@ -96,27 +91,25 @@ class MatchController extends AbstractController
      */
     public function matchUpdate($updateType, $matchId, Request $request)
     {
-        $em = $this->getDoctrine()->getManager();
-        $helper = new MatchHelper();
-        $match = $helper->updateMatch($updateType, $matchId, $em);
+        $match = $this->loader->updateMatch($updateType, $matchId);
         if (!$match) {
             return $this->redirectToRoute('error', ['message' => 'nooperation']);
         }
-        $em->persist($match);
-        $em->flush();
-
+        $this->em->persist($match);
+        $this->em->flush();
         $referer = $request->headers->get('referer');
+
         return $this->redirect($referer);
     }
 
     /**
      * @Route("/match/delete/{matchId}", name="matchDelete")
      */
-
     public function deleteMatch($matchId, Request $request)
     {
         $this->loader->delete($matchId);
         $referer = $request->headers->get('referer');
-        return $this->redirectToRoute('match_by_jobs');
+
+        return $this->redirect($referer);
     }
 }
