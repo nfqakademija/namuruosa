@@ -6,22 +6,24 @@
             <div class="page-title-elipse">
                 <h2>DARBO SKELBIMO REDAGAVIMAS</h2>
             </div>
-            <div class="container">
+            <div class="container stucco py-4">
                 {{ form_start(form, {'method': 'post', 'action': path('jobEdit', {'id' : id}), 'attr': {'class': 'fos_user_registration_register'}}) }}
-               {% include 'job/table/newJob.html.twig' %}
+                {% include 'job/table/newJob.html.twig' %}
                 <div class="row">
-                    <div class="col-sm-6 col-md-4 offset-md-2 mt-3">
-                        <input type="submit" class="btn btn-info btn-lg btn-block" value="Išsaugoti pakeitimus"/>
+                    <div class="col-sm-6 col-md-4 offset-md-2  mt-3">
+                        <a class="form-button" href="{{ path('my_jobs') }}">
+                            <button class="btn btn-outline-info btn-lg btn-block"><i class="fas fa-arrow-left"></i>Grįžti
+                            </button>
+                        </a>
                     </div>
-                    <div class="col-sm-6 col-md-4  mt-3">
-                        <a class="form-button" href="{{ path('my_jobs') }}"><button class="btn btn-success btn-lg btn-block">Grįžti</button></a>
+                    <div class="col-sm-6 col-md-4 mt-3">
+                        <input type="submit" class="btn btn-info btn-lg btn-block" value="Išsaugoti pakeitimus"/>
                     </div>
                 </div>
                 {{ form_end(form) }}
             </div>
         </div>
     </div>
-
 {% endblock %}
 
 {% block javascripts %}
