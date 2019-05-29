@@ -22,6 +22,10 @@ class Loader
     {
         $this->em = $em;
     }
+    public function getMatch($matchId)
+    {
+        return $this->em->find('App:Match', $matchId);
+    }
 
     public function getJobMatches($userId)
     {
@@ -33,5 +37,17 @@ class Loader
     {
         $myServicesMatches = $this->em->getRepository('App:Match')->findServicesMatches($userId);
         return $myServicesMatches;
+    }
+
+    public function delete($matchId)
+    {
+        $match = $this->getMatch($matchId);
+        if ($match) {
+            $this->em->remove($match);
+            $this->em->flush();
+            return true;
+        } else {
+            return false;
+        }
     }
 }

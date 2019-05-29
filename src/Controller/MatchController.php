@@ -8,15 +8,32 @@
 
 namespace App\Controller;
 
+use App\Entity\Match;
 use App\Helpers\MatchHelper;
 use App\Match\Loader;
 use App\Match\Manager;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
 class MatchController extends AbstractController
 {
+    private $em;
+    private $loader;
+
+    /**
+     * JobController constructor.
+     * @param EntityManagerInterface $em
+     * @param Loader $loader
+     */
+    public function __construct(EntityManagerInterface $em, Loader $loader)
+    {
+        $this->em = $em;
+        $this->loader = $loader;
+    }
+
+
     /**
      * @Route("/match/job/create/{callerJobId}/{responderServiceId}", name="match_job_create")
      */
@@ -75,7 +92,7 @@ class MatchController extends AbstractController
     }
 
     /**
-     * @Route("/match/{updateType}/{matchId}", name="matchUpdate")
+     * @Route("/match/update/{matchId}/{updateType}", name="matchUpdate")
      */
     public function matchUpdate($updateType, $matchId, Request $request)
     {
@@ -90,5 +107,16 @@ class MatchController extends AbstractController
 
         $referer = $request->headers->get('referer');
         return $this->redirect($referer);
+    }
+
+    /**
+     * @Route("/match/delete/{matchId}", name="matchDelete")
+     */
+
+    public function deleteMatch($matchId, Request $request)
+    {
+        $this->loader->delete($matchId);
+        $referer = $request->headers->get('referer');
+        return $this->redirectToRoute('match_by_jobs');
     }
 }
