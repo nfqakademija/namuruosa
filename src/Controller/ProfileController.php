@@ -113,7 +113,6 @@ class ProfileController extends AbstractController
 
             return $this->redirectToRoute('profile');
         }else {
-          // Set default value
           $form->get('description')->setData(
           $userProfile->getdescription()
         );
@@ -123,40 +122,4 @@ class ProfileController extends AbstractController
         ]);
     }
 
-    /**
-     * @Route("/profile/review/{userId}", name="reviewProfile", requirements={"userId"="\d+"})
-     */
-
-    public function reviewProfile(Request $request, $userId)
-    {
-        $form = $this->createForm(ReviewType::class);
-        $form->handleRequest($request);
-
-        $estimator = $this->getUser();
-        $ratedUser = $this->getDoctrine()->getRepository(User::class)->find($userId);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager = $this->getDoctrine()->getManager();
-            $review = $form->getData();
-
-            $review->setUserId($ratedUser);
-            $review->setEstimatorId($estimator);
-            $review->setCreatedAt(new \DateTime());
-
-            $entityManager->persist($review);
-            $entityManager->flush();
-
-            $this->addFlash(
-                'notice',
-                'Jūsų vertinimas išsaugotas!'
-            );
-
-            return $this->redirectToRoute('otherUserProfile', ['userId' => $userId]);
-        }
-
-        return $this->render('profile/rateUser.html.twig', [
-            'form' => $form->createView(),
-            'userId' => $userId
-        ]);
-    }
 }

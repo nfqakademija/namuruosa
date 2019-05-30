@@ -47,7 +47,19 @@ body{
   flex-direction: column;
   margin-top: 2rem;
 
+  &-rate{
+    height: 80vh;
+    margin: auto;
+    max-width: 1200px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--secondary-bg-color);
+    flex-direction: column;
+    margin-top: 2rem;
+  }
 }
+
 
 .form-nums{
   display: flex;
@@ -114,6 +126,7 @@ body{
   position: absolute;
   top: -65px;
   left: 128px;
+
 }
 
 .user-name{
@@ -206,6 +219,7 @@ body{
   margin-bottom: 2rem;
   transition: all 0.2s;
   display: inline-block;
+  text-align: center;
 }
 
 .btn-submit-review:hover{
@@ -351,6 +365,7 @@ body{
 .edit-profile-h4{
   font-size: 2rem;
   font-weight: lighter;
+  margin-left: -1rem;
 
 }
 
@@ -358,7 +373,7 @@ body{
   font-size: 1.5rem;
   font-weight: lighter;
   color: var(--primary-bg-color-dark);
-  // margin-top: -2rem;
+  margin-left: -1rem;
 }
 
 .profile-headers{
@@ -395,4 +410,20 @@ body{
   text-decoration: none;
   color: var(--primary-bg-color-dark);
   font-size: .8rem;
+}
+
+// .flash-message-custom{
+//   z-index: 999;
+// }
+
+.rating-star{
+  margin-top: 2rem;
+  margin-bottom: 1rem;
+}
+
+.recaptcha-container{
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  display: flex;
+  justify-content: center;
 }

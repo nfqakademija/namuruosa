@@ -10,6 +10,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Brokoskokoli\StarRatingBundle\Form\StarRatingType;
 use EWZ\Bundle\RecaptchaBundle\Form\Type\EWZRecaptchaType;
+use Symfony\Component\Validator\Constraints\Length;
 
 class ReviewType extends AbstractType
 {
@@ -17,7 +18,8 @@ class ReviewType extends AbstractType
     {
         $builder
             ->add('comment', TextareaType::class, [
-                'label' => 'comment'
+                'label' => 'comment',
+                 'constraints' => [new Length(['min' => 100])]
             ])
             ->add('rating', StarRatingType::class, [
     	'label' => 'Rating'
