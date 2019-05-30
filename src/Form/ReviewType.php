@@ -9,6 +9,7 @@ use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Brokoskokoli\StarRatingBundle\Form\StarRatingType;
+use EWZ\Bundle\RecaptchaBundle\Form\Type\EWZRecaptchaType;
 
 class ReviewType extends AbstractType
 {
@@ -20,8 +21,12 @@ class ReviewType extends AbstractType
             ])
             ->add('rating', StarRatingType::class, [
     	'label' => 'Rating'
-    ]);
-    }
+    ])
+
+            ->add('recaptcha', EWZRecaptchaType::class, [
+              'required' => true,
+            ]);
+  }
 
     public function configureOptions(OptionsResolver $resolver)
     {

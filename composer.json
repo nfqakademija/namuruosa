@@ -6,6 +6,7 @@
         "ext-ctype": "*",
         "ext-iconv": "*",
         "brokoskokoli/star-rating-bundle": "^3.0",
+        "excelwebzone/recaptcha-bundle": "^1.5",
         "friendsofsymfony/user-bundle": "~2.0",
         "knplabs/knp-paginator-bundle": "^3.0",
         "symfony/asset": "4.2.*",
