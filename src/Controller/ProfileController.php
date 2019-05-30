@@ -91,7 +91,6 @@ class ProfileController extends AbstractController
         $em = $this->getDoctrine()->getManager();
         $em->persist($report);
         $em->flush();
-
       }
 
       return $this->render('profile/otherUserProfile.html.twig', [
