@@ -2,7 +2,10 @@
 
 namespace App\Controller;
 
+use App\Entity\Reports;
 use App\Entity\User;
+use App\Form\ReportType;
+use App\Service\ReportCreator;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
@@ -77,6 +80,19 @@ class ProfileController extends AbstractController
       $userJobs = $dataLoader->countUserJobs($userId);
       $money = $dataLoader->countUserMoney($userId);
 
+      $reportForm = $this->createForm(ReportType::class, $report = new Reports())
+      ->handleRequest($request);
+
+      if ($reportForm->isSubmitted() && $reportForm->isValid()) {
+        $report->setCreatedAt(new \DateTime())
+        ->setReportedUserId($userId)
+        ->setReporterUserId($this->getUser()->getId());
+        $report = $reportForm->getData();
+        $em = $this->getDoctrine()->getManager();
+        $em->persist($report);
+        $em->flush();
+      }
+
       return $this->render('profile/otherUserProfile.html.twig', [
           'user' => $user,
           'profile' => $profile,
@@ -88,6 +104,7 @@ class ProfileController extends AbstractController
           'rating' => $rating,
           'reviewsCount'=> $totalReviews,
           'controller_name' => 'ProfileController',
+          'reportForm' => $reportForm->createView(),
           ]);
     }
 

@@ -19,7 +19,7 @@ class Reports
     /**
      * @ORM\Column(type="integer")
      */
-    private $reporterUserID;
+    private $reporterUserId;
 
     /**
      * @ORM\Column(type="integer")
@@ -46,14 +46,14 @@ class Reports
         return $this->id;
     }
 
-    public function getReporterUserID(): ?int
+    public function getReporterUserId(): ?int
     {
-        return $this->reporterUserID;
+        return $this->reporterUserId;
     }
 
-    public function setReporterUserID(int $reporterUserID): self
+    public function setReporterUserId(int $reporterUserId): self
     {
-        $this->reporterUserID = $reporterUserID;
+        $this->reporterUserId = $reporterUserId;
 
         return $this;
     }
