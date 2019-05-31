@@ -10,6 +10,10 @@ admin_jobs:
     path: /admin/jobs
     controller: App\Controller\Admin\JobsController::getAllJobs
 
+admin_job_delete:
+    path: /admin/job/delete/{id}
+    controller: App\Controller\Admin\JobsController::adminDeleteJob
+
 admin_services:
     path: /admin/services
     controller: App\Controller\Admin\ServicesController::getAllServices
