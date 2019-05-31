@@ -20,5 +20,9 @@ li.nav-item{
 
 .navbar-item {
   padding-right: 1rem;
+  &:hover {
+    text-decoration: none;
+  }
 }
+
 

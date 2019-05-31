@@ -50,58 +50,57 @@ class DataLoader
 
     public function countUserServices($userId)
     {
-      return $this->entityManager->getRepository('App:Match')->countUserServices($userId)[0][1];
+        return $this->entityManager->getRepository('App:Match')->countUserServices($userId)[0][1];
     }
 
     public function countUserJobs($userId)
     {
-      return $this->entityManager->getRepository('App:Match')->countUserJobs($userId)[0][1];
+        return $this->entityManager->getRepository('App:Match')->countUserJobs($userId)[0][1];
     }
 
     private function packPrices(array $userServices, string $method): array
     {
 
-      $servicesPrices = [];
+        $servicesPrices = [];
 
-      foreach ($userServices as $key => $service) {
-        array_push($servicesPrices, intval($service->$method()));
-      }
+        foreach ($userServices as $key => $service) {
+            array_push($servicesPrices, intval($service->$method()));
+        }
 
-      return $servicesPrices;
+        return $servicesPrices;
     }
 
     public function countUserMoney($userId): array
     {
 
-      $userServices = $this->entityManager->getRepository('App:Service')->findBy([
-        'userId' => $userId
-      ]);
-      $userJobs = $this->entityManager->getRepository('App:Job')->findBy([
-        'userId' => $userId
-      ]);
+        $userServices = $this->entityManager->getRepository('App:Service')->findBy([
+            'userId' => $userId
+        ]);
+        $userJobs = $this->entityManager->getRepository('App:Job')->findBy([
+            'userId' => $userId
+        ]);
 
-      $servicesPrices = $this->packPrices($userServices, 'getPricePerHour');
+        $servicesPrices = $this->packPrices($userServices, 'getPricePerHour');
 
-      $jobsPrices = $this->packPrices($userJobs, 'getBudget');
+        $jobsPrices = $this->packPrices($userJobs, 'getBudget');
 
-      $jobsLength = count($jobsPrices);
-      $servicesLength = count($servicesPrices);
+        $jobsLength = count($jobsPrices);
+        $servicesLength = count($servicesPrices);
 
-      $avgServicePrice = 0;
-      $avgJobPrice = 0;
+        $avgServicePrice = 0;
+        $avgJobPrice = 0;
 
-      if ($jobsLength > 0) {
-          $avgJobPrice = array_sum($jobsPrices) / $jobsLength;
-      }
-      if ($servicesLength > 0) {
-        $avgServicePrice = array_sum($servicesPrices) / $servicesLength;
-      }
+        if ($jobsLength > 0) {
+            $avgJobPrice = array_sum($jobsPrices) / $jobsLength;
+        }
+        if ($servicesLength > 0) {
+            $avgServicePrice = array_sum($servicesPrices) / $servicesLength;
+        }
 
-      $money = [];
-      array_push($money, $avgJobPrice);
-      array_push($money, $avgServicePrice);
+        $money = [];
+        array_push($money, $avgJobPrice);
+        array_push($money, $avgServicePrice);
 
-      return $money;
+        return $money;
     }
-
 }

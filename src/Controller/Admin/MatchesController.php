@@ -3,7 +3,6 @@
 
 namespace App\Controller\Admin;
 
-
 use App\Entity\Match;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;

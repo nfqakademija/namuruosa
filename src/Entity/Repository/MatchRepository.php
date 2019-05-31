@@ -18,15 +18,14 @@ class MatchRepository extends EntityRepository
             ->select('m')
             ->leftJoin('m.callerJobId', 'callerJob')
             ->leftJoin('m.responderJobId', 'responderJob')
-            ->andWhere("callerJob.userId = :userId OR responderJob.userId = :userId")
+            ->andWhere('callerJob.userId = :userId OR responderJob.userId = :userId')
             ->setParameters([
                 'userId' => $userId,
             ])
             ->orderBy('m.createdAt', 'DESC');
         $query = $qb->getQuery();
-        $myJobsMatches = $query->execute();
 
-        return $myJobsMatches;
+        return $query->execute();
     }
 
     public function findServicesMatches($userId)
@@ -35,52 +34,51 @@ class MatchRepository extends EntityRepository
             ->select('m, callerService')
             ->leftJoin('m.callerServiceId', 'callerService')
             ->leftJoin('m.responderServiceId', 'responderService')
-            ->andWhere("callerService.userId = :userId OR responderService.userId = :userId")
+            ->andWhere('callerService.userId = :userId OR responderService.userId = :userId')
             ->setParameters([
                 'userId' => $userId,
             ])
             ->orderBy('m.createdAt', 'DESC');
         $query = $qb->getQuery();
-        $myServicesMatches = $query->execute();
 
-        return $myServicesMatches;
+        return $query->execute();
     }
 
     public function countUserServices($userId): array
     {
-      $entityManager = $this->getEntityManager();
+        $entityManager = $this->getEntityManager();
 
-      $query = $entityManager->createQuery(
-        'SELECT COUNT(m)
+        $query = $entityManager->createQuery(
+            'SELECT COUNT(m)
          FROM App\Entity\Match m
          WHERE ((m.callerId = :userId  AND m.callerServiceId IS NOT NULL)
          OR (m.responderId = :userId AND m.responderServiceId IS NOT NULL))
          AND m.payedAt IS NOT NULL'
-    )->setParameter('userId', $userId);
+        )->setParameter('userId', $userId);
 
-    return $query->execute();
+        return $query->execute();
     }
 
     public function countUserJobs($userId): array
     {
-      $entityManager = $this->getEntityManager();
+        $entityManager = $this->getEntityManager();
 
-      $query = $entityManager->createQuery(
-        'SELECT COUNT(m)
+        $query = $entityManager->createQuery(
+            'SELECT COUNT(m)
          FROM App\Entity\Match m
          WHERE ((m.callerId = :userId  AND m.callerJobId IS NOT NULL)
          OR (m.responderId = :userId AND m.responderJobId IS NOT NULL))
          AND m.payedAt IS NOT NULL'
-    )->setParameter('userId', $userId);
+        )->setParameter('userId', $userId);
 
-    return $query->execute();
+        return $query->execute();
     }
 
     public function getAllMatches()
     {
         $conn = $this->getEntityManager()->getConnection();
 
-        $sql = "
+        $sql = '
                 SELECT m.id, m.caller_id, m.caller_service_id, m.responder_id,
                        m.responder_job_id, m.created_at, m.accepted_at, m.rejected_at, m.cancelled_at,
                        c.username as caller_username, r.username as responder_username,
@@ -95,7 +93,7 @@ class MatchRepository extends EntityRepository
                         ON IF(m.caller_service_id IS NULL, m.responder_service_id, m.caller_service_id) = s.id
                     LEFT JOIN job j 
                         ON IF(m.caller_job_id IS NULL, m.responder_job_id, m.caller_job_id) = j.id
-                        ";
+                        ';
 
         $query = $conn->prepare($sql);
         $query->execute();
