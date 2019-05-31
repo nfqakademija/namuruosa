@@ -3,7 +3,6 @@
 
 namespace App\Admin;
 
-
 class RolesUnserializer
 {
     private $users;
@@ -26,5 +25,4 @@ class RolesUnserializer
         }
         return $changedUser;
     }
-
 }

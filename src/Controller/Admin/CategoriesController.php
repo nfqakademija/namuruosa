@@ -55,7 +55,8 @@ class CategoriesController extends AbstractController
      * @param $form
      * @return bool
      */
-    private function categoryCreated($form) {
+    private function categoryCreated($form)
+    {
 
         if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
@@ -67,3 +68,4 @@ class CategoriesController extends AbstractController
         }
     }
 }
+

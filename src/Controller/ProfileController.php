@@ -52,7 +52,7 @@ class ProfileController extends AbstractController
         return $this->render('profile/logedUserProfile.html.twig', [
             'user' => $user,
             'profile' => $profile,
-            'reviews' =>$reviews,
+            'reviews' => $reviews,
             'services' => $userServices,
             'jobs' => $userJobs,
             'money' => $money,
@@ -68,44 +68,44 @@ class ProfileController extends AbstractController
 
     public function otherUserProfile($userId, DataLoader $dataLoader, Request $request)
     {
-      $profile = $this->getDoctrine()->getRepository(UserProfile::class)->
-      findOneBy(['user_id' => $userId]);
+        $profile = $this->getDoctrine()->getRepository(UserProfile::class)->
+        findOneBy(['user_id' => $userId]);
 
-      $user = $profile->getUserId();
+        $user = $profile->getUserId();
 
-      $reviews = $dataLoader->getAllReviews($userId, $request);
-      $totalReviews = $dataLoader->getCountReviews($userId);
-      $rating = $dataLoader->getAverageRating($userId);
-      $userServices = $dataLoader->countUserServices($userId);
-      $userJobs = $dataLoader->countUserJobs($userId);
-      $money = $dataLoader->countUserMoney($userId);
+        $reviews = $dataLoader->getAllReviews($userId, $request);
+        $totalReviews = $dataLoader->getCountReviews($userId);
+        $rating = $dataLoader->getAverageRating($userId);
+        $userServices = $dataLoader->countUserServices($userId);
+        $userJobs = $dataLoader->countUserJobs($userId);
+        $money = $dataLoader->countUserMoney($userId);
 
-      $reportForm = $this->createForm(ReportType::class, $report = new Reports())
-      ->handleRequest($request);
+        $reportForm = $this->createForm(ReportType::class, $report = new Reports())
+            ->handleRequest($request);
 
-      if ($reportForm->isSubmitted() && $reportForm->isValid()) {
-        $report->setCreatedAt(new \DateTime())
-        ->setReportedUserId($userId)
-        ->setReporterUserId($this->getUser()->getId());
-        $report = $reportForm->getData();
-        $em = $this->getDoctrine()->getManager();
-        $em->persist($report);
-        $em->flush();
-      }
+        if ($reportForm->isSubmitted() && $reportForm->isValid()) {
+            $report->setCreatedAt(new \DateTime())
+                ->setReportedUserId($userId)
+                ->setReporterUserId($this->getUser()->getId());
+            $report = $reportForm->getData();
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($report);
+            $em->flush();
+        }
 
-      return $this->render('profile/otherUserProfile.html.twig', [
-          'user' => $user,
-          'profile' => $profile,
-          'userId' => $userId,
-          'services' => $userServices,
-          'jobs' => $userJobs,
-          'money' => $money,
-          'reviews' => $reviews,
-          'rating' => $rating,
-          'reviewsCount'=> $totalReviews,
-          'controller_name' => 'ProfileController',
-          'reportForm' => $reportForm->createView(),
-          ]);
+        return $this->render('profile/otherUserProfile.html.twig', [
+            'user' => $user,
+            'profile' => $profile,
+            'userId' => $userId,
+            'services' => $userServices,
+            'jobs' => $userJobs,
+            'money' => $money,
+            'reviews' => $reviews,
+            'rating' => $rating,
+            'reviewsCount' => $totalReviews,
+            'controller_name' => 'ProfileController',
+            'reportForm' => $reportForm->createView(),
+        ]);
     }
 
     /**
@@ -129,12 +129,12 @@ class ProfileController extends AbstractController
             );
 
             return $this->redirectToRoute('profile');
-        }else {
-          // Set default value
-          $form->get('description')->setData(
-          $userProfile->getdescription()
-        );
-      }
+        } else {
+            // Set default value
+            $form->get('description')->setData(
+                $userProfile->getdescription()
+            );
+        }
         return $this->render('profile/editProfileForm.html.twig', [
             'form' => $form->createView(),
         ]);

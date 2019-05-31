@@ -27,14 +27,12 @@ class SaveForm
 
         if ($profilePhoto) {
             $profilePhotoName = $uploader->uploadImage($profilePhoto, 'profile_pics_dir', 'uploads/profile_pics/');
-
         } else {
             $profilePhotoName = 'build/images/profile-icon.png';
         }
 
         if ($bannerPhoto) {
             $bannerPhotoName = $uploader->uploadImage($bannerPhoto, 'banner_pics_dir', 'uploads/banner_pics/');
-
         } else {
             $bannerPhotoName = 'build/images/chore.jpg';
         }
@@ -45,7 +43,6 @@ class SaveForm
 
             $this->entityManager->persist($formData);
             $this->entityManager->flush();
-
         } else {
             $userProfile->setCity($form["city"]->getData());
             $userProfile->setLanguages($form["languages"]->getData());
