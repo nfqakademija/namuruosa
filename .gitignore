@@ -30,6 +30,6 @@ yarn-error.log
 ###< IDE files ###
 
 ###> Downloaded image files ###
-!/public/uploads/banner_pics
-!/public/uploads/profile_pics
+/public/uploads/banner_pics
+/public/uploads/profile_pics
 ###< Downloaded image files ###

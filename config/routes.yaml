@@ -2,6 +2,10 @@ admin_users:
     path: /admin/users
     controller: App\Controller\Admin\UsersController::getAllUsers
 
+admin_user_delete:
+    path: /admin/users/delete/{id}
+    controller: App\Controller\Admin\UsersController::adminDeleteUser
+
 admin_jobs:
     path: /admin/jobs
     controller: App\Controller\Admin\JobsController::getAllJobs
