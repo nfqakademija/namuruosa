@@ -8,6 +8,7 @@
             <th>Sukurta</th>
             <th>Galioja iki</th>
             <th>Vartotojas</th>
+            <th>Veiksmai</th>
           </tr>
         </thead>
         <tbody>
@@ -18,6 +19,11 @@
                 <td>{{ service.created_at|date('Y-m-d') }}</td>
                 <td>{{ service.active_till|date('Y-m-d') }}</td>
                 <td><a href="{{ path('otherUserProfile', {'userId': service.user_id} ) }}">{{ service.first_name }} {{ service.last_name }}</a> ({{ service.username }})</td>
+                <td>
+                    <a onclick="return confirm('Ar tikrai norite ištrinti? Tai gali pakenkti kitiems įrašams'); " class="text-danger" href="{{ path('admin_service_delete', {'id': service.id}) }}">
+                        Ištrinti
+                    </a>
+                </td>
             </tr>
         {% endfor %}
         </tbody>

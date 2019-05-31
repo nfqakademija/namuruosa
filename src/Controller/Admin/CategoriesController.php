@@ -24,13 +24,10 @@ class CategoriesController extends AbstractController
         $form = $this->createForm(CategoryType::class)
             ->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $newCategory = $form->getData();
-            $em->persist($newCategory);
-            $em->flush();
+        if ($this->categoryCreated($form)) {
             return $this->redirectToRoute('admin_categories');
         }
+
         return $this->render('admin/categories.html.twig', [
             'categories' => $categories,
             'form' => $form->createView(),
@@ -52,5 +49,21 @@ class CategoriesController extends AbstractController
         $em->flush();
 
         return $this->redirectToRoute('admin_categories');
+    }
+
+    /**
+     * @param $form
+     * @return bool
+     */
+    private function categoryCreated($form) {
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $em = $this->getDoctrine()->getManager();
+            $newCategory = $form->getData();
+            $em->persist($newCategory);
+            $em->flush();
+
+            return true;
+        }
     }
 }
