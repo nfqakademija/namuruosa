@@ -14,6 +14,10 @@ admin_services:
     path: /admin/services
     controller: App\Controller\Admin\ServicesController::getAllServices
 
+admin_service_delete:
+    path: /admin/service/delete/{id}
+    controller: App\Controller\Admin\ServicesController::adminDeleteService
+
 admin_matches:
     path: /admin/matches
     controller: App\Controller\Admin\MatchesController::getAllMatches

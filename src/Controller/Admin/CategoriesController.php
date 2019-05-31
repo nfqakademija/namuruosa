@@ -51,6 +51,10 @@ class CategoriesController extends AbstractController
         return $this->redirectToRoute('admin_categories');
     }
 
+    /**
+     * @param $form
+     * @return bool
+     */
     private function categoryCreated($form) {
 
         if ($form->isSubmitted() && $form->isValid()) {
