@@ -5,3 +5,4 @@ twig:
     form_themes: ['bootstrap_4_layout.html.twig']
     globals:
         navbar_break_point: 'md'
+        google_api_key: 'AIzaSyA8MhevTOOkPtWzuIgXbANypkM_S4Pc4XU'
