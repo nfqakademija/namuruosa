@@ -8,17 +8,23 @@
 
 {% else %}
     <li class="nav-item">
-        <a class="navbar-item" href="{{ path('service_pot_matches') }}"> {#todo perkelti į /service/home kai bus#}
-            <button class="btn btn-info">
+        <a class="navbar-item" href="{{ path('service_pot_matches') }}">
+            <button class="btn btn-info d-none d-{{ navbar_break_point }}-block">
                 Paslaugos
             </button>
+            <span class="nav-link text-info d-{{ navbar_break_point }}-none">
+                <i class="fas fa-concierge-bell"></i> Paslaugos
+            </span>
         </a>
     </li>
     <li class="nav-item">
-        <a class="navbar-item" href="{{ path('job_pot_matches') }}">  {#todo perkelti į /job/home kai bus#}
-            <button class="btn btn-warning">
+        <a class="navbar-item" href="{{ path('job_pot_matches') }}">
+            <button class="btn btn-warning d-none d-{{ navbar_break_point }}-block">
                 Darbai
             </button>
+            <span class="nav-link text-warning d-{{ navbar_break_point }}-none">
+                <i class="fas fa-hammer"></i> Darbai
+            </span>
         </a>
     </li>
 {% endif %}
@@ -29,15 +35,15 @@
        aria-haspopup="true" aria-expanded="false">
         <i class="fas fa-fw fa-user"></i> {{ app.user.username }} <i class="fa fa-angle-down"></i>
     </a>
-    <div class="dropdown-menu dropdown-menu-lg-right" aria-labelledby="myInfoDropdownMenuButton">
+    <div class="dropdown-menu dropdown-menu-{{ navbar_break_point }}-right" aria-labelledby="myInfoDropdownMenuButton">
 
         {% if 'service' in app.request.attributes.all["_route"] %}
-            <a class="dropdown-item" href="{{ path('job_pot_matches') }}"> {#todo perkelti į /service/home kai bus#}
+            <a class="dropdown-item" href="{{ path('job_pot_matches') }}">
                 Darbų puslapis
             </a>
             <div class="dropdown-divider"></div>
         {% elseif 'job' in app.request.attributes.all["_route"] %}
-            <a class="dropdown-item" href="{{ path('service_pot_matches') }}"> {#todo perkelti į /service/home kai bus#}
+            <a class="dropdown-item" href="{{ path('service_pot_matches') }}">
                 Paslaugų puslapis
             </a>
             <div class="dropdown-divider"></div>

@@ -26,10 +26,12 @@
                 <div class="text-right mt-5">
                     <a href="{{ path('job_pot_matches') }}">
                         <button class="btn btn-lg btn-warning">Ieškoti PASLAUGŲ</button></a>
-                    <h6 class="mt-5">Dar neprisiregistravai?</h6>
-                    <a href="{{ path('fos_user_registration_register') }}">
-                        <h5>Registruoti naują vartotoją</h5>
-                    </a>
+                    {% if not is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+                        <h6 class="mt-5">Dar neprisiregistravai?</h6>
+                        <a href="{{ path('fos_user_registration_register') }}">
+                            <h5>Registruoti naują vartotoją</h5>
+                        </a>
+                    {% endif %}
                 </div>
             </div>
             <div class="col-md-6 landing half right">
@@ -48,9 +50,12 @@
                 <div class="text-left mt-5">
                     <a href="{{ path('service_pot_matches') }}">
                         <button class="btn btn-lg btn-info">Peržvelgti DARBUS</button></a>
-                    <h6 class="mt-5">Dar neprisiregistravai?</h6>
-                    <a href="{{ path('fos_user_registration_register') }}">
-                        <h5>Registruoti naują vartotoją</h5></a>
+                    {% if not is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+                        <h6 class="mt-5">Dar neprisiregistravai?</h6>
+                        <a href="{{ path('fos_user_registration_register') }}">
+                            <h5>Registruoti naują vartotoją</h5>
+                        </a>
+                    {% endif %}
                 </div>
             </div>
         </div>

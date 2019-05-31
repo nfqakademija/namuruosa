@@ -1,12 +1,15 @@
 <li class="nav-item">
     <a class="navbar-item" href="{{ path('jobAdd') }}">
-        <button class="btn btn-warning">
+        <button class="btn btn-warning d-none d-{{ navbar_break_point }}-block"">
             <i class="fas fa-pencil-alt"></i> Naujas darbas
         </button>
+        <span class="nav-link text-warning d-{{ navbar_break_point }}-none">
+            <i class="fas fa-pencil-alt"></i> Naujas darbas
+        </span>
     </a>
 </li>
 <li class="nav-item">
-    <a class="navbar-item" href="{{ path ('job_pot_matches') }}">
+    <a class="nav-link" href="{{ path ('job_pot_matches') }}">
        <span class="text-warning"><i class="fas fa-search"></i> Ieškoti paslaugų</span>
     </a>
 </li>
