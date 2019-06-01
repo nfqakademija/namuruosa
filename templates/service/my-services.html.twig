@@ -1,10 +1,14 @@
-{% extends 'service/layout.html.twig' %}
+{% extends 'layout/layout-fluid-container.html.twig' %}
 
-{% block main %}
+{% block body %}
 
-    <h2>Mano paslaugos</h2>
-    {% for services in servicesArray %}
-        {% include 'service/table/services.html.twig' %}
-    {% endfor %}
+    <div class="row">
+        <div class="serviceWrapper container-under-fixednav">
+            <div class="page-title-elipse">
+                <h2>MANO PASLAUGOS</h2>
+            </div>
+            {% include 'service/table/services.html.twig' %}
+        </div>
+    </div>
 
 {% endblock %}

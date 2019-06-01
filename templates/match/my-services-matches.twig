@@ -1,5 +1,13 @@
-{% extends 'match/layout.html.twig' %}
+{% extends 'layout/layout-fluid-container.html.twig' %}
 
-{% block main %}
-    {% include 'match/table/service-matches.html.twig' %}
+{% block body %}
+    <div class="row">
+        <div class="serviceWrapper container-under-fixednav">
+            <div class="page-title-elipse">
+                <h2>MANO SANDORIAI</h2>
+                <h5 class="text-center text-muted">Pagal mano paslaugas</h5>
+            </div>
+            {% include 'match/table/service-matches.html.twig' %}
+        </div>
+    </div>
 {% endblock %}

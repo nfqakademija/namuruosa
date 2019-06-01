@@ -10,6 +10,7 @@ namespace App\Controller;
 
 use App\Form\ServiceType;
 use App\Service\Loader;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
@@ -21,6 +22,21 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class ServiceController extends AbstractController
 {
+
+    private $em;
+    private $loader;
+
+    /**
+     * JobController constructor.
+     * @param EntityManagerInterface $em
+     * @param Loader $loader
+     */
+    public function __construct(EntityManagerInterface $em, Loader $loader)
+    {
+        $this->em = $em;
+        $this->loader = $loader;
+    }
+
     /**
      * @Route("/service/add", name="serviceAdd")
      */
@@ -39,9 +55,33 @@ class ServiceController extends AbstractController
         }
 
         return $this->render('service/add.html.twig', [
-            'serviceForm' => $form->createView(),
+            'form' => $form->createView(),
         ]);
     }
+
+
+    /**
+     * @Route("/service/edit/{id}", name="serviceEdit")
+     * @param Request $request
+     * @param int $id
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
+     */
+    public function editService(Request $request, int $id)
+    {
+        $service = $this->loader->getService($id);
+        $form = $this->createForm(ServiceType::class, $service);
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $this->em->flush();
+            return $this->redirectToRoute('my_services');
+        }
+
+        return $this->render('service/edit.html.twig', [
+            'form' => $form->createView(),
+            'id' => $service->getId(),
+        ]);
+    }
+
 
     /**
      * @Route("/service/delete/{serviceId}", name="serviceDelete")
@@ -57,13 +97,13 @@ class ServiceController extends AbstractController
      *
      * @Route("service/myservices", name="my_services")
      */
-    public function listMyJobs(Loader $loader)
+    public function listMyServices(Loader $loader)
     {
         $userId = $this->getUser()->getId();
         $myServices = $loader->loadByUser($userId);
 
         return $this->render('service/my-services.html.twig', [
-            'servicesArray' => [$myServices],
+            'services' => $myServices,
         ]);
     }
 

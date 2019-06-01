@@ -2,16 +2,16 @@
 
 {% block body %}
     <div class="row ">
-        <div class="jobWrapper container-under-fixednav">
+        <div class="serviceWrapper container-under-fixednav">
             <div class="page-title-elipse">
-                <h2>DARBO SKELBIMO REDAGAVIMAS</h2>
+                <h2>PASLAUGOS SKELBIMO REDAGAVIMAS</h2>
             </div>
             <div class="container stucco py-4">
-                {{ form_start(form, {'method': 'post', 'action': path('jobEdit', {'id' : id}), 'attr': {'class': 'fos_user_registration_register'}}) }}
-                {% include 'job/table/newJob.html.twig' %}
+                {{ form_start(form, {'method': 'post', 'action': path('serviceEdit', {'id' : id}), 'attr': {'class': 'fos_user_registration_register'}}) }}
+                {% include 'service/table/newService.html.twig' %}
                 <div class="row">
                     <div class="col-sm-6 col-md-4 offset-md-2  mt-3">
-                        <a class="form-button" href="{{ path('my_jobs') }}">
+                        <a class="form-button" href="{{ path('my_services') }}">
                             <button class="btn btn-outline-info btn-lg btn-block"><i class="fas fa-arrow-left"></i> Grįžti
                             </button>
                         </a>

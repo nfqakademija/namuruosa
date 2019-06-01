@@ -4,6 +4,8 @@ namespace App\Controller;
 
 use App\Form\JobType;
 use App\Job\Loader;
+use App\Job\Validator;
+use App\Match\Loader as MatchLoader;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -14,18 +16,22 @@ class JobController extends AbstractController
 
     private $em;
     private $loader;
+    private $matchLoader;
+    private $validator;
 
     /**
      * JobController constructor.
      * @param EntityManagerInterface $em
      * @param Loader $loader
+     * @param matchLoader $matchLoader
      */
-    public function __construct(EntityManagerInterface $em, Loader $loader)
+    public function __construct(EntityManagerInterface $em, Loader $loader, MatchLoader $matchLoader, Validator $validator)
     {
         $this->em = $em;
         $this->loader = $loader;
+        $this->matchLoader = $matchLoader;
+        $this->validator = $validator;
     }
-
 
     /**
      * @Route("/job/add", name="jobAdd")
@@ -47,7 +53,7 @@ class JobController extends AbstractController
         ]);
     }
 
-     /**
+    /**
      * @Route("/job/edit/{id}", name="jobEdit")
      * @param Request $request
      * @param int $id
@@ -74,9 +80,16 @@ class JobController extends AbstractController
      */
     public function deleteJob($jobId, Request $request)
     {
-        $this->loader->delete($jobId);
-        $referer = $request->headers->get('referer');
-        return $this->redirect($referer);
+        $userId = $this->getUser()->getId();
+        $deleteRequestValid = $this->validator->checkDeleteValidity($jobId, $userId);
+        if($deleteRequestValid['validity']){
+            $this->loader->delete($jobId);
+            $this->addFlash("success", $deleteRequestValid['message']);
+        } else{
+            $this->addFlash("danger", $deleteRequestValid['message']);
+        }
+
+        return $this->redirectToRoute('my_jobs');
     }
 
     /**
