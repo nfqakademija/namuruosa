@@ -5,7 +5,7 @@
                 <th>Pavadinimas</th>
                 <th>Aprašymas</th>
                 <th>Kategorijos</th>
-                <th>Kaina</th>
+                <th style="min-width: 80px">Kaina</th>
                 <th>Redaguoti</th>
             </tr>
             {% for job in jobs %}
@@ -17,13 +17,13 @@
                             {{ cat.name }},
                         {% endfor %}
                     </td>
-                    <td>{{ job.budget }} Eur</td>
+                    <td><i class="fas fa-euro-sign fa-sm"></i> {{ job.budget }} / h</td>
                     <td>
                         <a href="{{ path('jobEdit', {'id': job.id }) }}">
-                            <button class="btn btn-link">Keisti</button>
+                            <div class="color-cancel btn-action"><i class="fas fa-pencil-alt"></i> Keisti</div>
                         </a>
                         <a href="{{ path( 'jobDelete' , { 'jobId' : job.id } ) }}">
-                            <button class="btn btn-sm btn-danger">Šalinti</button>
+                            <div class="text-danger btn-action"><i class="fas fa-trash"></i> Šalinti</div>
                         </a>
                     </td>
                 </tr>
