@@ -29,7 +29,7 @@
                             <span class="text-danger">Atmesta {{ match.rejectedAt|date('Y.m.d') }}</span>
                             {% set responded = 1 %}
                         {% elseif match.cancelledAt %}
-                            <span class="text-muted">Atšaukta {{ match.cancelledAt|date('Y.m.d') }}</span>
+                            <span class="color-cancel">Atšaukta {{ match.cancelledAt|date('Y.m.d') }}</span>
                             {% set responded = 1 %}
                         {% else %}
                             <span>Neatsakyta</span>
@@ -41,22 +41,22 @@
                             {% if  match.callerJobId %}
                                 <a href="{{ path('matchUpdate',
                                     { 'matchId': match.id, 'updateType':'cancel', }) }}">
-                                    <div class="text-muted btn-delete"><i class="fas fa-times"></i> Atšaukti</div>
+                                    <div class="color-cancel btn-action"><i class="fas fa-times"></i> Atšaukti</div>
                                 </a>
                             {% else %}
                                 <a href="{{ path('matchUpdate',
                                     { 'matchId': match.id, 'updateType':'accept' }) }}">
-                                    <div class="text-dark btn-delete"><i class="fas fa-check"></i> Sutikti</div>
+                                    <div class="text-dark btn-action"><i class="fas fa-check"></i> Sutikti</div>
                                 </a>
                                 <a href="{{ path('matchUpdate',
                                     { 'matchId': match.id, 'updateType':'reject' }) }}">
-                                    <div class="text-danger btn-delete"><i class="fas fa-times"></i> Atmesti</div>
+                                    <div class="text-danger btn-action"><i class="fas fa-times"></i> Atmesti</div>
                                 </a>
                             {% endif %}
                         {% else %}
                             <a href="{{ path('matchDelete',
                                 { 'matchId': match.id }) }}">
-                                <div class="text-danger btn-delete"><i class="fas fa-trash"></i> Šalinti</div>
+                                <div class="text-danger btn-action"><i class="fas fa-trash"></i> Šalinti</div>
                             </a>
                         {% endif %}
                     </td>
