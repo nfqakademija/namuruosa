@@ -1,4 +1,5 @@
 <div class="pot-matches-wrapper container">
+    {% include 'layout/messages.html.twig' %}
     <div class="table-responsive">
         <table class="table">
             <tr class="stucco">
@@ -22,8 +23,8 @@
                         <a href="{{ path('jobEdit', {'id': job.id }) }}">
                             <div class="color-cancel btn-action"><i class="fas fa-pencil-alt"></i> Keisti</div>
                         </a>
-                        <a href="{{ path( 'jobDelete' , { 'jobId' : job.id } ) }}">
-                            <div class="text-danger btn-action"><i class="fas fa-trash"></i> Šalinti</div>
+                        <a class = deleteAction href="{{ path( 'jobDelete' , { 'jobId' : job.id } ) }}">
+                            <div class="text-danger btn-action deleteButton"><i class="fas fa-trash"></i> Šalinti</div>
                         </a>
                     </td>
                 </tr>

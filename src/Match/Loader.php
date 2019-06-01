@@ -68,4 +68,9 @@ class Loader
             return false;
         }
     }
+
+    public function getMatchesByJob($jobId)
+    {
+        return $this->em->getRepository('App:Match')->findJobMatchesByJobId($jobId);
+    }
 }

@@ -101,4 +101,22 @@ class MatchRepository extends EntityRepository
         $query->execute();
         return $query->fetchAll();
     }
+
+    public function findJobMatchesByJobId($jobId)
+    {
+        $qb = $this->createQueryBuilder('m')
+            ->select('m')
+            ->leftJoin('m.callerJobId', 'callerJob')
+            ->leftJoin('m.responderJobId', 'responderJob')
+            ->andWhere("callerJob.id = :jobId OR responderJob.id = :jobId")
+            ->setParameters([
+                'jobId' => $jobId,
+            ])
+            ->orderBy('m.createdAt', 'DESC');
+        $query = $qb->getQuery();
+        $myJobMatches = $query->execute();
+
+        return $myJobMatches;
+    }
+
 }
