@@ -1,0 +1,21 @@
+<div class="row">
+    <div class="col-md-6">
+
+
+        {{ form_row(form.title) }}
+        {{ form_row(form.description) }}
+        {{ form_row(form.category) }}
+    </div>
+    <div class="col-md-6">
+
+        {{ form_row(form.pricePerHour) }}
+        {{ form_row(form.address) }}
+        {{ form_row(form.maxDistance) }}
+        {{ form_row(form.activeTill) }}
+
+    </div>
+    <div class="col-md-12">
+        {% include '/_map/map_divs.html.twig' %}
+    </div>
+
+</div>

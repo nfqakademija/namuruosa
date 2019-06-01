@@ -1,25 +1,22 @@
-{% extends "service/layout.html.twig" %}
+{% extends "layout/layout-fluid-container.html.twig" %}
 
-{% block main %}
-    <h2 class="text-center mb-5 text-info">Nauja PASLAUGA</h2>
+{% block body %}
+<div class="serviceWrapper container-under-fixednav">
+    <div class="page-title-elipse">
+        <h2>NAUJA PSALAUGA</h2>
+    </div>
     <div class="container">
-        <div class="row">
-            <div class="col-md-6">
-                {#{{ form_start(form, {'method': 'post', 'action': path('fos_user_registration_register'), 'attr': {'class': 'fos_user_registration_register'}}) }}#}
-                {{ form_start(serviceForm, {'method': 'post', 'action': path('serviceAdd'), 'attr': {'class': 'fos_user_registration_register'}}) }}
-                {{ form_widget(serviceForm) }}
-                <div class="row mt-5">
-                    <div class="col">
-                        <input type="submit" class="btn btn-info offset-lg-6" value="Išsaugoti" />
-                    </div>
-                </div>
+        {{ form_start(form, {'method': 'post', 'action': path('serviceAdd'), 'attr': {'class': 'fos_user_registration_register'}}) }}
+        {% include 'service/table/newService.html.twig' %}
 
-                {{ form_end(serviceForm) }}
-             </div>
-            <div class="col-md-6">
-                {% include '/_map/map_divs.html.twig' %}
+        <div class="row">
+            <div class="col-md-6 offset-md-3 mt-3">
+                <input type="submit" class="btn btn-info btn-lg btn-block" value="Sukurti Paslaugą"/>
             </div>
         </div>
+        {{ form_end(form) }}
+    </div>
+</div>
     </div>
 
 {% endblock %}

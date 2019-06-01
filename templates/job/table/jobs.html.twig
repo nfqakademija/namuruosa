@@ -19,7 +19,9 @@
                     </td>
                     <td>{{ job.budget }} Eur</td>
                     <td>
-                        <a href="{{ path('jobEdit', {'id': job.id }) }}"><button class="btn btn-link">Keisti</button></a>
+                        <a href="{{ path('jobEdit', {'id': job.id }) }}">
+                            <button class="btn btn-link">Keisti</button>
+                        </a>
                         <a href="{{ path( 'jobDelete' , { 'jobId' : job.id } ) }}">
                             <button class="btn btn-sm btn-danger">Šalinti</button>
                         </a>

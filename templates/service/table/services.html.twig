@@ -1,28 +1,33 @@
-<div class="table-responsive">
-    <table class="table">
-        <tr>
-            <th>Pavadinimas</th>
-            <th>Aprašymas</th>
-            <th>Kategorijos </th>
-            <th>Eur / val.</th>
-            <th>Redaguoti</th>
-        </tr>
-        {% for service in services %}
-            <tr>
-                <td>{{ service.title }}</td>
-                <td>{{ service.description }}</td>
-                <td>
-                    {% for cat in service.category %}
-                        {{ cat.name }},
-                    {% endfor %}
-                </td>
-                <td>{{ service.pricePerHour }}</td>
-                <td>
-                    <button class="btn btn-link">Keisti</button>
-                    <a href="{{ path( 'serviceDelete' , { 'serviceId' : service.id } ) }}"><button class="btn btn-sm btn-danger">Šalinti</button></a>
-                </td>
+<div class="pot-matches-wrapper container">
+    <div class="table-responsive">
+        <table class="table">
+            <tr class="stucco">
+                <th>Pavadinimas</th>
+                <th>Aprašymas</th>
+                <th>Kategorijos</th>
+                <th>Eur / val.</th>
+                <th>Redaguoti</th>
             </tr>
-
-        {% endfor %}
-    </table>
+            {% for service in services %}
+                <tr class="pot-match-odd-even">
+                    <td>{{ service.title }}</td>
+                    <td>{{ service.description }}</td>
+                    <td>
+                        {% for cat in service.category %}
+                            {{ cat.name }},
+                        {% endfor %}
+                    </td>
+                    <td>{{ service.pricePerHour }}</td>
+                    <td>
+                        <a href="{{ path('serviceEdit', {'id': service.id }) }}">
+                            <button class="btn btn-link">Keisti</button>
+                        </a>
+                        <a href="{{ path( 'serviceDelete' , { 'serviceId' : service.id } ) }}">
+                            <button class="btn btn-sm btn-danger">Šalinti</button>
+                        </a>
+                    </td>
+                </tr>
+            {% endfor %}
+        </table>
+    </div>
 </div>

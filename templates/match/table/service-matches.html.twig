@@ -1,62 +1,68 @@
-<h3 class="text-info mb-4">Sandoriai pagal MANO PASLAUGAS</h3>
-
-<table class="table mb-5 table-responsive">
-    <tr>
-        <th style="width: 10%">Data</th>
-        <th style="width: 25%">Mano paslauga</th>
-        <th style="width: 30%">Sutartas darbas</th>
-        <th style="width: 15%">Darbo tiekėjas</th>
-        <th style="width: 10%">Statusas</th>
-        <th></th>
-    </tr>
-    {% for match in myServicesMatches %}
-        <tr>
-            <td>{{ match.createdAt|date('Y.m.d') }}</td>
-            {% if match.callerServiceId %}
-                <td>{{ match.callerServiceId.title }}</td>
-                <td>{{ match.responderJobId.title }}</td>
-                <td>{{ match.responderId }}</td>
-            {% else %}
-                <td><b>R</b> {{ match.responderServiceId.title }}</td>
-                <td>{{ match.callerJobId.title }}</td>
-                <td>{{ match.callerId }}</td>
-            {% endif %}
-            <td>
-                {% if match.acceptedAt %}
-                    <span class="text-success">Patvirtinta {{ match.acceptedAt|date('Y.m.d') }}</span>
-                    {% set responded = 1 %}
-                {% elseif match.rejectedAt %}
-                    <span class="text-danger">Atmesta {{ match.rejectedAt|date('Y.m.d') }}</span>
-                    {% set responded = 1 %}
-                {% elseif match.cancelledAt %}
-                    <span class="text-muted">Atšaukta {{ match.cancelledAt|date('Y.m.d') }}</span>
-                    {% set responded = 1 %}
+<div class="pot-matches-wrapper container">
+    <div class="table-responsive">
+        <table class="table">
+            <tr class="stucco">
+                <th style="width: 10%">Data</th>
+                <th style="width: 25%">Mano paslauga</th>
+                <th style="width: 30%">Sutartas darbas</th>
+                <th style="width: 15%">Darbo tiekėjas</th>
+                <th style="width: 10%">Statusas</th>
+                <th>Veikti</th>
+            </tr>
+            {% for match in myServicesMatches %}
+            <tr class="pot-match-odd-even">
+                <td>{{ match.createdAt|date('Y.m.d') }}</td>
+                {% if match.callerServiceId %}
+                    <td>{{ match.callerServiceId.title }}</td>
+                    <td>{{ match.responderJobId.title }}</td>
+                    <td>{{ match.responderId }}</td>
                 {% else %}
-                    <span>Neatsakyta</span>
-                    {% set responded = 0 %}
+                    <td>{{ match.responderServiceId.title }}</td>
+                    <td>{{ match.callerJobId.title }}</td>
+                    <td>{{ match.callerId }}</td>
                 {% endif %}
-            </td>
-            <td>
-                {% if responded is same as(0) %}
-                    {% if  match.callerServiceId %}
-                        <a href="{{ path('matchUpdate',
-                            {'updateType':'cancel', 'matchId': match.id }) }}">
-                            <button class="btn btn-sm btn-danger">Atšaukti</button>
-                        </a>
+                <td>
+                    {% if match.acceptedAt %}
+                        <span class="text-success">Patvirtinta {{ match.acceptedAt|date('Y.m.d') }}</span>
+                        {% set responded = 1 %}
+                    {% elseif match.rejectedAt %}
+                        <span class="text-danger">Atmesta {{ match.rejectedAt|date('Y.m.d') }}</span>
+                        {% set responded = 1 %}
+                    {% elseif match.cancelledAt %}
+                        <span class="text-muted">Atšaukta {{ match.cancelledAt|date('Y.m.d') }}</span>
+                        {% set responded = 1 %}
                     {% else %}
-                        <a href="{{ path('matchUpdate',
-                            {'updateType':'accept', 'matchId': match.id }) }}">
-                            <button class="btn btn-sm btn-success mb-2">Sutikti</button>
-                        </a>
-                        <a href="{{ path('matchUpdate',
-                            {'updateType':'reject', 'matchId': match.id }) }}">
-                            <button class="btn btn-sm btn-danger">Atmesti</button>
+                        <span>Neatsakyta</span>
+                        {% set responded = 0 %}
+                    {% endif %}
+                </td>
+                <td>
+                    {% if responded is same as(0) %}
+                        {% if  match.callerServiceId %}
+                            <a href="{{ path('matchUpdate',
+                                {'updateType':'cancel', 'matchId': match.id }) }}">
+                                <div class="text-muted btn-delete"><i class="fas fa-times"></i> Atšaukti</div>
+                            </a>
+                        {% else %}
+                            <a href="{{ path('matchUpdate',
+                                {'updateType':'accept', 'matchId': match.id }) }}">
+                                <div class="text-dark btn-delete"><i class="fas fa-check"></i> Sutikti</div>
+                            </a>
+                            <a href="{{ path('matchUpdate',
+                                {'updateType':'reject', 'matchId': match.id }) }}">
+                                <div class="text-danger btn-delete"><i class="fas fa-times"></i> Atmesti</div>
+                            </a>
+                        {% endif %}
+                    {% else %}
+                        <a href="{{ path('matchDelete',
+                            { 'matchId': match.id }) }}">
+                            <div class="text-danger btn-delete"><i class="fas fa-trash"></i> Šalinti</div>
                         </a>
                     {% endif %}
-                {% endif %}
-            </td>
-        </tr>
-    {% endfor %}
-</table>
-
+                </td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+</div>
 
