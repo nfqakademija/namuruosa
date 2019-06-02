@@ -19,14 +19,15 @@ class ReviewType extends AbstractType
         $builder
             ->add('comment', TextareaType::class, [
                 'label' => 'comment',
-                 'constraints' => [new Length(['min' => 100])]
+                 'constraints' => [new Length(['min' => 20])]
             ])
             ->add('rating', StarRatingType::class, [
-    	'label' => 'Rating'
+    	         'label' => 'Rating'
     ])
 
             ->add('recaptcha', EWZRecaptchaType::class, [
               'required' => true,
+              'mapped' => false
             ]);
   }
 
