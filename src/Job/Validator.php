@@ -10,25 +10,28 @@ namespace App\Job;
 
 
 use Doctrine\ORM\EntityManagerInterface;
-use App\Job\Loader;
+use App\Job\Loader as JobLoader;
+use App\Service\Loader as ServiceLoader;
 use App\Match\Loader as MatchLoader;
 
 class Validator
 {
 
     private $em;
-    private $loader;
     private $matchLoader;
+    private $jobLoader;
+    private $serviceLoader;
 
     /**
      * @param EntityManagerInterface $em
-     * @param Loader $loader
+     * @param jobLoader $jobLoader
      * @param matchLoader $matchLoader
      */
-    public function __construct(EntityManagerInterface $em, Loader $loader, MatchLoader $matchLoader)
+    public function __construct(EntityManagerInterface $em, JobLoader $jobLoader, ServiceLoader $serviceLoader, MatchLoader $matchLoader)
     {
         $this->em = $em;
-        $this->loader = $loader;
+        $this->jobLoader = $jobLoader;
+        $this->serviceLoader = $serviceLoader;
         $this->matchLoader = $matchLoader;
     }
 
@@ -39,7 +42,7 @@ class Validator
             'message' => '',
         ];
         $jobMatches = $this->matchLoader->getMatchesByJob($jobId);
-        $job = $this->loader->getJob($jobId);
+        $job = $this->jobLoader->getJob($jobId);
         if ($job == null) {
             $result['message'] = 'Toks darbas neegzistuoja!';
         } elseif ($userId !== $job->getUserId()->getId()) {
@@ -47,7 +50,7 @@ class Validator
         } elseif ($jobMatches !== []) {
             $result['message'] = "Negalima pašalinti darbo, kuris dalyvauja sandoryje! Pirma turite pašalinti šio darbo sandorius.";
         } else {
-            $this->loader->delete($jobId);
+            $this->jobLoader->delete($jobId);
             $result['validity'] = true;
             $result['message'] = "Darbas sėkmingai pašalintas";
         }

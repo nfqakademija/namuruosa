@@ -73,4 +73,9 @@ class Loader
     {
         return $this->em->getRepository('App:Match')->findJobMatchesByJobId($jobId);
     }
+
+    public function getMatchesByService($serviceId)
+    {
+        return $this->em->getRepository('App:Match')->findServiceMatchesByServiceId($serviceId);
+    }
 }

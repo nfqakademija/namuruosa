@@ -119,4 +119,20 @@ class MatchRepository extends EntityRepository
         return $myJobMatches;
     }
 
+    public function findServiceMatchesByServiceId($serviceId)
+    {
+        $qb = $this->createQueryBuilder('m')
+            ->select('m')
+            ->leftJoin('m.callerServiceId', 'callerService')
+            ->leftJoin('m.responderServiceId', 'responderService')
+            ->andWhere("callerService.id = :serviceId OR responderService.id = :serviceId")
+            ->setParameters([
+                'serviceId' => $serviceId,
+            ])
+            ->orderBy('m.createdAt', 'DESC');
+        $query = $qb->getQuery();
+        $myServiceMatches = $query->execute();
+
+        return $myServiceMatches;
+    }
 }

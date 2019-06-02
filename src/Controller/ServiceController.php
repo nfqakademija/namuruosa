@@ -9,7 +9,9 @@
 namespace App\Controller;
 
 use App\Form\ServiceType;
-use App\Service\Loader;
+use App\Service\Loader as ServiceLoader;
+use App\Match\Loader as MatchLoader;
+use App\Service\ServiceValidator;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -18,23 +20,28 @@ use Symfony\Component\Routing\Annotation\Route;
 /**
  * Class ServiceController
  * @package App\Controller
- *
  */
 class ServiceController extends AbstractController
 {
 
     private $em;
-    private $loader;
+    private $serviceLoader;
+    private $matchLoader;
+    private $validator;
 
     /**
      * JobController constructor.
      * @param EntityManagerInterface $em
-     * @param Loader $loader
+     * @param ServiceLoader $serviceLoader
+     * @param MAtchLoader $matchLoader
      */
-    public function __construct(EntityManagerInterface $em, Loader $loader)
+    public function __construct(EntityManagerInterface $em, ServiceLoader $serviceLoader, MatchLoader $matchLoader, ServiceValidator $validator)
     {
         $this->em = $em;
-        $this->loader = $loader;
+        $this->serviceLoader = $serviceLoader;
+        $this->matchLoader = $matchLoader;
+        $this->validator = $validator;
+
     }
 
     /**
@@ -68,7 +75,7 @@ class ServiceController extends AbstractController
      */
     public function editService(Request $request, int $id)
     {
-        $service = $this->loader->getService($id);
+        $service = $this->serviceLoader->getService($id);
         $form = $this->createForm(ServiceType::class, $service);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
@@ -86,18 +93,25 @@ class ServiceController extends AbstractController
     /**
      * @Route("/service/delete/{serviceId}", name="serviceDelete")
      */
-    public function deleteJob($serviceId, Request $request, Loader $loader)
+    public function deleteService($serviceId, Request $request)
     {
-        $loader->delete($serviceId);
-        $referer = $request->headers->get('referer');
-        return $this->redirect($referer);
+        $userId = $this->getUser()->getId();
+        $deleteRequestValid = $this->validator->checkDeleteValidity($serviceId, $userId);
+        if($deleteRequestValid['validity']){
+            $this->serviceLoader->delete($serviceId);
+            $this->addFlash("success", $deleteRequestValid['message']);
+        } else{
+            $this->addFlash("danger", $deleteRequestValid['message']);
+        }
+
+        return $this->redirectToRoute('my_services');
     }
 
     /**
      *
      * @Route("service/myservices", name="my_services")
      */
-    public function listMyServices(Loader $loader)
+    public function listMyServices(ServiceLoader $loader)
     {
         $userId = $this->getUser()->getId();
         $myServices = $loader->loadByUser($userId);
@@ -110,7 +124,7 @@ class ServiceController extends AbstractController
     /**
      * @Route("service/pot-matches", name="service_pot_matches")
      */
-    public function listPotMatches(Loader $loader)
+    public function listPotMatches(ServiceLoader $loader)
     {
         $userId = $this->getUser()->getId();
         $myMatchingJobs = $loader->loadPotMatches($userId);
