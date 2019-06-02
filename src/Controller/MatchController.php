@@ -13,6 +13,7 @@ use App\Helpers\MatchHelper;
 use App\Match\Loader;
 use App\Match\Manager;
 use Doctrine\ORM\EntityManagerInterface;
+use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
@@ -22,6 +23,8 @@ class MatchController extends AbstractController
     private $em;
     private $loader;
     private $manager;
+    private $paginator;
+
 
     /**
      * JobController constructor.
@@ -29,11 +32,12 @@ class MatchController extends AbstractController
      * @param Loader $loader
      * @param Manager $manager
      */
-    public function __construct(EntityManagerInterface $em, Loader $loader, Manager $manager)
+    public function __construct(EntityManagerInterface $em, Loader $loader, Manager $manager, PaginatorInterface $paginator)
     {
         $this->em = $em;
         $this->loader = $loader;
         $this->manager = $manager;
+        $this->paginator = $paginator;
     }
 
     /**
@@ -63,10 +67,15 @@ class MatchController extends AbstractController
     /**
      * @Route("/match/by-jobs", name="match_by_jobs")
      */
-    public function matchByJobs()
+    public function matchByJobs(Request $request)
     {
         $myId = $this->getUser()->getId();
-        $myJobsMatches = $this->loader->getJobMatches($myId);
+        $myJobsMatchesQuery = $this->loader->getJobMatches($myId);
+        $myJobsMatches = $this->paginator->paginate(
+            $myJobsMatchesQuery,
+            $request->query->getInt('page', 1),
+            $request->query->getInt('limit', 3)
+        );
 
         return $this->render('match/my-jobs-matches.twig', [
             'myJobsMatches' => $myJobsMatches,

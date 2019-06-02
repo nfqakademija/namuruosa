@@ -7,7 +7,7 @@
                 <h2>MANO SANDORIAI</h2>
                 <h5 class="text-center text-muted">Pagal mano darbus</h5>
             </div>
-            {% if (myJobsMatches != []) %}
+            {% if (myJobsMatches.items != []) %}
                 {% include 'match/table/job-matches.html.twig' %}
             {% else %}
                 <div class="container">

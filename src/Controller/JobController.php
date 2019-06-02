@@ -110,7 +110,7 @@ class JobController extends AbstractController
     public function listMyJobs(Request $request)
     {
         $userId = $this->getUser()->getId();
-        $myJobsQuery = $this->loader->loadByUser($userId);
+        $myJobsQuery = $this->loader->loadQueryByUser($userId);
         $myJobs = $this->paginator->paginate(
             $myJobsQuery,
             $request->query->getInt('page', 1),

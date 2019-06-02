@@ -55,9 +55,18 @@ class Loader
      * @param $userId
      * @return Query
      */
-    public function loadByUser($userId): ?Query
+    public function loadQueryByUser($userId): ?Query
     {
         return $this->em->getRepository(Job::class)->findByUserId($userId);
+    }
+
+    /**
+     * @param $userId
+     * @return Job[]
+     */
+    public function loadByUser($userId)
+    {
+        return $this->loadQueryByUser($userId)->getResult();
     }
 
     /**

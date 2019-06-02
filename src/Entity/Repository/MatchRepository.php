@@ -25,7 +25,7 @@ class MatchRepository extends EntityRepository
             ->orderBy('m.createdAt', 'DESC');
         $query = $qb->getQuery();
 
-        return $query->execute();
+        return $query; //->execute();
     }
 
     public function findServicesMatches($userId)
