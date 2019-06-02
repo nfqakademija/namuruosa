@@ -7,7 +7,20 @@
                 <h2>MANO SANDORIAI</h2>
                 <h5 class="text-center text-muted">Pagal mano darbus</h5>
             </div>
-            {% include 'match/table/job-matches.html.twig' %}
+            {% if (myJobsMatches != []) %}
+                {% include 'match/table/job-matches.html.twig' %}
+            {% else %}
+                <div class="container">
+                    <h3 class="text-danger">Jūs neturite sandorių pagal savo darbus</h3>
+                    <div class="row">
+                        <div class="col mt-3">
+                            <a href="{{ path('job_pot_matches') }}">
+                                <button class="btn btn-link"><i class="fas fa-search"></i> Ieškoti paslaugų</button>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            {% endif %}
         </div>
     </div>
 {% endblock %}

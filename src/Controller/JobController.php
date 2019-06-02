@@ -61,11 +61,19 @@ class JobController extends AbstractController
      */
     public function editJob(Request $request, int $id)
     {
+        $userId = $this->getUser()->getId();
         $job = $this->loader->getJob($id);
+        $editRequestValid = $this->validator->checkEditValidity($id, $userId);
+        if ($editRequestValid['validity']) {
         $form = $this->createForm(JobType::class, $job);
         $form->handleRequest($request);
+        } else {
+            $this->addFlash("danger", $editRequestValid['message']);
+            return $this->redirectToRoute('my_jobs');
+        }
         if ($form->isSubmitted() && $form->isValid()) {
             $this->em->flush();
+            $this->addFlash("success", $editRequestValid['message']);
             return $this->redirectToRoute('my_jobs');
         }
 
