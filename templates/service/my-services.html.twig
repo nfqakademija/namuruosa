@@ -7,7 +7,7 @@
                 <h2>MANO PASLAUGOS</h2>
             </div>
 
-            {% if (services != []) %}
+            {% if (services.items != []) %}
             {% include 'service/table/services.html.twig' %}
                 {% else %}
                     <div class="container">

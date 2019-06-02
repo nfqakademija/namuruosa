@@ -9,6 +9,7 @@
 namespace App\Service;
 
 use App\Entity\Job;
+use App\Entity\Service;
 use App\Helpers\CalcHelper;
 use App\Profile\DataLoader;
 use Doctrine\ORM\EntityManagerInterface;
@@ -45,7 +46,16 @@ class Loader
 
     public function getService($serviceId)
     {
-        return $this->em->find('App:Service', $serviceId);
+        return $this->em->find(Service::class, $serviceId);
+    }
+
+     /**
+     * @param $id
+     * @return mixed
+     */
+    public function loadByUserQuery($userId)
+    {
+        return $this->em->getRepository(Service::class)->findServicesByUserId($userId);
     }
 
     /**
@@ -54,7 +64,7 @@ class Loader
      */
     public function loadByUser($userId)
     {
-        return $this->em->getRepository('App:Service')->findByUserId($userId);
+        return $this->loadByUserQuery($userId)->getResult();
     }
 
     /**

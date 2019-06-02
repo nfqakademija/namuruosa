@@ -13,6 +13,7 @@ use App\Service\Loader as ServiceLoader;
 use App\Match\Loader as MatchLoader;
 use App\Service\ServiceValidator;
 use Doctrine\ORM\EntityManagerInterface;
+use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
@@ -28,6 +29,7 @@ class ServiceController extends AbstractController
     private $serviceLoader;
     private $matchLoader;
     private $validator;
+    private $paginator;
 
     /**
      * JobController constructor.
@@ -35,18 +37,22 @@ class ServiceController extends AbstractController
      * @param ServiceLoader $serviceLoader
      * @param MatchLoader $matchLoader
      * @param ServiceValidator $validator
+     * @param PaginatorInterface $paginator
      */
-    public function __construct(EntityManagerInterface $em, ServiceLoader $serviceLoader, MatchLoader $matchLoader, ServiceValidator $validator)
+    public function __construct(EntityManagerInterface $em, ServiceLoader $serviceLoader, MatchLoader $matchLoader, ServiceValidator $validator, PaginatorInterface $paginator)
     {
         $this->em = $em;
         $this->serviceLoader = $serviceLoader;
         $this->matchLoader = $matchLoader;
         $this->validator = $validator;
-
+        $this->paginator = $paginator;
     }
+
 
     /**
      * @Route("/service/add", name="serviceAdd")
+     * @param Request $request
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      */
     public function addService(Request $request)
     {
@@ -66,7 +72,6 @@ class ServiceController extends AbstractController
             'form' => $form->createView(),
         ]);
     }
-
 
     /**
      * @Route("/service/edit/{id}", name="serviceEdit")
@@ -98,9 +103,10 @@ class ServiceController extends AbstractController
         ]);
     }
 
-
     /**
      * @Route("/service/delete/{serviceId}", name="serviceDelete")
+     * @param $serviceId
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function deleteService($serviceId)
     {
@@ -117,14 +123,20 @@ class ServiceController extends AbstractController
     }
 
     /**
-     *
      * @Route("service/myservices", name="my_services")
+     * @param Request $request
+     * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function listMyServices()
+    public function listMyServices(Request $request)
     {
         $userId = $this->getUser()->getId();
-        $myServices = $this->serviceLoader->loadByUser($userId);
-//        dump($myServices); die();
+        $myServicesQuery = $this->serviceLoader->loadByUserQuery($userId);
+
+        $myServices = $this->paginator->paginate(
+            $myServicesQuery,
+            $request->query->getInt('page', 1),
+            $request->query->getInt('limit', 3)
+        );
 
         return $this->render('service/my-services.html.twig', [
             'services' => $myServices,

@@ -6,7 +6,7 @@
             <div class="page-title-elipse">
                 <h2>MANO DARBAI</h2>
             </div>
-            {% if (jobs != []) %}
+            {% if (jobs.items != []) %}
                 {% include 'job/table/jobs.html.twig' %}
 
             {% else %}

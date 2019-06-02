@@ -31,14 +31,24 @@ class Loader
         return $this->em->find('App:Match', $matchId);
     }
 
-    public function getJobMatches($userId)
+    public function getJobMatchesQuery($userId)
     {
         return $this->em->getRepository('App:Match')->findJobsMatches($userId);
     }
 
-    public function getServicesMatches($userId)
+    public function getJobMatches($userId)
+    {
+        return $this->getJobMatchesQuery($userId)->execute();
+    }
+
+    public function getServicesMatchesQuery($userId)
     {
         return $this->em->getRepository('App:Match')->findServicesMatches($userId);
+    }
+
+    public function getServicesMatches($userId)
+    {
+        return $this->getServicesMatchesQuery($userId)->execute();
     }
 
     public function updateMatch($updateType, $matchId)
