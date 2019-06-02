@@ -124,6 +124,7 @@ class ServiceController extends AbstractController
     {
         $userId = $this->getUser()->getId();
         $myServices = $this->serviceLoader->loadByUser($userId);
+//        dump($myServices); die();
 
         return $this->render('service/my-services.html.twig', [
             'services' => $myServices,
