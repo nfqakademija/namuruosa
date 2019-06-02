@@ -13,6 +13,8 @@ use App\Entity\Service;
 use App\Helpers\CalcHelper;
 use App\Profile\DataLoader;
 use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\Query;
+use Knp\Component\Pager\PaginatorInterface;
 
 class Loader
 {
@@ -37,7 +39,7 @@ class Loader
      * @param CalcHelper $calDist
      * @param DataLoader $profileLoader
      */
-    public function __construct(EntityManagerInterface $em, CalcHelper $calDist, DataLoader $profileLoader)
+    public function __construct(EntityManagerInterface $em, CalcHelper $calDist, DataLoader $profileLoader, PaginatorInterface $paginator)
     {
         $this->em = $em;
         $this->calcDist = $calDist;
@@ -51,11 +53,20 @@ class Loader
 
     /**
      * @param $userId
-     * @return Job[]|null
+     * @return Query
      */
-    public function loadByUser($userId): ?array
+    public function loadQueryByUser($userId): ?Query
     {
         return $this->em->getRepository(Job::class)->findByUserId($userId);
+    }
+
+    /**
+     * @param $userId
+     * @return Job[]
+     */
+    public function loadByUser($userId)
+    {
+        return $this->loadQueryByUser($userId)->getResult();
     }
 
     /**

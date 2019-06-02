@@ -7,6 +7,7 @@ use App\Job\Loader;
 use App\Job\Validator;
 use App\Match\Loader as MatchLoader;
 use Doctrine\ORM\EntityManagerInterface;
+use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
@@ -18,6 +19,7 @@ class JobController extends AbstractController
     private $loader;
     private $matchLoader;
     private $validator;
+    private $paginator;
 
     /**
      * JobController constructor.
@@ -25,12 +27,13 @@ class JobController extends AbstractController
      * @param Loader $loader
      * @param matchLoader $matchLoader
      */
-    public function __construct(EntityManagerInterface $em, Loader $loader, MatchLoader $matchLoader, Validator $validator)
+    public function __construct(EntityManagerInterface $em, Loader $loader, MatchLoader $matchLoader, Validator $validator, PaginatorInterface $paginator)
     {
         $this->em = $em;
         $this->loader = $loader;
         $this->matchLoader = $matchLoader;
         $this->validator = $validator;
+        $this->paginator = $paginator;
     }
 
     /**
@@ -104,10 +107,15 @@ class JobController extends AbstractController
      *
      * @Route("job/myjobs", name="my_jobs")
      */
-    public function listMyJobs()
+    public function listMyJobs(Request $request)
     {
         $userId = $this->getUser()->getId();
-        $myJobs = $this->loader->loadByUser($userId);
+        $myJobsQuery = $this->loader->loadQueryByUser($userId);
+        $myJobs = $this->paginator->paginate(
+            $myJobsQuery,
+            $request->query->getInt('page', 1),
+            $request->query->getInt('limit', 3)
+        );
 
         return $this->render('job/my-jobs.html.twig', [
             'jobs' => $myJobs,
