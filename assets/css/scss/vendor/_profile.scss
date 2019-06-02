@@ -282,6 +282,7 @@ body{
 
 .user-review{
   padding: 0.5rem;
+
 }
 
 .user-reviews-title{
@@ -340,6 +341,11 @@ body{
 
 .project-title a{
   font-size: 2rem;
+}
+
+.project p{
+  word-wrap: break-word;
+  padding-right: 1rem;
 }
 
 .feedback{
@@ -426,4 +432,8 @@ body{
   margin-bottom: 1rem;
   display: flex;
   justify-content: center;
+}
+
+.paginator{
+  padding-left: 170px;
 }

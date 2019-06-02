@@ -105,7 +105,9 @@
                             {% endfor %}
                         </div>
                     </div>
-                    {{ knp_pagination_render(reviews) }}
+                    <div class="paginator">
+                      {{ knp_pagination_render(reviews) }}
+                    </div>
                 </div>
             </article>
         </section>

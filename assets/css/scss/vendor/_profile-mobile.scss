@@ -45,4 +45,71 @@
   input[type="submit"]{
     margin: auto;
   }
+
+  .paginator{
+    padding-left: 0;
+  }
+}
+@media(max-width: 800px){
+  #profile{
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .profile-aside{
+    width: 400px;
+  }
+
+  .offers{
+    width: 400px;
+    margin-top: 50rem;
+    margin-left: 0rem;
+    min-height: 100px;
+  }
+
+  .project{
+      width: 24rem;
+      margin-left: -.10rem;
+  }
+
+  .reviews{
+    padding: 0rem;
+  }
+
+  .project a{
+      margin-bottom: 0.25rem;
+  }
+
+  .profile-pic img{
+    left: 135px;
+  }
+
+  .profile-headers{
+    margin-left: -5rem;
+  }
+
+  .profile-form form{
+    padding: 1rem;
+  }
+
+  input[type="submit"]{
+    margin: auto;
+  }
+
+  .paginator{
+    padding-left: 0;
+  }
+
+  .profile-form-rate{
+    padding: 1rem;
+  }
+
+  .edit-profile-h6{
+    margin-left: -4rem;
+  }
+
+  .edit-profile-h4{
+    margin-left: -4rem;
+  }
 }
