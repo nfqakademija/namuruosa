@@ -7,6 +7,7 @@
                 <h2 class="text-center ">PASLAUGŲ PASIŪLYMAI</h2>
                 <h5 class="text-center text-muted">Pagal mano darbus</h5>
             </div>
+            {% if (potMatchesByJobs != []) %}
             {% set jobsWithNoServices = [] %}
             <div class="pot-matches-wrapper">
                 {% for matchesByJob in potMatchesByJobs %}
@@ -23,6 +24,17 @@
                         <h5 class="text-info">Darbui <span class="text-danger">{{ job }}</span>
                             šiuo metu pasiūlymų neturime</h5>
                     {% endfor %}
+                </div>
+            {% endif %}
+            {% else %}
+                <div class="container">
+                    <h3 class="text-danger">Deja, paslaugų pagal jūsų darbus šiuo metu nėra.</h3>
+                    <h4>Pamėginkite sukurti naują darbą!</h4>
+                    <div class="row">
+                        <div class="col mt-3">
+                            <a href="{{ path('jobAdd') }}"><button class="btn btn-link"><i class="fas fa-pencil-alt"></i> Kurti naują darbą</button></a>
+                        </div>
+                    </div>
                 </div>
             {% endif %}
         </div>
