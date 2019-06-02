@@ -76,11 +76,9 @@ class ServiceController extends AbstractController
      */
     public function editService(Request $request, int $id)
     {
-
         $userId = $this->getUser()->getId();
         $service = $this->serviceLoader->getService($id);
         $editRequestValid = $this->validator->checkEditValidity($id, $userId);
-
         if ($editRequestValid['validity']) {
             $form = $this->createForm(ServiceType::class, $service);
             $form->handleRequest($request);

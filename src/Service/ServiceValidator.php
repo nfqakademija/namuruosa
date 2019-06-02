@@ -43,9 +43,9 @@ class ServiceValidator
         if ($service == null) {
             $result['message'] = 'Tokia paslauga neegzistuoja!';
         } elseif ($userId !== $service->getUserId()->getId()) {
-            $result['message'] = "NEGALIMA šalinti kitų vartotojų paslaugų!";
+            $result['message'] = "NEGALIMA keisti kitų vartotojų paslaugų!";
         } elseif ($serviceMatches !== []) {
-            $result['message'] = "Negalima pašalinti paslaugos, kuri dalyvauja sandoryje! Pirma turite pašalinti sandorius.";
+            $result['message'] = "NEGALIMA keisti paslaugų, kurios dalyvauja sandoryje! Pirma turite pašalinti sandorius.";
         } else {
             $result['validity'] = true;
             $result['message'] = "Paslauga sėkmingai atnaujinta";
@@ -56,20 +56,8 @@ class ServiceValidator
 
     public function checkDeleteValidity($serviceId, $userId)
     {
-        $result = [
-            'validity' => false,
-            'message' => '',
-        ];
-        $serviceMatches = $this->matchLoader->getMatchesByService($serviceId);
-        $service = $this->serviceLoader->getService($serviceId);
-        if ($service == null) {
-            $result['message'] = 'Tokia paslauga neegzistuoja!';
-        } elseif ($userId !== $service->getUserId()->getId()) {
-            $result['message'] = "NEGALIMA šalinti kitų vartotojų paslaugų!";
-        } elseif ($serviceMatches !== []) {
-            $result['message'] = "Negalima pašalinti paslaugos, kuri dalyvauja sandoryje! Pirma turite pašalinti sandorius.";
-        } else {
-            $result['validity'] = true;
+        $result = $this->checkEditValidity($serviceId, $userId);
+        if ($result['validity']) {
             $result['message'] = "Paslauga sėkmingai pašalinta";
         }
 

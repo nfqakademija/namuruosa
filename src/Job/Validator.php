@@ -35,23 +35,33 @@ class Validator
         $this->matchLoader = $matchLoader;
     }
 
-    public function checkDeleteValidity($jobId, $userId)
+    public function checkEditValidity($jobId, $userId)
     {
         $result = [
             'validity' => false,
             'message' => '',
         ];
         $jobMatches = $this->matchLoader->getMatchesByJob($jobId);
+//        dump($jobMatches); die();
         $job = $this->jobLoader->getJob($jobId);
         if ($job == null) {
             $result['message'] = 'Toks darbas neegzistuoja!';
         } elseif ($userId !== $job->getUserId()->getId()) {
-            $result['message'] = "NEGALIMA šalinti kitų vartotojų darbų!";
+            $result['message'] = "NEGALIMA keisti kitų vartotojų darbų!";
         } elseif ($jobMatches !== []) {
-            $result['message'] = "Negalima pašalinti darbo, kuris dalyvauja sandoryje! Pirma turite pašalinti šio darbo sandorius.";
+            $result['message'] = "NEGALIMA keisti darbų, kurie dalyvauja sandoryje! Pirma turite pašalinti sandorius.";
         } else {
-            $this->jobLoader->delete($jobId);
             $result['validity'] = true;
+            $result['message'] = "Darbas sėkmingai atnaujintas";
+        }
+
+        return $result;
+    }
+
+    public function checkDeleteValidity($jobId, $userId)
+    {
+        $result = $this->checkEditValidity($jobId, $userId);
+        if ($result['validity']) {
             $result['message'] = "Darbas sėkmingai pašalintas";
         }
 
