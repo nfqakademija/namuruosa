@@ -32,6 +32,28 @@ class ServiceValidator
         $this->matchLoader = $matchLoader;
     }
 
+    public function checkEditValidity($serviceId, $userId)
+    {
+        $result = [
+            'validity' => false,
+            'message' => '',
+        ];
+        $serviceMatches = $this->matchLoader->getMatchesByService($serviceId);
+        $service = $this->serviceLoader->getService($serviceId);
+        if ($service == null) {
+            $result['message'] = 'Tokia paslauga neegzistuoja!';
+        } elseif ($userId !== $service->getUserId()->getId()) {
+            $result['message'] = "NEGALIMA šalinti kitų vartotojų paslaugų!";
+        } elseif ($serviceMatches !== []) {
+            $result['message'] = "Negalima pašalinti paslaugos, kuri dalyvauja sandoryje! Pirma turite pašalinti sandorius.";
+        } else {
+            $result['validity'] = true;
+            $result['message'] = "Paslauga sėkmingai atnaujinta";
+        }
+
+        return $result;
+    }
+
     public function checkDeleteValidity($serviceId, $userId)
     {
         $result = [
@@ -47,7 +69,6 @@ class ServiceValidator
         } elseif ($serviceMatches !== []) {
             $result['message'] = "Negalima pašalinti paslaugos, kuri dalyvauja sandoryje! Pirma turite pašalinti sandorius.";
         } else {
-            $this->serviceLoader->delete($serviceId);
             $result['validity'] = true;
             $result['message'] = "Paslauga sėkmingai pašalinta";
         }
