@@ -1,5 +1,7 @@
 {% extends 'layout/layout-container.html.twig' %}
 
+
+
 {% block body %}
 
 <div class="profile-form">
@@ -9,11 +11,6 @@
   </div>
   {{form_start(form,  {'method': 'post', 'action': path('editProfile')})}}
 
-    {{ form_label(form.profilePhoto, 'Profilio Nuotrauka', {'label_attr': {'class': 'profile-form-label'}}) }}
-      {{form_widget(form.profilePhoto)}}
-
-    {{ form_label(form.bannerPhoto, 'Viršelio Nuotrauka', {'label_attr': {'class': 'profile-form-label'}}) }}
-      {{form_widget(form.bannerPhoto)}}
 
     {{ form_label(form.city, 'Miestas', {'label_attr': {'class': 'profile-form-label'}}) }}
       {{form_widget(form.city, {'attr': {'class': 'profile-form-input', 'placeholder': 'Miestas, kuriame gyvenate'}}) }}
@@ -27,6 +24,12 @@
       {{ form_label(form.phone, 'Telefonas', {'label_attr': {'class': 'profile-form-label'}}) }}
       {{form_widget(form.phone
       , {'attr': {'class': 'profile-form-input', 'placeholder': '+370'}}) }}
+
+      {{ form_label(form.profilePhoto, 'Profilio Nuotrauka', {'label_attr': {'class': 'profile-form-label'}}) }}
+      {{form_widget(form.profilePhoto)}}
+
+      {{ form_label(form.bannerPhoto, 'Viršelio Nuotrauka', {'label_attr': {'class': 'profile-form-label'}}) }}
+      {{form_widget(form.bannerPhoto)}}
 
     {{ form_label(form.description, 'Aprašymas', {'label_attr': {'class': 'profile-form-label'}}) }}
     {{form_widget(form.description

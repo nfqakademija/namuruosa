@@ -10,7 +10,6 @@ use App\Form\EditProfileType;
 use App\Form\ReviewType;
 use App\Entity\UserProfile;
 use App\Profile\DataLoader;
-use App\Profile\SaveForm;
 use App\Profile\FileUploader;
 
 class ProfileController extends AbstractController
@@ -34,17 +33,7 @@ class ProfileController extends AbstractController
         $money = $dataLoader->countUserMoney($userId);
 
         if (!$profile) {
-            $profile = new UserProfile;
-            $profile->setUserId($user);
-            $profile->setCity('');
-            $profile->setDescription('');
-            $profile->setLanguages('');
-            $profile->setSkill('igudis1, igudis2');
-            $profile->setProfilePhoto('build/images/profile-icon.png');
-            $profile->setBannerPhoto('build/images/chores.jpg');
-            $profile->setPhone('');
-            $entityManager->persist($profile);
-            $entityManager->flush();
+          $profile = $this->setNewProfile($user);
         }
         return $this->render('profile/logedUserProfile.html.twig', [
             'user' => $user,
@@ -94,7 +83,7 @@ class ProfileController extends AbstractController
     /**
      * @Route("/profile/edit", name="editProfile")
      */
-    public function editProfile(Request $request, SaveForm $saver, FileUploader $uploader)
+    public function editProfile(Request $request, FileUploader $uploader)
     {
 
         $userObj = $this->getUser();
@@ -104,7 +93,7 @@ class ProfileController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $saver->saveProfileForm($form, $userProfile, $uploader, $userObj);
+            $this->saveProfileForm($form, $userProfile, $uploader, $userObj, $request);
 
             $this->addFlash(
                 'notice',
@@ -112,14 +101,79 @@ class ProfileController extends AbstractController
             );
 
             return $this->redirectToRoute('profile');
-        }else {
+        }
+        elseif (!$form->isSubmitted()) {
           $form->get('description')->setData(
-          $userProfile->getdescription()
-        );
-      }
+          $userProfile->getdescription());
+        }
         return $this->render('profile/editProfileForm.html.twig', [
             'form' => $form->createView(),
         ]);
+    }
+
+    public function saveProfileForm($form, $userProfile, $uploader, $userObj, $request)
+    {
+        $entityManager = $this->getDoctrine()->getManager();
+
+        $formData = $form->getData();
+
+        $profilePhoto = $request->files->get('edit_profile')['profilePhoto'];
+        $bannerPhoto = $request->files->get('edit_profile')['bannerPhoto'];
+
+        $profilePhotoName = 'build/images/profile-icon.png';
+
+        if ($profilePhoto) {
+            $profilePhotoName = $uploader->uploadImage($profilePhoto, 'profile_pics_dir', 'uploads/profile_pics/');
+        }
+
+        $bannerPhotoName = 'build/images/cooperation.jpg';
+
+        if ($bannerPhoto) {
+            $bannerPhotoName = $uploader->uploadImage($bannerPhoto, 'banner_pics_dir', 'uploads/banner_pics/');
+
+        }
+
+        if (!$userProfile) {
+            $userProfile->setUserId($userObj);
+            $userProfile->setProfilePhoto($profilePhotoName);
+            $userProfile->setBannerPhoto($abnnerPhotoName);
+
+            $entityManager->persist($formData);
+            $entityManager->flush();
+
+        } else {
+            $userProfile->setCity($form["city"]->getData());
+            $userProfile->setLanguages($form["languages"]->getData());
+            $userProfile->setSkill($form["skill"]->getData());
+            $userProfile->setPhone($form["phone"]->getData());
+            $userProfile->setDescription($form["description"]->getData());
+            if ($profilePhoto) {
+                $userProfile->setProfilePhoto($profilePhotoName);
+            }
+
+            if ($bannerPhoto) {
+                $userProfile->setBannerPhoto($bannerPhotoName);
+            }
+            $entityManager->flush();
+        }
+    }
+
+    public function setNewProfile($user){
+      $entityManager = $this->getDoctrine()->getManager();
+
+      $profile = new UserProfile;
+      $profile->setUserId($user);
+      $profile->setCity('');
+      $profile->setDescription('');
+      $profile->setLanguages('');
+      $profile->setSkill('igudis1, igudis2');
+      $profile->setProfilePhoto('build/images/profile-icon.png');
+      $profile->setBannerPhoto('build/images/cooperation.jpg');
+      $profile->setPhone('');
+      $entityManager->persist($profile);
+      $entityManager->flush();
+
+      return $profile;
     }
 
 }
