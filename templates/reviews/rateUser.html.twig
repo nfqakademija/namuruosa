@@ -1,0 +1,47 @@
+{% extends 'layout/layout-container.html.twig' %}
+
+{% block body %}
+    <div class="flash-message-custom">
+        {% block message %}
+            {% for message in app.flashes('notice') %}
+                <div class="alert alert-success alert-dismissible">
+                    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {% endblock %}
+    </div>
+
+
+    <div class="profile-form-rate">
+        <div class="profile-headers">
+            <h6 class="edit-profile-h6">Įvertinkite vartotoją!</h6>
+        </div>
+        {{ form_start(form,  {'method': 'post', 'action': path('reviewUser', {'userId': userId})}) }}
+        {{ form_widget(form.comment, {'attr': {'class': 'profile-form-textarea', 'placeholder': 'Jūsų nuomonė apie vartotoją', 'cols': '80', 'rows': '5'}}) }}
+        {{ form_errors(form.comment) }}
+        <div class="rating-star">
+            {{ form_label(form.rating) }}
+            {{ form_widget(form.rating) }}
+        </div>
+        <div class="recaptcha-container">
+            <div class="recaptcha">
+                {{ form_widget(form.recaptcha, { 'attr': {
+                    'options' : {
+                        'theme': 'light',
+                        'type': 'image',
+                        'size': 'normal'
+                    }
+
+                } }) }}
+            </div>
+        </div>
+        <div class="review-submit-button">
+          <input class="btn btn-submit-review" type="submit">
+        </div>
+        {{ form_end(form) }}
+
+
+    </div>
+    </div>
+{% endblock %}

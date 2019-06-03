@@ -3,17 +3,14 @@
 namespace App\Controller;
 
 use App\Entity\Reports;
-use App\Entity\User;
 use App\Form\ReportType;
 use App\Service\ReportCreator;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
 use App\Form\EditProfileType;
-use App\Form\RatingType;
 use App\Entity\UserProfile;
 use App\Profile\DataLoader;
-use App\Profile\SaveForm;
 use App\Profile\FileUploader;
 
 class ProfileController extends AbstractController
@@ -21,13 +18,14 @@ class ProfileController extends AbstractController
 
     /**
      * @Route("/profile", name="profile")
+     * @param DataLoader $dataLoader
+     * @return \Symfony\Component\HttpFoundation\Response
      */
     public function profile(DataLoader $dataLoader)
     {
         $user = $this->getUser();
         $userId = $user->getId();
         $profile = $user->getUserProfile();
-        $entityManager = $this->getDoctrine()->getManager();
 
         $reviews = $dataLoader->getAllReviews($userId);
         $totalReviews = $dataLoader->getCountReviews($userId);
@@ -37,17 +35,7 @@ class ProfileController extends AbstractController
         $money = $dataLoader->countUserMoney($userId);
 
         if (!$profile) {
-            $profile = new UserProfile;
-            $profile->setUserId($user);
-            $profile->setCity('');
-            $profile->setDescription('');
-            $profile->setLanguages('');
-            $profile->setSkill('igudis1, igudis2');
-            $profile->setProfilePhoto('build/images/profile-icon.png');
-            $profile->setBannerPhoto('build/images/chores.jpg');
-            $profile->setPhone('');
-            $entityManager->persist($profile);
-            $entityManager->flush();
+            $profile = $this->setNewProfile($user);
         }
         return $this->render('profile/logedUserProfile.html.twig', [
             'user' => $user,
@@ -64,6 +52,11 @@ class ProfileController extends AbstractController
 
     /**
      * @Route("/profile/user/{userId}", name="otherUserProfile"), requirements={"userId"="\d+"}
+     * @param $userId
+     * @param DataLoader $dataLoader
+     * @param Request $request
+     * @return \Symfony\Component\HttpFoundation\Response
+     * @throws \Exception
      */
 
     public function otherUserProfile($userId, DataLoader $dataLoader, Request $request)
@@ -73,7 +66,7 @@ class ProfileController extends AbstractController
 
         $user = $profile->getUserId();
 
-        $reviews = $dataLoader->getAllReviews($userId, $request);
+        $reviews = $dataLoader->getAllReviews($userId);
         $totalReviews = $dataLoader->getCountReviews($userId);
         $rating = $dataLoader->getAverageRating($userId);
         $userServices = $dataLoader->countUserServices($userId);
@@ -92,7 +85,6 @@ class ProfileController extends AbstractController
             $em->persist($report);
             $em->flush();
         }
-
         return $this->render('profile/otherUserProfile.html.twig', [
             'user' => $user,
             'profile' => $profile,
@@ -110,8 +102,11 @@ class ProfileController extends AbstractController
 
     /**
      * @Route("/profile/edit", name="editProfile")
+     * @param Request $request
+     * @param FileUploader $uploader
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      */
-    public function editProfile(Request $request, SaveForm $saver, FileUploader $uploader)
+    public function editProfile(Request $request, FileUploader $uploader)
     {
 
         $userObj = $this->getUser();
@@ -121,7 +116,7 @@ class ProfileController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $saver->saveProfileForm($form, $userProfile, $uploader, $userObj);
+            $this->saveProfileForm($form, $userProfile, $uploader, $userObj, $request);
 
             $this->addFlash(
                 'notice',
@@ -129,51 +124,93 @@ class ProfileController extends AbstractController
             );
 
             return $this->redirectToRoute('profile');
-        } else {
-            // Set default value
+
+        } elseif (!$form->isSubmitted()) {
             $form->get('description')->setData(
-                $userProfile->getdescription()
-            );
+                $userProfile->getdescription());
+
         }
+
         return $this->render('profile/editProfileForm.html.twig', [
             'form' => $form->createView(),
         ]);
     }
 
     /**
-     * @Route("/profile/review/{userId}", name="reviewProfile", requirements={"userId"="\d+"})
+     * @param $form
+     * @param $userProfile
+     * @param $uploader
+     * @param $userObj
+     * @param $request
      */
-
-    public function reviewProfile(Request $request, $userId)
+    public function saveProfileForm($form, $userProfile, $uploader, $userObj, $request)
     {
-        $form = $this->createForm(RatingType::class);
-        $form->handleRequest($request);
+        $entityManager = $this->getDoctrine()->getManager();
 
-        $estimator = $this->getUser();
-        $ratedUser = $this->getDoctrine()->getRepository(User::class)->find($userId);
+        $formData = $form->getData();
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager = $this->getDoctrine()->getManager();
-            $review = $form->getData();
+        $profilePhoto = $request->files->get('edit_profile')['profilePhoto'];
+        $bannerPhoto = $request->files->get('edit_profile')['bannerPhoto'];
 
-            $review->setUserId($ratedUser);
-            $review->setEstimatorId($estimator);
-            $review->setCreatedAt(new \DateTime());
+        $profilePhotoName = 'build/images/profile-icon.png';
 
-            $entityManager->persist($review);
-            $entityManager->flush();
-
-            $this->addFlash(
-                'notice',
-                'Jūsų vertinimas išsaugotas!'
-            );
-
-            return $this->redirectToRoute('otherUserProfile', ['userId' => $userId]);
+        if ($profilePhoto) {
+            $profilePhotoName = $uploader->uploadImage($profilePhoto, 'profile_pics_dir', 'uploads/profile_pics/');
         }
 
-        return $this->render('profile/rateUser.html.twig', [
-            'form' => $form->createView(),
-            'userId' => $userId
-        ]);
+        $bannerPhotoName = 'build/images/cooperation.jpg';
+
+        if ($bannerPhoto) {
+            $bannerPhotoName = $uploader->uploadImage($bannerPhoto, 'banner_pics_dir', 'uploads/banner_pics/');
+
+        }
+
+        if (!$userProfile) {
+            $userProfile->setUserId($userObj);
+            $userProfile->setProfilePhoto($profilePhotoName);
+            $userProfile->setBannerPhoto($bannerPhotoName);
+
+            $entityManager->persist($formData);
+            $entityManager->flush();
+
+        } else {
+            $userProfile->setCity($form["city"]->getData());
+            $userProfile->setLanguages($form["languages"]->getData());
+            $userProfile->setSkill($form["skill"]->getData());
+            $userProfile->setPhone($form["phone"]->getData());
+            $userProfile->setDescription($form["description"]->getData());
+            if ($profilePhoto) {
+                $userProfile->setProfilePhoto($profilePhotoName);
+            }
+
+            if ($bannerPhoto) {
+                $userProfile->setBannerPhoto($bannerPhotoName);
+            }
+            $entityManager->flush();
+        }
     }
+
+    /**
+     * @param $user
+     * @return UserProfile
+     */
+    public function setNewProfile($user)
+    {
+        $entityManager = $this->getDoctrine()->getManager();
+
+        $profile = new UserProfile;
+        $profile->setUserId($user);
+        $profile->setCity('');
+        $profile->setDescription('');
+        $profile->setLanguages('');
+        $profile->setSkill('igudis1, igudis2');
+        $profile->setProfilePhoto('build/images/profile-icon.png');
+        $profile->setBannerPhoto('build/images/cooperation.jpg');
+        $profile->setPhone('');
+        $entityManager->persist($profile);
+        $entityManager->flush();
+
+        return $profile;
+    }
+
 }

@@ -4,8 +4,63 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "fed39d8492ae3a5ec0e1d8e793aee438",
+    "content-hash": "0e26229191d5dc5062b408e0d911d0aa",
     "packages": [
+        {
+            "name": "brokoskokoli/star-rating-bundle",
+            "version": "v3.0.7",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/brokoskokoli/StarRatingBundle.git",
+                "reference": "d691bc22c02da4d4d8ede7ace02b301505c680a3"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/brokoskokoli/StarRatingBundle/zipball/d691bc22c02da4d4d8ede7ace02b301505c680a3",
+                "reference": "d691bc22c02da4d4d8ede7ace02b301505c680a3",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=7.1",
+                "twig/twig": "^2.4"
+            },
+            "require-dev": {
+                "symfony/framework-bundle": ">=4.0"
+            },
+            "type": "symfony-bundle",
+            "autoload": {
+                "psr-4": {
+                    "Brokoskokoli\\StarRatingBundle\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Derick Felsman",
+                    "email": "derickfelsman@gmail.com"
+                },
+                {
+                    "name": "Steven Ng"
+                },
+                {
+                    "name": "Brokoskokoli",
+                    "email": "brokoskokoli@gmail.com"
+                }
+            ],
+            "description": "Star Rating Bundle for use with Symfony 4 using Font Awesome.  This bundle adds the 'rating' form type and rating filter to render ratings.  Simple and easy to use.",
+            "homepage": "http://github.com/brokoskokoli/StarRatingBundle",
+            "keywords": [
+                "Rating",
+                "bundle",
+                "star",
+                "symfony",
+                "symfony4"
+            ],
+            "time": "2019-01-22T11:11:49+00:00"
+        },
         {
             "name": "doctrine/annotations",
             "version": "v1.6.1",
@@ -1253,6 +1308,60 @@
             "time": "2018-12-04T22:38:24+00:00"
         },
         {
+            "name": "excelwebzone/recaptcha-bundle",
+            "version": "v1.5.13",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/excelwebzone/EWZRecaptchaBundle.git",
+                "reference": "0ab877583961efac961d651fd3bcc3bfcf3d543c"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/excelwebzone/EWZRecaptchaBundle/zipball/0ab877583961efac961d651fd3bcc3bfcf3d543c",
+                "reference": "0ab877583961efac961d651fd3bcc3bfcf3d543c",
+                "shasum": ""
+            },
+            "require": {
+                "google/recaptcha": "^1.1",
+                "php": ">=5.6 || ^7.0",
+                "symfony/form": "^2.8 || ^3.0 || ^4.0",
+                "symfony/framework-bundle": "^2.8 || ^3.0 || ^4.0",
+                "symfony/security-bundle": "^2.8 || ^3.0 || ^4.0",
+                "symfony/validator": "^2.8 || ^3.0 || ^4.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^5 || ^6 || ^7"
+            },
+            "type": "symfony-bundle",
+            "extra": {
+                "symfony": {
+                    "allow-contrib": "true"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "EWZ\\Bundle\\RecaptchaBundle\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Michael H. Arieli",
+                    "email": "excelwebzone@gmail.com",
+                    "homepage": "http://excelwebzone.com/"
+                }
+            ],
+            "description": "This bundle provides easy reCAPTCHA form field integration",
+            "homepage": "https://github.com/excelwebzone/EWZRecaptchaBundle",
+            "keywords": [
+                "recaptcha"
+            ],
+            "time": "2019-01-21T16:57:28+00:00"
+        },
+        {
             "name": "friendsofsymfony/user-bundle",
             "version": "v2.1.2",
             "source": {
@@ -1327,6 +1436,53 @@
                 "User management"
             ],
             "time": "2018-03-08T08:59:27+00:00"
+        },
+        {
+            "name": "google/recaptcha",
+            "version": "1.2.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/google/recaptcha.git",
+                "reference": "c4a17d6af648d4f3814430cd103cba50b75b571c"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/google/recaptcha/zipball/c4a17d6af648d4f3814430cd103cba50b75b571c",
+                "reference": "c4a17d6af648d4f3814430cd103cba50b75b571c",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.5"
+            },
+            "require-dev": {
+                "friendsofphp/php-cs-fixer": "^2.2.20|^2.15",
+                "php-coveralls/php-coveralls": "^2.1",
+                "phpunit/phpunit": "^4.8.36|^5.7.27|^6.59|^7.5.11"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.2.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "ReCaptcha\\": "src/ReCaptcha"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "description": "Client library for reCAPTCHA, a free service that protects websites from spam and abuse.",
+            "homepage": "https://www.google.com/recaptcha/",
+            "keywords": [
+                "Abuse",
+                "captcha",
+                "recaptcha",
+                "spam"
+            ],
+            "time": "2019-05-24T12:44:03+00:00"
         },
         {
             "name": "jdorn/sql-formatter",
@@ -4534,16 +4690,16 @@
         },
         {
             "name": "symfony/webpack-encore-bundle",
-            "version": "v1.5.0",
+            "version": "v1.6.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/webpack-encore-bundle.git",
-                "reference": "2384cfde92226f2447eb422570c322afe2ae15ea"
+                "reference": "f1ec2fea7fb6a7c7a444ac17e711fab3bbf5e015"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/webpack-encore-bundle/zipball/2384cfde92226f2447eb422570c322afe2ae15ea",
-                "reference": "2384cfde92226f2447eb422570c322afe2ae15ea",
+                "url": "https://api.github.com/repos/symfony/webpack-encore-bundle/zipball/f1ec2fea7fb6a7c7a444ac17e711fab3bbf5e015",
+                "reference": "f1ec2fea7fb6a7c7a444ac17e711fab3bbf5e015",
                 "shasum": ""
             },
             "require": {
@@ -4555,10 +4711,12 @@
                 "symfony/http-kernel": "^3.4 || ^4.0"
             },
             "require-dev": {
+                "fig/link-util": "^1.0",
                 "friendsofphp/php-cs-fixer": "^2.14",
                 "symfony/framework-bundle": "^3.4 || ^4.0",
                 "symfony/phpunit-bridge": "^3.4 || ^4.1",
                 "symfony/twig-bundle": "^3.4 || ^4.0",
+                "symfony/web-link": "^3.4 || ^4.0",
                 "twig/twig": "^1.35 || ^2.0"
             },
             "type": "symfony-bundle",
@@ -4584,7 +4742,7 @@
                 }
             ],
             "description": "Integration with your Symfony app & Webpack Encore!",
-            "time": "2019-04-10T17:55:40+00:00"
+            "time": "2019-05-26T18:09:46+00:00"
         },
         {
             "name": "symfony/yaml",
@@ -4821,57 +4979,6 @@
         }
     ],
     "packages-dev": [
-        {
-            "name": "blackknight467/star-rating-bundle",
-            "version": "v2.0.1",
-            "target-dir": "blackknight467/StarRatingBundle",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/blackknight467/StarRatingBundle.git",
-                "reference": "5a95fe9cef75f8b3e3e763dc92b020091103d5b1"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/blackknight467/StarRatingBundle/zipball/5a95fe9cef75f8b3e3e763dc92b020091103d5b1",
-                "reference": "5a95fe9cef75f8b3e3e763dc92b020091103d5b1",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=5.3.2"
-            },
-            "require-dev": {
-                "symfony/framework-bundle": ">=2.1"
-            },
-            "type": "symfony-bundle",
-            "autoload": {
-                "psr-0": {
-                    "blackknight467\\StarRatingBundle": ""
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Derick Felsman",
-                    "email": "derickfelsman@gmail.com"
-                },
-                {
-                    "name": "Steven Ng"
-                }
-            ],
-            "description": "Star Rating Bundle for use with Symfony 2 using Font Awesome.  This bundle adds the 'rating' form type and rating filter to render ratings.  Simple and easy to use.",
-            "homepage": "http://github.com/blackknight467/StarRatingBundle",
-            "keywords": [
-                "Rating",
-                "Symfony2",
-                "bundle",
-                "star",
-                "symfony"
-            ],
-            "time": "2016-04-12T01:57:35+00:00"
-        },
         {
             "name": "nikic/php-parser",
             "version": "v4.2.1",

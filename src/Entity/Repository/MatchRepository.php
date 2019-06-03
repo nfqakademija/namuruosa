@@ -23,6 +23,7 @@ class MatchRepository extends EntityRepository
                 'userId' => $userId,
             ])
             ->orderBy('m.createdAt', 'DESC');
+
         $query = $qb->getQuery();
 
         return $query;
@@ -53,8 +54,8 @@ class MatchRepository extends EntityRepository
          FROM App\Entity\Match m
          WHERE ((m.callerId = :userId  AND m.callerServiceId IS NOT NULL)
          OR (m.responderId = :userId AND m.responderServiceId IS NOT NULL))
-         AND m.payedAt IS NOT NULL'
-        )->setParameter('userId', $userId);
+         AND m.acceptedAt IS NOT NULL'
+    )->setParameter('userId', $userId);
 
         return $query->execute();
     }
@@ -68,8 +69,8 @@ class MatchRepository extends EntityRepository
          FROM App\Entity\Match m
          WHERE ((m.callerId = :userId  AND m.callerJobId IS NOT NULL)
          OR (m.responderId = :userId AND m.responderJobId IS NOT NULL))
-         AND m.payedAt IS NOT NULL'
-        )->setParameter('userId', $userId);
+         AND m.acceptedAt IS NOT NULL'
+    )->setParameter('userId', $userId);
 
         return $query->execute();
     }
@@ -85,13 +86,13 @@ class MatchRepository extends EntityRepository
                        s.title as service_title,
                        j.title as job_title
                 FROM matches m
-                    LEFT JOIN fos_user c 
+                    LEFT JOIN fos_user c
                         ON m.caller_id = c.id
                     LEFT join fos_user r
                         ON m.responder_id = r.id
-                    LEFT JOIN service s 
+                    LEFT JOIN service s
                         ON IF(m.caller_service_id IS NULL, m.responder_service_id, m.caller_service_id) = s.id
-                    LEFT JOIN job j 
+                    LEFT JOIN job j
                         ON IF(m.caller_job_id IS NULL, m.responder_job_id, m.caller_job_id) = j.id
                         ';
 
