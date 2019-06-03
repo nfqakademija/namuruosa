@@ -9,7 +9,11 @@
 namespace App\Controller;
 
 use App\Form\ServiceType;
-use App\Service\Loader;
+use App\Service\Loader as ServiceLoader;
+use App\Match\Loader as MatchLoader;
+use App\Service\ServiceValidator;
+use Doctrine\ORM\EntityManagerInterface;
+use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
@@ -17,12 +21,38 @@ use Symfony\Component\Routing\Annotation\Route;
 /**
  * Class ServiceController
  * @package App\Controller
- *
  */
 class ServiceController extends AbstractController
 {
+
+    private $em;
+    private $serviceLoader;
+    private $matchLoader;
+    private $validator;
+    private $paginator;
+
+    /**
+     * JobController constructor.
+     * @param EntityManagerInterface $em
+     * @param ServiceLoader $serviceLoader
+     * @param MatchLoader $matchLoader
+     * @param ServiceValidator $validator
+     * @param PaginatorInterface $paginator
+     */
+    public function __construct(EntityManagerInterface $em, ServiceLoader $serviceLoader, MatchLoader $matchLoader, ServiceValidator $validator, PaginatorInterface $paginator)
+    {
+        $this->em = $em;
+        $this->serviceLoader = $serviceLoader;
+        $this->matchLoader = $matchLoader;
+        $this->validator = $validator;
+        $this->paginator = $paginator;
+    }
+
+
     /**
      * @Route("/service/add", name="serviceAdd")
+     * @param Request $request
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      */
     public function addService(Request $request)
     {
@@ -39,41 +69,87 @@ class ServiceController extends AbstractController
         }
 
         return $this->render('service/add.html.twig', [
-            'serviceForm' => $form->createView(),
+            'form' => $form->createView(),
+        ]);
+    }
+
+    /**
+     * @Route("/service/edit/{id}", name="serviceEdit")
+     * @param Request $request
+     * @param int $id
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
+     */
+    public function editService(Request $request, int $id)
+    {
+        $userId = $this->getUser()->getId();
+        $service = $this->serviceLoader->getService($id);
+        $editRequestValid = $this->validator->checkEditValidity($id, $userId);
+        if ($editRequestValid['validity']) {
+            $form = $this->createForm(ServiceType::class, $service);
+            $form->handleRequest($request);
+        } else {
+            $this->addFlash("danger", $editRequestValid['message']);
+            return $this->redirectToRoute('my_services');
+        }
+        if ($form->isSubmitted() && $form->isValid()) {
+            $this->em->flush();
+            $this->addFlash("success", $editRequestValid['message']);
+            return $this->redirectToRoute('my_services');
+        }
+
+        return $this->render('service/edit.html.twig', [
+            'form' => $form->createView(),
+            'id' => $service->getId(),
         ]);
     }
 
     /**
      * @Route("/service/delete/{serviceId}", name="serviceDelete")
+     * @param $serviceId
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    public function deleteJob($serviceId, Request $request, Loader $loader)
+    public function deleteService($serviceId)
     {
-        $loader->delete($serviceId);
-        $referer = $request->headers->get('referer');
-        return $this->redirect($referer);
+        $userId = $this->getUser()->getId();
+        $deleteRequestValid = $this->validator->checkDeleteValidity($serviceId, $userId);
+        if ($deleteRequestValid['validity']) {
+            $this->serviceLoader->delete($serviceId);
+            $this->addFlash("success", $deleteRequestValid['message']);
+        } else {
+            $this->addFlash("danger", $deleteRequestValid['message']);
+        }
+
+        return $this->redirectToRoute('my_services');
     }
 
     /**
-     *
      * @Route("service/myservices", name="my_services")
+     * @param Request $request
+     * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function listMyJobs(Loader $loader)
+    public function listMyServices(Request $request)
     {
         $userId = $this->getUser()->getId();
-        $myServices = $loader->loadByUser($userId);
+        $myServicesQuery = $this->serviceLoader->loadByUserQuery($userId);
+
+        $myServices = $this->paginator->paginate(
+            $myServicesQuery,
+            $request->query->getInt('page', 1),
+            $request->query->getInt('limit', 3)
+        );
 
         return $this->render('service/my-services.html.twig', [
-            'servicesArray' => [$myServices],
+            'services' => $myServices,
         ]);
     }
 
     /**
      * @Route("service/pot-matches", name="service_pot_matches")
      */
-    public function listPotMatches(Loader $loader)
+    public function listPotMatches()
     {
         $userId = $this->getUser()->getId();
-        $myMatchingJobs = $loader->loadPotMatches($userId);
+        $myMatchingJobs = $this->serviceLoader->loadPotMatches($userId);
 
         return $this->render('service/pot-matches.html.twig', [
             'potMatchesByServices' => $myMatchingJobs,

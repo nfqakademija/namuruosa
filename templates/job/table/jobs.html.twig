@@ -1,29 +1,37 @@
-<div class="table-responsive">
-    <table class="table">
-        <tr>
-            <th>Pavadinimas</th>
-            <th>Aprašymas</th>
-            <th>Kategorijos </th>
-            <th>Kaina</th>
-            <th>Redaguoti</th>
-        </tr>
-        {% for job in jobs %}
-            <tr>
-                <td>{{ job.title }}</td>
-                <td>{{ job.description }}</td>
-                <td>
-                    {% for cat in job.category %}
-                        {{ cat.name }},
-                    {% endfor %}
-                </td>
-                <td>{{ job.budget }}</td>
-                <td>{{ job.id }}</td>
-                <td>
-                    <button class="btn btn-link">Keisti</button>
-                    <a href="{{ path( 'jobDelete' , { 'jobId' : job.id } ) }}"><button class="btn btn-sm btn-danger">Šalinti</button></a>
-                </td>
+<div class="pot-matches-wrapper container">
+    {% include 'layout/messages.html.twig' %}
+    <div class="table-responsive">
+        <table class="table">
+            <tr class="stucco">
+                <th>Pavadinimas</th>
+                <th>Aprašymas</th>
+                <th>Kategorijos</th>
+                <th style="min-width: 80px">Kaina</th>
+                <th>Redaguoti</th>
             </tr>
-
-        {% endfor %}
-    </table>
+            {% for job in jobs %}
+                <tr class="pot-match-odd-even">
+                    <td>{{ job.title }}</td>
+                    <td>{{ job.description }}</td>
+                    <td>
+                        {% for cat in job.category %}
+                            {{ cat.name }},
+                        {% endfor %}
+                    </td>
+                    <td><i class="fas fa-euro-sign fa-sm"></i> {{ job.budget }} / h</td>
+                    <td>
+                        <a href="{{ path('jobEdit', {'id': job.id }) }}">
+                            <div class="color-cancel btn-action"><i class="fas fa-pencil-alt"></i> Keisti</div>
+                        </a>
+                        <a class = deleteAction href="{{ path( 'jobDelete' , { 'jobId' : job.id } ) }}">
+                            <div class="text-danger btn-action deleteButton"><i class="fas fa-trash"></i> Šalinti</div>
+                        </a>
+                    </td>
+                </tr>
+            {% endfor %}
+        </table>
+    </div>
+    <div class="mt-3">
+        {{ knp_pagination_render(jobs) }}
+    </div>
 </div>

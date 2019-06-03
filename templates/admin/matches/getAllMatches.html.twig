@@ -12,6 +12,7 @@
             <th>Sutikta</th>
             <th>Atmesta</th>
             <th>Atšaukta</th>
+            <th>Veiksmai</th>
           </tr>
         </thead>
         <tbody class="text-nowrap">
@@ -26,6 +27,11 @@
                 <td>{% if match.accepted_at is not null %}{{ match.accepted_at|date('Y-m-d') }}{% endif %}</td>
                 <td>{% if match.rejected_at is not null %}{{ match.rejected_at|date('Y-m-d') }}{% endif %}</td>
                 <td>{% if match.cancelled_at is not null %}{{ match.cancelled_at|date('Y-m-d') }}{% endif %}</td>
+                <td>
+                    <a onclick="return confirm('Ar tikrai norite ištrinti? Tai gali pakenkti kitiems įrašams'); " class="text-danger" href="{{ path('admin_match_delete', {'id': match.id}) }}">
+                        Ištrinti
+                    </a>
+                </td>
             </tr>
         {% endfor %}
         </tbody>

@@ -1,10 +1,25 @@
-{% extends 'service/layout.html.twig' %}
+{% extends 'layout/layout-fluid-container.html.twig' %}
 
-{% block main %}
+{% block body %}
+    <div class="row">
+        <div class="serviceWrapper container-under-fixednav">
+            <div class="page-title-elipse">
+                <h2>MANO PASLAUGOS</h2>
+            </div>
 
-    <h2>Mano paslaugos</h2>
-    {% for services in servicesArray %}
-        {% include 'service/table/services.html.twig' %}
-    {% endfor %}
+            {% if (services.items != []) %}
+            {% include 'service/table/services.html.twig' %}
+                {% else %}
+                    <div class="container">
+                        <h3 class="text-danger">Jūs neturite užregitstruotų paslaugų</h3>
+                        <div class="row">
+                            <div class="col mt-3">
+                                <a href="{{ path('serviceAdd') }}"><button class="btn btn-link"><i class="fas fa-pencil-alt"></i> Sukurti Naują Paslaugą</button></a>
+                            </div>
+                        </div>
+                    </div>
+            {% endif %}
+        </div>
+    </div>
 
 {% endblock %}

@@ -48,12 +48,13 @@ class JobType extends AbstractType
                 },
                 'multiple' => true,
                 'expanded' => false,
+                'attr' => ['class' => 'category-select'],
             ])
             ->add('upload', FileType::class, [
                 'label' => 'Objekto foto',
                 'required' => false,
             ])
-            ->add('address', SearchType::class, [
+            ->add('address', TextType::class, [
                 'label' => 'Adresas'
             ])
             ->add('payType', ChoiceType::class, [

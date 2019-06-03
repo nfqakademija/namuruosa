@@ -4,12 +4,37 @@ namespace App\Controller;
 
 use App\Form\JobType;
 use App\Job\Loader;
+use App\Job\Validator;
+use App\Match\Loader as MatchLoader;
+use Doctrine\ORM\EntityManagerInterface;
+use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
 class JobController extends AbstractController
 {
+
+    private $em;
+    private $loader;
+    private $matchLoader;
+    private $validator;
+    private $paginator;
+
+    /**
+     * JobController constructor.
+     * @param EntityManagerInterface $em
+     * @param Loader $loader
+     * @param matchLoader $matchLoader
+     */
+    public function __construct(EntityManagerInterface $em, Loader $loader, MatchLoader $matchLoader, Validator $validator, PaginatorInterface $paginator)
+    {
+        $this->em = $em;
+        $this->loader = $loader;
+        $this->matchLoader = $matchLoader;
+        $this->validator = $validator;
+        $this->paginator = $paginator;
+    }
 
     /**
      * @Route("/job/add", name="jobAdd")
@@ -18,13 +43,11 @@ class JobController extends AbstractController
     {
         $form = $this->createForm(JobType::class);
         $form->handleRequest($request);
-
         if ($form->isSubmitted() && $form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
             $job = $form->getData();
             $job->setUserId($this->getUser());
-            $em->persist($job);
-            $em->flush();
+            $this->em->persist($job);
+            $this->em->flush();
             return $this->redirectToRoute('my_jobs');
         }
 
@@ -34,36 +57,78 @@ class JobController extends AbstractController
     }
 
     /**
+     * @Route("/job/edit/{id}", name="jobEdit")
+     * @param Request $request
+     * @param int $id
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
+     */
+    public function editJob(Request $request, int $id)
+    {
+        $userId = $this->getUser()->getId();
+        $job = $this->loader->getJob($id);
+        $editRequestValid = $this->validator->checkEditValidity($id, $userId);
+        if ($editRequestValid['validity']) {
+        $form = $this->createForm(JobType::class, $job);
+        $form->handleRequest($request);
+        } else {
+            $this->addFlash("danger", $editRequestValid['message']);
+            return $this->redirectToRoute('my_jobs');
+        }
+        if ($form->isSubmitted() && $form->isValid()) {
+            $this->em->flush();
+            $this->addFlash("success", $editRequestValid['message']);
+            return $this->redirectToRoute('my_jobs');
+        }
+
+        return $this->render('job/edit.html.twig', [
+            'form' => $form->createView(),
+            'id' => $job->getId(),
+        ]);
+    }
+
+    /**
      * @Route("/job/delete/{jobId}", name="jobDelete")
      */
-    public function deleteJob($jobId, Request $request, Loader $loader)
+    public function deleteJob($jobId, Request $request)
     {
-        $loader->delete($jobId);
-        $referer = $request->headers->get('referer');
-        return $this->redirect($referer);
+        $userId = $this->getUser()->getId();
+        $deleteRequestValid = $this->validator->checkDeleteValidity($jobId, $userId);
+        if($deleteRequestValid['validity']){
+            $this->loader->delete($jobId);
+            $this->addFlash("success", $deleteRequestValid['message']);
+        } else{
+            $this->addFlash("danger", $deleteRequestValid['message']);
+        }
+
+        return $this->redirectToRoute('my_jobs');
     }
 
     /**
      *
      * @Route("job/myjobs", name="my_jobs")
      */
-    public function listMyJobs(Loader $loader)
+    public function listMyJobs(Request $request)
     {
         $userId = $this->getUser()->getId();
-        $myJobs = $loader->loadByUser($userId);
+        $myJobsQuery = $this->loader->loadQueryByUser($userId);
+        $myJobs = $this->paginator->paginate(
+            $myJobsQuery,
+            $request->query->getInt('page', 1),
+            $request->query->getInt('limit', 3)
+        );
 
         return $this->render('job/my-jobs.html.twig', [
-            'jobsArray' => [$myJobs],
+            'jobs' => $myJobs,
         ]);
     }
 
     /**
      * @Route("job/pot-matches", name="job_pot_matches")
      */
-    public function listPotMatches(Loader $loader)
+    public function listPotMatches()
     {
         $userId = $this->getUser()->getId();
-        $myMatchingServices = $loader->loadPotMatches($userId);
+        $myMatchingServices = $this->loader->loadPotMatches($userId);
 
         return $this->render('job/pot-matches.html.twig', [
             'potMatchesByJobs' => $myMatchingServices,

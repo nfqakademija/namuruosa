@@ -37,8 +37,10 @@
                                 <span class="badge badge-warning">{{ cat.name }}</span>
                             {% endfor %}
                         </div>
-                        <iframe src="https://maps.google.com/maps?q={{ job.lat }},{{ job.lon }}&hl=en;z=14&amp;output=embed"
-                                width="100%" height="200" frameborder="0" style="border:0" allowfullscreen></iframe>
+                        <iframe src="https://www.google.com/maps/embed/v1/place?key={{ google_api_key }}
+                                &q={{ job.address }}"
+                                width="100%" height="200" frameborder="0" style="border:0" allowfullscreen>
+                        </iframe>
                         <div class="align-content-center mt-3">
                             <a href="{{ path('match_service_create', { 'callerServiceId': matchesByService[0].id, 'responderJobId': job.id }) }}">
                                 <button class="btn btn-outline-success font-weight-bold px-3">Siūlyti paslaugas</button>

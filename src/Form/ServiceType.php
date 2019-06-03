@@ -48,7 +48,7 @@ class ServiceType extends AbstractType
                 'multiple' => true,
                 'expanded' => false,
             ])
-            ->add('address', SearchType::class, [
+            ->add('address', TextType::class, [
                 'label' => 'Adresas'
             ])
             ->add('maxDistance', IntegerType::class, [

@@ -9,7 +9,10 @@
 namespace App\Entity\Repository;
 
 use App\Entity\Service;
+use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\EntityRepository;
+use Knp\Component\Pager\PaginatorInterface;
 
 class JobRepository extends EntityRepository
 {
@@ -22,8 +25,8 @@ class JobRepository extends EntityRepository
             WHERE s.userId= :id 
             ORDER BY s.updatedAt DESC "
         )
-            ->setParameter('id', $userId)
-            ->getResult();
+            ->setParameter('id', $userId);
+//            ->getResult();
     }
 
     public function findMatches(Service $service)

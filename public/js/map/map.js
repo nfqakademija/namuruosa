@@ -120,4 +120,3 @@ function handleLocationError(browserHasGeolocation, infoWindow, pos)
     );
     infoWindow.open(map);
 }
-//TODO needs to be moved to assets

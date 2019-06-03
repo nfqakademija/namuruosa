@@ -1,0 +1,29 @@
+{% include 'admin/reports/linksBetween.html.twig' %}
+
+<h3 class="text-center">Nusiskundimų sąrašas</h3>
+<div class="table-responsive">
+    <table class="table table-bordered table-striped">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Sukūrė</th>
+            <th>Skirta</th>
+            <th>Skundas</th>
+            <th>Sukurta</th>
+            <th>Veiksmai</th>
+          </tr>
+        </thead>
+        <tbody>
+        {% for report in reports %}
+            <tr>
+                <td>{{ report.id }}</td>
+                <td><a href="{{ path('otherUserProfile', {'userId': report.reporter_user_id}) }}">{{ report.reporter_username }}</a></td>
+                <td><a href="{{ path('otherUserProfile', {'userId': report.reported_user_id}) }}">{{ report.reported_username }}</a></td>
+                <td>{{ report.report }}</td>
+                <td>{{ report.created_at|date('Y-m-d H:i') }}</td>
+                <td><a class="text-info" href="{{ path('admin_report_solve', {'id': report.id}) }}">Išspręsti</a></td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>

@@ -24,8 +24,7 @@ class ServiceRepository extends EntityRepository
             WHERE s.userId= :id 
             ORDER BY s.updatedAt DESC "
         )
-            ->setParameter('id', $id)
-            ->getResult();
+            ->setParameter('id', $id);
     }
 
     public function findMatches(Job $job)

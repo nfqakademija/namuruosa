@@ -1,10 +1,28 @@
-{% extends 'job/layout.html.twig' %}
+{% extends 'layout/layout-fluid-container.html.twig' %}
 
-{% block main %}
+{% block body %}
+    <div class="row">
+        <div class="jobWrapper container-under-fixednav">
+            <div class="page-title-elipse">
+                <h2>MANO DARBAI</h2>
+            </div>
+            {% if (jobs.items != []) %}
+                {% include 'job/table/jobs.html.twig' %}
 
-    <h2>Mano darbai</h2>
-    {% for jobs in jobsArray %}
-        {% include 'job/table/jobs.html.twig' %}
-    {% endfor %}
+            {% else %}
+                <div class="container">
+                    <h3 class="text-danger">Jūs neturite užregitstruotų darbų</h3>
+                    <div class="row">
+                        <div class="col mt-3">
+                            <a href="{{ path('jobAdd') }}">
+                                <button class="btn btn-link"><i class="fas fa-pencil-alt"></i> Sukurti Naują Darbą
+                                </button>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            {% endif %}
+        </div>
+    </div>
 
 {% endblock %}

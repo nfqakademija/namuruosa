@@ -2,22 +2,58 @@ admin_users:
     path: /admin/users
     controller: App\Controller\Admin\UsersController::getAllUsers
 
+admin_user_delete:
+    path: /admin/users/delete/{id}
+    controller: App\Controller\Admin\UsersController::adminDeleteUser
+
 admin_jobs:
     path: /admin/jobs
     controller: App\Controller\Admin\JobsController::getAllJobs
+
+admin_job_delete:
+    path: /admin/job/delete/{id}
+    controller: App\Controller\Admin\JobsController::adminDeleteJob
 
 admin_services:
     path: /admin/services
     controller: App\Controller\Admin\ServicesController::getAllServices
 
+admin_service_delete:
+    path: /admin/service/delete/{id}
+    controller: App\Controller\Admin\ServicesController::adminDeleteService
+
 admin_matches:
     path: /admin/matches
     controller: App\Controller\Admin\MatchesController::getAllMatches
+
+admin_match_delete:
+    path: /admin/matches/delete/{id}
+    controller: App\Controller\Admin\MatchesController::adminDeleteMatch
 
 admin_categories:
     path: /admin/categories
     controller: App\Controller\Admin\CategoriesController::adminGetCategories
 
 admin_category_delete:
-    path: /admin/category/delete/{id}
+    path: /admin/categories/delete/{id}
     controller: App\Controller\Admin\CategoriesController::adminDeleteCategory
+
+admin_reports:
+    path: /admin/reports
+    controller: App\Controller\Admin\ReportsController::homeReports
+
+admin_reports_new:
+    path: /admin/reports/new
+    controller: App\Controller\Admin\ReportsController::getNewReports
+
+admin_reports_solved:
+    path: /admin/reports/solved
+    controller: App\Controller\Admin\ReportsController::getSolvedReports
+
+admin_report_solve:
+    path: /admin/report/solve/{id}
+    controller: App\Controller\Admin\ReportsController::solveReport
+
+admin_report_unsolve:
+    path: /admin/report/unsolve/{id}
+    controller: App\Controller\Admin\ReportsController::unsolveReport

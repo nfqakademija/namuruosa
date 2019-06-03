@@ -5,3 +5,6 @@ twig:
     form_themes: ['bootstrap_4_layout.html.twig']
     paths:
      '%kernel.project_dir%/vendor/brokoskokoli/star-rating-bundle/Resources/views': BrokoskokoliStarRatingBundle
+    globals:
+        navbar_break_point: 'md'
+        google_api_key: 'AIzaSyA8MhevTOOkPtWzuIgXbANypkM_S4Pc4XU'

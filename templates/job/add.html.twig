@@ -1,30 +1,28 @@
-{% extends "job/layout.html.twig" %}
+{% extends "layout/layout-fluid-container.html.twig" %}
 
-
-{% block main %}
-    <h2 class="text-center mb-5 text-info">Naujas DARBAS </h2>
-    <div class="container">
-        <div class="row">
-            <div class="col-md-6">
-                {#{{ form_start(form, {'method': 'post', 'action': path('fos_user_registration_register'), 'attr': {'class': 'fos_user_registration_register'}}) }}#}
+{% block body %}
+    <div class="row ">
+        <div class="jobWrapper container-under-fixednav">
+            <div class="page-title-elipse">
+                <h2>NAUJAS DARBAS</h2>
+            </div>
+            <div class="container">
                 {{ form_start(form, {'method': 'post', 'action': path('jobAdd'), 'attr': {'class': 'fos_user_registration_register'}}) }}
-                {{ form_widget(form) }}
-                <div class="row mt-5">
-                    <div class="col">
-                        <input type="submit" class="btn btn-info offset-lg-6" value="Sukurti Darbą" />
+               {% include 'job/table/newJob.html.twig' %}
+
+                <div class="row">
+                    <div class="col-md-6 offset-md-3 mt-3">
+                        <input type="submit" class="btn btn-info btn-lg btn-block" value="Sukurti Darbą"/>
                     </div>
                 </div>
                 {{ form_end(form) }}
-             </div>
-             <div class="col-md-6">
-                {% include '/_map/map_divs.html.twig' %}
             </div>
         </div>
     </div>
 
 {% endblock %}
 
-{% block javascripts  %}
+{% block javascripts %}
     {{ parent() }}
     {% include '/_map/map_js.html.twig' %}
 {% endblock %}
