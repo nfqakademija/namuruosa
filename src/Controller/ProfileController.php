@@ -3,14 +3,12 @@
 namespace App\Controller;
 
 use App\Entity\Reports;
-use App\Entity\User;
 use App\Form\ReportType;
 use App\Service\ReportCreator;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
 use App\Form\EditProfileType;
-use App\Form\ReviewType;
 use App\Entity\UserProfile;
 use App\Profile\DataLoader;
 use App\Profile\FileUploader;
@@ -20,13 +18,14 @@ class ProfileController extends AbstractController
 
     /**
      * @Route("/profile", name="profile")
+     * @param DataLoader $dataLoader
+     * @return \Symfony\Component\HttpFoundation\Response
      */
     public function profile(DataLoader $dataLoader)
     {
         $user = $this->getUser();
         $userId = $user->getId();
         $profile = $user->getUserProfile();
-        $entityManager = $this->getDoctrine()->getManager();
 
         $reviews = $dataLoader->getAllReviews($userId);
         $totalReviews = $dataLoader->getCountReviews($userId);
@@ -53,6 +52,11 @@ class ProfileController extends AbstractController
 
     /**
      * @Route("/profile/user/{userId}", name="otherUserProfile"), requirements={"userId"="\d+"}
+     * @param $userId
+     * @param DataLoader $dataLoader
+     * @param Request $request
+     * @return \Symfony\Component\HttpFoundation\Response
+     * @throws \Exception
      */
 
     public function otherUserProfile($userId, DataLoader $dataLoader, Request $request)
@@ -62,7 +66,7 @@ class ProfileController extends AbstractController
 
         $user = $profile->getUserId();
 
-        $reviews = $dataLoader->getAllReviews($userId, $request);
+        $reviews = $dataLoader->getAllReviews($userId);
         $totalReviews = $dataLoader->getCountReviews($userId);
         $rating = $dataLoader->getAverageRating($userId);
         $userServices = $dataLoader->countUserServices($userId);
@@ -98,6 +102,9 @@ class ProfileController extends AbstractController
 
     /**
      * @Route("/profile/edit", name="editProfile")
+     * @param Request $request
+     * @param FileUploader $uploader
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      */
     public function editProfile(Request $request, FileUploader $uploader)
     {
@@ -129,6 +136,13 @@ class ProfileController extends AbstractController
         ]);
     }
 
+    /**
+     * @param $form
+     * @param $userProfile
+     * @param $uploader
+     * @param $userObj
+     * @param $request
+     */
     public function saveProfileForm($form, $userProfile, $uploader, $userObj, $request)
     {
         $entityManager = $this->getDoctrine()->getManager();
@@ -154,7 +168,7 @@ class ProfileController extends AbstractController
         if (!$userProfile) {
             $userProfile->setUserId($userObj);
             $userProfile->setProfilePhoto($profilePhotoName);
-            $userProfile->setBannerPhoto($abnnerPhotoName);
+            $userProfile->setBannerPhoto($bannerPhotoName);
 
             $entityManager->persist($formData);
             $entityManager->flush();
@@ -176,6 +190,10 @@ class ProfileController extends AbstractController
         }
     }
 
+    /**
+     * @param $user
+     * @return UserProfile
+     */
     public function setNewProfile($user)
     {
         $entityManager = $this->getDoctrine()->getManager();

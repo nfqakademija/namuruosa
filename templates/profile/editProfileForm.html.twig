@@ -34,8 +34,9 @@
         {{ form_label(form.description, 'Aprašymas', {'label_attr': {'class': 'profile-form-label'}}) }}
         {{ form_widget(form.description
             , {'attr': {'class': 'profile-form-textarea', 'placeholder': 'Trumpai apie save', 'cols': '80', 'rows': '8'}}) }}
-
-        <input class=" btn btn-submit-review" type="submit" value="Pateikti">
+        <div class="review-submit-button">
+          <input class=" btn btn-submit-review" type="submit" value="Pateikti">
+        </div>
 
         {{ form_end(form) }}
     </div>

@@ -22,6 +22,10 @@ class DataLoader
         $this->entityManager = $manager;
     }
 
+    /**
+     * @param $userId
+     * @return \Knp\Component\Pager\Pagination\PaginationInterface
+     */
     public function getAllReviews($userId)
     {
         $queryBuilder = $this->reviews->getAllUserReviews($userId);
@@ -34,11 +38,19 @@ class DataLoader
         return $pagination;
     }
 
+    /**
+     * @param $userId
+     * @return mixed
+     */
     public function getCountReviews($userId)
     {
         return $this->reviews->getCountReviews($userId)[0][1];
     }
 
+    /**
+     * @param $userId
+     * @return float
+     */
     public function getAverageRating($userId)
     {
         $avRating = 0;
@@ -53,11 +65,20 @@ class DataLoader
         return $this->entityManager->getRepository('App:Match')->countUserServices($userId)[0][1];
     }
 
+    /**
+     * @param $userId
+     * @return mixed
+     */
     public function countUserJobs($userId)
     {
         return $this->entityManager->getRepository('App:Match')->countUserJobs($userId)[0][1];
     }
 
+    /**
+     * @param array $userServices
+     * @param string $method
+     * @return array
+     */
     private function packPrices(array $userServices, string $method): array
     {
 
@@ -70,6 +91,10 @@ class DataLoader
         return $servicesPrices;
     }
 
+    /**
+     * @param $userId
+     * @return array
+     */
     public function countUserMoney($userId): array
     {
 

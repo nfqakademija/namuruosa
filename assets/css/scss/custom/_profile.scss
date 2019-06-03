@@ -233,6 +233,12 @@ body{
         transform: translateY(0);
     }
 
+.review-submit-button{
+  display: flex;
+  justify-content: center;
+  margin-top: 1rem;
+}
+
 /* skills */
 .skills{
   margin-top: 2rem;
@@ -435,5 +441,5 @@ body{
 }
 
 .paginator{
-  padding-left: 170px;
+  padding-left: 0px;
 }
