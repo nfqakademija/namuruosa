@@ -34,37 +34,38 @@ class ReviewsController extends AbstractController
     }
 
 
-    public function saveReviewForm($request, $form, $userId){
+    public function saveReviewForm($request, $form, $userId)
+    {
 
-      $recaptcha = new ReCaptcha('6LeIxAcTAAAAAGG-vFI1TnRWxMZNFuojJ4WifJWe');
-      $resp = $recaptcha->verify($request->request->get('g-recaptcha-response'), $request->getClientIp());
+        $recaptcha = new ReCaptcha('6LeIxAcTAAAAAGG-vFI1TnRWxMZNFuojJ4WifJWe');
+        $resp = $recaptcha->verify($request->request->get('g-recaptcha-response'), $request->getClientIp());
 
-      if (!$resp->isSuccess()) {
+        if (!$resp->isSuccess()) {
 
-        $this->addFlash(
-          'notice',
-          'Uždėkyte varnelę'
-        );
-      }else{
-        $estimator = $this->getUser();
-        $ratedUser = $this->getDoctrine()->getRepository(User::class)->find($userId);
+            $this->addFlash(
+                'notice',
+                'Uždėkyte varnelę'
+            );
+        } else {
+            $estimator = $this->getUser();
+            $ratedUser = $this->getDoctrine()->getRepository(User::class)->find($userId);
 
-        $entityManager = $this->getDoctrine()->getManager();
-        $review = $form->getData();
+            $entityManager = $this->getDoctrine()->getManager();
+            $review = $form->getData();
 
-        $review->setUserId($ratedUser);
-        $review->setEstimatorId($estimator);
-        $review->setCreatedAt(new \DateTime());
+            $review->setUserId($ratedUser);
+            $review->setEstimatorId($estimator);
+            $review->setCreatedAt(new \DateTime());
 
-        $entityManager->persist($review);
-        $entityManager->flush();
+            $entityManager->persist($review);
+            $entityManager->flush();
 
-        $this->addFlash(
-          'notice',
-          'Jūsų vertinimas išsaugotas!'
-        );
+            $this->addFlash(
+                'notice',
+                'Jūsų vertinimas išsaugotas!'
+            );
 
-        return $this->redirectToRoute('otherUserProfile', ['userId' => $userId]);
-      }
-      }
+            return $this->redirectToRoute('otherUserProfile', ['userId' => $userId]);
+        }
     }
+}

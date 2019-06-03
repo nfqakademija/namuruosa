@@ -20,20 +20,19 @@ class EditProfileType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-
             ->add('city', TextType::class, [
                 'required' => true,
-                ])
+            ])
             ->add('languages', TextType::class, [
                 'required' => true,
-                ])
+            ])
             ->add('skill', TextType::class, [
                 'required' => true,
-                ])
+            ])
             ->add('phone', TelType::class, [
                 'required' => true,
 
-                ])
+            ])
             ->add('description', TextareaType::class, [
                 'required' => true,
             ])
@@ -41,22 +40,22 @@ class EditProfileType extends AbstractType
                 'required' => false,
                 'mapped' => false,
                 'data_class' => null,
-                'constraints' =>[
-                  new Image([
-                      'maxSize' => '5M'
-                  ])
+                'constraints' => [
+                    new Image([
+                        'maxSize' => '5M'
+                    ])
                 ]
-              ])
+            ])
             ->add('bannerPhoto', FileType::class, [
                 'required' => false,
                 'mapped' => false,
                 'data_class' => null,
-                'constraints' =>[
-                  new Image([
-                      'maxSize' => '5M'
-                  ])
+                'constraints' => [
+                    new Image([
+                        'maxSize' => '5M'
+                    ])
                 ]
-              ]);
+            ]);
     }
 
     public function configureOptions(OptionsResolver $resolver)

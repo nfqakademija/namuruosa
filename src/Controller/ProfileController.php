@@ -33,12 +33,12 @@ class ProfileController extends AbstractController
         $money = $dataLoader->countUserMoney($userId);
 
         if (!$profile) {
-          $profile = $this->setNewProfile($user);
+            $profile = $this->setNewProfile($user);
         }
         return $this->render('profile/logedUserProfile.html.twig', [
             'user' => $user,
             'profile' => $profile,
-            'reviews' =>$reviews,
+            'reviews' => $reviews,
             'services' => $userServices,
             'jobs' => $userJobs,
             'money' => $money,
@@ -54,30 +54,30 @@ class ProfileController extends AbstractController
 
     public function otherUserProfile($userId, DataLoader $dataLoader, Request $request)
     {
-      $profile = $this->getDoctrine()->getRepository(UserProfile::class)->
-      findOneBy(['user_id' => $userId]);
+        $profile = $this->getDoctrine()->getRepository(UserProfile::class)->
+        findOneBy(['user_id' => $userId]);
 
-      $user = $profile->getUserId();
+        $user = $profile->getUserId();
 
-      $reviews = $dataLoader->getAllReviews($userId, $request);
-      $totalReviews = $dataLoader->getCountReviews($userId);
-      $rating = $dataLoader->getAverageRating($userId);
-      $userServices = $dataLoader->countUserServices($userId);
-      $userJobs = $dataLoader->countUserJobs($userId);
-      $money = $dataLoader->countUserMoney($userId);
+        $reviews = $dataLoader->getAllReviews($userId, $request);
+        $totalReviews = $dataLoader->getCountReviews($userId);
+        $rating = $dataLoader->getAverageRating($userId);
+        $userServices = $dataLoader->countUserServices($userId);
+        $userJobs = $dataLoader->countUserJobs($userId);
+        $money = $dataLoader->countUserMoney($userId);
 
-      return $this->render('profile/otherUserProfile.html.twig', [
-          'user' => $user,
-          'profile' => $profile,
-          'userId' => $userId,
-          'services' => $userServices,
-          'jobs' => $userJobs,
-          'money' => $money,
-          'reviews' => $reviews,
-          'rating' => $rating,
-          'reviewsCount'=> $totalReviews,
-          'controller_name' => 'ProfileController',
-          ]);
+        return $this->render('profile/otherUserProfile.html.twig', [
+            'user' => $user,
+            'profile' => $profile,
+            'userId' => $userId,
+            'services' => $userServices,
+            'jobs' => $userJobs,
+            'money' => $money,
+            'reviews' => $reviews,
+            'rating' => $rating,
+            'reviewsCount' => $totalReviews,
+            'controller_name' => 'ProfileController',
+        ]);
     }
 
     /**
@@ -101,10 +101,9 @@ class ProfileController extends AbstractController
             );
 
             return $this->redirectToRoute('profile');
-        }
-        elseif (!$form->isSubmitted()) {
-          $form->get('description')->setData(
-          $userProfile->getdescription());
+        } elseif (!$form->isSubmitted()) {
+            $form->get('description')->setData(
+                $userProfile->getdescription());
         }
         return $this->render('profile/editProfileForm.html.twig', [
             'form' => $form->createView(),
@@ -158,22 +157,23 @@ class ProfileController extends AbstractController
         }
     }
 
-    public function setNewProfile($user){
-      $entityManager = $this->getDoctrine()->getManager();
+    public function setNewProfile($user)
+    {
+        $entityManager = $this->getDoctrine()->getManager();
 
-      $profile = new UserProfile;
-      $profile->setUserId($user);
-      $profile->setCity('');
-      $profile->setDescription('');
-      $profile->setLanguages('');
-      $profile->setSkill('igudis1, igudis2');
-      $profile->setProfilePhoto('build/images/profile-icon.png');
-      $profile->setBannerPhoto('build/images/cooperation.jpg');
-      $profile->setPhone('');
-      $entityManager->persist($profile);
-      $entityManager->flush();
+        $profile = new UserProfile;
+        $profile->setUserId($user);
+        $profile->setCity('');
+        $profile->setDescription('');
+        $profile->setLanguages('');
+        $profile->setSkill('igudis1, igudis2');
+        $profile->setProfilePhoto('build/images/profile-icon.png');
+        $profile->setBannerPhoto('build/images/cooperation.jpg');
+        $profile->setPhone('');
+        $entityManager->persist($profile);
+        $entityManager->flush();
 
-      return $profile;
+        return $profile;
     }
 
 }

@@ -7,30 +7,31 @@
 {% endblock %}
 
 {% block banner %}
-<div class="banner-image" style="background: url('{{ asset(profile.getbannerphoto)}}')no-repeat center center/cover; height: 30vh; position: relative; margin-top: 35px;">
-</div>
+    <div class="banner-image"
+         style="background: url('{{ asset(profile.getbannerphoto) }}')no-repeat center center/cover; height: 30vh; position: relative; margin-top: 35px;">
+    </div>
 {% endblock %}
 
 {% block body %}
 
     <div class="flash-message-custom">
-      {% block message %}
-      {% for message in app.flashes('notice') %}
-      <div class="alert alert-success alert-dismissible">
-        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-        {{ message }}
-      </div>
-      {% endfor %}
-      {% endblock %}
+        {% block message %}
+            {% for message in app.flashes('notice') %}
+                <div class="alert alert-success alert-dismissible">
+                    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {% endblock %}
     </div>
 
     <div id="profile">
         <aside class="profile-aside">
             <div class="sidebar-content">
-              <div class="profile-pic">
-                <img src="{{ asset(profile.getprofilephoto)}}" alt="profile icon"
-                title="Your profile picture!">
-              </div>
+                <div class="profile-pic">
+                    <img src="{{ asset(profile.getprofilephoto) }}" alt="profile icon"
+                         title="Your profile picture!">
+                </div>
                 <div class="sidebar-content-text">
                     <h4 class="user-name">{{ user.getfirstname }} {{ user.getlastname }}</h4>
                     <div class="user-location">
@@ -48,7 +49,8 @@
                             <div class="total-rating"><i class="text-warning fas fa-star"></i> {{ rating }}</div>
                             <div class="total-reviews">({{ reviewsCount }})</div>
                         </div>
-                        <div class="member-cost"> {{money[1]}} - {{money[0]}} &euro;<span>/hr (prašo/siūlo)</span> </div>
+                        <div class="member-cost"> {{ money[1] }} - {{ money[0] }} &euro;<span>/hr (prašo/siūlo)</span>
+                        </div>
                     </div>
                     {% block profileButton %}
 
@@ -70,11 +72,11 @@
                         <div class="times-worked">
                             <div>
                                 <p>Ivykdyta darbų</p>
-                                <p>{{services}}</p>
+                                <p>{{ services }}</p>
                             </div>
                             <div>
                                 <p>Pirkta paslaugų</p>
-                                <p>{{jobs}}</p>
+                                <p>{{ jobs }}</p>
                             </div>
                             <div class="last-login">
                                 <p>Paskutinis prisijungimas</p>
@@ -106,7 +108,7 @@
                         </div>
                     </div>
                     <div class="paginator">
-                      {{ knp_pagination_render(reviews) }}
+                        {{ knp_pagination_render(reviews) }}
                     </div>
                 </div>
             </article>
