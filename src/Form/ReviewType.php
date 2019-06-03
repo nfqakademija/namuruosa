@@ -22,7 +22,8 @@ class ReviewType extends AbstractType
                  'constraints' => [new Length(['min' => 20])]
             ])
             ->add('rating', StarRatingType::class, [
-    	         'label' => 'Rating'
+    	         'label' => 'Įvertinimas',
+               'required' => true
     ])
 
             ->add('recaptcha', EWZRecaptchaType::class, [

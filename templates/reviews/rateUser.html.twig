@@ -21,6 +21,7 @@
     {{form_widget(form.comment, {'attr': {'class': 'profile-form-textarea', 'placeholder': 'Jūsų nuomonė apie vartotoją', 'cols': '80', 'rows': '5'}}) }}
        {{ form_errors(form.comment) }}
     <div class="rating-star">
+        {{form_label(form.rating) }}
       {{form_widget(form.rating) }}
     </div>
     <div class="recaptcha-container">

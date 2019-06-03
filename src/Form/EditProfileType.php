@@ -4,6 +4,7 @@ namespace App\Form;
 
 use App\Entity\UserProfile;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\Extension\Core\Type\TelType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
@@ -11,20 +12,15 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\Image;
+
 
 class EditProfileType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('profilePhoto', FileType::class, [
-                'required' => false,
-                'data_class' => null
-                ])
-            ->add('bannerPhoto', FileType::class, [
-                'required' => false,
-                'data_class' => null
-                ])
+
             ->add('city', TextType::class, [
                 'required' => true,
                 ])
@@ -40,7 +36,27 @@ class EditProfileType extends AbstractType
                 ])
             ->add('description', TextareaType::class, [
                 'required' => true,
-            ]);
+            ])
+            ->add('profilePhoto', FileType::class, [
+                'required' => false,
+                'mapped' => false,
+                'data_class' => null,
+                'constraints' =>[
+                  new Image([
+                      'maxSize' => '5M'
+                  ])
+                ]
+              ])
+            ->add('bannerPhoto', FileType::class, [
+                'required' => false,
+                'mapped' => false,
+                'data_class' => null,
+                'constraints' =>[
+                  new Image([
+                      'maxSize' => '5M'
+                  ])
+                ]
+              ]);
     }
 
     public function configureOptions(OptionsResolver $resolver)

@@ -98,8 +98,8 @@ class DataLoader
         }
 
         $money = [];
-        array_push($money, $avgJobPrice);
-        array_push($money, $avgServicePrice);
+        array_push($money, round($avgJobPrice, 1));
+        array_push($money, round($avgServicePrice, 1));
 
         return $money;
     }
