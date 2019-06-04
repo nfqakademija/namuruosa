@@ -59,6 +59,42 @@ class ServiceRepository extends EntityRepository
         return $allMatchesByOneMyService;
     }
 
+    public function getMatchesQuery(Job $job)
+    {
+        $myCats = $job->getCategory()->toArray();
+        $myLat = $job->getLat();
+        $myLon = $job->getLon();
+        $myId = $job->getUserId()->getId();
+
+        $qb = $this->createQueryBuilder('s')
+            ->addSelect('( (s.lat - :myLat) * (s.lat - :myLat) + (s.lon - :myLon) * (s.lon - :myLon)) / 100 AS HIDDEN distance')// Distance for sorting purpose ONLY
+            ->andWhere('s.userId <> :myId')
+            ->leftJoin('s.category', 'category')
+            ->andWhere("category in (:myCats)")
+            ->andWhere('s.lat BETWEEN :minLat AND :maxLat ')
+            ->andWhere('s.lon BETWEEN :minLon AND :maxLon ')
+            ->setParameters([
+                'myCats' => $myCats,
+                'myLat' => $myLat,
+                'myLon' => $myLon,
+                'maxLat' => $myLat + 30,
+                'maxLon' => $myLon + 30,
+                'minLat' => $myLat - 30,
+                'minLon' => $myLon - 30,
+                'myId' => $myId,
+            ])
+            ->orderBy('distance', 'ASC');
+
+        $query = $qb->getQuery();
+//        $allMatchesByOneMyService = $query->execute();
+
+        return $query;
+    }
+
+
+
+
+
     public function getAllServices()
     {
         $conn = $this->getEntityManager()->getConnection();

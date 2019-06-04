@@ -49,6 +49,27 @@
   padding-bottom: 10px;
 }
 
+// Tabs for potential matches
+.pot-match-tabs{
+  display: flex;
+  justify-content: flex-start;
+  list-style-type: none;
+  margin-bottom: 1px;
+  flex-wrap: wrap;
+}
+.pot-match-tabs button{
+  min-width: 100px;
+  max-width: 120px;
+  height: 45px;
+  overflow: hidden;
+  padding: 10px;
+  background-color: rgba(100,100,100, 0.2);
+  text-align: start;
+  white-space:nowrap
+}
+
+
+
 @media (max-width: 500px){
   .page-title-elipse {
     margin-left: 10px;

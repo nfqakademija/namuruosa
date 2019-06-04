@@ -95,6 +95,39 @@ class Loader
     }
 
     /**
+     * @param $myJob int
+     * @return array
+     */
+    public function loadPotMatchesByJobIdQuery($myJobId)
+    {
+
+        $job = $this->em->getRepository(Job::class)->find($myJobId);
+        $potMatchesQuery = $this->em->getRepository(Service::class)->getMatchesQuery($job);
+
+//        $potMatches = [];
+//        $myJobs = $this->loadByUser($userId);
+//        foreach ($myJobs as $myJob) {
+//            $servicesByJob = [];
+//            $jobLat = $myJob->getLat();
+//            $jobLon = $myJob->getLon();
+//            $servicesByJob[] = $myJob;
+//            $services = $this->em->getRepository(Service::class)->findMatches($myJob);
+//            foreach ($services as $service) {
+//                $serviceUserId = $service->getUserId()->getId();
+//                $service->setUserRating($this->profileLoader->getAverageRating($serviceUserId));
+//                $service->setDistance($this->calcDistance($jobLat, $jobLon, $service));
+//            }
+//            $servicesByJob[] = $services;
+//            $potMatches[] = $servicesByJob;
+//        }
+        return $potMatchesQuery;
+    }
+
+
+
+
+
+    /**
      * @param $jobLat float
      * @param $jobLon float
      * @param $service Service

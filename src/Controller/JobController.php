@@ -123,15 +123,27 @@ class JobController extends AbstractController
     }
 
     /**
-     * @Route("job/pot-matches", name="job_pot_matches")
+     * @Route("job/pot-matches/{id}", name="job_pot_matches")
      */
-    public function listPotMatches()
+    public function listPotMatches($id = null, Request $request)
     {
         $userId = $this->getUser()->getId();
+//        dump($id); die();
         $myMatchingServices = $this->loader->loadPotMatches($userId);
+        $jobId = $id === null? $myMatchingServices[0][0]->getId(): $id;
+//        $myMatchingServicesByJob = $this->loader->loadPotMatchesByJobId($jobId);
+        $myPotMatchesQuery = $this->loader->loadPotMatchesByJobIdQuery($jobId);
+
+        $myPotMatches = $this->paginator->paginate(
+            $myPotMatchesQuery,
+            $request->query->getInt('page', 1),
+            $request->query->getInt('limit', 2)
+        );
+
 
         return $this->render('job/pot-matches.html.twig', [
             'potMatchesByJobs' => $myMatchingServices,
+            'potMatchesByJobId' => $myPotMatches,
         ]);
     }
 }
