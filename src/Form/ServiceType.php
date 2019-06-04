@@ -49,7 +49,10 @@ class ServiceType extends AbstractType
                 'expanded' => false,
             ])
             ->add('address', TextType::class, [
-                'label' => 'Adresas'
+                'label' => 'Adresas',
+                'attr' => [
+                    'placeholder' => ''
+                ],
             ])
             ->add('maxDistance', IntegerType::class, [
                 'label' => 'Kaip toli galite vykti (Km)'
