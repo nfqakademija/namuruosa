@@ -3,6 +3,7 @@
     </b></span></h3>
     <div class="row">
         {% set imageNo = 38 %}
+        {% set idNo = 1 %}
         {% for service in matchesByJob[1] %}
             <div class="col-md-6 col-lg-4 col-xl-3 mt-3">
                 <div class="card text-center">
@@ -28,8 +29,12 @@ text-overflow: ellipsis;">{{ service.description }}</h6>
                                 <span class="badge badge-warning">{{ cat.name }}</span>
                             {% endfor %}
                         </div>
-                        <div class="text-muted" ><i class="fas fa-chevron-down"></i> <button onclick="hideToggle()"> Žemėlapis </button> </div>
-                        <iframe src="https://www.google.com/maps/embed/v1/place?key={{ google_api_key }}
+
+
+                            <a class="map-hider" id="{{ service.title }}{{ matchesByJob[0].title }}" ><i class="fas fa-chevron-down"></i> Žemėlapis </a>
+
+
+                        <iframe class="service-card-map" src="https://www.google.com/maps/embed/v1/place?key={{ google_api_key }}
                                 &q={{ service.address }}"
                                 width="100%" height="200" frameborder="0" style="border:0" allowfullscreen>
                         </iframe>
@@ -61,14 +66,3 @@ text-overflow: ellipsis;">{{ service.description }}</h6>
     </div>
 </div>
 
-<script>
-    function hideToggle() {
-        // let x = document.querySelector("iframe");
-        let x = document.elem.nextElementSibling("iframe");
-        if (x.style.display === "none") {
-            x.style.display = "block";
-        } else {
-            x.style.display = "none";
-        }
-    }
-</script>
