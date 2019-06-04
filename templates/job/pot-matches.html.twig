@@ -8,35 +8,68 @@
                 <h5 class="text-center text-muted">Pagal mano darbus</h5>
             </div>
             {% if (potMatchesByJobs != []) %}
-            {% set jobsWithNoServices = [] %}
-            <div class="pot-matches-wrapper">
-                {% for matchesByJob in potMatchesByJobs %}
-                    {% if matchesByJob[1] != null %}
-                        {% include 'job/table/pot-matches-table.html.twig' %}
-                    {% else %}
-                        {% set jobsWithNoServices = jobsWithNoServices|merge([matchesByJob[0].title]) %}
-                    {% endif %}
-                {% endfor %}
-            </div>
-            {% if jobsWithNoServices != [] %}
-                <div class="alert alert-danger mt-5">
-                    {% for job in  jobsWithNoServices %}
-                        <h5 class="text-info">Darbui <span class="text-danger">{{ job }}</span>
-                            šiuo metu pasiūlymų neturime</h5>
+                {% set jobsWithNoServices = [] %}
+                <div class="pot-matches-wrapper">
+                    {% for matchesByJob in potMatchesByJobs %}
+                        {% if matchesByJob[1] != null %}
+                            {% include 'job/table/pot-matches-table.html.twig' %}
+                        {% else %}
+                            {% set jobsWithNoServices = jobsWithNoServices|merge([matchesByJob[0].title]) %}
+                        {% endif %}
                     {% endfor %}
                 </div>
-            {% endif %}
+                {% if jobsWithNoServices != [] %}
+                    <div class="alert alert-danger mt-5">
+                        {% for job in  jobsWithNoServices %}
+                            <h5 class="text-info">Darbui <span class="text-danger">{{ job }}</span>
+                                šiuo metu pasiūlymų neturime</h5>
+                        {% endfor %}
+                    </div>
+                {% endif %}
             {% else %}
                 <div class="container">
                     <h3 class="text-danger">Deja, paslaugų pagal jūsų darbus šiuo metu nėra.</h3>
                     <h4>Pamėginkite sukurti naują darbą!</h4>
                     <div class="row">
                         <div class="col mt-3">
-                            <a href="{{ path('jobAdd') }}"><button class="btn btn-link"><i class="fas fa-pencil-alt"></i> Kurti naują darbą</button></a>
+                            <a href="{{ path('jobAdd') }}">
+                                <button class="btn btn-link"><i class="fas fa-pencil-alt"></i> Kurti naują darbą
+                                </button>
+                            </a>
                         </div>
                     </div>
                 </div>
             {% endif %}
         </div>
     </div>
+
+{% endblock %}
+
+{% block javascripts %}
+
+    <script>
+        document.addEventListener('click', function (e) {
+            e = e || window.event;
+            let target = e.target;
+            let targetId = target.id;
+            let targetClass = target.className;
+            let icon = target.firstChild;
+
+            if (targetClass === 'map-hider') {
+                let map = document.getElementById(targetId).nextElementSibling;
+                if (map.style.height === '0px' || map.style.height === '') {
+                    map.style.height = "auto";
+                    map.style.opacity = 1;
+                    icon.style.transform = 'rotate(180deg)';
+                    map.style.overflow = 'hidden';
+                } else {
+                    map.style.height = 0;
+                    map.style.opacity = 0;
+                    icon.style.transform = 'rotate(0deg)';
+                    map.style.overflow = 'hidden';
+                }
+            }
+        }, false);
+    </script>
+
 {% endblock %}
