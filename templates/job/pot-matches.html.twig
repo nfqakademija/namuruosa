@@ -9,6 +9,12 @@
             </div>
             {% if (potMatchesByJobs != []) %}
                 {% set jobsWithNoServices = [] %}
+                <ul class="job-tabs">
+                    {% for matchesByJob in potMatchesByJobs %}
+                        <li>
+                            <button>{{ matchesByJob[0].title }}</button></li>
+                    {% endfor %}
+                </ul>
                 <div class="pot-matches-wrapper">
                     {% for matchesByJob in potMatchesByJobs %}
                         {% if matchesByJob[1] != null %}
@@ -45,7 +51,7 @@
 
 {% endblock %}
 
-{% block javascripts %}
+{% block javascripts2 %}
 
     <script>
         document.addEventListener('click', function (e) {
