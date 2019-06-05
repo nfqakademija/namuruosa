@@ -7,23 +7,20 @@
                 <h2 class="text-center ">PASLAUGŲ PASIŪLYMAI</h2>
                 <h5 class="text-center text-muted">Pagal mano darbus</h5>
             </div>
-            {% if (potMatchesByJobs != []) %}
+            {% if (myJobs != []) %}
                 {% set jobsWithNoServices = [] %}
                 <ul class="pot-match-tabs">
-                    {% for matchesByJob in potMatchesByJobs %}
+                    {% for job in myJobs %}
                         <li>
-                            <a id="{{ matchesByJob[0].title }}" href="{{ path('job_pot_matches', {'id':matchesByJob[0].id}) }}"><button>{{ matchesByJob[0].title }}</button></a>
+                            <a id="{{ job.title }}"
+                               href="{{ path('job_pot_matches', {'id':job.id}) }}">
+                                <button>{{ job.title }}</button>
+                            </a>
                         </li>
                     {% endfor %}
                 </ul>
                 <div class="pot-matches-wrapper">
-                    {#{% for matchesByJob in potMatchesByJobs %}#}
-                        {#{% if matchesByJob[1] != null %}#}
-                            {% include 'job/table/pot-matches-table.html.twig' %}
-                        {#{% else %}#}
-                            {#{% set jobsWithNoServices = jobsWithNoServices|merge([matchesByJob[0].title]) %}#}
-                        {#{% endif %}#}
-                    {#{% endfor %}#}
+                    {% include 'job/table/pot-matches-table.html.twig' %}
                 </div>
                 {% if jobsWithNoServices != [] %}
                     <div class="alert alert-danger mt-5">
