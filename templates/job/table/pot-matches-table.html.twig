@@ -2,7 +2,13 @@
     <h3 class="text-muted">Mano darbas: <span class="text-white"> <b>{{ job.title }}
     </b></span></h3>
     <div class="row">
-      
+        {% if potMatches == null %}
+            <div class="text-center" style="margin: auto; padding-top: 40px;">
+                <h2 class="text-danger">Deja, paslaugų pagal šį darbą šiuo metu nėra.</h2>
+                <h4 class="text-muted">Mėginkite pasitikrinti vėliau!</h4>
+            </div>
+        {% endif %}
+        {% set imageNo = 38 %}
         {% for service in  potMatches %}
 
             <div class="col-md-6 col-lg-4 col-xl-3 mt-3">
@@ -11,12 +17,10 @@
                          <span class="price">{{ service.pricePerHour }}
                              <i class="fa fa-euro-sign fa-xs"></i> / val.
                          </span>
-                        <div class="profile-pic-card">
-                            <img class="card-img-top card-half-height"
-                                 src="{{ asset(service.getuserid.getuserprofile.getprofilephoto)}}"
-                                 alt="Card image cap">
-                        </div>
-
+                        <img class="card-img-top card-half-height"
+                             src="https://source.unsplash.com/collection/1390{{ imageNo }}/300x100"
+                             alt="Card image cap">
+                        {% set imageNo = imageNo - 1 %}
                     </div>
                     <div class="card-body">
                         <h5 class="card-title" style="height: 50px;">{{ service.title }}</h5>
