@@ -50,7 +50,6 @@ class Service
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
-     * @Assert\NotBlank
      * @Assert\Type(type="array")
      */
     private $serviceType;
