@@ -9,10 +9,7 @@
 namespace App\Entity\Repository;
 
 use App\Entity\Service;
-use Doctrine\ORM\EntityManager;
-use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\EntityRepository;
-use Knp\Component\Pager\PaginatorInterface;
 
 class JobRepository extends EntityRepository
 {
@@ -26,46 +23,10 @@ class JobRepository extends EntityRepository
             ORDER BY s.updatedAt DESC "
         )
             ->setParameter('id', $userId);
-//            ->getResult();
     }
-
-    public function findMatches(Service $service)
-    {
-
-        $myCats = $service->getCategory()->toArray();
-        $myLat = $service->getLat();
-        $myLon = $service->getLon();
-        $myId = $service->getUserId()->getId();
-
-        $qb = $this->createQueryBuilder('j')
-            ->addSelect('( (j.lat - :myLat) * (j.lat - :myLat) + (j.lon - :myLon) * (j.lon - :myLon)) / 100 AS HIDDEN distance')// Distance for sorting purpose ONLY
-            ->andWhere('j.userId <> :myId')
-            ->leftJoin('j.category', 'category')
-            ->andWhere("category in (:myCats)")
-            ->andWhere('j.lat BETWEEN :minLat AND :maxLat ')
-            ->andWhere('j.lon BETWEEN :minLon AND :maxLon ')
-            ->setParameters([
-                'myCats' => $myCats,
-                'myLat' => $myLat,
-                'myLon' => $myLon,
-                'maxLat' => $myLat + 30,
-                'maxLon' => $myLon + 30,
-                'minLat' => $myLat - 30,
-                'minLon' => $myLon - 30,
-                'myId' => $myId,
-            ])
-            ->orderBy('distance', 'ASC');
-
-        $query = $qb->getQuery();
-        $allMatchesByOneMyJob = $query->execute();
-
-        return $allMatchesByOneMyJob;
-    }
-
 
     public function getMatchesQuery(Service $service)
     {
-
         $myCats = $service->getCategory()->toArray();
         $myLat = $service->getLat();
         $myLon = $service->getLon();
@@ -95,7 +56,6 @@ class JobRepository extends EntityRepository
 
         return $allMatchesByOneMyJob;
     }
-
 
     public function getAllJobs()
     {
