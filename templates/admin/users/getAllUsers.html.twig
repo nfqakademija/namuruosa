@@ -4,8 +4,7 @@
         <thead>
         <tr>
             <th>ID</th>
-            <th>Vardas Pavardė</th>
-            <th>Vartotojo vardas</th>
+            <th>Vardas Pavardė<br>Vartotojo vardas</th>
             <th>Darbų kiekis</th>
             <th>Paslaugų kiekis</th>
             <th>Priimtų sandorių kiekis</th>
@@ -21,8 +20,7 @@
         {% for user in users %}
             <tr>
                 <td>{{ user.id }}</td>
-                <td><a href="{{ path('otherUserProfile', {'userId': user.id}) }}">{{ user.first_name }} {{ user.last_name }}</a></td>
-                <td>{{ user.username }}</td>
+                <td><a href="{{ path('otherUserProfile', {'userId': user.id}) }}">{{ user.first_name }} {{ user.last_name }}</a><br>{{ user.username }}</td>
                 <td>{{ user.job_count }}</td>
                 <td>{{ user.service_count }}</td>
                 <td>{{ user.accepted_match_count }}</td>

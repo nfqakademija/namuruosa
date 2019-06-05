@@ -19,8 +19,8 @@
         {% for match in matches %}
             <tr>
                 <td>{{ match.id }}</td>
-                <td>{{ match.service_title }}</td>
-                <td>{{ match.job_title }}</td>
+                <td data-toggle="tooltip" title="{{ match.service_title }}">{{ match.service_title|slice(0,15) }}</td>
+                <td data-toggle="tooltip" title="{{ match.job_title }}">{{ match.job_title|slice(0, 15) }}</td>
                 <td><a href="{{ path('otherUserProfile', {'userId': match.caller_id}) }}">{{ match.caller_username }}</a></td>
                 <td><a href="{{ path('otherUserProfile', {'userId': match.responder_id}) }}">{{ match.responder_username }}</a></td>
                 <td>{{ match.created_at|date('Y-m-d') }}</td>
