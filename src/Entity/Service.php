@@ -11,6 +11,7 @@ namespace App\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Class UserServices
@@ -49,23 +50,31 @@ class Service
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
+     * @Assert\NotBlank
+     * @Assert\Type(type="array")
      */
     private $serviceType;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\NotBlank
+     * @Assert\Type(type="string")
      *
      */
     private $title;
 
     /**
      * @ORM\Column(type="text")
+     * @Assert\NotBlank
+     * @Assert\Type(type="string")
      */
     protected $description;
 
     /**
      * @var
      * @ORM\Column(type="datetime")
+     * @Assert\NotBlank
+     * @Assert\Type(type="datetime")
      */
     protected $activeTill;
 
@@ -83,6 +92,8 @@ class Service
 
     /**
      * @ORM\Column(type="string", length=120, nullable=false)
+     * @Assert\NotBlank
+     * @Assert\Type(type="string")
      */
     protected $address;
 
@@ -94,12 +105,16 @@ class Service
     /**
      * @var
      * @ORM\Column(type="decimal")
+     * @Assert\NotBlank
+     * @Assert\Type(type="integer")
      */
     protected $maxDistance;
 
     /**
      * @var
      * @ORM\Column(type="decimal")
+     * @Assert\NotBlank
+     * @Assert\Type(type="numeric")
      */
     protected $pricePerHour;
 

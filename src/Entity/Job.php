@@ -11,6 +11,7 @@ namespace App\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  *
@@ -55,11 +56,15 @@ class Job
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\NotBlank
+     * @Assert\Type(type="string")
      */
     private $title;
 
     /**
      * @ORM\Column(type="text")
+     * @Assert\NotBlank
+     * @Assert\Type(type="string")
      */
     protected $description;
 
@@ -70,11 +75,15 @@ class Job
 
     /**
      * @ORM\Column(type="text")
+     * @Assert\NotBlank
+     * @Assert\Type(type="string")
      */
     protected $payType;
 
     /**
      * @ORM\Column(type="decimal", nullable=true)
+     * @Assert\NotBlank
+     * @Assert\Type(type="numeric")
      */
     protected $budget;
 
@@ -90,6 +99,8 @@ class Job
 
     /**
      * @ORM\Column(type="string", length=120, nullable=false)
+     * @Assert\NotBlank
+     * @Assert\Type(type="string")
      */
     protected $address;
 
@@ -101,6 +112,8 @@ class Job
     /**
      * @var
      * @ORM\Column(type="datetime", nullable=true)
+     * @Assert\NotBlank
+     * @Assert\Type(type="datetime")
      */
     protected $dateEnd;
 
