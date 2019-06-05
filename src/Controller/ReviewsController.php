@@ -25,6 +25,7 @@ class ReviewsController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $this->saveReviewForm($request, $form, $userId);
 
+            return $this->redirectToRoute('otherUserProfile', ['userId' => $userId]);
         }
 
         return $this->render('reviews/rateUser.html.twig', [
@@ -64,8 +65,6 @@ class ReviewsController extends AbstractController
                 'notice',
                 'Jūsų vertinimas išsaugotas!'
             );
-
-            return $this->redirectToRoute('otherUserProfile', ['userId' => $userId]);
         }
     }
 }
