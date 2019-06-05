@@ -114,7 +114,7 @@ class JobController extends AbstractController
         $myJobs = $this->paginator->paginate(
             $myJobsQuery,
             $request->query->getInt('page', 1),
-            $request->query->getInt('limit', 3)
+            $request->query->getInt('limit', 6)
         );
 
         return $this->render('job/my-jobs.html.twig', [
@@ -140,7 +140,7 @@ class JobController extends AbstractController
             $pagination = $this->paginator->paginate(
                 $paginationQuery,
                 $request->query->getInt('page', 1),
-                $request->query->getInt('limit', 4)
+                $request->query->getInt('limit', 6)
             );
             $potMatchesArray = $pagination->getItems();
             $potMatchesComplete = $this->loader->addDistanceAndRating($currentJob, $potMatchesArray);
