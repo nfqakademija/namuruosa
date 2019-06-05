@@ -12,6 +12,7 @@
         <div class="mb-3">
             <label for="username" class="sr-only">{{ 'security.login.username'|trans }}</label>
             <input class="form-control" placeholder="Prisijungimo vardas" type="text" id="username" name="_username"  required="required" autocomplete="username" />
+            <br>
             {#value="{{ last_username }}"#}
             <label for="password" class="sr-only">{{ 'security.login.password'|trans }}</label>
             <input class="form-control" placeholder={{ 'security.login.password'|trans }} type="password" id="password" name="_password" required="required" autocomplete="current-password" />
