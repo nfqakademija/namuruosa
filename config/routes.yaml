@@ -57,3 +57,7 @@ admin_report_solve:
 admin_report_unsolve:
     path: /admin/report/unsolve/{id}
     controller: App\Controller\Admin\ReportsController::unsolveReport
+
+fos_user_registration_confirmed:
+    path: /profile
+    controller: App\Controller\ProfileController::profile

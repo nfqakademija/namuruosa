@@ -123,15 +123,34 @@ class JobController extends AbstractController
     }
 
     /**
-     * @Route("job/pot-matches", name="job_pot_matches")
+     * @Route("job/pot-matches/{id}", name="job_pot_matches", defaults={"id"=null}))
      */
-    public function listPotMatches()
+    public function listPotMatches($id, Request $request)
     {
-        $userId = $this->getUser()->getId();
-        $myMatchingServices = $this->loader->loadPotMatches($userId);
+        $jobId = null;
+        $pagination = null;
+        $potMatchesComplete = null;
+        $currentJob = null;
+        $myJobs = $this->loader->loadByUser($this->getUser()->getId());
+
+        if ($myJobs !== []){
+            $jobId = $id === null? $myJobs[0]->getId(): $id;
+            $currentJob = $this->loader->getJob($jobId);
+            $paginationQuery = $this->loader->getPotMatchesByJobIdQuery($jobId);
+            $pagination = $this->paginator->paginate(
+                $paginationQuery,
+                $request->query->getInt('page', 1),
+                $request->query->getInt('limit', 4)
+            );
+            $potMatchesArray = $pagination->getItems();
+            $potMatchesComplete = $this->loader->addDistanceAndRating($currentJob, $potMatchesArray);
+        }
 
         return $this->render('job/pot-matches.html.twig', [
-            'potMatchesByJobs' => $myMatchingServices,
+            'myJobs' => $myJobs,
+            'job' => $currentJob,
+            'pagination' =>$pagination,
+            'potMatches' => $potMatchesComplete,
         ]);
     }
 }

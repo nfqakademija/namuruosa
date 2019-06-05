@@ -55,7 +55,10 @@ class JobType extends AbstractType
                 'required' => false,
             ])
             ->add('address', TextType::class, [
-                'label' => 'Adresas'
+                'label' => 'Adresas',
+                'attr' => [
+                    'placeholder' => ''
+                ],
             ])
             ->add('payType', ChoiceType::class, [
                 'label' => 'Apmokėjimas',

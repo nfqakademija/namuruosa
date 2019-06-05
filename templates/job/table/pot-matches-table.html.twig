@@ -1,9 +1,10 @@
 <div class="pot-match-odd-even">
-    <h3 class="text-muted">Mano darbas: <span class="text-white"> <b>{{ matchesByJob[0].title }}
+    <h3 class="text-muted">Mano darbas: <span class="text-white"> <b>{{ job.title }}
     </b></span></h3>
     <div class="row">
+      
+        {% for service in  potMatches %}
 
-        {% for service in matchesByJob[1] %}
             <div class="col-md-6 col-lg-4 col-xl-3 mt-3">
                 <div class="card text-center">
                     <div class="card-top">
@@ -30,12 +31,14 @@ text-overflow: ellipsis;">{{ service.description }}</h6>
                                 <span class="badge badge-warning">{{ cat.name }}</span>
                             {% endfor %}
                         </div>
-                        <iframe src="https://www.google.com/maps/embed/v1/place?key={{ google_api_key }}
+                        <a class="map-hider" id="{{ service.title }}"><i class="fas fa-chevron-down"></i> Žemėlapis </a>
+                        <iframe class="service-card-map"
+                                src="https://www.google.com/maps/embed/v1/place?key={{ google_api_key }}
                                 &q={{ service.address }}"
                                 width="100%" height="200" frameborder="0" style="border:0" allowfullscreen>
                         </iframe>
                         <div class="align-content-center mt-3">
-                            <a href="{{ path('match_job_create', { 'callerJobId': matchesByJob[0].id, 'responderServiceId': service.id }) }}">
+                            <a href="{{ path('match_job_create', { 'callerJobId': job.id, 'responderServiceId': service.id }) }}">
                                 <button class="btn btn-outline-success font-weight-bold px-3">Siūlyti darbą</button>
                             </a>
                         </div>
@@ -59,5 +62,8 @@ text-overflow: ellipsis;">{{ service.description }}</h6>
                 </div>
             </div>
         {% endfor %}
+    </div>
+    <div class="pagination">
+        {{ knp_pagination_render(pagination) }}
     </div>
 </div>

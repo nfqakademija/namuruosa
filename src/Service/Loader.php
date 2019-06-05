@@ -68,28 +68,31 @@ class Loader
     }
 
     /**
-     * @param $userId int
      * @return array
      */
-    public function loadPotMatches($userId)
+    public function addDistanceAndRating($myService, $potMatches)
     {
-        $potMatches = [];
-        $myServices = $this->loadByUser($userId);
-        foreach ($myServices as $myService) {
-            $jobsByService = [];
-            $serviceLat = $myService->getLat();
-            $serviceLon = $myService->getLon();
-            $jobsByService[] = $myService;
-            $jobs = $this->em->getRepository(Job::class)->findMatches($myService);
-            foreach ($jobs as $job) {
-                $jobUserId = $job->getUserId()->getId();
-                $job->setUserRating($this->profileLoader->getAverageRating($jobUserId));
-                $job->setDistance($this->calcDistance($serviceLat, $serviceLon, $job));
-            }
-            $jobsByService[] = $jobs;
-            $potMatches[] = $jobsByService;
+        $lat = $myService->getLat();
+        $lon = $myService->getLon();
+        foreach ($potMatches as $job) {
+            $serviceUserId = $job->getUserId()->getId();
+            $job->setUserRating($this->profileLoader->getAverageRating($serviceUserId));
+            $job->setDistance($this->calcDistance($lat, $lon, $job));
         }
+
         return $potMatches;
+    }
+
+    /**
+     * @param $myServiceId int
+     * @return array
+     */
+    public function getPotMatchesByServiceIdQuery($myServiceId)
+    {
+        $service = $this->em->getRepository(Service::class)->find($myServiceId);
+        $potMatchesQuery = $this->em->getRepository(Job::class)->getMatchesQuery($service);
+
+        return $potMatchesQuery;
     }
 
     /**

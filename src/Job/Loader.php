@@ -70,28 +70,39 @@ class Loader
     }
 
     /**
-     * @param $userId int
      * @return array
      */
-    public function loadPotMatches($userId)
+    public function addDistanceAndRating($myJob, $potMatches)
     {
-        $potMatches = [];
-        $myJobs = $this->loadByUser($userId);
-        foreach ($myJobs as $myJob) {
-            $servicesByJob = [];
-            $jobLat = $myJob->getLat();
-            $jobLon = $myJob->getLon();
-            $servicesByJob[] = $myJob;
-            $services = $this->em->getRepository(Service::class)->findMatches($myJob);
-            foreach ($services as $service) {
-                $serviceUserId = $service->getUserId()->getId();
-                $service->setUserRating($this->profileLoader->getAverageRating($serviceUserId));
-                $service->setDistance($this->calcDistance($jobLat, $jobLon, $service));
-            }
-            $servicesByJob[] = $services;
-            $potMatches[] = $servicesByJob;
+//        $potMatches = [];
+//        $myJobs = $this->loadByUser($userId);
+//        foreach ($myJobs as $myJob) {
+//        $servicesByJob = [];
+        $lat = $myJob->getLat();
+        $lon = $myJob->getLon();
+//        $servicesByJob[] = $myJob;
+//            $services = $this->em->getRepository(Service::class)->findMatches($myJob);
+        foreach ($potMatches as $service) {
+            $serviceUserId = $service->getUserId()->getId();
+            $service->setUserRating($this->profileLoader->getAverageRating($serviceUserId));
+            $service->setDistance($this->calcDistance($lat, $lon, $service));
         }
+//            $servicesByJob[] = $services;
+//        $potMatches[] = $servicesByJob;
+//        }
         return $potMatches;
+    }
+
+    /**
+     * @param $myJobId int
+     * @return array
+     */
+    public function getPotMatchesByJobIdQuery($myJobId)
+    {
+        $job = $this->em->getRepository(Job::class)->find($myJobId);
+        $potMatchesQuery = $this->em->getRepository(Service::class)->getMatchesQuery($job);
+
+        return $potMatchesQuery;
     }
 
     /**
