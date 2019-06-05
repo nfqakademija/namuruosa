@@ -81,7 +81,7 @@ class MatchController extends AbstractController
         $myJobsMatches = $this->paginator->paginate(
             $myJobsMatchesQuery,
             $request->query->getInt('page', 1),
-            $request->query->getInt('limit', 3)
+            $request->query->getInt('limit', 8)
         );
 
         return $this->render('match/my-jobs-matches.twig', [
@@ -101,7 +101,7 @@ class MatchController extends AbstractController
         $myServicesMatches = $this->paginator->paginate(
             $myServicesMatchesQuery,
             $request->query->getInt('page', 1),
-            $request->query->getInt('limit', 3)
+            $request->query->getInt('limit', 8)
         );
 
         return $this->render('match/my-services-matches.twig', [

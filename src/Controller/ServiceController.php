@@ -134,7 +134,7 @@ class ServiceController extends AbstractController
         $myServices = $this->paginator->paginate(
             $myServicesQuery,
             $request->query->getInt('page', 1),
-            $request->query->getInt('limit', 6)
+            $request->query->getInt('limit', 8)
         );
 
         return $this->render('service/my-services.html.twig', [
@@ -160,7 +160,7 @@ class ServiceController extends AbstractController
             $pagination = $this->paginator->paginate(
                 $paginationQuery,
                 $request->query->getInt('page', 1),
-                $request->query->getInt('limit', 6)
+                $request->query->getInt('limit', 8)
             );
             $potMatchesArray = $pagination->getItems();
             $potMatchesComplete = $this->serviceLoader->addDistanceAndRating($currentService, $potMatchesArray);
