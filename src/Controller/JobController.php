@@ -123,27 +123,34 @@ class JobController extends AbstractController
     }
 
     /**
-     * @Route("job/pot-matches/{id}", name="job_pot_matches")
+     * @Route("job/pot-matches/{id}", name="job_pot_matches", defaults={"id"=null}))
      */
-    public function listPotMatches($id = null, Request $request)
+    public function listPotMatches($id, Request $request)
     {
-        $userId = $this->getUser()->getId();
-//        dump($id); die();
-        $myMatchingServices = $this->loader->loadPotMatches($userId);
-        $jobId = $id === null? $myMatchingServices[0][0]->getId(): $id;
-//        $myMatchingServicesByJob = $this->loader->loadPotMatchesByJobId($jobId);
-        $myPotMatchesQuery = $this->loader->loadPotMatchesByJobIdQuery($jobId);
+        $jobId = null;
+        $pagination = null;
+        $potMatchesComplete = null;
+        $currentJob = null;
+        $myJobs = $this->loader->loadByUser($this->getUser()->getId());
 
-        $myPotMatches = $this->paginator->paginate(
-            $myPotMatchesQuery,
-            $request->query->getInt('page', 1),
-            $request->query->getInt('limit', 2)
-        );
-
+        if ($myJobs !== []){
+            $jobId = $id === null? $myJobs[0]->getId(): $id;
+            $currentJob = $this->loader->getJob($jobId);
+            $paginationQuery = $this->loader->getPotMatchesByJobIdQuery($jobId);
+            $pagination = $this->paginator->paginate(
+                $paginationQuery,
+                $request->query->getInt('page', 1),
+                $request->query->getInt('limit', 4)
+            );
+            $potMatchesArray = $pagination->getItems();
+            $potMatchesComplete = $this->loader->addDistanceAndRating($currentJob, $potMatchesArray);
+        }
 
         return $this->render('job/pot-matches.html.twig', [
-            'potMatchesByJobs' => $myMatchingServices,
-            'potMatchesByJobId' => $myPotMatches,
+            'myJobs' => $myJobs,
+            'job' => $currentJob,
+            'pagination' =>$pagination,
+            'potMatches' => $potMatchesComplete,
         ]);
     }
 }

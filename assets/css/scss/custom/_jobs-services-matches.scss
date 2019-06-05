@@ -66,16 +66,19 @@
   background-color: rgba(100,100,100, 0.2);
   text-align: start;
   white-space:nowrap;
-  transition: max-width 0.3s ;
+  transition:  max-width 0.5s;
 }
-.pot-match-tabs button:hover{
-  overflow: visible;
+.pot-match-tabs button:hover {
   font-weight: bold;
-  background-color: rgba(100,100,100, 0.3);
+  color: #fff;
+  background-color: rgba(100, 100, 100, 0.4);
   max-width: 400px;
-  transition: max-width 0.3s ;
+  transition: max-width 1s ease-in;
 }
+.pot-match-tabs button:active{
+  background-color: rgba(100,100,100, 0.5);
 
+}
 
 @media (max-width: 500px){
   .page-title-elipse {
@@ -83,7 +86,7 @@
     margin-right: 10px;
   }
   .pot-match-tabs{
-    margin-left: -50px;
-    margin-right: -50px;
+    margin-left: -40px;
+    margin-right: -40px;
   }
 }
