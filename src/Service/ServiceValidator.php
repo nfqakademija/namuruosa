@@ -8,7 +8,6 @@
 
 namespace App\Service;
 
-
 use Doctrine\ORM\EntityManagerInterface;
 use App\Service\Loader as ServiceLoader;
 use App\Match\Loader as MatchLoader;

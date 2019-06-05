@@ -8,7 +8,6 @@
 
 namespace App\Helpers;
 
-
 class MatchHelper
 {
 }

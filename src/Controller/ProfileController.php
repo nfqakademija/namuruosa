@@ -124,11 +124,8 @@ class ProfileController extends AbstractController
             );
 
             return $this->redirectToRoute('profile');
-
         } elseif (!$form->isSubmitted()) {
-            $form->get('description')->setData(
-                $userProfile->getdescription());
-
+            $form->get('description')->setData($userProfile->getdescription());
         }
 
         return $this->render('profile/editProfileForm.html.twig', [
@@ -162,7 +159,6 @@ class ProfileController extends AbstractController
 
         if ($bannerPhoto) {
             $bannerPhotoName = $uploader->uploadImage($bannerPhoto, 'banner_pics_dir', 'uploads/banner_pics/');
-
         }
 
         if (!$userProfile) {
@@ -172,7 +168,6 @@ class ProfileController extends AbstractController
 
             $entityManager->persist($formData);
             $entityManager->flush();
-
         } else {
             $userProfile->setCity($form["city"]->getData());
             $userProfile->setLanguages($form["languages"]->getData());
@@ -182,7 +177,6 @@ class ProfileController extends AbstractController
             if ($profilePhoto) {
                 $userProfile->setProfilePhoto($profilePhotoName);
             }
-
             if ($bannerPhoto) {
                 $userProfile->setBannerPhoto($bannerPhotoName);
             }
@@ -212,5 +206,4 @@ class ProfileController extends AbstractController
 
         return $profile;
     }
-
 }

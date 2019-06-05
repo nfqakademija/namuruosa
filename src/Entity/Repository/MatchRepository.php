@@ -55,7 +55,7 @@ class MatchRepository extends EntityRepository
          WHERE ((m.callerId = :userId  AND m.callerServiceId IS NOT NULL)
          OR (m.responderId = :userId AND m.responderServiceId IS NOT NULL))
          AND m.acceptedAt IS NOT NULL'
-    )->setParameter('userId', $userId);
+        )->setParameter('userId', $userId);
 
         return $query->execute();
     }
@@ -70,7 +70,7 @@ class MatchRepository extends EntityRepository
          WHERE ((m.callerId = :userId  AND m.callerJobId IS NOT NULL)
          OR (m.responderId = :userId AND m.responderJobId IS NOT NULL))
          AND m.acceptedAt IS NOT NULL'
-    )->setParameter('userId', $userId);
+        )->setParameter('userId', $userId);
 
         return $query->execute();
     }

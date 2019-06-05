@@ -9,14 +9,11 @@ use App\Form\ReviewType;
 use App\Entity\User;
 use ReCaptcha\ReCaptcha;
 
-
 class ReviewsController extends AbstractController
 {
-
     /**
      * @Route("/review/user/{userId}", name="reviewUser", requirements={"userId"="\d+"})
      */
-
     public function reviewProfile(Request $request, $userId)
     {
         $form = $this->createForm(ReviewType::class);
@@ -37,12 +34,10 @@ class ReviewsController extends AbstractController
 
     public function saveReviewForm($request, $form, $userId)
     {
-
         $recaptcha = new ReCaptcha('6LeIxAcTAAAAAGG-vFI1TnRWxMZNFuojJ4WifJWe');
         $resp = $recaptcha->verify($request->request->get('g-recaptcha-response'), $request->getClientIp());
 
         if (!$resp->isSuccess()) {
-
             $this->addFlash(
                 'notice',
                 'Uždėkyte varnelę'

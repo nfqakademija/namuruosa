@@ -14,7 +14,7 @@ class DataLoader
     private $request;
     private $entityManager;
 
-    public function __construct(ReviewsRepository $reviews, PaginatorInterface $paginator, RequestStack $request, EntityManagerInterface $manager)
+    public function __construct(ReviewsRepository $reviews, PaginatorInterface $paginator,RequestStack $request, EntityManagerInterface $manager)
     {
         $this->reviews = $reviews;
         $this->paginator = $paginator;

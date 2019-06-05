@@ -8,7 +8,6 @@
 
 namespace App\Job;
 
-
 use Doctrine\ORM\EntityManagerInterface;
 use App\Job\Loader as JobLoader;
 use App\Service\Loader as ServiceLoader;
@@ -16,7 +15,6 @@ use App\Match\Loader as MatchLoader;
 
 class Validator
 {
-
     private $em;
     private $matchLoader;
     private $jobLoader;

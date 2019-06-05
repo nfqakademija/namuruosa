@@ -68,4 +68,3 @@ class CategoriesController extends AbstractController
         }
     }
 }
-

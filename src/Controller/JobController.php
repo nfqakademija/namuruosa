@@ -68,8 +68,8 @@ class JobController extends AbstractController
         $job = $this->loader->getJob($id);
         $editRequestValid = $this->validator->checkEditValidity($id, $userId);
         if ($editRequestValid['validity']) {
-        $form = $this->createForm(JobType::class, $job);
-        $form->handleRequest($request);
+            $form = $this->createForm(JobType::class, $job);
+            $form->handleRequest($request);
         } else {
             $this->addFlash("danger", $editRequestValid['message']);
             return $this->redirectToRoute('my_jobs');
@@ -93,10 +93,10 @@ class JobController extends AbstractController
     {
         $userId = $this->getUser()->getId();
         $deleteRequestValid = $this->validator->checkDeleteValidity($jobId, $userId);
-        if($deleteRequestValid['validity']){
+        if ($deleteRequestValid['validity']) {
             $this->loader->delete($jobId);
             $this->addFlash("success", $deleteRequestValid['message']);
-        } else{
+        } else {
             $this->addFlash("danger", $deleteRequestValid['message']);
         }
 
@@ -133,8 +133,8 @@ class JobController extends AbstractController
         $currentJob = null;
         $myJobs = $this->loader->loadByUser($this->getUser()->getId());
 
-        if ($myJobs !== []){
-            $jobId = $id === null? $myJobs[0]->getId(): $id;
+        if ($myJobs !== []) {
+            $jobId = $id === null ? $myJobs[0]->getId() : $id;
             $currentJob = $this->loader->getJob($jobId);
             $paginationQuery = $this->loader->getPotMatchesByJobIdQuery($jobId);
             $pagination = $this->paginator->paginate(
@@ -149,7 +149,7 @@ class JobController extends AbstractController
         return $this->render('job/pot-matches.html.twig', [
             'myJobs' => $myJobs,
             'job' => $currentJob,
-            'pagination' =>$pagination,
+            'pagination' => $pagination,
             'potMatches' => $potMatchesComplete,
         ]);
     }

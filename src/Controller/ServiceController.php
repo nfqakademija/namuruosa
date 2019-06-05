@@ -153,8 +153,8 @@ class ServiceController extends AbstractController
         $currentService = null;
         $myServices = $this->serviceLoader->loadByUser($this->getUser()->getId());
 
-        if ($myServices !== []){
-            $serviceId = $id === null? $myServices[0]->getId(): $id;
+        if ($myServices !== []) {
+            $serviceId = $id === null ? $myServices[0]->getId() : $id;
             $currentService = $this->serviceLoader->getService($serviceId);
             $paginationQuery = $this->serviceLoader->getPotMatchesByServiceIdQuery($serviceId);
             $pagination = $this->paginator->paginate(
@@ -169,7 +169,7 @@ class ServiceController extends AbstractController
         return $this->render('service/pot-matches.html.twig', [
             'myServices' => $myServices,
             'service' => $currentService,
-            'pagination' =>$pagination,
+            'pagination' => $pagination,
             'potMatches' => $potMatchesComplete,
         ]);
     }
