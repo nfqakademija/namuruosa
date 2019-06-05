@@ -2,7 +2,7 @@
 
 namespace App\Form;
 
-use App\Entity\Matches;
+use App\Entity\Match;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -18,16 +18,14 @@ class MatchType extends AbstractType
             ->add('cancelledAt')
             ->add('payedAt')
             ->add('callerId')
-//            ->add('callerServiceId')
             ->add('responderId')
-//            ->add('responderServiceId')
         ;
     }
 
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'data_class' => Matches::class,
+            'data_class' => Match::class,
         ]);
     }
 }
