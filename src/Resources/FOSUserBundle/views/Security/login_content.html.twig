@@ -8,7 +8,7 @@
         {% if csrf_token %}
             <input type="hidden" name="_csrf_token" value="{{ csrf_token }}" />
         {% endif %}
-        <h1 class="h3 mb-3 font-weight-normal">Prašom prisiregistruoti</h1>
+        <h1 class="h3 mb-3 font-weight-normal">Prisijunkite</h1>
         <div class="mb-3">
             <label for="username" class="sr-only">{{ 'security.login.username'|trans }}</label>
             <input class="form-control" placeholder="Prisijungimo vardas" type="text" id="username" name="_username"  required="required" autocomplete="username" />
@@ -22,6 +22,7 @@
             <label for="remember_me">{{ 'security.login.remember_me'|trans }}</label>
         </div>
         <input class="btn btn-lg btn-primary btn-block" type="submit" id="_submit" name="_submit" value="{{ 'security.login.submit'|trans }}" />
+        <br>
+        <p>Neturite paskyros? <a href="{{path('fos_user_registration_register')}}">Registruotis</a></p>
     </form>
 </div>
-
