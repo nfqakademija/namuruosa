@@ -48,7 +48,6 @@ class ServiceController extends AbstractController
         $this->paginator = $paginator;
     }
 
-
     /**
      * @Route("/service/add", name="serviceAdd")
      * @param Request $request

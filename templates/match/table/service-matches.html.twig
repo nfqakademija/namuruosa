@@ -15,11 +15,11 @@
                 {% if match.callerServiceId %}
                     <td>{{ match.callerServiceId.title }}</td>
                     <td>{{ match.responderJobId.title }}</td>
-                    <td>{{ match.responderId }}</td>
+                    <td><a href="{{ path('otherUserProfile', {'userId':match.responderId.id}) }}">{{ match.responderId }}</a></td>
                 {% else %}
                     <td>{{ match.responderServiceId.title }}</td>
                     <td>{{ match.callerJobId.title }}</td>
-                    <td>{{ match.callerId }}</td>
+                    <td><a href="{{ path('otherUserProfile', {'userId':match.callerId.id}) }}">{{ match.callerId }}</a></td>
                 {% endif %}
                 <td>
                     {% if match.acceptedAt %}
