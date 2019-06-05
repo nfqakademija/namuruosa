@@ -161,7 +161,7 @@ class ServiceController extends AbstractController
             $pagination = $this->paginator->paginate(
                 $paginationQuery,
                 $request->query->getInt('page', 1),
-                $request->query->getInt('limit', 4)
+                $request->query->getInt('limit', 2)
             );
             $potMatchesArray = $pagination->getItems();
             $potMatchesComplete = $this->serviceLoader->addDistanceAndRating($currentService, $potMatchesArray);

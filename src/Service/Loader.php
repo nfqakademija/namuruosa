@@ -108,7 +108,10 @@ class Loader
         return $this->calcDist->getDistanceFromCoordinates($jobLat, $jobLon, $serviceLat, $serviceLon);
     }
 
-
+    /**
+     * @param $serviceId
+     * @return bool
+     */
     public function delete($serviceId)
     {
         $service = $this->getService($serviceId);
