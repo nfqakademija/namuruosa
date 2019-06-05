@@ -2,8 +2,13 @@
     <h3 class="text-muted">Mano darbas: <span class="text-white"> <b>{{ job.title }}
     </b></span></h3>
     <div class="row">
+        {% if potMatches == null %}
+            <div class="text-center" style="margin: auto; padding-top: 40px;">
+                <h2 class="text-danger">Deja, paslaugų pagal šį darbą šiuo metu nėra.</h2>
+                <h4 class="text-muted">Mėginkite pasitikrinti vėliau!</h4>
+            </div>
+        {% endif %}
         {% set imageNo = 38 %}
-        {#{% set idNo = 1 %}#}
         {% for service in  potMatches %}
 
             <div class="col-md-6 col-lg-4 col-xl-3 mt-3">
