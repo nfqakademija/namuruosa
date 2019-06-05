@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\UserProfileRepository")
@@ -23,36 +24,48 @@ class UserProfile
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\NotBlank
+     * @Assert\Type(type="string")
      */
     private $city;
 
     /**
      * @ORM\Column(type="text")
+     * @Assert\NotBlank
+     * @Assert\Type(type = "string")
      */
     private $description;
 
     /**
      * @ORM\Column(type="string", length=255)
+     *
      */
     private $profilePhoto;
 
     /**
      * @ORM\Column(type="string", length=255)
+     *
      */
     private $bannerPhoto;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\NotBlank
+     * @Assert\Type(type = "string")
      */
     private $languages;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\NotBlank
+     * @Assert\Type(type = "string")
      */
     private $skill;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\Regex(pattern="/[+370][0-9]{11}/m")
+     * @Assert\NotBlank
      */
     private $phone;
 
