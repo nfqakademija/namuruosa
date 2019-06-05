@@ -15,7 +15,7 @@
         {% for service in services %}
             <tr>
                 <td>{{ service.id }}</td>
-                <td>{{ service.title }}</td>
+                <td data-toggle="tooltip" title="{{ service.title }}">{{ service.title|slice(0, 55) }}</td>
                 <td>{{ service.created_at|date('Y-m-d') }}</td>
                 <td>{{ service.active_till|date('Y-m-d') }}</td>
                 <td><a href="{{ path('otherUserProfile', {'userId': service.user_id} ) }}">{{ service.first_name }} {{ service.last_name }}</a> ({{ service.username }})</td>

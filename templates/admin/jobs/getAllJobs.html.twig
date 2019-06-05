@@ -15,7 +15,7 @@
         {% for job in jobs %}
             <tr>
                 <td>{{ job.id }}</td>
-                <td>{{ job.title }}</td>
+                <td data-toggle="tooltip" title="{{ job.title }}">{{ job.title|slice(0,55) }}</td>
                 <td>{{ job.created_at|date('Y-m-d') }}</td>
                 <td>{{ job.date_end|date('Y-m-d') }}</td>
                 <td><a href="{{ path('otherUserProfile', {'userId': job.user_id} ) }}">{{ job.first_name }} {{ job.last_name }}</a> ({{ job.username }})</td>
