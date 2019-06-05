@@ -70,28 +70,27 @@ class Loader
     }
 
     /**
-     * @param $userId int
      * @return array
      */
-    public function addDistanceAndRating($myJob, $potServices)
+    public function addDistanceAndRating($myJob, $potMatches)
     {
-        $potMatches = [];
+//        $potMatches = [];
 //        $myJobs = $this->loadByUser($userId);
 //        foreach ($myJobs as $myJob) {
-        $servicesByJob = [];
-        $jobLat = $myJob->getLat();
-        $jobLon = $myJob->getLon();
-        $servicesByJob[] = $myJob;
+//        $servicesByJob = [];
+        $lat = $myJob->getLat();
+        $lon = $myJob->getLon();
+//        $servicesByJob[] = $myJob;
 //            $services = $this->em->getRepository(Service::class)->findMatches($myJob);
-        foreach ($potServices as $service) {
+        foreach ($potMatches as $service) {
             $serviceUserId = $service->getUserId()->getId();
             $service->setUserRating($this->profileLoader->getAverageRating($serviceUserId));
-            $service->setDistance($this->calcDistance($jobLat, $jobLon, $service));
+            $service->setDistance($this->calcDistance($lat, $lon, $service));
         }
 //            $servicesByJob[] = $services;
-        $potMatches[] = $servicesByJob;
+//        $potMatches[] = $servicesByJob;
 //        }
-        return $potServices;
+        return $potMatches;
     }
 
     /**

@@ -1,8 +1,8 @@
 <div class="pot-match-odd-even">
-    <h3 class="text-muted">Mano paslauga: <span class="text-white"><b> {{ matchesByService[0].title }}</b></span></h3>
+    <h3 class="text-muted">Mano paslauga: <span class="text-white"><b> {{service.title }}</b></span></h3>
     <div class="row">
         {% set imageNo = 86 %}
-        {% for job in matchesByService[1] %}
+        {% for job in potMatches %}
 
             {% if job.payType == "per_hour" %}
                 {% set payType = "val." %}
@@ -37,12 +37,13 @@
                                 <span class="badge badge-warning">{{ cat.name }}</span>
                             {% endfor %}
                         </div>
-                        <iframe src="https://www.google.com/maps/embed/v1/place?key={{ google_api_key }}
+                        <a class="map-hider" id="{{ job.title }}"><i class="fas fa-chevron-down"></i> Žemėlapis </a>
+                        <iframe class="service-card-map" src="https://www.google.com/maps/embed/v1/place?key={{ google_api_key }}
                                 &q={{ job.address }}"
                                 width="100%" height="200" frameborder="0" style="border:0" allowfullscreen>
                         </iframe>
                         <div class="align-content-center mt-3">
-                            <a href="{{ path('match_service_create', { 'callerServiceId': matchesByService[0].id, 'responderJobId': job.id }) }}">
+                            <a href="{{ path('match_service_create', { 'callerServiceId': service.id, 'responderJobId': job.id }) }}">
                                 <button class="btn btn-outline-success font-weight-bold px-3">Siūlyti paslaugas</button>
                             </a>
                         </div>
@@ -66,5 +67,8 @@
                 </div>
             </div>
         {% endfor %}
+    </div>
+    <div class="pagination">
+        {{ knp_pagination_render(pagination) }}
     </div>
 </div>

@@ -7,17 +7,28 @@
                 <h2 class="text-center ">DARBŲ PASIŪLYMAI</h2>
                 <h5 class="text-center text-muted">Pagal mano paslaugas</h5>
             </div>
-            {% if (potMatchesByServices != []) %}
+            {% if (myServices != []) %}
                 {% set servicesWithNoJobs = [] %}
-                <div class="pot-matches-wrapper">
-                    {% for matchesByService in potMatchesByServices %}
-                        {% if matchesByService[1] != null %}
-                            {% include 'service/table/pot-matches-table.html.twig' %}
-                        {% else %}
-                            {% set servicesWithNoJobs = servicesWithNoJobs|merge([matchesByService[0].title]) %}
-                        {% endif %}
+                <ul class="pot-match-tabs">
+                    {% for service in myServices %}
+                        <li>
+                            <a id="{{ service.title }}"
+                               href="{{ path('service_pot_matches', {'id':service.id}) }}">
+                                <button>{{ service.title }}</button>
+                            </a>
+                        </li>
                     {% endfor %}
+                </ul>
+                <div class="pot-matches-wrapper">
+
+                    {% include 'service/table/pot-matches-table.html.twig' %}
                 </div>
+                {#{% else %}#}
+                {#{% set servicesWithNoJobs = servicesWithNoJobs|merge([matchesByService[0].title]) %}#}
+                {#{% endif %}#}
+                {#{% endfor %}#}
+
+
                 {% if servicesWithNoJobs != [] %}
                     <div class="alert alert-danger">
                         {% for service in  servicesWithNoJobs %}
@@ -32,11 +43,45 @@
                     <h4>Pamėginkite sukurti naują paslaugą!</h4>
                     <div class="row">
                         <div class="col mt-3">
-                            <a href="{{ path('serviceAdd') }}"><button class="btn btn-link"><i class="fas fa-pencil-alt"></i> Kurti naują paslaugą</button></a>
+                            <a href="{{ path('serviceAdd') }}">
+                                <button class="btn btn-link"><i class="fas fa-pencil-alt"></i> Kurti naują paslaugą
+                                </button>
+                            </a>
                         </div>
                     </div>
                 </div>
             {% endif %}
         </div>
     </div>
+{% endblock %}
+
+
+{% block javascripts2 %}
+
+    <script>
+        document.addEventListener('click', function (e) {
+            e = e || window.event;
+            let target = e.target;
+            console.log(target);
+            let targetId = target.id;
+            let targetClass = target.className;
+            let icon = target.firstChild;
+
+            if (targetClass === 'map-hider') {
+                let map = document.getElementById(targetId).nextElementSibling;
+                if (map.style.height === '0px' || map.style.height === '') {
+                    map.style.height = "auto";
+                    map.style.opacity = 1;
+                    icon.style.transform = 'rotate(180deg)';
+                    map.style.overflow = 'hidden';
+                } else {
+                    map.style.height = 0;
+                    map.style.opacity = 0;
+                    icon.style.transform = 'rotate(0deg)';
+                    map.style.overflow = 'hidden';
+                }
+            }
+        }, false);
+    </script>
+
 {% endblock %}

@@ -129,7 +129,6 @@ class JobController extends AbstractController
     {
         $jobId = null;
         $pagination = null;
-        $jobName = null;
         $potMatchesComplete = null;
         $currentJob = null;
         $myJobs = $this->loader->loadByUser($this->getUser()->getId());

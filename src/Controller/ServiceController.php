@@ -32,7 +32,7 @@ class ServiceController extends AbstractController
     private $paginator;
 
     /**
-     * JobController constructor.
+     * ServiceController constructor.
      * @param EntityManagerInterface $em
      * @param ServiceLoader $serviceLoader
      * @param MatchLoader $matchLoader
@@ -144,15 +144,34 @@ class ServiceController extends AbstractController
     }
 
     /**
-     * @Route("service/pot-matches", name="service_pot_matches")
+     * @Route("service/pot-matches/{id}", name="service_pot_matches", defaults={"id"=null}))
      */
-    public function listPotMatches()
+    public function listPotMatches($id, Request $request)
     {
-        $userId = $this->getUser()->getId();
-        $myMatchingJobs = $this->serviceLoader->loadPotMatches($userId);
+        $serviceId = null;
+        $pagination = null;
+        $potMatchesComplete = null;
+        $currentService = null;
+        $myServices = $this->serviceLoader->loadByUser($this->getUser()->getId());
+
+        if ($myServices !== []){
+            $serviceId = $id === null? $myServices[0]->getId(): $id;
+            $currentService = $this->serviceLoader->getService($serviceId);
+            $paginationQuery = $this->serviceLoader->getPotMatchesByServiceIdQuery($serviceId);
+            $pagination = $this->paginator->paginate(
+                $paginationQuery,
+                $request->query->getInt('page', 1),
+                $request->query->getInt('limit', 4)
+            );
+            $potMatchesArray = $pagination->getItems();
+            $potMatchesComplete = $this->serviceLoader->addDistanceAndRating($currentService, $potMatchesArray);
+        }
 
         return $this->render('service/pot-matches.html.twig', [
-            'potMatchesByServices' => $myMatchingJobs,
+            'myServices' => $myServices,
+            'service' => $currentService,
+            'pagination' =>$pagination,
+            'potMatches' => $potMatchesComplete,
         ]);
     }
 }
