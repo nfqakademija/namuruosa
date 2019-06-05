@@ -28,6 +28,8 @@ class Reports
 
     /**
      * @ORM\Column(type="text")
+     * @Assert\NotBlank
+     * @Assert\Type(type="string")
      */
     private $report;
 
