@@ -1,5 +1,8 @@
 <div class="pot-match-odd-even">
     <h3 class="text-muted">Mano paslauga: <span class="text-white"><b> {{service.title }}</b></span></h3>
+    <div class="pagination my-3">
+        {{ knp_pagination_render(pagination) }}
+    </div>
     <div class="row">
         {% if potMatches == null %}
             <div class="text-center" style="margin: auto; padding-top: 40px;">
