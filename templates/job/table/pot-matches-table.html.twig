@@ -2,7 +2,7 @@
     <h3 class="text-muted">Mano darbas: <span class="text-white"> <b>{{ matchesByJob[0].title }}
     </b></span></h3>
     <div class="row">
-        {% set imageNo = 38 %}
+
         {% for service in matchesByJob[1] %}
             <div class="col-md-6 col-lg-4 col-xl-3 mt-3">
                 <div class="card text-center">
@@ -10,10 +10,12 @@
                          <span class="price">{{ service.pricePerHour }}
                              <i class="fa fa-euro-sign fa-xs"></i> / val.
                          </span>
-                        <img class="card-img-top card-half-height"
-                             src="https://source.unsplash.com/collection/1390{{ imageNo }}/300x100"
-                             alt="Card image cap">
-                        {% set imageNo = imageNo - 1 %}
+                        <div class="profile-pic-card">
+                            <img class="card-img-top card-half-height"
+                                 src="{{ asset(service.getuserid.getuserprofile.getprofilephoto)}}"
+                                 alt="Card image cap">
+                        </div>
+
                     </div>
                     <div class="card-body">
                         <h5 class="card-title" style="height: 50px;">{{ service.title }}</h5>
